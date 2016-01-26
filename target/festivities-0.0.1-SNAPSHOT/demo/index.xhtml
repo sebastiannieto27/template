@@ -8,7 +8,8 @@
 <h:body>
 
 	<h1>JSF 2.0 + Spring Example</h1>
-	<p:outputLabel value="#{baseController.prop1}"></p:outputLabel>
+	<h:commandButton action="#{baseController.findPerson}" value="" />
+	<p:outputLabel value="#{baseController.person.name}"></p:outputLabel>
 </h:body>
 
 </html>
