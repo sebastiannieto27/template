@@ -1,0 +1,8 @@
+co/com/plantilla/services/ServiceException.class
+co/com/plantilla/dao/IBaseDAO.class
+co/com/plantilla/services/IBaseService.class
+co/com/plantilla/services/impl/BaseServiceImpl.class
+co/com/plantilla/configuration/AppConfig.class
+co/com/plantilla/dao/impl/BaseDAO.class
+co/com/plantilla/controller/BaseController.class
+co/com/plantilla/domain/BaseEntity.class
