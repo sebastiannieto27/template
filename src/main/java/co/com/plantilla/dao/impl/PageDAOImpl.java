@@ -38,45 +38,48 @@ public class PageDAOImpl implements PageDAO{
 
 	@Override
 	public void createPage(Page page) {
-		/*try {
-			session = HibernateUtil.getSessionFactory().openSession(); 
-			session.beginTransaction();
+		try {
+			session = this.sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
 			session.save(page);
-			session.getTransaction().commit();
+			tx.commit();
 		} catch(Exception ex) {
 			//TODO
 			session.getTransaction().rollback();
 		} finally {
 			session.close();
-		}*/
-	}
-
-	@Override
-	public void delete(Page page) {
-		/*try {
-			session = HibernateUtil.getSessionFactory().openSession(); 
-			session.beginTransaction();
-			Query query = session.createQuery("delete Page p where p.pageId = :pageId");
-			query.setParameter("pageId", page.getPageId());
-			query.executeUpdate();
-			session.getTransaction().commit();
-		} catch(Exception ex) {
-			session.getTransaction().rollback();
-		} finally {
-			session.close();
-		}*/
+		}
 	}
 
 	@Override
 	public void update(Page page) {
-		/*try {
-			session = HibernateUtil.getSessionFactory().openSession(); 
-			session.beginTransaction();
-			session.merge(page);
-			session.getTransaction().commit();
+		try {
+			session = this.sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
+	        session.merge(page);
+	        tx.commit();
 		} catch(Exception ex) {
 			session.getTransaction().rollback();
-		} */
+		} finally {
+			session.close();
+		}
 	}
+	@Override
+	public void delete(Page page) {
+		try {
+			session = this.sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
+			Query query = session.createQuery("delete Page p where p.pageId = :pageId");
+			query.setParameter("pageId", page.getPageId());
+			query.executeUpdate();
+			tx.commit();
+		} catch(Exception ex) {
+			session.getTransaction().rollback();
+		} finally {
+			session.close();
+		}
+	}
+
+	
 
 }
