@@ -28,6 +28,7 @@ public class BaseController {
          
         if(list!=null && list.size() > 0) {
         	person = list.get(0);
+        	System.out.println("PERSON: " + person.getName());
         }
 	}
 	

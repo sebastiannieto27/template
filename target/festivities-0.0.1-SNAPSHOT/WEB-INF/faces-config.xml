@@ -6,7 +6,10 @@
 	version="2.1">
 
 	<application>
-		<message-bundle>resources.application</message-bundle>
+		<resource-bundle>
+			<base-name>label</base-name>
+			<var>msg</var>
+		</resource-bundle>
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 		<locale-config>
 			<default-locale>en</default-locale>
