@@ -1,0 +1,50 @@
+.ui-panel .ui-panel-content .ui-panelgrid .ui-panelgrid-cell .ui-widget-content {
+    	padding: 0;
+    	border: 0px;
+	}
+	
+	.ui-widget {
+		border-width: 0px;
+    	font-size: 12px;
+	}
+	.ui-layout-north {
+	    z-index:20;
+	    overflow:visible;
+	}
+	.ui-layout-north .ui-layout-unit-content {
+	    overflow:visible !important;
+	}
+	.ui-widget-header {
+	    text-align: center;
+	    text-transform: uppercase;
+	}
+	.ui-datatable .ui-datatable-footer .footer-section {
+	    text-align: left;
+	}
+	
+	.column {
+	    font-weight: bold;
+	    background-color: menu;
+	}
+	
+	.ui-carousel {
+		width: 100% !important;
+	}
+		
+	.ui-carousel-item {
+		width: auto !important;
+	}
+	.ui-slider-one {
+		position: relative !important; 
+		width: 40px !important; 
+		height: 250px !important;
+	}
+	
+	.ui-scheduler-one {
+		width: 450px !important; 
+		height: 400px !important;
+	}
+	
+	.ui-datascroller .ui-datascroller-list .ui-datascroller-content {
+		height: 200px !important;
+	}

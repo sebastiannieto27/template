@@ -9,10 +9,21 @@
 
 	<h1>JSF 2.0 + Spring Example</h1>
 	<h:form id="myForm">
-		<p:commandButton actionListener="#{baseController.findPerson}" value="click me!" update="myForm"></p:commandButton>
-		<p:outputLabel id="myName" value="#{baseController.person.name}"></p:outputLabel>
+		<p:growl id="growl" life="2000" />
+		<p:panelGrid columns="2">
+			<h:outputText value="Email" />
+			<p:inputText id="txtUserEmail" value="222"></p:inputText>
+			<h:outputText value="Password" />
+			<p:password id="txtPassword" value="xxxx"></p:password>
+			<p:column colspan="4">
+				<p:commandButton value="Login"
+					
+					update="growl"></p:commandButton>
+			</p:column>
+
+		</p:panelGrid>
 	</h:form>
-	
+
 </h:body>
 
 </html>

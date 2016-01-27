@@ -18,7 +18,7 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
         destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/test" />
+        <property name="url" value="jdbc:mysql://localhost:3306/mydb" />
         <property name="username" value="root" />
         <property name="password" value="admin" />
     </bean>
@@ -46,6 +46,7 @@
         <property name="annotatedClasses">
             <list>
                 <value>co.com.plantilla.domain.Person</value>
+                <value>co.com.plantilla.domain.Page</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -57,29 +58,36 @@
         </property>
     </bean>
 
-	<!-- DAO -->
+	<!-- DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO -->
+	<bean id="baseDAO" class="co.com.plantilla.dao.impl.BaseDAO"></bean>
+	    
     <bean id="personDAO" class="co.com.plantilla.dao.impl.PersonDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
 	
-	<!-- Controllers -->
+    <bean id="pageDAO" class="co.com.plantilla.dao.impl.PageDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+	
+	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers -->
     <bean id="baseController" scope="session" class="co.com.plantilla.controller.BaseController">
     	<property name="baseService" ref="baseService" />
     	<property name="personDAO" ref="personDAO" />
     </bean>
 
-	<!-- Services -->
+    <bean id="pageController" scope="session" class="co.com.plantilla.controller.PageController">
+    	<property name="pageService" ref="pageService" />
+    </bean>
+
+	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services -->
     <bean id="baseService" class="co.com.plantilla.services.impl.BaseServiceImpl">
     	<property name="baseDAO" ref="baseDAO" />
     </bean>
 
-	<!-- DAOs -->
-    <bean id="baseDAO" class="co.com.plantilla.dao.impl.BaseDAO">
-    <!-- data source -->
+    <bean id="pageService" class="co.com.plantilla.services.impl.PageServiceImpl">
+    	<property name="pageDAO" ref="pageDAO" />
     </bean>
+    
 
-	<!-- Data sources -->
-<!--     <bean id="baseDAO" class="co.com.plantilla.dao.BaseDAO"> -->
-<!--     </bean> -->
 
 </beans>

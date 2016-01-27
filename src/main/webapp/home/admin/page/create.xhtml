@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+        <p:dialog id="pageCreateDlg" widgetVar="pageCreateDialog" modal="true" resizable="true" appendTo="@(body)" header="#{msg.create} #{msg.page}" closeOnEscape="true">
+            <h:form id="pageCreateForm">
+                <h:panelGroup id="display" >
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                       <p:outputLabel value="#{msg.name}" for="pageName" />
+                        <p:inputText id="pageName" value="#{pageController.selected.pageName}" title="#{msg.name}" required="true" requiredMessage="#{msg.name}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{msg.url}" for="url" />
+                        <p:inputText id="url" value="#{pageController.selected.url}" title="#{msg.url}" required="true" requiredMessage="#{msg.url}" size="200" maxlength="200"/>
+                   
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{pageController.saveNew}" value="#{msg.save}" update="display,:pageListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('pageCreateDialog'));">
+                        <p:confirm header="Sure" message="Sure" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('pageCreateDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+    </body>
+</html>
