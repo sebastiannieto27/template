@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+        <p:dialog id="RoleCreateDlg" widgetVar="RoleCreateDialog" modal="true" resizable="true" appendTo="@(body)" header="#{msg.create} #{msg.role}" closeOnEscape="true">
+            <h:form id="RoleCreateForm">
+                <h:panelGroup id="display" >
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.name}" for="roleName" />
+                        <p:inputText id="roleName" value="#{roleController.selected.roleName}" title="#{msg.name}" required="true" requiredMessage="#{msg.name}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{msg.description}" for="description" />
+                        <p:inputText id="description" value="#{roleController.selected.description}" title="#{msg.description}" size="100" maxlength="100"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{roleController.saveNew}" value="#{msg.save}" update="display,:RoleListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RoleCreateDialog'));">
+                        <p:confirm header="Sure" message="Sure" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('RoleCreateDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+    </body>
+</html>

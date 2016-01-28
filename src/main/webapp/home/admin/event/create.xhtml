@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+        <p:dialog id="eventCreateDlg" widgetVar="eventCreateDialog" modal="true" resizable="true" appendTo="@(body)" header="#{msg.create} #{msg.event}" closeOnEscape="true">
+            <h:form id="eventCreateForm">
+                <h:panelGroup id="display" >
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.name}" for="eventName" />
+                        <p:inputText id="eventName" value="#{eventController.selected.name}" title="#{msg.name}" required="true" requiredMessage="#{msg.name}" size="45" maxlength="45"/>
+
+						<p:outputLabel value="#{msg.priority}" for="priorityId" />
+                        <p:selectOneMenu id="priorityId" value="#{eventController.priorityIdSelected}" requiredMessage="#{msg.priority}">
+                            <f:selectItem itemLabel="Select One"/>
+                            <f:selectItems value="#{priorityController.items}"
+                                           var="priorityIdItem"
+                                           itemValue="#{priorityIdItem.priorityId}"
+                                           itemLabel="#{priorityIdItem.name.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{msg.startDate}" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{eventController.selected.startDate}" title="#{msg.startDate}" required="true" requiredMessage="#{msg.startDate}" showOn="button"/>
+
+                        <p:outputLabel value="#{msg.endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy" value="#{eventController.selected.endDate}" title="#{msg.endDate}" required="true" requiredMessage="#{msg.endDate}" showOn="button"/>
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{eventController.saveNew}" value="#{msg.save}" update="display,:eventListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('eventCreateDialog'));">
+                        <p:confirm header="Sure" message="Sure" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('eventCreateDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+    </body>
+</html>

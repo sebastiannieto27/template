@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+	
+		<h:form id="eventListForm">
+	            <p:contextMenu id="eventDataTableContextMenu" for="datalist">  
+	            <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('eventListForm:createButton').click();" icon="ui-icon-plus"/>
+	            <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('eventListForm:viewButton').click();" icon="ui-icon-search"/>
+	            <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('eventListForm:editButton').click();" icon="ui-icon-pencil"/>
+	            <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('eventListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{eventController.lazyModel}"
+                         var="item"
+                         rowKey="#{item.eventId}"
+                         paginator="true"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{eventController.selected}"
+                         lazy="true">
+
+                <p:ajax event="rowSelect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:eventDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:eventDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('eventListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.eventId}" filterBy="#{item.eventId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.eventId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.name}" filterBy="#{item.name}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.name}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.priorityId.name}" filterBy="#{item.priorityId.name}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.priority}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.priorityId.name}"/>
+                </p:column>
+                
+                <p:column sortBy="#{item.startDate}" filterBy="#{item.startDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.startDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.startDate}"/>
+                </p:column>
+                                
+                <p:column sortBy="#{item.endDate}" filterBy="#{item.endDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.endDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.endDate}"/>
+                </p:column>
+                
+            </p:dataTable>
+            <p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{eventController.init()}" update=":eventListForm" />
+            <p:commandButton id="createButton" icon="ui-icon-plus" value="#{msg.create}" actionListener="#{eventController.prepareCreate}" update=":eventCreateForm" oncomplete="PF('eventCreateDialog').show()" />
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{msg.view}" update=":eventViewForm" oncomplete="PF('eventViewDialog').show()" disabled="#{empty eventController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{msg.edit}" actionListener="#{eventController.prepareEdit}" update=":eventEditForm" oncomplete="PF('eventEditDialog').show()" disabled="#{empty eventController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{eventController.delete}" update=":eventListForm:datalist,:growl" disabled="#{empty eventController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
+            </p:commandButton>
+             <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+		</h:form>
+				
+	    </ui:composition>
+    </body>
+</html>

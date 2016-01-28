@@ -14,8 +14,6 @@ import co.com.core.domain.RoleMenu;
 import co.com.core.domain.User;
 import co.com.core.domain.UserRole;
 
-
-
 public class MenuDAOImpl implements MenuDAO {
 
     private SessionFactory sessionFactory;

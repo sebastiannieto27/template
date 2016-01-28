@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="priorityViewDlg" widgetVar="priorityViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.view} #{msg.priority}" closeOnEscape="true">
+
+            <h:form id="priorityViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{priorityController.selected != null}">
+
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{priorityController.selected.priorityId}" title="#{msg.id}"/>
+
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{priorityController.selected.name}" title="#{msg.name}"/>
+
+                        <h:outputText value="#{msg.color}"/>
+                        <h:outputText value="#{priorityController.selected.color}" title="#{msg.color}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.close}" onclick="PF('priorityViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

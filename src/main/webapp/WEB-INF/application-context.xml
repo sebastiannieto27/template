@@ -69,6 +69,10 @@
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
     
+    <bean id="userDAO" class="co.com.core.dao.impl.UserDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    
 	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers -->
     <bean id="baseController" scope="session" class="co.com.core.controller.BaseController">
     	<property name="baseService" ref="baseService" />
@@ -79,10 +83,13 @@
     	<property name="pageService" ref="pageService" />
     </bean>
 
-    <bean id="menuController" scope="session" class="co.com.core.controller.MenuController">
+    <bean id="menuController" scope="session" class="co.com.core.controller.MenuController" init-method="init">
     	<property name="menuService" ref="menuService" />
     </bean>
-    
+
+    <bean id="userController" scope="session" class="co.com.core.controller.UserController" init-method="init">
+    	<property name="UserService" ref="userService" />
+    </bean>    
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services -->
     <bean id="baseService" class="co.com.core.services.impl.BaseServiceImpl">
     	<property name="baseDAO" ref="baseDAO" />
@@ -95,6 +102,9 @@
     <bean id="menuService" class="co.com.core.services.impl.MenuServiceImpl">
     	<property name="menuDAO" ref="menuDAO" />
     </bean>
-
+    
+    <bean id="userService" class="co.com.core.services.impl.UserServiceImpl">
+    	<property name="userDAO" ref="userDAO" />
+    </bean>
 
 </beans>

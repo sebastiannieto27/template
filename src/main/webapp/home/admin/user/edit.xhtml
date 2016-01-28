@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="userEditDlg" widgetVar="userEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.editUserTitle}" closeOnEscape="true">
+
+            <h:form id="userEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{userController.selected != null}">
+
+                        <p:outputLabel value="#{msg.firstName}" for="firstName" />
+                        <p:inputText id="firstName" value="#{userController.selected.firstName}" title="#{msg.firstName}" required="true" requiredMessage="#{msg.firstNameRequired}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{msg.lastName}" for="lastName" />
+                        <p:inputText id="lastName" value="#{userController.selected.lastName}" title="#{msg.lastName}" required="true" requiredMessage="#{msg.lastNameRequired}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{msg.email}" for="email" />
+                        <p:inputText id="email" value="#{userController.selected.email}" title="#{msg.email}" required="true" requiredMessage="#{msg.emailRequired}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{msg.password}" for="password" />
+                        <p:inputText id="password" value="#{userController.selected.password}" title="#{msg.password}" required="true" requiredMessage="#{msg.passwordRequired}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{msg.idNumber}" for="idNumber" />
+                        <p:inputText id="idNumber" value="#{userController.selected.idNumber}" title="#{msg.idNumber}" required="true" requiredMessage="#{msg.idNumberRequired}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{msg.active}" for="active" />
+                        <p:selectBooleanCheckbox id="active" value="#{userController.selected.active}" />
+
+                        <p:outputLabel value="#{msg.city}" for="cityCityId" />
+                        <p:selectOneMenu id="cityCityId" value="#{userController.selected.cityCityId}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cityController.items}"
+                                           var="cityCityIdItem"
+                                           itemValue="#{cityCityIdItem}"
+                                           itemLabel="#{cityCityIdItem.cityName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{userController.save}" value="#{myBundle.Save}" update="display,:userListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('userEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('userEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
