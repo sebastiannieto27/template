@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+	
+		<h:form id="menuListForm">
+	            <p:contextMenu id="menuDataTableContextMenu" for="datalist">  
+	            <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('menuListForm:createButton').click();" icon="ui-icon-plus"/>
+	            <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('menuListForm:viewButton').click();" icon="ui-icon-search"/>
+	            <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('menuListForm:editButton').click();" icon="ui-icon-pencil"/>
+	            <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('menuListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{menuController.items}"
+                         var="item"
+                         rowKey="#{item.menuId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPermenuTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{menuController.selected}">
+
+                <p:ajax event="rowSelect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:menuDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:menuDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('menuListForm:viewButton').click();"/>
+
+               <p:column sortBy="#{item.menuId}" filterBy="#{item.menuId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.menuId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.menuName}" filterBy="#{item.menuName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.menuName}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.parentMenuId.menuName}" filterBy="#{item.parentMenuId.menuName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.parentMenu}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.parentMenuId.menuName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.pageId.pageName}" filterBy="#{item.pageId.pageName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.page}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.pageId.pageName}"/>
+                </p:column>
+                
+                <p:column sortBy="#{item.submenu}" filterBy="#{item.submenu}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.submenu}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="submenu" value="#{item.submenu}" title="#{msg.submenu}"  disabled="true"/>
+                </p:column>
+
+                <p:column sortBy="#{item.general}" filterBy="#{item.general}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.general}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="general" value="#{item.general}" title="#{msg.general}"  disabled="true"/>
+                </p:column>
+
+                
+            </p:dataTable>
+            <p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{menuController.init()}" update=":menuListForm" />
+            <p:commandButton id="createButton" icon="ui-icon-plus" value="#{msg.create}" actionListener="#{menuController.prepareCreate}" update=":menuCreateForm" oncomplete="PF('menuCreateDialog').show()" />
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{msg.view}" update=":menuViewForm" oncomplete="PF('menuViewDialog').show()" disabled="#{empty menuController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{msg.edit}" update=":menuEditForm" oncomplete="PF('menuEditDialog').show()" disabled="#{empty menuController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{menuController.delete}" update=":menuListForm:datalist,:growl" disabled="#{empty menuController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
+            </p:commandButton>
+             <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+		</h:form>
+				
+	    </ui:composition>
+    </body>
+</html>

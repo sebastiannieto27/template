@@ -23,30 +23,26 @@
         <property name="password" value="admin" />
     </bean>
 	
-	<!-- Hibernate 3 XML SessionFactory Bean definition-->
-	<!--     <bean id="hibernate3SessionFactory"
-        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="mappingResources">
-            <list>
-                <value>person.hbm.xml</value>
-            </list>
-        </property>
-        <property name="hibernateProperties">
-            <value>
-                hibernate.dialect=org.hibernate.dialect.MySQLDialect
-            </value>
-        </property>
-    </bean> -->
-	
 	<!-- Hibernate 3 Annotation SessionFactory Bean definition-->
     <bean id="hibernate4AnnotatedSessionFactory"
         class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="annotatedClasses">
             <list>
-                <value>co.com.plantilla.domain.Person</value>
-                <value>co.com.plantilla.domain.Page</value>
+                <value>co.com.core.domain.City</value>
+                <value>co.com.core.domain.Country</value>
+                <value>co.com.core.domain.Deparment</value>
+                <value>co.com.core.domain.Event</value>
+                <value>co.com.core.domain.Menu</value>
+                <value>co.com.core.domain.Permission</value>
+                <value>co.com.core.domain.Person</value>
+                <value>co.com.core.domain.Page</value>
+                <value>co.com.core.domain.Priority</value>
+                <value>co.com.core.domain.Role</value>
+                <value>co.com.core.domain.RoleMenu</value>
+                <value>co.com.core.domain.RolePermission</value>
+                <value>co.com.core.domain.User</value>
+                <value>co.com.core.domain.UserRole</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -59,35 +55,46 @@
     </bean>
 
 	<!-- DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO -->
-	<bean id="baseDAO" class="co.com.plantilla.dao.impl.BaseDAO"></bean>
+	<bean id="baseDAO" class="co.com.core.dao.impl.BaseDAO"></bean>
 	    
-    <bean id="personDAO" class="co.com.plantilla.dao.impl.PersonDAOImpl">
+    <bean id="personDAO" class="co.com.core.dao.impl.PersonDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
 	
-    <bean id="pageDAO" class="co.com.plantilla.dao.impl.PageDAOImpl">
+    <bean id="pageDAO" class="co.com.core.dao.impl.PageDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
-	
+		
+    <bean id="menuDAO" class="co.com.core.dao.impl.MenuDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    
 	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers -->
-    <bean id="baseController" scope="session" class="co.com.plantilla.controller.BaseController">
+    <bean id="baseController" scope="session" class="co.com.core.controller.BaseController">
     	<property name="baseService" ref="baseService" />
     	<property name="personDAO" ref="personDAO" />
     </bean>
 
-    <bean id="pageController" scope="session" class="co.com.plantilla.controller.PageController">
+    <bean id="pageController" scope="session" class="co.com.core.controller.PageController" init-method="init">
     	<property name="pageService" ref="pageService" />
     </bean>
 
+    <bean id="menuController" scope="session" class="co.com.core.controller.MenuController">
+    	<property name="menuService" ref="menuService" />
+    </bean>
+    
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services -->
-    <bean id="baseService" class="co.com.plantilla.services.impl.BaseServiceImpl">
+    <bean id="baseService" class="co.com.core.services.impl.BaseServiceImpl">
     	<property name="baseDAO" ref="baseDAO" />
     </bean>
 
-    <bean id="pageService" class="co.com.plantilla.services.impl.PageServiceImpl">
+    <bean id="pageService" class="co.com.core.services.impl.PageServiceImpl">
     	<property name="pageDAO" ref="pageDAO" />
     </bean>
     
+    <bean id="menuService" class="co.com.core.services.impl.MenuServiceImpl">
+    	<property name="menuDAO" ref="menuDAO" />
+    </bean>
 
 
 </beans>

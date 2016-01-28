@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="menuViewDlg" widgetVar="menuViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.view} #{msg.menu}" closeOnEscape="true">
+
+            <h:form id="menuViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{menuController.selected != null}">
+                    
+ 						<h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{menuController.selected.menuId}" title="#{msg.id}"/>
+
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{menuController.selected.menuName}" title="#{msg.name}"/>
+
+                        <h:outputText value="#{msg.submenu}"/>
+                        <h:selectBooleanCheckbox id="submenu" value="#{menuController.selected.submenu}" title="#{msg.submenu}"  disabled="true"/>
+
+                        <h:outputText value="#{msg.parentMenu}"/>
+                        <h:outputText value="#{menuController.selected.parentMenuId.menuName}"/>
+
+                        <h:outputText value="#{msg.page}"/>
+                        <h:outputText value="#{menuController.selected.pageId.pageName}"/>
+
+                        <h:outputText value="#{msg.general}"/>
+                        <h:selectBooleanCheckbox id="general" value="#{menuController.selected.general}" title="#{msg.general}"  disabled="true"/>
+                    
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.close}" onclick="PF('menuViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
