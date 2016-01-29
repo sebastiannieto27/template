@@ -1,53 +1,51 @@
 package co.com.core.controller;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import co.com.core.dto.UserDTO;
+import co.com.core.services.IUserService;
 
 public class LoginController {
 
-	/*private String userEmail;
+	private String userEmail;
 	private String userPassword;
 	private Integer userId;
 	private boolean isLogged;
 	
-	private UserBO userBO;
+	private IUserService userService;
 	private MenuController menuController;
 	UserDTO userDto;
 	
-	@PostConstruct
 	public void init () {
 		menuController.loadGeneralMenu();
 	}
 	
-	public String queryUserByUserName() {
-		userDto = userBO.login(userEmail);
+	public String validateLogin() {
+		userDto = userService.login(userEmail, userPassword);
 		
 		try {
 			if(userDto != null) {
-				if(userDto.getPassword().equals(this.userPassword)) {
-					this.isLogged = true;
-					HttpSession session = SessionBean.getSession();
-					session.setAttribute("loginController", this);
-		            session.setAttribute("username", userDto.getEmail());
-		            menuController.loadMenu(userDto);
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.getExternalContext().getSessionMap().put("user", userDto);
+				this.isLogged = true;
+				//HttpSession session = SessionBean.getSession();
+				//session.setAttribute("loginController", this);
+	            //session.setAttribute("username", userDto.getEmail());
+	            menuController.loadMenu(userDto);
 		            
-		            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,
+	            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,
 		                            "Login Successful","Welcome"));
-		            FacesContext.getCurrentInstance().getExternalContext().redirect("home/profile.xhtml");
+		           // FacesContext.getCurrentInstance().getExternalContext().redirect("home/profile.xhtml");
 		            
-					return "/home.xhtml?faces-redirect=true";
-				} else {
-					this.isLogged = false;
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-		                            "Incorrect Username and Passowrd", "Please enter correct username and Password"));
-					return "/login.xhtml?faces-redirect=true";
-				}
+		            return "home/profile.xhtml?faces-redirect=true";
+					//return "home/profile.xhtml";
+			} else {
+				this.isLogged = false;
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+	                            "Incorrect Username and Passowrd", "Please enter correct username and Password"));
+				return "/login.xhtml?faces-redirect=true";
 			}
 		} catch(Exception ex) {
 			ex.printStackTrace();
@@ -57,7 +55,7 @@ public class LoginController {
 
 
 	public String logout() {
-	      HttpSession session = SessionBean.getSession();
+	      //HttpSession session = SessionBean.getSession();
 	    		  //session.invalidate();
 	      this.isLogged = false;
 	      return "/logout.xhtml?faces-redirect=true";
@@ -95,14 +93,6 @@ public class LoginController {
 		this.userId = userId;
 	}
 
-	public UserBO getUserBO() {
-		return userBO;
-	}
-
-	public void setUserBO(UserBO userBO) {
-		this.userBO = userBO;
-	}
-
 	public MenuController getMenuController() {
 		return menuController;
 	}
@@ -119,12 +109,19 @@ public class LoginController {
 		this.userDto = userDto;
 	}
 
-
 	@Override
 	public String toString() {
 		return "LoginController [userEmail=" + userEmail + ", userPassword="
 				+ userPassword + ", isLogged=" + isLogged + "]";
 	}
-	*/
+
+	public IUserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(IUserService userService) {
+		this.userService = userService;
+	}
+	
 	
 }

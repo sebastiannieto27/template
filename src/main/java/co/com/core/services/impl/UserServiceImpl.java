@@ -19,10 +19,14 @@ public class UserServiceImpl implements IUserService {
 		UserDTO userDto = UserUtil.getDtoFromEntity(user);
 		return userDto;
 	}
+	
 	@Override
-	public UserDTO login(String userEmail) {
-		User user = userDAO.login(userEmail);
-		UserDTO userDto = UserUtil.getDtoFromEntity(user);
+	public UserDTO login(String userEmail, String password) {
+		UserDTO userDto = null;
+		User user = userDAO.login(userEmail, password);
+		if (user!=null) {
+			userDto = UserUtil.getDtoFromEntity(user);
+		}
 		return userDto;
 	}
 	

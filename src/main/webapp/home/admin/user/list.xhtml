@@ -1,123 +1,116 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<body>
+	<ui:composition>
+		<h:form id="userListForm">
+			<p:contextMenu id="userDataTableContextMenu" for="datalist">
+				<p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('userListForm:createButton').click();" icon="ui-icon-plus" />
+				<p:menuitem value="#{myBundle.View}" onclick="document.getElementById('userListForm:viewButton').click();" icon="ui-icon-search" />
+				<p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('userListForm:editButton').click();" icon="ui-icon-pencil" />
+				<p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('userListForm:deleteButton').click();" icon="ui-icon-trash" />
+				<p:separator />
+			</p:contextMenu>
+			<p:dataTable 
+				id="datalist" 
+				value="#{userController.lazyModel}"
+				var="item" 
+				rowKey="#{item.userId}" 
+				paginator="true"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rows="10" 
+				rowsPerPageTemplate="10,20,30,40,50"
+				selectionMode="single" 
+				selection="#{userController.selected}"
+				lazy="true">
 
-    <h:form id="userListForm">
+				<p:ajax event="rowSelect" listener="#{userController.selectOne()}" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:userDataTableContextMenu" />
+				<p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:userDataTableContextMenu" />
+				<p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" />
+				<p:ajax event="rowDblselect" onsuccess="document.getElementById('userListForm:viewButton').click();" />
 
-        <p:panel header="#{myBundle.ListuserTitle}">
-            <p:contextMenu id="userDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('userListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('userListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('userListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('userListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.userMenuItem_userRoleCollection}" icon="ui-icon-search"  action="#{userController.navigateuserRoleCollection}" disabled="#{empty userController.selected.userRoleCollection}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.userMenuItem_cityCityId}" icon="ui-icon-search"  actionListener="#{userController.prepareCityCityId}" update=":CityViewForm" oncomplete="PF('CityViewDialog').show()" disabled="#{empty userController.selected.cityCityId}"/>  
-            </p:contextMenu>
-            <p:dataTable id="datalist"
-                         value="#{userController.lazyModel}"
-                         var="item"
-                         rowKey="#{item.userId}"
-                         paginator="true"
-                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{userController.selected}"
-                         lazy="true">
+				<p:column sortBy="#{item.userId}" filterBy="#{item.userId}">
+					<f:facet name="header">
+						<h:outputText value="#{myBundle.ListuserTitle_userId}" />
+					</f:facet>
+					<h:outputText value="#{item.userId}" />
+				</p:column>
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:userDataTableContextMenu" listener="#{userController.resetParents}"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:userDataTableContextMenu" listener="#{userController.resetParents}"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{userController.resetParents}"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('userListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.userId}" filterBy="#{item.userId}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListuserTitle_userId}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.userId}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.firstName}" filterBy="#{item.firstName}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListuserTitle_firstName}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.firstName}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.lastName}" filterBy="#{item.lastName}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListuserTitle_lastName}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.lastName}"/>
-                </p:column>
+				<p:column sortBy="#{item.firstName}" filterBy="#{item.firstName}">
+					<f:facet name="header">
+						<h:outputText value="#{myBundle.ListuserTitle_firstName}" />
+					</f:facet>
+					<h:outputText value="#{item.firstName}" />
+				</p:column>
 
 
-                <p:column sortBy="#{item.email}" filterBy="#{item.email}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListuserTitle_email}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.email}"/>
-                </p:column>
+				<p:column sortBy="#{item.lastName}" filterBy="#{item.lastName}">
+					<f:facet name="header">
+						<h:outputText value="#{myBundle.ListuserTitle_lastName}" />
+					</f:facet>
+					<h:outputText value="#{item.lastName}" />
+				</p:column>
 
 
-                <p:column sortBy="#{item.password}" filterBy="#{item.password}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListuserTitle_password}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.password}"/>
-                </p:column>
+				<p:column sortBy="#{item.email}" filterBy="#{item.email}">
+					<f:facet name="header">
+						<h:outputText value="#{myBundle.ListuserTitle_email}" />
+					</f:facet>
+					<h:outputText value="#{item.email}" />
+				</p:column>
 
 
-                <p:column sortBy="#{item.idNumber}" filterBy="#{item.idNumber}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListuserTitle_idNumber}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.idNumber}"/>
-                </p:column>
+				<p:column sortBy="#{item.password}" filterBy="#{item.password}">
+					<f:facet name="header">
+						<h:outputText value="#{myBundle.ListuserTitle_password}" />
+					</f:facet>
+					<h:outputText value="#{item.password}" />
+				</p:column>
 
-                <!--
-                                    <p:column sortBy="#{item.active}" filterBy="#{item.active}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListuserTitle_active}"/>
-                                        </f:facet>
-                                        <h:selectBooleanCheckbox id="active" value="#{item.active}" title="#{myBundle.EdituserTitle_active}"  disabled="true"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.creationDate}" filterBy="#{item.creationDate}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListuserTitle_creationDate}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.creationDate}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.cityCityId.cityName}" filterBy="#{item.cityCityId.cityName}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListuserTitle_cityCityId}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.cityCityId.cityName}"/>
-                                    </p:column>
-                -->
+				<p:column sortBy="#{item.idNumber}" filterBy="#{item.idNumber}">
+					<f:facet name="header">
+						<h:outputText value="#{myBundle.ListuserTitle_idNumber}" />
+					∫</f:facet>
+					<h:outputText value="#{item.idNumber}" />
+				</p:column>
+				<p:column sortBy="#{item.active}" filterBy="#{item.active}">
+					<f:facet name="header">
+						<h:outputText value="#{myBundle.ListuserTitle_active}" />
+					</f:facet>
+					<h:selectBooleanCheckbox id="active" value="#{item.active}"
+						title="#{myBundle.EdituserTitle_active}" disabled="true" />
+				</p:column>
 
-            </p:dataTable>
-
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{userController.prepareCreate}" update=":userCreateForm" oncomplete="PF('userCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":userViewForm" oncomplete="PF('userViewDialog').show()" disabled="#{empty userController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":userEditForm" oncomplete="PF('userEditDialog').show()" disabled="#{empty userController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{userController.delete}" update=":growl,datalist" disabled="#{empty userController.selected}">
-                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
-
-        </p:panel>
-        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
-    </h:form>
-
-</ui:composition>
+			</p:dataTable>
+			<p:commandButton id="searchButton" icon="ui-icon-search"
+				value="#{msg.search}" actionListener="#{userController.init()}"
+				update="userListForm" />
+			<p:commandButton id="createButton" icon="ui-icon-plus"
+				value="#{msg.create}"
+				actionListener="#{userController.prepareCreate}"
+				update=":userCreateForm" oncomplete="PF('userCreateDialog').show()" />
+			<p:commandButton id="viewButton" icon="ui-icon-search"
+				value="#{msg.view}" update=":userViewForm"
+				oncomplete="PF('userViewDialog').show()"
+				disabled="#{empty userController.selected}" />
+			<p:commandButton id="editButton" icon="ui-icon-pencil"
+				value="#{msg.edit}" update=":userEditForm"
+				oncomplete="PF('userEditDialog').show()"
+				disabled="#{empty userController.selected}" />
+			<p:commandButton id="deleteButton" icon="ui-icon-trash"
+				value="#{msg.delete}" actionListener="#{userController.delete}"
+				update=":growl,datalist" disabled="#{empty userController.selected}">
+				<p:confirm header="#{msg.confirmation_header}"
+					message="#{msg.confirm_delete_message}" icon="ui-icon-alert" />
+			</p:commandButton>
+			<ui:include src="/WEB-INF/templates/confirmation.xhtml" />
+		</h:form>
+	</ui:composition>
+</body>
+</html>

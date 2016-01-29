@@ -36,12 +36,13 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User login(String userEmail) {
+	public User login(String userEmail, String userPassword) {
 		User user = null;
 		try {
 			session = this.sessionFactory.openSession();
 			StringBuilder hql = new StringBuilder();
 			hql.append("SELECT u FROM User u WHERE u.email = '").append(userEmail).append("'");
+			hql.append(" and u.password = '").append(userPassword).append("'");
 			Query query = session.createQuery(hql.toString());
 			List users = query.list();
 			

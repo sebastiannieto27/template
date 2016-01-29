@@ -47,5 +47,11 @@ public class EventDTO {
 	    public String getRowKeyValue() {
 	    	return this.eventId + this.name;
 	    }
+		@Override
+		public String toString() {
+			return "EventDTO [eventId=" + eventId + ", name=" + name
+					+ ", startDate=" + startDate + ", endDate=" + endDate
+					+ ", priorityId=" + priorityId + "]";
+		}
 	    
 }

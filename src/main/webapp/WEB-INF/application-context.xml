@@ -72,24 +72,11 @@
     <bean id="userDAO" class="co.com.core.dao.impl.UserDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
-    
-	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers -->
-    <bean id="baseController" scope="session" class="co.com.core.controller.BaseController">
-    	<property name="baseService" ref="baseService" />
-    	<property name="personDAO" ref="personDAO" />
-    </bean>
-
-    <bean id="pageController" scope="session" class="co.com.core.controller.PageController" init-method="init">
-    	<property name="pageService" ref="pageService" />
-    </bean>
-
-    <bean id="menuController" scope="session" class="co.com.core.controller.MenuController" init-method="init">
-    	<property name="menuService" ref="menuService" />
-    </bean>
-
-    <bean id="userController" scope="session" class="co.com.core.controller.UserController" init-method="init">
-    	<property name="UserService" ref="userService" />
-    </bean>    
+     
+    <bean id="eventDAO" class="co.com.core.dao.impl.EventDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>   
+ 
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services -->
     <bean id="baseService" class="co.com.core.services.impl.BaseServiceImpl">
     	<property name="baseDAO" ref="baseDAO" />
@@ -106,5 +93,38 @@
     <bean id="userService" class="co.com.core.services.impl.UserServiceImpl">
     	<property name="userDAO" ref="userDAO" />
     </bean>
+    
+    <bean id="eventService" class="co.com.core.services.impl.EventServiceImpl">
+    	<property name="eventDAO" ref="eventDAO" />
+    </bean>
+    
+   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers -->
+    <bean id="baseController" scope="session" class="co.com.core.controller.BaseController">
+    	<property name="baseService" ref="baseService" />
+    	<property name="personDAO" ref="personDAO" />
+    </bean>
 
+    <bean id="pageController" scope="session" class="co.com.core.controller.PageController" init-method="init">
+    	<property name="pageService" ref="pageService" />
+    </bean>
+
+    <bean id="menuController" scope="session" class="co.com.core.controller.MenuController" init-method="init">
+    	<property name="menuService" ref="menuService" />
+    </bean>
+
+    <bean id="userController" scope="session" class="co.com.core.controller.UserController" init-method="init">
+    	<property name="userService" ref="userService" />
+    </bean>   
+    
+    <bean id="eventController" scope="session" class="co.com.core.controller.EventController" init-method="init">
+    	<property name="eventService" ref="eventService" />
+    </bean> 
+    
+    <bean id="loginController" scope="session" class="co.com.core.controller.LoginController" init-method="init">
+    	<property name="userService" ref="userService" />
+    	<property name="menuController" ref="menuController" />
+    </bean> 
+    
+    <bean id="templateController" scope="session" class="co.com.core.controller.TemplateController">
+    </bean> 
 </beans>

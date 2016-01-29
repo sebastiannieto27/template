@@ -9,7 +9,7 @@ public interface IUserService {
 
 	public UserDTO getUserById(Integer userId);
 	
-	public UserDTO login(String userEmail);
+	public UserDTO login(String userEmail, String password);
 
 	public List<UserDTO> getAll(); 
 	

@@ -8,14 +8,13 @@
                 xmlns:p="http://primefaces.org/ui">
     <body>
 	    <ui:composition>
-	
-		<h:form id="pageListForm">
+			<h:form id="pageListForm">
 	            <p:contextMenu id="pageDataTableContextMenu" for="datalist">  
 	            <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('pageListForm:createButton').click();" icon="ui-icon-plus"/>
 	            <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('pageListForm:viewButton').click();" icon="ui-icon-search"/>
 	            <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('pageListForm:editButton').click();" icon="ui-icon-pencil"/>
 	            <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('pageListForm:deleteButton').click();" icon="ui-icon-trash"/>
-            </p:contextMenu>
+            	</p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{pageController.items}"
                          var="item"

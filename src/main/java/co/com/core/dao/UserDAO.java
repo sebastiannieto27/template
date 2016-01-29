@@ -8,7 +8,7 @@ public interface UserDAO {
 
 	public User getUserById(Integer userID);
 	
-	public User login(String userEmail);
+	public User login(String userEmail, String userPassword);
 
 	public List<User> getAll();
 	

@@ -11,13 +11,19 @@ import org.primefaces.model.SortOrder;
 
 import co.com.core.dto.EventDTO;
 import co.com.core.lazy.sorter.EventLazySorter;
+import co.com.core.services.IEventService;
 
 public class EventLazyLoader extends LazyDataModel<EventDTO> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private List<EventDTO> datasource;
     
-    /*public EventLazyLoader(EventBO eventBOImpl) {
-        this.datasource = eventBOImpl.getAll();//TODO
-    }*/
+    public EventLazyLoader(IEventService eventServiceImpl) {
+        this.datasource = eventServiceImpl.getAll();
+    }
     
     @Override
     public EventDTO getRowData(String rowKey) {

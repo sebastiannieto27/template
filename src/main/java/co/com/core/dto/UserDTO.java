@@ -11,6 +11,7 @@ public class UserDTO {
     private String idNumber;
     private Boolean active;
     private String creationDate;
+    
 	public Integer getUserId() {
 		return userId;
 	}

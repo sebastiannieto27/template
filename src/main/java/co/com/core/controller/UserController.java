@@ -82,6 +82,9 @@ public class UserController {
 		}
 	}
 
+	public void selectOne() {
+		System.out.println("selected: " + selected);
+	}
 	public void prepareCreate() {
 		selected = new UserDTO();
 	}

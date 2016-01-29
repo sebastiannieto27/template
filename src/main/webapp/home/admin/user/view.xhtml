@@ -36,8 +36,6 @@
                         <h:outputText value="#{msg.active}"/>
                         <h:selectBooleanCheckbox id="active" value="#{userController.selected.active}" title="#{msg.active}"  disabled="true"/>
 
-                        <h:outputText value="#{msg.city}"/>
-                        <h:outputText value="#{userController.selected.cityCityId.cityName}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{msg.Close}" onclick="PF('userViewDialog').hide()"/>
                 </h:panelGroup>

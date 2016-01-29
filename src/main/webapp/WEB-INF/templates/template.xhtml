@@ -7,6 +7,7 @@
 
 <h:head>
 	<title><ui:insert name="title">Default Title</ui:insert></title>
+	<f:event listener="#{templateController.validateUserSession()}" type="preRenderView"></f:event>
 </h:head>
 
 <ui:include src="header.xhtml" />

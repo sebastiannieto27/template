@@ -33,16 +33,6 @@
                         <p:outputLabel value="#{msg.active}" for="active" />
                         <p:selectBooleanCheckbox id="active" value="#{userController.selected.active}" />
 
-                        <p:outputLabel value="#{msg.city}" for="cityCityId" />
-                        <p:selectOneMenu id="cityCityId" value="#{userController.selected.cityCityId}">
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{cityController.items}"
-                                           var="cityCityIdItem"
-                                           itemValue="#{cityCityIdItem}"
-                                           itemLabel="#{cityCityIdItem.cityName.toString()}"
-                                           />
-
-                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{userController.saveNew}" value="#{myBundle.Save}" update="display,:userListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('userCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
