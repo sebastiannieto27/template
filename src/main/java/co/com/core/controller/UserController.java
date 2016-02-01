@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
 
+import co.com.core.commons.EncryptDecrypt;
 import co.com.core.dto.UserDTO;
 import co.com.core.lazy.loader.UserLazyLoader;
 import co.com.core.services.IUserService;
@@ -16,24 +17,26 @@ public class UserController {
 	IUserService userService;
 	List<UserDTO> items;
 	private UserDTO selected;
-	
 	private LazyDataModel<UserDTO> lazyModel;
 
 	@PostConstruct
 	public void init() {
-		lazyModel = new UserLazyLoader(userService);
+		items = userService.getAll();
+		//lazyModel = new UserLazyLoader(userService);
 	}
 
 	public void saveNew() {
 		try {
+			String encryptedPasswd = EncryptDecrypt.encrypt(selected.getPassword());
+			selected.setPassword(encryptedPasswd);
 			userService.createUser(selected);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Creación exitosa", "Usuario"));
 		} catch (Exception ex) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
+			ex.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Error en creación", "Usuario"));
 		} finally {
@@ -65,6 +68,8 @@ public class UserController {
 	public void save() {
 		if (this.selected != null) {
 			try {
+				String encryptedPasswd = EncryptDecrypt.encrypt(selected.getPassword());
+				selected.setPassword(encryptedPasswd);
 				userService.update(selected);
 				FacesContext.getCurrentInstance().addMessage(
 						null,

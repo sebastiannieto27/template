@@ -75,12 +75,15 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void createUser(User user) {
 		try {
+			System.out.println(user);
 			session = this.sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
 			session.save(user);
 			tx.commit();
 		} catch(Exception ex) {
 			//TODO
+			ex.printStackTrace();
+			System.out.println("Error user: " + ex.getMessage());
 			session.getTransaction().rollback();
 		} finally {
 			session.close();

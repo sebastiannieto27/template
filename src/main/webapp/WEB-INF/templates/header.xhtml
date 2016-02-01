@@ -12,19 +12,22 @@
 
 	<h:outputStylesheet library="css" name="common.css"  />
 	<h:outputScript library="js" name="common.js" />
-<!-- 			<h:form> -->
-<!-- 					<p:row> -->
-<!-- 						<p:column> -->
-<!-- 							<p:menubar model="#{menuController.generalModel}" /> -->
-<!-- 						</p:column> -->
-<!-- 					</p:row> -->
-<!-- 					<p:row> -->
-<!-- 						<p:column> -->
-<!-- 							<p:menubar model="#{menuController.model}" -->
-<!-- 								rendered="#{loginController.logged}" /> -->
-<!-- 						</p:column> -->
-<!-- 					</p:row> -->
-<!-- 			</h:form> -->
+			<h:form>
+					<p:row>
+						<p:column>
+							<p:menubar model="#{menuController.generalModel}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:menubar model="#{menuController.model}"
+								rendered="#{loginController.logged}" />
+						
+							<p:commandButton value="Logout" 
+										action="#{loginController.logout()}"></p:commandButton>
+						</p:column>
+					</p:row>
+			</h:form>
 	</ui:composition>
 </body>
 </html>

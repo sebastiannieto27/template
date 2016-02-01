@@ -203,8 +203,12 @@ public class User implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "com.core.entity.User[ userId=" + userId + " ]";
-    }
+	public String toString() {
+		return "User [userId=" + userId + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", email=" + email + ", password="
+				+ password + ", idNumber=" + idNumber + ", active=" + active
+				+ ", creationDate=" + creationDate + ", userRoleCollection="
+				+ userRoleCollection + ", cityCityId=" + cityCityId + "]";
+	}
     
 }

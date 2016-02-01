@@ -19,7 +19,7 @@
 			</p:contextMenu>
 			<p:dataTable 
 				id="datalist" 
-				value="#{userController.lazyModel}"
+				value="#{userController.items}"
 				var="item" 
 				rowKey="#{item.userId}" 
 				paginator="true"
@@ -27,8 +27,7 @@
 				rows="10" 
 				rowsPerPageTemplate="10,20,30,40,50"
 				selectionMode="single" 
-				selection="#{userController.selected}"
-				lazy="true">
+				selection="#{userController.selected}">
 
 				<p:ajax event="rowSelect" listener="#{userController.selectOne()}" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:userDataTableContextMenu" />
 				<p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:userDataTableContextMenu" />
@@ -63,14 +62,6 @@
 						<h:outputText value="#{myBundle.ListuserTitle_email}" />
 					</f:facet>
 					<h:outputText value="#{item.email}" />
-				</p:column>
-
-
-				<p:column sortBy="#{item.password}" filterBy="#{item.password}">
-					<f:facet name="header">
-						<h:outputText value="#{myBundle.ListuserTitle_password}" />
-					</f:facet>
-					<h:outputText value="#{item.password}" />
 				</p:column>
 
 				<p:column sortBy="#{item.idNumber}" filterBy="#{item.idNumber}">

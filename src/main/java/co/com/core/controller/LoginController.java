@@ -2,8 +2,8 @@ package co.com.core.controller;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
+import co.com.core.commons.EncryptDecrypt;
 import co.com.core.dto.UserDTO;
 import co.com.core.services.IUserService;
 
@@ -16,16 +16,21 @@ public class LoginController {
 	
 	private IUserService userService;
 	private MenuController menuController;
-	UserDTO userDto;
+	private UserDTO userDto;
+	private EncryptDecrypt decrypter;
 	
 	public void init () {
 		menuController.loadGeneralMenu();
 	}
 	
 	public String validateLogin() {
-		userDto = userService.login(userEmail, userPassword);
-		
+
 		try {
+			
+			String encrypted = EncryptDecrypt.encrypt(userPassword);
+			
+			userDto = userService.login(userEmail, encrypted);
+			
 			if(userDto != null) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.getExternalContext().getSessionMap().put("user", userDto);
@@ -55,10 +60,9 @@ public class LoginController {
 
 
 	public String logout() {
-	      //HttpSession session = SessionBean.getSession();
-	    		  //session.invalidate();
-	      this.isLogged = false;
-	      return "/logout.xhtml?faces-redirect=true";
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		this.isLogged = false;	
+		return "/login.xhtml?faces-redirect=true";
    }
 	
 	public String getUserEmail() {
