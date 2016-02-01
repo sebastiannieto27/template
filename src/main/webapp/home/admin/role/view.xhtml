@@ -8,9 +8,9 @@
 
     <ui:composition>
 
-        <p:dialog id="RoleViewDlg" widgetVar="RoleViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.view} #{msg.role}" closeOnEscape="true">
+        <p:dialog id="roleViewDlg" widgetVar="roleViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.view} #{msg.role}" closeOnEscape="true">
 
-            <h:form id="RoleViewForm">
+            <h:form id="roleViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{roleController.selected != null}">
@@ -24,7 +24,7 @@
                         <h:outputText value="#{msg.description}"/>
                         <h:outputText value="#{roleController.selected.description}" title="#{msg.description}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.close}" onclick="PF('RoleViewDialog').hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="PF('roleViewDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>

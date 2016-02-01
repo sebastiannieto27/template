@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+    <h:form id="userRoleListForm">
+
+        <p:panel header="#{msg.userRole}">
+            <p:contextMenu id="userRoleDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.create}" onclick="document.getElementById('userRoleListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg.view}" onclick="document.getElementById('userRoleListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg.edit}" onclick="document.getElementById('userRoleListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg.delete}" onclick="document.getElementById('userRoleListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{userRoleController.items}"
+                         var="item"
+                         rowKey="#{item.userRoleId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{userRoleController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:userRoleDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:userRoleDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{userRoleController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('userRoleListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.userRoleId}" filterBy="#{item.userRoleId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.userRoleId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.roleId.roleName}" filterBy="#{item.roleId.roleName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.role}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.roleId.roleName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.userId.firstName}" filterBy="#{item.userId.firstName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.user}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.userId.firstName}"/>
+                </p:column>
+
+
+            </p:dataTable>
+			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{userRoleController.init()}" update="userRoleListForm" />
+            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{userRoleController.prepareCreate}" update=":userRoleCreateForm" oncomplete="PF('userRoleCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{msg.view}" update=":userRoleViewForm" oncomplete="PF('userRoleViewDialog').show()" disabled="#{empty userRoleController.selected}"/>
+            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{msg.edit}" update=":userRoleEditForm" oncomplete="PF('userRoleEditDialog').show()" disabled="#{empty userRoleController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{userRoleController.delete}" update=":growl,datalist" disabled="#{empty userRoleController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+    </h:form>
+				
+	    </ui:composition>
+    </body>
+</html>

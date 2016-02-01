@@ -9,12 +9,12 @@
     <body>
 	    <ui:composition>
 	
-		<h:form id="RoleListForm">
-	            <p:contextMenu id="RoleDataTableContextMenu" for="datalist">  
-	            <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('RoleListForm:createButton').click();" icon="ui-icon-plus"/>
-	            <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('RoleListForm:viewButton').click();" icon="ui-icon-search"/>
-	            <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('RoleListForm:editButton').click();" icon="ui-icon-pencil"/>
-	            <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('RoleListForm:deleteButton').click();" icon="ui-icon-trash"/>
+		<h:form id="roleListForm">
+	            <p:contextMenu id="roleDataTableContextMenu" for="datalist">  
+	            <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('roleListForm:createButton').click();" icon="ui-icon-plus"/>
+	            <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('roleListForm:viewButton').click();" icon="ui-icon-search"/>
+	            <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('roleListForm:editButton').click();" icon="ui-icon-pencil"/>
+	            <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('roleListForm:deleteButton').click();" icon="ui-icon-trash"/>
             </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{roleController.items}"
@@ -26,10 +26,10 @@
                          selectionMode="single"
                          selection="#{roleController.selected}">
 
-                <p:ajax event="rowSelect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:RoleDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:RoleDataTableContextMenu"/>
+                <p:ajax event="rowSelect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:roleDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:roleDataTableContextMenu"/>
                 <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('RoleListForm:viewButton').click();"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('roleListForm:viewButton').click();"/>
 
                 <p:column sortBy="#{item.roleId}" filterBy="#{item.roleId}">
                     <f:facet name="header">
@@ -53,11 +53,11 @@
                     <h:outputText value="#{item.description}"/>
                 </p:column>
             </p:dataTable>
-            <p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{roleController.init()}" update=":RoleListForm" />
-            <p:commandButton id="createButton" icon="ui-icon-plus" value="#{msg.create}" actionListener="#{roleController.prepareCreate}" update=":RoleCreateForm" oncomplete="PF('RoleCreateDialog').show()" />
-            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{msg.view}" update=":RoleViewForm" oncomplete="PF('RoleViewDialog').show()" disabled="#{empty roleController.selected}"/>
-            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{msg.edit}" update=":RoleEditForm" oncomplete="PF('RoleEditDialog').show()" disabled="#{empty roleController.selected}"/>
-            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{roleController.delete}" update=":RoleListForm:datalist,:growl" disabled="#{empty roleController.selected}">
+            <p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{roleController.init()}" update=":roleListForm" />
+            <p:commandButton id="createButton" icon="ui-icon-plus" value="#{msg.create}" actionListener="#{roleController.prepareCreate}" update=":roleCreateForm" oncomplete="PF('roleCreateDialog').show()" />
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{msg.view}" update=":roleViewForm" oncomplete="PF('roleViewDialog').show()" disabled="#{empty roleController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{msg.edit}" update=":roleEditForm" oncomplete="PF('roleEditDialog').show()" disabled="#{empty roleController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{roleController.delete}" update=":roleListForm:datalist,:growl" disabled="#{empty roleController.selected}">
                 <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
             </p:commandButton>
              <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>

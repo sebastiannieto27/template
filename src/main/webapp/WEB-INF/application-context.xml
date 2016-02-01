@@ -73,6 +73,14 @@
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
      
+    <bean id="userRoleDAO" class="co.com.core.dao.impl.UserRoleDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+          
+    <bean id="roleDAO" class="co.com.core.dao.impl.RoleDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    
     <bean id="eventDAO" class="co.com.core.dao.impl.EventDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>   
@@ -94,9 +102,17 @@
     	<property name="userDAO" ref="userDAO" />
     </bean>
     
+    <bean id="userRoleService" class="co.com.core.services.impl.UserRoleServiceImpl">
+    	<property name="userRoleDAO" ref="userRoleDAO" />
+    </bean>    
+    
     <bean id="eventService" class="co.com.core.services.impl.EventServiceImpl">
     	<property name="eventDAO" ref="eventDAO" />
     </bean>
+        
+    <bean id="roleService" class="co.com.core.services.impl.RoleServiceImpl">
+    	<property name="roleDAO" ref="roleDAO" />
+    </bean> 
     
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers -->
     <bean id="baseController" scope="session" class="co.com.core.controller.BaseController">
@@ -128,5 +144,13 @@
     <bean id="templateController" scope="session" class="co.com.core.controller.TemplateController">
     	<property name="menuService" ref="menuService" />
     	<property name="pageService" ref="pageService" />
+    </bean> 
+        
+    <bean id="userRoleController" scope="session" class="co.com.core.controller.UserRoleController" init-method="init">
+    	<property name="userRoleService" ref="userRoleService" />
+    </bean> 
+            
+    <bean id="roleController" scope="session" class="co.com.core.controller.RoleController" init-method="init">
+    	<property name="roleService" ref="roleService" />
     </bean> 
 </beans>

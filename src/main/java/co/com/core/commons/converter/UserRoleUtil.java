@@ -5,7 +5,7 @@ import co.com.core.dto.UserRoleDTO;
 
 public class UserRoleUtil {
 
-	public UserRoleDTO getDtoFromEntity(UserRole entity) {
+	public static UserRoleDTO getDtoFromEntity(UserRole entity) {
 		UserRoleDTO dto = new UserRoleDTO();
 		dto.setRoleId(entity.getRoleId());
 		dto.setUserId(entity.getUserId());
@@ -13,7 +13,7 @@ public class UserRoleUtil {
 		return dto;
 	}
 	
-	public UserRole getEntityFromDto(UserRoleDTO dto) {
+	public static UserRole getEntityFromDto(UserRoleDTO dto) {
 		UserRole entity = new UserRole();
 		entity.setRoleId(dto.getRoleId());
 		entity.setUserId(dto.getUserId());

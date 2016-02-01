@@ -25,6 +25,11 @@ public class RoleDTO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	@Override
+	public String toString() {
+		return "RoleDTO [roleId=" + roleId + ", roleName=" + roleName
+				+ ", description=" + description + "]";
+	}
     
     
 }
