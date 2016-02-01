@@ -2,6 +2,7 @@ package co.com.core.dao.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,7 +13,7 @@ import co.com.core.domain.Event;
 
 public class EventDAOImpl implements EventDAO{
 	
-	//private static final Logger logger = Logger.getLogger(EventDAOImpl.class);
+	private static final Logger logger = Logger.getLogger(EventDAOImpl.class);
 	
     private SessionFactory sessionFactory;
     private Session session;
@@ -29,7 +30,7 @@ public class EventDAOImpl implements EventDAO{
 			Query query = session.getNamedQuery("Event.findAll");
 			events = query.list();
 		} catch (Exception ex) {
-			//logger.error("Error - method[EventDAOImpl.getAll]: " + ex.getMessage());
+			logger.error("Throwed Exception [EventDAOImpl.getAll]: " +ex.getMessage());
 		} finally {
 			session.close();
 		}
@@ -44,7 +45,7 @@ public class EventDAOImpl implements EventDAO{
 			session.save(event);
 			tx.commit();
 		} catch(Exception ex) {
-			//TODO
+			logger.error("Throwed Exception [EventDAOImpl.createEvent]: " +ex.getMessage());
 			session.getTransaction().rollback();
 		} finally {
 			session.close();
@@ -61,8 +62,8 @@ public class EventDAOImpl implements EventDAO{
 			query.executeUpdate();
 			tx.commit();
 		} catch(Exception ex) {
+			logger.error("Throwed Exception [EventDAOImpl.delete]: " +ex.getMessage());
 			session.getTransaction().rollback();
-			//logger.error("Error - method[EventDAOImpl.delete]: " + ex.getMessage());
 		} finally {
 			session.close();
 		}
@@ -76,6 +77,7 @@ public class EventDAOImpl implements EventDAO{
 	        session.merge(event);
 	        tx.commit();
 		} catch(Exception ex) {
+			logger.error("Throwed Exception [EventDAOImpl.update]: " +ex.getMessage());
 			session.getTransaction().rollback();
 		} finally {
 			session.close();
@@ -103,7 +105,7 @@ public class EventDAOImpl implements EventDAO{
 			query.executeUpdate();
 			session.getTransaction().commit();
 		} catch(Exception ex) {
-			//logger.error("Error - method[EventDAOImpl.updateHQL]: " + ex.getMessage());
+			logger.error("Throwed Exception [EventDAOImpl.updateHQL]: " +ex.getMessage());
 		} finally {
 			session.close();
 		}

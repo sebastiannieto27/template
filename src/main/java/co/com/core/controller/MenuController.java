@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -35,7 +36,8 @@ public class MenuController {
 	private Integer parentMenuId;
 	private Integer pageId;
 	
-	@PostConstruct
+	private static final Logger logger = Logger.getLogger(MenuController.class);
+	
 	public void init() {
 		model = new DefaultMenuModel();
 		items = menuService.getAll();
@@ -116,6 +118,7 @@ public class MenuController {
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Creación exitosa", "Menu"));
 		} catch (Exception ex) {
+			logger.error("Throwed Exception [MenuController.saveNew]: " +ex.getMessage());
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -135,7 +138,7 @@ public class MenuController {
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
 								"Eliminado", "Menu"));
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				logger.error("Throwed Exception [MenuController.delete]: " +ex.getMessage());
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -163,7 +166,7 @@ public class MenuController {
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
 								"Actualizado", "Menu"));
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				logger.error("Throwed Exception [MenuController.save]: " +ex.getMessage());
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR,

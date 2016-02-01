@@ -2,6 +2,7 @@ package co.com.core.dao.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,6 +16,7 @@ public class PageDAOImpl implements PageDAO{
 	
     private SessionFactory sessionFactory;
     private Session session;
+    private static final Logger logger = Logger.getLogger(PageDAOImpl.class);
     
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -29,7 +31,7 @@ public class PageDAOImpl implements PageDAO{
 	        Query query = session.getNamedQuery("Page.findAll");
 			pages = query.list();
 		} catch(Exception ex) {
-			//TODO logger
+			logger.error("Throwed Exception [PageDAOImpl.getAll]: " +ex.getMessage());
 		} finally {
 			session.close();
 		}
@@ -44,7 +46,7 @@ public class PageDAOImpl implements PageDAO{
 			session.save(page);
 			tx.commit();
 		} catch(Exception ex) {
-			//TODO
+			logger.error("Throwed Exception [PageDAOImpl.createPage]: " +ex.getMessage());
 			session.getTransaction().rollback();
 		} finally {
 			session.close();
@@ -59,6 +61,7 @@ public class PageDAOImpl implements PageDAO{
 	        session.merge(page);
 	        tx.commit();
 		} catch(Exception ex) {
+			logger.error("Throwed Exception [PageDAOImpl.update]: " +ex.getMessage());
 			session.getTransaction().rollback();
 		} finally {
 			session.close();
@@ -74,6 +77,7 @@ public class PageDAOImpl implements PageDAO{
 			query.executeUpdate();
 			tx.commit();
 		} catch(Exception ex) {
+			logger.error("Throwed Exception [PageDAOImpl.delete]: " +ex.getMessage());
 			session.getTransaction().rollback();
 		} finally {
 			session.close();
@@ -93,14 +97,11 @@ public class PageDAOImpl implements PageDAO{
 	        query.setParameter("url", "%"+url+"%");
 	        pages = query.list();
 		} catch(Exception ex) {
-			System.out.println("ERROR PAGE DAO: " + ex.getMessage());
+			logger.error("Throwed Exception [PageDAOImpl.getPageByURL]: " +ex.getMessage());
 		} finally {
 			session.close();
 		}
 		
 		return pages;
 	}
-
-	
-
 }

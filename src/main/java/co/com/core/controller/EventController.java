@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 
@@ -18,7 +19,7 @@ import co.com.core.services.IEventService;
 
 public class EventController implements Serializable {
 
-	//private static final Logger logger = Logger.getLogger(EventController.class);
+	private static final Logger logger = Logger.getLogger(EventController.class);
 	
 	IEventService eventService;
 	//PriorityBO priorityBO;
@@ -43,6 +44,7 @@ public class EventController implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Creación exitosa", "Evento"));
 		} catch (Exception ex) {
+			logger.error("Throwed Exception [EventController.saveNew]: " +ex.getMessage());
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -62,7 +64,7 @@ public class EventController implements Serializable {
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
 								"Eliminado", "Evento"));
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				logger.error("Throwed Exception [EventController.delete]: " +ex.getMessage());
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -87,7 +89,7 @@ public class EventController implements Serializable {
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
 								"Actualizado", "Evento"));
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				logger.error("Throwed Exception [EventController.save]: " +ex.getMessage());
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR,

@@ -3,6 +3,8 @@ package co.com.core.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import co.com.core.commons.converter.PageUtil;
 import co.com.core.dao.PageDAO;
 import co.com.core.domain.Page;
@@ -11,6 +13,7 @@ import co.com.core.services.IPageService;
 
 public class PageServiceImpl implements IPageService {
 
+	private static final Logger logger = Logger.getLogger(PageServiceImpl.class);
 	PageDAO pageDAO;
 	
 	@Override
@@ -58,7 +61,7 @@ public class PageServiceImpl implements IPageService {
 				dto = PageUtil.getDtoFromEntity(page);
 			}
 		} else {
-			//TODO
+			logger.info("Zero pages found related to : " + url);
 		}
 		
 		return dto;

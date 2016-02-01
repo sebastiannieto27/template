@@ -5,6 +5,8 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
+
 import co.com.core.dto.PageDTO;
 import co.com.core.services.IPageService;
 
@@ -14,7 +16,8 @@ public class PageController {
 	IPageService pageService;
 	List<PageDTO> items;
 	private PageDTO selected;
-
+	private static final Logger logger = Logger.getLogger(PageController.class);
+	
 	public void init() {
 		items = pageService.getAll();
 	}
@@ -27,6 +30,7 @@ public class PageController {
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Creación exitosa", "Página"));
 		} catch (Exception ex) {
+			logger.error("Throwed Exception [PageController.saveNew]: " +ex.getMessage());
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -46,7 +50,7 @@ public class PageController {
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
 								"Eliminado", "Página"));
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				logger.error("Throwed Exception [PageController.delete]: " +ex.getMessage());
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -66,7 +70,7 @@ public class PageController {
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
 								"Actualizado", "Página"));
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				logger.error("Throwed Exception [PageController.save]: " +ex.getMessage());
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR,

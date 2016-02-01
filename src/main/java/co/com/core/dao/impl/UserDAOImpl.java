@@ -3,6 +3,7 @@ package co.com.core.dao.impl;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,6 +17,7 @@ public class UserDAOImpl implements UserDAO {
 
     private SessionFactory sessionFactory;
     private Session session;
+    private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
     
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -28,7 +30,7 @@ public class UserDAOImpl implements UserDAO {
 			session = this.sessionFactory.openSession();
 			user = (User) session.get(User.class, userID);
 		} catch(Exception ex) {
-			//TODO
+			logger.error("Throwed Exception [UserDAOImpl.getUserById]: " +ex.getMessage());
 		} finally {
 			session.close();
 		}
@@ -51,7 +53,7 @@ public class UserDAOImpl implements UserDAO {
 			}
 			
 		} catch(Exception ex) {
-			ex.printStackTrace();
+			logger.error("Throwed Exception [UserDAOImpl.login]: " +ex.getMessage());
 		} finally {
 			session.close();
 		}
@@ -67,7 +69,7 @@ public class UserDAOImpl implements UserDAO {
 			Query query = session.getNamedQuery("User.findAll");
 			Users = query.list();
 		} catch(Exception ex) {
-			//TODO
+			logger.error("Throwed Exception [UserDAOImpl.getAll]: " +ex.getMessage());
 		}
 		return Users;
 	}
@@ -75,15 +77,12 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void createUser(User user) {
 		try {
-			System.out.println(user);
 			session = this.sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
 			session.save(user);
 			tx.commit();
 		} catch(Exception ex) {
-			//TODO
-			ex.printStackTrace();
-			System.out.println("Error user: " + ex.getMessage());
+			logger.error("Throwed Exception [UserDAOImpl.createUser]: " +ex.getMessage());
 			session.getTransaction().rollback();
 		} finally {
 			session.close();
@@ -100,6 +99,7 @@ public class UserDAOImpl implements UserDAO {
 			query.executeUpdate();
 			tx.commit();
 		} catch(Exception ex) {
+			logger.error("Throwed Exception [UserDAOImpl.delete]: " +ex.getMessage());
 			session.getTransaction().rollback();
 		} finally {
 			session.close();
@@ -115,6 +115,7 @@ public class UserDAOImpl implements UserDAO {
 	        session.merge(user);
 	        tx.commit();
 		} catch(Exception ex) {
+			logger.error("Throwed Exception [UserDAOImpl.update]: " +ex.getMessage());
 			session.getTransaction().rollback();
 		} finally {
 			session.close();

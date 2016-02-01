@@ -3,6 +3,8 @@ package co.com.core.controller;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
+
 import co.com.core.commons.EncryptDecrypt;
 import co.com.core.dto.UserDTO;
 import co.com.core.services.IUserService;
@@ -17,7 +19,8 @@ public class LoginController {
 	private IUserService userService;
 	private MenuController menuController;
 	private UserDTO userDto;
-	private EncryptDecrypt decrypter;
+
+	private static final Logger logger = Logger.getLogger(LoginController.class);
 	
 	public void init () {
 		menuController.loadGeneralMenu();
@@ -50,7 +53,7 @@ public class LoginController {
 				return "/login.xhtml?faces-redirect=true";
 			}
 		} catch(Exception ex) {
-			ex.printStackTrace();
+			logger.error("Throwed Exception [LoginController.validateLogin]: " +ex.getMessage());
 		}
 		return null;
 	}

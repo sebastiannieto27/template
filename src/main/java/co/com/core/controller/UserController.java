@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 
 import co.com.core.commons.EncryptDecrypt;
@@ -18,8 +19,8 @@ public class UserController {
 	List<UserDTO> items;
 	private UserDTO selected;
 	private LazyDataModel<UserDTO> lazyModel;
-
-	@PostConstruct
+	private static final Logger logger = Logger.getLogger(UserController.class);
+	
 	public void init() {
 		items = userService.getAll();
 		//lazyModel = new UserLazyLoader(userService);
@@ -35,7 +36,7 @@ public class UserController {
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Creación exitosa", "Usuario"));
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Throwed Exception [UserController.saveNew]: " +ex.getMessage());
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Error en creación", "Usuario"));
@@ -54,7 +55,7 @@ public class UserController {
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
 								"Eliminado", "Usuario"));
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				logger.error("Throwed Exception [UserController.delete]: " +ex.getMessage());
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -76,7 +77,7 @@ public class UserController {
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
 								"Actualizado", "Usuario"));
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				logger.error("Throwed Exception [UserController.save]: " +ex.getMessage());
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR,

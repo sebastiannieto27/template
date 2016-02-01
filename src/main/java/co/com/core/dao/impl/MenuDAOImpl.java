@@ -2,6 +2,7 @@ package co.com.core.dao.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -18,6 +19,7 @@ public class MenuDAOImpl implements MenuDAO {
 
     private SessionFactory sessionFactory;
     private Session session;
+    private static final Logger logger = Logger.getLogger(MenuDAOImpl.class);
     
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -35,7 +37,7 @@ public class MenuDAOImpl implements MenuDAO {
 			query.setParameter("userId", user.getUserId());
 			userRoles = query.list();
 		} catch(Exception ex) {
-			//TODO
+			logger.error("Throwed Exception [MenuDAOImpl.getUserRoles]: " +ex.getMessage());
 		} finally {
 			session.close();
 		}
@@ -64,8 +66,7 @@ public class MenuDAOImpl implements MenuDAO {
 			menuRoles = query.list();
 			
 		} catch(Exception ex) {
-			System.out.println("ERROR Getting rolesMenu: " + ex.getMessage());
-			//TODO
+			logger.error("Throwed Exception [MenuDAOImpl.getUserRoleMenu]: " +ex.getMessage());
 		} finally {
 			session.close();
 		}
@@ -94,8 +95,7 @@ public class MenuDAOImpl implements MenuDAO {
 			menuList = query.list();
 			
 		} catch(Exception ex) {
-			ex.printStackTrace();
-			//TODO
+			logger.error("Throwed Exception [MenuDAOImpl.getUserMenuOptions]: " +ex.getMessage());
 		} finally {
 			session.close();
 		}
@@ -111,9 +111,8 @@ public class MenuDAOImpl implements MenuDAO {
 			hql.append("SELECT m FROM Menu m WHERE m.general = 1");
 			Query query = session.createQuery(hql.toString());
 			menuList = query.list();
-			
 		} catch(Exception ex) {
-			ex.printStackTrace();
+			logger.error("Throwed Exception [MenuDAOImpl.getMenuGeneral]: " +ex.getMessage());
 		} finally {
 			session.close();
 		}
@@ -129,7 +128,7 @@ public class MenuDAOImpl implements MenuDAO {
 			Query query = session.getNamedQuery("Menu.findAll");
 			menuList = query.list();
 		} catch(Exception ex) {
-			//TODO
+			logger.error("Throwed Exception [MenuDAOImpl.getAll]: " +ex.getMessage());
 		} finally {
 			session.close();
 		}
@@ -144,7 +143,7 @@ public class MenuDAOImpl implements MenuDAO {
 			session.save(menu);
 			tx.commit();
 		} catch(Exception ex) {
-			//TODO
+			logger.error("Throwed Exception [MenuDAOImpl.createMenu]: " +ex.getMessage());
 			session.getTransaction().rollback();
 		} finally {
 			session.close();
@@ -161,6 +160,7 @@ public class MenuDAOImpl implements MenuDAO {
 			query.executeUpdate();
 			tx.commit();
 		} catch(Exception ex) {
+			logger.error("Throwed Exception [MenuDAOImpl.delete]: " +ex.getMessage());
 			session.getTransaction().rollback();
 		} finally {
 			session.close();
@@ -175,6 +175,7 @@ public class MenuDAOImpl implements MenuDAO {
 	        session.merge(menu);
 	        tx.commit();
 		} catch(Exception ex) {
+			logger.error("Throwed Exception [MenuDAOImpl.update]: " +ex.getMessage());
 			session.getTransaction().rollback();
 		} finally {
 			session.close();
