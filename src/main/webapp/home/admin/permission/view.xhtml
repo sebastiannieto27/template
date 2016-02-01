@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PermissionViewDlg" widgetVar="PermissionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewPermissionTitle}" closeOnEscape="true">
+
+            <h:form id="PermissionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{permissionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPermissionLabel_permissionId}"/>
+                        <h:outputText value="#{permissionController.selected.permissionId}" title="#{myBundle.ViewPermissionTitle_permissionId}"/>
+
+                        <h:outputText value="#{myBundle.ViewPermissionLabel_permissionName}"/>
+                        <h:outputText value="#{permissionController.selected.permissionName}" title="#{myBundle.ViewPermissionTitle_permissionName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('PermissionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

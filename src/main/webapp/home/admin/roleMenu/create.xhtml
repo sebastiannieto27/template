@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+        <p:dialog id="roleMenuCreateDlg" widgetVar="roleMenuCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.roleMenu}" closeOnEscape="true">
+
+            <h:form id="roleMenuCreateForm">
+
+                <h:panelGroup id="display" rendered="#{roleMenuController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.menu}" for="menuId" />
+                        <p:selectOneMenu id="menuId" value="#{roleMenuController.selectedMenuId}" required="true" requiredMessage="#{msg.menuRequiredMessage}">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{menuController.items}"
+                                           var="menuIdItem"
+                                           itemValue="#{menuIdItem.menuId}"
+                                           itemLabel="#{menuIdItem.menuName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{msg.role}" for="roleId" />
+                        <p:selectOneMenu id="roleId" value="#{roleMenuController.selectedRoleId}" required="true" requiredMessage="#{msg.roleRequiredMessage}">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{roleController.items}"
+                                           var="roleIdItem"
+                                           itemValue="#{roleIdItem.roleId}"
+                                           itemLabel="#{roleIdItem.roleName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{roleMenuController.saveNew}" value="#{msg.save}" update="display,:roleMenuListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('roleMenuCreateDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('roleMenuCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+    </body>
+</html>
