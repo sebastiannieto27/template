@@ -1,28 +1,28 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+        <p:dialog id="permissionCreateDlg" widgetVar="permissionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.permission}" closeOnEscape="true">
 
-    <ui:composition>
-
-        <p:dialog id="PermissionCreateDlg" widgetVar="PermissionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreatePermissionTitle}" closeOnEscape="true">
-
-            <h:form id="PermissionCreateForm">
+            <h:form id="permissionCreateForm">
 
                 <h:panelGroup id="display" rendered="#{permissionController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="#{myBundle.CreatePermissionLabel_permissionName}" for="permissionName" />
-                        <p:inputText id="permissionName" value="#{permissionController.selected.permissionName}" title="#{myBundle.CreatePermissionTitle_permissionName}" required="true" requiredMessage="#{myBundle.CreatePermissionRequiredMessage_permissionName}" size="45" maxlength="45"/>
+                        <p:outputLabel value="#{msg.name}" for="permissionName" />
+                        <p:inputText id="permissionName" value="#{permissionController.selected.permissionName}" title="#{msg.name}" required="true" requiredMessage="#{msg.nameRequiredMessage}" size="45" maxlength="45"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{permissionController.saveNew}" value="#{myBundle.Save}" update="display,:PermissionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PermissionCreateDialog'));">
-                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    <p:commandButton actionListener="#{permissionController.saveNew}" value="#{msg.save}" update="display,:permissionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('permissionCreateDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
 
-                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('PermissionCreateDialog').hide()"/>
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('permissionCreateDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>
@@ -30,5 +30,5 @@
         </p:dialog>
 
     </ui:composition>
-
+    </body>
 </html>

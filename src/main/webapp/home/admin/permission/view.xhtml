@@ -8,20 +8,20 @@
 
     <ui:composition>
 
-        <p:dialog id="PermissionViewDlg" widgetVar="PermissionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewPermissionTitle}" closeOnEscape="true">
+        <p:dialog id="permissionViewDlg" widgetVar="permissionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.permission}" closeOnEscape="true">
 
-            <h:form id="PermissionViewForm">
+            <h:form id="permissionViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{permissionController.selected != null}">
 
-                        <h:outputText value="#{myBundle.ViewPermissionLabel_permissionId}"/>
-                        <h:outputText value="#{permissionController.selected.permissionId}" title="#{myBundle.ViewPermissionTitle_permissionId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{permissionController.selected.permissionId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{myBundle.ViewPermissionLabel_permissionName}"/>
-                        <h:outputText value="#{permissionController.selected.permissionName}" title="#{myBundle.ViewPermissionTitle_permissionName}"/>
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{permissionController.selected.permissionName}" title="#{msg.name}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{myBundle.Close}" onclick="PF('PermissionViewDialog').hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="PF('permissionViewDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>

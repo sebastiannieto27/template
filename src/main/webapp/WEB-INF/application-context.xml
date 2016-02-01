@@ -88,7 +88,10 @@
     <bean id="roleMenuDAO" class="co.com.core.dao.impl.RoleMenuDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean> 
-    
+ 
+    <bean id="permissionDAO" class="co.com.core.dao.impl.PermissionDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>     
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services -->
     <bean id="baseService" class="co.com.core.services.impl.BaseServiceImpl">
     	<property name="baseDAO" ref="baseDAO" />
@@ -121,7 +124,10 @@
     <bean id="roleMenuService" class="co.com.core.services.impl.RoleMenuServiceImpl">
     	<property name="roleMenuDAO" ref="roleMenuDAO" />
     </bean>
-    
+            
+    <bean id="permissionService" class="co.com.core.services.impl.PermissionServiceImpl">
+    	<property name="permissionDAO" ref="permissionDAO" />
+    </bean>    
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers -->
     <bean id="baseController" scope="session" class="co.com.core.controller.BaseController">
     	<property name="baseService" ref="baseService" />
@@ -164,5 +170,9 @@
                 
     <bean id="roleMenuController" scope="session" class="co.com.core.controller.RoleMenuController" init-method="init">
     	<property name="roleMenuService" ref="roleMenuService" />
+    </bean> 
+                   
+    <bean id="permissionController" scope="session" class="co.com.core.controller.PermissionController" init-method="init">
+    	<property name="permissionService" ref="permissionService" />
     </bean> 
 </beans>

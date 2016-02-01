@@ -7,24 +7,20 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-        <p:dialog id="PermissionEditDlg" widgetVar="PermissionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditPermissionTitle}" closeOnEscape="true">
+        <p:dialog id="permissionEditDlg" widgetVar="permissionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.permission}" closeOnEscape="true">
 
-            <h:form id="PermissionEditForm">
+            <h:form id="permissionEditForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{permissionController.selected != null}">
 
-
-                        <h:outputLabel value="#{myBundle.EditPermissionLabel_permissionId}" for="permissionId" />
-                        <h:outputText id="permissionId" value="#{permissionController.selected.permissionId}" />
-
-                        <p:outputLabel value="#{myBundle.EditPermissionLabel_permissionName}" for="permissionName" />
-                        <p:inputText id="permissionName" value="#{permissionController.selected.permissionName}" title="#{myBundle.EditPermissionTitle_permissionName}" required="true" requiredMessage="#{myBundle.EditPermissionRequiredMessage_permissionName}" size="45" maxlength="45"/>
+                        <p:outputLabel value="#{msg.name}" for="permissionName" />
+                        <p:inputText id="permissionName" value="#{permissionController.selected.permissionName}" title="#{msg.name}" required="true" requiredMessage="#{msg.nameRequiredMessage}" size="45" maxlength="45"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{permissionController.save}" value="#{myBundle.Save}" update="display,:PermissionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PermissionEditDialog'));">
-                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    <p:commandButton actionListener="#{permissionController.save}" value="#{msg.save}" update="display,:permissionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('permissionEditDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
-                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('PermissionEditDialog').hide()"/>
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('permissionEditDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>
