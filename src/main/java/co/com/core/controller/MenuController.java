@@ -28,7 +28,6 @@ public class MenuController {
 	private String userName;
 	
 	private LoginController login;
-	@Autowired
 	private IMenuService menuService;
 	
 	List<MenuDTO> items;

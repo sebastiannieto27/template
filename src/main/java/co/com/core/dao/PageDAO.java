@@ -14,4 +14,6 @@ public interface PageDAO {
 	public void delete(Page Page);
 	
 	public void update(Page Page);
+	
+	public List<Page> getPageByURL(String url);
 }

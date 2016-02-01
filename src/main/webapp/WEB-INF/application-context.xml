@@ -126,5 +126,7 @@
     </bean> 
     
     <bean id="templateController" scope="session" class="co.com.core.controller.TemplateController">
+    	<property name="menuService" ref="menuService" />
+    	<property name="pageService" ref="pageService" />
     </bean> 
 </beans>

@@ -80,6 +80,27 @@ public class PageDAOImpl implements PageDAO{
 		}
 	}
 
+
+	@Override
+	public List<Page> getPageByURL(String url) {
+		List<Page> pages = null;
+		try {
+			session = this.sessionFactory.openSession();
+			StringBuilder hql = new StringBuilder();
+//			hql.append("SELECT * FROM page WHERE url LIKE '%").append(url).append("%'");
+			hql.append("SELECT p FROM Page p WHERE p.url LIKE :url");
+	        Query query = session.createQuery(hql.toString());
+	        query.setParameter("url", "%"+url+"%");
+	        pages = query.list();
+		} catch(Exception ex) {
+			System.out.println("ERROR PAGE DAO: " + ex.getMessage());
+		} finally {
+			session.close();
+		}
+		
+		return pages;
+	}
+
 	
 
 }

@@ -35,9 +35,6 @@ public class LoginController {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.getExternalContext().getSessionMap().put("user", userDto);
 				this.isLogged = true;
-				//HttpSession session = SessionBean.getSession();
-				//session.setAttribute("loginController", this);
-	            //session.setAttribute("username", userDto.getEmail());
 	            menuController.loadMenu(userDto);
 		            
 	            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,

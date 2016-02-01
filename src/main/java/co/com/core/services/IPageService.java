@@ -14,4 +14,6 @@ public interface IPageService {
 	public void delete(co.com.core.dto.PageDTO pageDto);
 	
 	public void update(PageDTO pageDto);
+	
+	public PageDTO getPageByURL(String url);
 }
