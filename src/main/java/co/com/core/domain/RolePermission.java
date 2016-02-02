@@ -99,3 +99,4 @@ public class RolePermission implements Serializable {
     }
     
 }
+

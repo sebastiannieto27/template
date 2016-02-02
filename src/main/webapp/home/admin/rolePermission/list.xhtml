@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+    <h:form id="rolePermissionListForm">
+
+        <p:panel header="#{msg.rolePermission}">
+            <p:contextMenu id="rolePermissionDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.create}" onclick="document.getElementById('rolePermissionListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg.view}" onclick="document.getElementById('rolePermissionListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg.edit}" onclick="document.getElementById('rolePermissionListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg.delete}" onclick="document.getElementById('rolePermissionListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{rolePermissionController.items}"
+                         var="item"
+                         rowKey="#{item.rolePermissionId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{rolePermissionController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:rolePermissionDataTableContextMenu" />
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:rolePermissionDataTableContextMenu" />
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" />
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('rolePermissionListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.rolePermissionId}" filterBy="#{item.rolePermissionId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rolePermissionId}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.permissionId.permissionName}" filterBy="#{item.permissionId.permissionName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.permission}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.permissionId.permissionName}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.roleId.roleName}" filterBy="#{item.roleId.roleName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.role}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.roleId.roleName}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{rolePermissionController.init()}" update=":rolePermissionListForm" />
+            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{rolePermissionController.prepareCreate}" update=":rolePermissionCreateForm" oncomplete="PF('rolePermissionCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{msg.view}" update=":rolePermissionViewForm" oncomplete="PF('rolePermissionViewDialog').show()" disabled="#{empty rolePermissionController.selected}"/>
+            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{msg.edit}" update=":rolePermissionEditForm" oncomplete="PF('rolePermissionEditDialog').show()" disabled="#{empty rolePermissionController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{rolePermissionController.delete}" update=":growl,datalist" disabled="#{empty rolePermissionController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+    </h:form>
+ </ui:composition>
+    </body>
+</html>
