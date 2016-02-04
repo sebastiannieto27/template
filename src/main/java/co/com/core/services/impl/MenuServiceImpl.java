@@ -77,6 +77,18 @@ public class MenuServiceImpl implements IMenuService {
 	public void setMenuDAO(MenuDAO menuDAO) {
 		this.menuDAO = menuDAO;
 	}
+
+	@Override
+	public List<MenuDTO> getNotAssignedMenu(String ids) {
+		List<MenuDTO> dtoList = new ArrayList<MenuDTO>();
+		List<Menu> entityList = this.menuDAO.getNotAssignedMenu(ids);
+		if(entityList!=null && entityList.size() > 0) {
+			for(Menu entity: entityList) {
+				dtoList.add(MenuUtil.getDtoFromEntity(entity));
+			}
+		}
+		return dtoList;
+	}
 	
 	
 }

@@ -8,9 +8,13 @@ import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 
+import co.com.core.commons.converter.MenuUtil;
+import co.com.core.commons.converter.RoleUtil;
+import co.com.core.domain.RoleMenu;
 import co.com.core.dto.MenuDTO;
 import co.com.core.dto.RoleDTO;
 import co.com.core.dto.RoleMenuDTO;
+import co.com.core.services.IMenuService;
 import co.com.core.services.IRoleMenuService;
 import co.com.core.services.IRoleService;
 
@@ -19,12 +23,15 @@ public class RoleController {
 
 	IRoleService roleService;
 	IRoleMenuService roleMenuService;
+	IMenuService menuService;
 	List<RoleDTO> items;
 	List<RoleMenuDTO> roleItems;
+	List<MenuDTO> menuItems;
 	private RoleDTO selected;
 	private Integer userIdSelected;
 	private Integer roleIdSelected;
-	private RoleDTO selectedRoleMenu;
+	private RoleDTO selectedRole;
+	private MenuDTO selectedMenu;
 	
 	private List<MenuDTO> menuList;
 	private boolean checkValue;
@@ -37,24 +44,47 @@ public class RoleController {
 	}
 
 	public void findMenuByRole(RoleDTO roleDto) {
-		selectedRoleMenu = roleDto;
+		selectedRole = roleDto;
 		try {
 			roleItems = roleMenuService.findMenuByRole(roleDto);
+			String menuIds = getMenuIds();
+			menuItems = menuService.getNotAssignedMenu(menuIds);
+			logger.info("ROLE: " + roleItems);
+			logger.info("MENU NOT ADDED: " + roleItems);
 		} catch(Exception ex) {
 			logger.error("Error finding menus by role: " + ex.getMessage());
 		}
 	}
 	
 	public void addMenuToRol() {
-		
-		if(menuList!=null && menuList.size() > 0) {
-			for(MenuDTO menu : menuList) {
-				logger.error("::::::::::::" + menu);
-				
+		try {
+			if(menuList!=null && menuList.size() > 0) {
+				for(MenuDTO menu : menuList) {
+					RoleMenuDTO dto = new RoleMenuDTO();
+					dto.setMenuId(MenuUtil.getEntityFromDto(menu));
+					dto.setRoleId(RoleUtil.getEntityFromDto(selectedRole));
+					
+					roleMenuService.create(dto);
+				}
+			}
+		} catch(Exception ex) {
+			logger.error("Throwed Exception [RoleController.addMenuToRol]: " +ex.getMessage());
+		}
+	}
+	
+	private String getMenuIds() {
+		int counter = 0;
+		StringBuilder ids = new StringBuilder();
+		if(roleItems!=null && roleItems.size() > 0) {
+			for(RoleMenuDTO dto:  roleItems) {
+				if(counter > 0) {
+					ids.append(",");
+				}
+				ids.append(dto.getMenuId().getMenuId());
+				counter++;
 			}
 		}
-		
-		logger.error("::::::::::::" + selectedRoleMenu);
+		return ids.toString();
 	}
 	
 	public void addRemoveMenu(MenuDTO menu) {
@@ -186,12 +216,12 @@ public class RoleController {
 		this.checkValue = checkValue;
 	}
 
-	public RoleDTO getSelectedRoleMenu() {
-		return selectedRoleMenu;
+	public RoleDTO getSelectedRole() {
+		return selectedRole;
 	}
 
-	public void setSelectedRoleMenu(RoleDTO selectedRoleMenu) {
-		this.selectedRoleMenu = selectedRoleMenu;
+	public void setSelectedRole(RoleDTO selectedRole) {
+		this.selectedRole = selectedRole;
 	}
 
 	public IRoleMenuService getRoleMenuService() {
@@ -208,6 +238,30 @@ public class RoleController {
 
 	public void setRoleItems(List<RoleMenuDTO> roleItems) {
 		this.roleItems = roleItems;
+	}
+
+	public IMenuService getMenuService() {
+		return menuService;
+	}
+
+	public void setMenuService(IMenuService menuService) {
+		this.menuService = menuService;
+	}
+
+	public List<MenuDTO> getMenuItems() {
+		return menuItems;
+	}
+
+	public void setMenuItems(List<MenuDTO> menuItems) {
+		this.menuItems = menuItems;
+	}
+
+	public MenuDTO getSelectedMenu() {
+		return selectedMenu;
+	}
+
+	public void setSelectedMenu(MenuDTO selectedMenu) {
+		this.selectedMenu = selectedMenu;
 	}
 	
 }

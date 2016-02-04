@@ -14,6 +14,8 @@ public interface IMenuService {
 	
 	public List<MenuDTO> getAll(); 
 	
+	public List<MenuDTO> getNotAssignedMenu(String ids); 
+	
 	public void createMenu(MenuDTO menuDto);
 	
 	public void delete(MenuDTO menuDto);

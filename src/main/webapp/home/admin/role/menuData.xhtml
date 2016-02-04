@@ -12,14 +12,14 @@
 
             <h:form id="roleViewMenuForm">
             <p:dataTable id="datalist"
-                         value="#{menuController.items}"
+                         value="#{roleController.menuItems}"
                          var="item"
                          rowKey="#{item.menuId}"
                          paginator="true"
-                         rows="10"
+                         rows="5"
                          rowsPermenuTemplate="10,20,30,40,50"
                          selectionMode="single"
-                         selection="#{menuController.selected}">
+                         selection="#{roleController.selectedMenu}">
 
                 <p:ajax event="rowSelect" />
 
@@ -51,17 +51,16 @@
             </p:dataTable>
             <p:commandButton id="addMenuButton" value="#{msg.add}" actionListener="#{roleController.addMenuToRol}" update=":roleListForm" />
             </h:form>
-            <p:separator />
             <h:form id="listRoleMenuForm">
 	            <p:dataTable id="datalistRoleMenu"
 	                         value="#{roleController.roleItems}"
 	                         var="roleItem"
 	                         rowKey="#{roleItem.roleId}"
 	                         paginator="true"
-	                         rows="10"
+	                         rows="5"
 	                         rowsPerPageTemplate="10,20,30,40,50"
 	                         selectionMode="single"
-	                         selection="#{roleController.selectedRoleMenu}">
+	                         selection="#{roleController.selectedRole}">
 
                 <p:column sortBy="#{roleItem.roleMenuId}" filterBy="#{roleItem.roleMenuId}">
                     <f:facet name="header">
@@ -90,6 +89,7 @@
                 </p:column>
                 
             </p:dataTable>
+            <p:commandButton id="removeMenuButton" value="#{msg.remove}" actionListener="#{roleController.removeMenuToRol}" update=":listRoleMenuForm" />
 		</h:form>
         </p:dialog>
 

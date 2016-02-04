@@ -82,7 +82,6 @@ public class RoleMenuDAOImpl implements RoleMenuDAO {
 			}
 		}
 
-
 		@Override
 		public List<RoleMenu> findMenuByRole(Role role) {
 			List<RoleMenu> entityList = null;

@@ -19,6 +19,8 @@ public interface MenuDAO {
 	
 	public List<Menu> getAll();
 	
+	public List<Menu> getNotAssignedMenu(String ids);
+	
 	public void createMenu(Menu menu);
 	
 	public void delete(Menu menu);

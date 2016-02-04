@@ -179,5 +179,23 @@ public class MenuDAOImpl implements MenuDAO {
 			session.close();
 		}
 	}
+
+	@Override
+	public List<Menu> getNotAssignedMenu(String ids) {
+		List<Menu> menuList = null;
+		try {
+			session = this.sessionFactory.openSession();
+			StringBuilder hql = new StringBuilder();
+			hql.append("SELECT m FROM Menu m WHERE m.menuId NOT IN(").append(ids).append(")");
+			Query query = session.createQuery(hql.toString());
+			menuList = query.list();
+			
+		} catch(Exception ex) {
+			logger.error("Throwed Exception [MenuDAOImpl.getNotAssignedMenu]: " +ex.getMessage());
+		} finally {
+			session.close();
+		}
+		return menuList;
+	}
 	
 }
