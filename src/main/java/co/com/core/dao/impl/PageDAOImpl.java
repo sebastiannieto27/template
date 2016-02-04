@@ -72,9 +72,7 @@ public class PageDAOImpl implements PageDAO{
 		try {
 			session = this.sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
-			Query query = session.createQuery("delete Page p where p.pageId = :pageId");
-			query.setParameter("pageId", page.getPageId());
-			query.executeUpdate();
+			session.delete(page);
 			tx.commit();
 		} catch(Exception ex) {
 			logger.error("Throwed Exception [PageDAOImpl.delete]: " +ex.getMessage());

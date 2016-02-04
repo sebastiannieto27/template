@@ -21,7 +21,6 @@ public class TemplateController {
 	private static final Logger logger = Logger.getLogger(TemplateController.class);
 	
 	public void validateUserSession() {
-		System.out.println("Validating session");
 		try {
 			FacesContext context = FacesContext.getCurrentInstance();
 			String viewId = context.getViewRoot().getViewId();
@@ -31,7 +30,12 @@ public class TemplateController {
 				if(userDto==null) {
 					context.getExternalContext().redirect("/festivities/login.xhtml");
 				} else {
-					validateAllowedPage(userDto, viewId);
+					boolean validPage = validateAllowedPage(userDto, viewId);
+					if(!validPage) {
+						//context.getExternalContext().invalidateSession();
+						context.getExternalContext().redirect("/festivities/home/profile.xhtml");
+						logger.info("Invalid page access: " + userDto.getFirstName() + "Page: " + viewId);
+					}
 					logger.info("Valid session: " + userDto.getFirstName() + "Page: " + viewId);
 				}
 			}

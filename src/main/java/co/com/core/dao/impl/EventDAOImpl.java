@@ -57,9 +57,7 @@ public class EventDAOImpl implements EventDAO{
 		try {
 			session = this.sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
-			Query query = session.createQuery("delete Event e where e.eventId = :eventId");
-			query.setParameter("eventId", event.getEventId());
-			query.executeUpdate();
+			session.delete(event);
 			tx.commit();
 		} catch(Exception ex) {
 			logger.error("Throwed Exception [EventDAOImpl.delete]: " +ex.getMessage());

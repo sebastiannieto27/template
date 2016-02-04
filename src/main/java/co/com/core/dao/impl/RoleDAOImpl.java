@@ -74,9 +74,6 @@ public class RoleDAOImpl implements RoleDAO {
 				session = this.sessionFactory.openSession();
 				Transaction tx = session.beginTransaction();
 				session.delete(role);
-				//Query query = session.createQuery("delete Role r where Role.roleId = :roleId");
-				//query.setParameter("roleId", role.getRoleId());
-				//query.executeUpdate();
 				tx.commit();
 			} catch(Exception ex) {
 				logger.error("Throwed Exception [RoleDAOImpl.delete]: " +ex.getMessage());

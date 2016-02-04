@@ -49,4 +49,12 @@ public class MenuDTO {
 	public void setGeneral(Boolean general) {
 		this.general = general;
 	}
+	
+	@Override
+	public String toString() {
+		return "MenuDTO [menuId=" + menuId + ", menuName=" + menuName
+				+ ", submenu=" + submenu + ", general=" + general
+				+ ", parentMenuId=" + parentMenuId + ", pageId=" + pageId + "]";
+	}
+	
 }

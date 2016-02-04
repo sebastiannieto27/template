@@ -155,9 +155,7 @@ public class MenuDAOImpl implements MenuDAO {
 		try {
 			session = this.sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
-			Query query = session.createQuery("delete Menu m where m.menuId = :menuId");
-			query.setParameter("menuId", menu.getMenuId());
-			query.executeUpdate();
+			session.delete(menu);
 			tx.commit();
 		} catch(Exception ex) {
 			logger.error("Throwed Exception [MenuDAOImpl.delete]: " +ex.getMessage());

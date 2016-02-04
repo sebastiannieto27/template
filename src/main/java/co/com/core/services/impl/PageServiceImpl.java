@@ -55,7 +55,6 @@ public class PageServiceImpl implements IPageService {
 	public PageDTO getPageByURL(String url) {
 		PageDTO dto = null;
 		List<Page> pageList = pageDAO.getPageByURL(url);
-		System.out.println(pageDAO.getPageByURL(url));
 		if(pageList!=null && pageList.size() > 0) {
 			for(Page page : pageList) {
 				dto = PageUtil.getDtoFromEntity(page);

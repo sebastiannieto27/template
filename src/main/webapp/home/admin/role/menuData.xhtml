@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="roleViewMenuDlg" widgetVar="roleViewMenuDialog" modal="true" resizable="true" width="50%" appendTo="@(body)" header="#{msg.menu}" closeOnEscape="true">
+
+            <h:form id="roleViewMenuForm">
+            <p:dataTable id="datalist"
+                         value="#{menuController.items}"
+                         var="item"
+                         rowKey="#{item.menuId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPermenuTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{menuController.selected}">
+
+                <p:ajax event="rowSelect" />
+
+               <p:column sortBy="#{item.menuId}" filterBy="#{item.menuId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.menuId}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.menuName}" filterBy="#{item.menuName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.menuName}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.submenu}" filterBy="#{item.submenu}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.submenu}"/>
+                    </f:facet>
+                    
+               		 <h:selectBooleanCheckbox id="chk-#{item.menuId}"
+                                value="#{roleController.checkValue}">
+                                <f:ajax execute="@this" listener="#{roleController.addRemoveMenu(item)}"/>
+                       </h:selectBooleanCheckbox>
+               
+                </p:column>
+            </p:dataTable>
+            <p:commandButton id="addMenuButton" value="#{msg.add}" actionListener="#{roleController.addMenuToRol}" update=":roleListForm" />
+            <p:separator />
+            
+		</h:form>
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

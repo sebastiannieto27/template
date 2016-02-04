@@ -1,12 +1,15 @@
 package co.com.core.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 
+import co.com.core.dto.MenuDTO;
 import co.com.core.dto.RoleDTO;
 import co.com.core.services.IRoleService;
 
@@ -18,13 +21,47 @@ public class RoleController {
 	private RoleDTO selected;
 	private Integer userIdSelected;
 	private Integer roleIdSelected;
+	private RoleDTO selectedRolMenu;
+	
+	private List<MenuDTO> menuList;
+	private boolean checkValue;
 	
 	private static final Logger logger = Logger.getLogger(RoleController.class);
 	
 	public void init() {
+		menuList = new ArrayList<MenuDTO>();
 		items = roleService.getAll();
 	}
 
+	public void addMenuToRol() {
+		
+		if(menuList!=null && menuList.size() > 0) {
+			for(MenuDTO menu : menuList) {
+				logger.error("::::::::::::" + menu);
+				
+			}
+		}
+		
+		logger.error("::::::::::::" + selectedRolMenu);
+	}
+	
+	public void addRemoveMenu(MenuDTO menu) {
+
+		try {
+			if(checkValue) {
+				if(!menuList.contains(menu)) {
+					menuList.add(menu);
+				}
+			} else {
+				if(menuList.contains(menu)) {
+					menuList.remove(menu);
+				}
+			}
+		} catch(Exception ex) {
+			logger.error("Error adding menu to list: " + ex.getMessage());
+		}
+	}
+	
 	public void saveNew() {
 		try {
 			roleService.createRole(selected);
@@ -127,5 +164,21 @@ public class RoleController {
 
 	public void setRoleIdSelected(Integer roleIdSelected) {
 		this.roleIdSelected = roleIdSelected;
+	}
+
+	public boolean isCheckValue() {
+		return checkValue;
+	}
+
+	public void setCheckValue(boolean checkValue) {
+		this.checkValue = checkValue;
+	}
+
+	public RoleDTO getSelectedRolMenu() {
+		return selectedRolMenu;
+	}
+
+	public void setSelectedRolMenu(RoleDTO selectedRolMenu) {
+		this.selectedRolMenu = selectedRolMenu;
 	}
 }

@@ -94,9 +94,7 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			session = this.sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
-			Query query = session.createQuery("delete User p where p.UserId = :UserId");
-			query.setParameter("UserId", user.getUserId());
-			query.executeUpdate();
+			session.delete(user);
 			tx.commit();
 		} catch(Exception ex) {
 			logger.error("Throwed Exception [UserDAOImpl.delete]: " +ex.getMessage());

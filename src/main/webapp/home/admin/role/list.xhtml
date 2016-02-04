@@ -52,6 +52,16 @@
                     </f:facet>
                     <h:outputText value="#{item.description}"/>
                 </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.menu}"/>
+                    </f:facet>
+                    <p:commandLink id="viewMenuLink" value="#{msg.menu}" update=":roleViewMenuForm" 
+                    		oncomplete="PF('roleViewMenuDialog').show()" actionListener="#{roleController.setSelectedRolMenu(item)}"/>
+                </p:column>
+                
+                
             </p:dataTable>
             <p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{roleController.init()}" update=":roleListForm" />
             <p:commandButton id="createButton" icon="ui-icon-plus" value="#{msg.create}" actionListener="#{roleController.prepareCreate}" update=":roleCreateForm" oncomplete="PF('roleCreateDialog').show()" />
@@ -60,8 +70,12 @@
             <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{roleController.delete}" update=":roleListForm:datalist,:growl" disabled="#{empty roleController.selected}">
                 <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
             </p:commandButton>
-             <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+             	 
+    	<ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
 		</h:form>
+				
+		
+    	
 				
 	    </ui:composition>
     </body>
