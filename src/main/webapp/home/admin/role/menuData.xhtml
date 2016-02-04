@@ -44,12 +44,12 @@
                     
                		 <h:selectBooleanCheckbox id="chk-#{item.menuId}"
                                 value="#{roleController.checkValue}">
-                                <f:ajax execute="@this" listener="#{roleController.addRemoveMenu(item)}"/>
+                                <f:ajax execute="@this" listener="#{roleController.addRemoveMenuList(item)}"/>
                        </h:selectBooleanCheckbox>
                
                 </p:column>
             </p:dataTable>
-            <p:commandButton id="addMenuButton" value="#{msg.add}" actionListener="#{roleController.addMenuToRol}" update=":roleListForm" />
+            <p:commandButton id="addMenuButton" value="#{msg.add}" actionListener="#{roleController.addMenuToRol}" update="roleViewMenuForm listRoleMenuForm" />
             </h:form>
             <h:form id="listRoleMenuForm">
 	            <p:dataTable id="datalistRoleMenu"
@@ -60,7 +60,7 @@
 	                         rows="5"
 	                         rowsPerPageTemplate="10,20,30,40,50"
 	                         selectionMode="single"
-	                         selection="#{roleController.selectedRole}">
+	                         selection="#{roleController.selectedRoleMenu}">
 
                 <p:column sortBy="#{roleItem.roleMenuId}" filterBy="#{roleItem.roleMenuId}">
                     <f:facet name="header">
@@ -82,14 +82,14 @@
                     </f:facet>
                     
                		 <h:selectBooleanCheckbox id="chk-#{roleItem.menuId}"
-                                value="#{roleController.checkValue}">
-                                <f:ajax execute="@this" listener="#{roleController.addRemoveMenu(roleItem)}"/>
+                                value="#{roleController.roleMenuCheckValue}">
+                                <f:ajax execute="@this" listener="#{roleController.addRemoveRoleMenu(roleItem)}"/>
                        </h:selectBooleanCheckbox>
                
                 </p:column>
                 
             </p:dataTable>
-            <p:commandButton id="removeMenuButton" value="#{msg.remove}" actionListener="#{roleController.removeMenuToRol}" update=":listRoleMenuForm" />
+            <p:commandButton id="removeMenuButton" value="#{msg.remove}" actionListener="#{roleController.removeMenuFromRol}" update="listRoleMenuForm roleViewMenuForm" />
 		</h:form>
         </p:dialog>
 

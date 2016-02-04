@@ -27,24 +27,35 @@ public class RoleController {
 	List<RoleDTO> items;
 	List<RoleMenuDTO> roleItems;
 	List<MenuDTO> menuItems;
+	List<RoleMenuDTO> deleteMenuItems;
 	private RoleDTO selected;
 	private Integer userIdSelected;
 	private Integer roleIdSelected;
 	private RoleDTO selectedRole;
 	private MenuDTO selectedMenu;
+	private RoleMenuDTO selectedRoleMenu;
 	
 	private List<MenuDTO> menuList;
 	private boolean checkValue;
+	private boolean roleMenuCheckValue;
 	
 	private static final Logger logger = Logger.getLogger(RoleController.class);
 	
+	/**
+	 * Initial method executed when the bean is loaded
+	 */
 	public void init() {
 		menuList = new ArrayList<MenuDTO>();
+		deleteMenuItems = new ArrayList<RoleMenuDTO>();
 		items = roleService.getAll();
 	}
 
+	/**
+	 * Find the menu items related to the Role
+	 * @param roleDto
+	 */
 	public void findMenuByRole(RoleDTO roleDto) {
-		selectedRole = roleDto;
+		this.selectedRole = roleDto;
 		try {
 			roleItems = roleMenuService.findMenuByRole(roleDto);
 			String menuIds = getMenuIds();
@@ -56,6 +67,9 @@ public class RoleController {
 		}
 	}
 	
+	/**
+	 * add the selected menu to the list
+	 */
 	public void addMenuToRol() {
 		try {
 			if(menuList!=null && menuList.size() > 0) {
@@ -69,9 +83,16 @@ public class RoleController {
 			}
 		} catch(Exception ex) {
 			logger.error("Throwed Exception [RoleController.addMenuToRol]: " +ex.getMessage());
+		} finally {
+			menuList = new ArrayList<MenuDTO>();
+			findMenuByRole(selectedRole);
 		}
 	}
 	
+	/**
+	 * craeate a string with the menu ids
+	 * @return
+	 */
 	private String getMenuIds() {
 		int counter = 0;
 		StringBuilder ids = new StringBuilder();
@@ -87,7 +108,11 @@ public class RoleController {
 		return ids.toString();
 	}
 	
-	public void addRemoveMenu(MenuDTO menu) {
+	/**
+	 * add the item to the creation list
+	 * @param menu
+	 */
+	public void addRemoveMenuList(MenuDTO menu) {
 
 		try {
 			if(checkValue) {
@@ -100,10 +125,49 @@ public class RoleController {
 				}
 			}
 		} catch(Exception ex) {
-			logger.error("Error adding menu to list: " + ex.getMessage());
+			logger.error("Error addRemoveMenuList: " + ex.getMessage());
 		}
 	}
 	
+	/**
+	 * add the item to the deletion list
+	 * @param roleMenu
+	 */
+	public void addRemoveRoleMenu(RoleMenuDTO roleMenu) {
+
+		try {
+			if(roleMenuCheckValue) {
+				if(!deleteMenuItems.contains(roleMenu)) {
+					deleteMenuItems.add(roleMenu);
+				}
+			} else {
+				if(deleteMenuItems.contains(roleMenu)) {
+					deleteMenuItems.remove(roleMenu);
+				}
+			}
+		} catch(Exception ex) {
+			logger.error("Error addRemoveRoleMenu: " + ex.getMessage());
+		}
+	}
+	
+	public void removeMenuFromRol() {
+		try {
+			if(deleteMenuItems!=null && deleteMenuItems.size() > 0) {
+				for(RoleMenuDTO roleMenu : deleteMenuItems) {
+					roleMenuService.delete(roleMenu);
+				}
+			}
+		} catch(Exception ex) {
+			logger.error("Throwed Exception [RoleController.removeMenuFromRol]: " +ex.getMessage());
+		}  finally {
+			deleteMenuItems = new ArrayList<RoleMenuDTO>();
+			findMenuByRole(this.selectedRole);
+		}
+	}
+	
+	/**
+	 * creates a new entry
+	 */
 	public void saveNew() {
 		try {
 			roleService.createRole(selected);
@@ -262,6 +326,24 @@ public class RoleController {
 
 	public void setSelectedMenu(MenuDTO selectedMenu) {
 		this.selectedMenu = selectedMenu;
+	}
+
+	
+
+	public boolean isRoleMenuCheckValue() {
+		return roleMenuCheckValue;
+	}
+
+	public void setRoleMenuCheckValue(boolean roleMenuCheckValue) {
+		this.roleMenuCheckValue = roleMenuCheckValue;
+	}
+
+	public RoleMenuDTO getSelectedRoleMenu() {
+		return selectedRoleMenu;
+	}
+
+	public void setSelectedRoleMenu(RoleMenuDTO selectedRoleMenu) {
+		this.selectedRoleMenu = selectedRoleMenu;
 	}
 	
 }
