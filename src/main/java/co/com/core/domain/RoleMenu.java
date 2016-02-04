@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "role_menu")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "RoleMenu.findAll", query = "SELECT r FROM RoleMenu r"),
+	@NamedQuery(name = "RoleMenu.findAll", query = "SELECT r FROM RoleMenu r"),
+    @NamedQuery(name = "RoleMenu.findByRoleId", query = "SELECT r FROM RoleMenu r WHERE r.roleId = :roleId"),
     @NamedQuery(name = "RoleMenu.findByRoleMenuId", query = "SELECT r FROM RoleMenu r WHERE r.roleMenuId = :roleMenuId")})
 public class RoleMenu implements Serializable {
     private static final long serialVersionUID = 1L;

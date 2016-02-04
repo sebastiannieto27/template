@@ -50,8 +50,46 @@
                 </p:column>
             </p:dataTable>
             <p:commandButton id="addMenuButton" value="#{msg.add}" actionListener="#{roleController.addMenuToRol}" update=":roleListForm" />
+            </h:form>
             <p:separator />
-            
+            <h:form id="listRoleMenuForm">
+	            <p:dataTable id="datalistRoleMenu"
+	                         value="#{roleController.roleItems}"
+	                         var="roleItem"
+	                         rowKey="#{roleItem.roleId}"
+	                         paginator="true"
+	                         rows="10"
+	                         rowsPerPageTemplate="10,20,30,40,50"
+	                         selectionMode="single"
+	                         selection="#{roleController.selectedRoleMenu}">
+
+                <p:column sortBy="#{roleItem.roleMenuId}" filterBy="#{roleItem.roleMenuId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{roleItem.roleMenuId}"/>
+                </p:column>
+
+                <p:column sortBy="#{roleItem.menuId.menuName}" filterBy="#{roleItem.menuId.menuName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.menu}"/>
+                    </f:facet>
+                    <h:outputText value="#{roleItem.menuId.menuName}"/>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.submenu}"/>
+                    </f:facet>
+                    
+               		 <h:selectBooleanCheckbox id="chk-#{roleItem.menuId}"
+                                value="#{roleController.checkValue}">
+                                <f:ajax execute="@this" listener="#{roleController.addRemoveMenu(roleItem)}"/>
+                       </h:selectBooleanCheckbox>
+               
+                </p:column>
+                
+            </p:dataTable>
 		</h:form>
         </p:dialog>
 

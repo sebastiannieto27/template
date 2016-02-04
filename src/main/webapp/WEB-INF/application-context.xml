@@ -174,6 +174,7 @@
             
     <bean id="roleController" scope="session" class="co.com.core.controller.RoleController" init-method="init">
     	<property name="roleService" ref="roleService" />
+    	<property name="roleMenuService" ref="roleMenuService" />
     </bean> 
                 
     <bean id="roleMenuController" scope="session" class="co.com.core.controller.RoleMenuController" init-method="init">

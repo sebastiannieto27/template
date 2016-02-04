@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.RoleMenuDAO;
+import co.com.core.domain.Role;
 import co.com.core.domain.RoleMenu;
 
 public class RoleMenuDAOImpl implements RoleMenuDAO {
@@ -79,5 +80,23 @@ public class RoleMenuDAOImpl implements RoleMenuDAO {
 			} finally {
 				session.close();
 			}
+		}
+
+
+		@Override
+		public List<RoleMenu> findMenuByRole(Role role) {
+			List<RoleMenu> entityList = null;
+			try {
+				session = this.sessionFactory.openSession();
+		        Query query = session.getNamedQuery("RoleMenu.findByRoleId");
+		        query.setParameter("roleId", role);
+		        entityList = query.list();
+		        
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [RoleMenuDAOImpl.findMenuByRole]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return entityList;
 		}
 }

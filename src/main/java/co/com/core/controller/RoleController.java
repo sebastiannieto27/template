@@ -2,7 +2,6 @@ package co.com.core.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -11,17 +10,21 @@ import org.apache.log4j.Logger;
 
 import co.com.core.dto.MenuDTO;
 import co.com.core.dto.RoleDTO;
+import co.com.core.dto.RoleMenuDTO;
+import co.com.core.services.IRoleMenuService;
 import co.com.core.services.IRoleService;
 
 
 public class RoleController {
 
 	IRoleService roleService;
+	IRoleMenuService roleMenuService;
 	List<RoleDTO> items;
+	List<RoleMenuDTO> roleItems;
 	private RoleDTO selected;
 	private Integer userIdSelected;
 	private Integer roleIdSelected;
-	private RoleDTO selectedRolMenu;
+	private RoleDTO selectedRoleMenu;
 	
 	private List<MenuDTO> menuList;
 	private boolean checkValue;
@@ -33,6 +36,15 @@ public class RoleController {
 		items = roleService.getAll();
 	}
 
+	public void findMenuByRole(RoleDTO roleDto) {
+		selectedRoleMenu = roleDto;
+		try {
+			roleItems = roleMenuService.findMenuByRole(roleDto);
+		} catch(Exception ex) {
+			logger.error("Error finding menus by role: " + ex.getMessage());
+		}
+	}
+	
 	public void addMenuToRol() {
 		
 		if(menuList!=null && menuList.size() > 0) {
@@ -42,7 +54,7 @@ public class RoleController {
 			}
 		}
 		
-		logger.error("::::::::::::" + selectedRolMenu);
+		logger.error("::::::::::::" + selectedRoleMenu);
 	}
 	
 	public void addRemoveMenu(MenuDTO menu) {
@@ -174,11 +186,28 @@ public class RoleController {
 		this.checkValue = checkValue;
 	}
 
-	public RoleDTO getSelectedRolMenu() {
-		return selectedRolMenu;
+	public RoleDTO getSelectedRoleMenu() {
+		return selectedRoleMenu;
 	}
 
-	public void setSelectedRolMenu(RoleDTO selectedRolMenu) {
-		this.selectedRolMenu = selectedRolMenu;
+	public void setSelectedRoleMenu(RoleDTO selectedRoleMenu) {
+		this.selectedRoleMenu = selectedRoleMenu;
 	}
+
+	public IRoleMenuService getRoleMenuService() {
+		return roleMenuService;
+	}
+
+	public void setRoleMenuService(IRoleMenuService roleMenuService) {
+		this.roleMenuService = roleMenuService;
+	}
+
+	public List<RoleMenuDTO> getRoleItems() {
+		return roleItems;
+	}
+
+	public void setRoleItems(List<RoleMenuDTO> roleItems) {
+		this.roleItems = roleItems;
+	}
+	
 }

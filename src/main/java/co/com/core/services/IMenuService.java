@@ -4,6 +4,7 @@ import java.util.List;
 
 import co.com.core.domain.User;
 import co.com.core.dto.MenuDTO;
+import co.com.core.dto.RoleDTO;
 
 public interface IMenuService {
 

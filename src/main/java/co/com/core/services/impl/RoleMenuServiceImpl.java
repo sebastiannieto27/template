@@ -6,8 +6,10 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import co.com.core.commons.converter.RoleMenuUtil;
+import co.com.core.commons.converter.RoleUtil;
 import co.com.core.dao.RoleMenuDAO;
 import co.com.core.domain.RoleMenu;
+import co.com.core.dto.RoleDTO;
 import co.com.core.dto.RoleMenuDTO;
 import co.com.core.services.IRoleMenuService;
 
@@ -49,6 +51,20 @@ public class RoleMenuServiceImpl implements IRoleMenuService {
 
 	public void setRoleMenuDAO(RoleMenuDAO RoleMenuDAO) {
 		this.roleMenuDAO = RoleMenuDAO;
+	}
+
+	@Override
+	public List<RoleMenuDTO> findMenuByRole(RoleDTO role) {
+		List<RoleMenuDTO> dtoList = new ArrayList<RoleMenuDTO>();
+		List<RoleMenu> entityList = this.roleMenuDAO.findMenuByRole(RoleUtil.getEntityFromDto(role));
+		
+		if(entityList!= null && entityList.size() > 0) {
+			for(RoleMenu entity : entityList) {
+				dtoList.add(RoleMenuUtil.getDtoFromEntity(entity));
+			}
+		}
+		
+		return dtoList;
 	}
 
 	

@@ -58,7 +58,7 @@
                         <h:outputText value="#{msg.menu}"/>
                     </f:facet>
                     <p:commandLink id="viewMenuLink" value="#{msg.menu}" update=":roleViewMenuForm" 
-                    		oncomplete="PF('roleViewMenuDialog').show()" actionListener="#{roleController.setSelectedRolMenu(item)}"/>
+                    		oncomplete="PF('roleViewMenuDialog').show()" actionListener="#{roleController.findMenuByRole(item)}"/>
                 </p:column>
                 
                 
