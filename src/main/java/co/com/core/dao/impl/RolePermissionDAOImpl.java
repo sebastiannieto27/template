@@ -9,6 +9,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.RolePermissionDAO;
+import co.com.core.domain.Role;
+import co.com.core.domain.RoleMenu;
 import co.com.core.domain.RolePermission;
 
 public class RolePermissionDAOImpl implements RolePermissionDAO {
@@ -79,5 +81,23 @@ public class RolePermissionDAOImpl implements RolePermissionDAO {
 			} finally {
 				session.close();
 			}
+		}
+
+
+		@Override
+		public List<RolePermission> findByRole(Role role) {
+			List<RolePermission> entityList = null;
+			try {
+				session = this.sessionFactory.openSession();
+		        Query query = session.getNamedQuery("RolePermission.findByRoleId");
+		        query.setParameter("roleId", role);
+		        entityList = query.list();
+		        
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [RolePermissionDAOImpl.findByRole]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return entityList;
 		}
 }

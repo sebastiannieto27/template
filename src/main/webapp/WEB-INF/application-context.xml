@@ -176,6 +176,8 @@
     	<property name="roleService" ref="roleService" />
     	<property name="roleMenuService" ref="roleMenuService" />
     	<property name="menuService" ref="menuService" />
+    	<property name="permissionService" ref="permissionService" />
+    	<property name="rolePermissionService" ref="rolePermissionService" />
     </bean> 
                 
     <bean id="roleMenuController" scope="session" class="co.com.core.controller.RoleMenuController" init-method="init">

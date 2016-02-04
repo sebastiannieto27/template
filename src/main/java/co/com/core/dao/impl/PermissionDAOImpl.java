@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.PermissionDAO;
+import co.com.core.domain.Menu;
 import co.com.core.domain.Permission;
 
 public class PermissionDAOImpl implements PermissionDAO {
@@ -79,5 +80,29 @@ public class PermissionDAOImpl implements PermissionDAO {
 			} finally {
 				session.close();
 			}
+		}
+
+
+		@Override
+		public List<Permission> getNotAssignedPermission(String ids) {
+			List<Permission> permissionList = null;
+			try {
+				session = this.sessionFactory.openSession();
+				StringBuilder hql = new StringBuilder();
+				if(ids!=null && !ids.isEmpty()) {
+					hql.append("SELECT p FROM Permission p WHERE p.permissionId NOT IN(").append(ids).append(")");
+				} else {
+					hql.append("SELECT p FROM Permission p");
+				}
+				
+				Query query = session.createQuery(hql.toString());
+				permissionList = query.list();
+				
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [PermissionDAOImpl.getNotAssignedMenu]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return permissionList;
 		}
 }

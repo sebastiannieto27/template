@@ -5,9 +5,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import co.com.core.commons.converter.RoleMenuUtil;
 import co.com.core.commons.converter.RolePermissionUtil;
+import co.com.core.commons.converter.RoleUtil;
 import co.com.core.dao.RolePermissionDAO;
+import co.com.core.domain.RoleMenu;
 import co.com.core.domain.RolePermission;
+import co.com.core.dto.RoleDTO;
+import co.com.core.dto.RoleMenuDTO;
 import co.com.core.dto.RolePermissionDTO;
 import co.com.core.services.IRolePermissionService;
 
@@ -49,5 +54,19 @@ public class RolePermissionServiceImpl implements IRolePermissionService {
 
 	public void setRolePermissionDAO(RolePermissionDAO RolePermissionDAO) {
 		this.rolePermissionDAO = RolePermissionDAO;
+	}
+
+	@Override
+	public List<RolePermissionDTO> findByRole(RoleDTO role) {
+		List<RolePermissionDTO> dtoList = new ArrayList<RolePermissionDTO>();
+		List<RolePermission> entityList = this.rolePermissionDAO.findByRole(RoleUtil.getEntityFromDto(role));
+		
+		if(entityList!= null && entityList.size() > 0) {
+			for(RolePermission entity : entityList) {
+				dtoList.add(RolePermissionUtil.getDtoFromEntity(entity));
+			}
+		}
+		
+		return dtoList;
 	}
 }

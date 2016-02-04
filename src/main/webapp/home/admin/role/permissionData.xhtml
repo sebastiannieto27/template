@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="roleViewPermissionDlg" widgetVar="roleViewPermissionDialog" modal="true" resizable="true" width="50%" appendTo="@(body)" header="#{msg.permission}" closeOnEscape="true">
+
+            <h:form id="roleViewPermissionForm">
+            <p:dataTable id="datalist"
+                         value="#{roleController.notAssignedPermissionItems}"
+                         var="item"
+                         rowKey="#{item.permissionId}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{roleController.selectedPermission}">
+
+               <p:column sortBy="#{item.permissionId}" filterBy="#{item.permissionId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.permissionId}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.permissionName}" filterBy="#{item.permissionName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.permissionName}"/>
+                </p:column>
+
+                <p:column>
+               		 <h:selectBooleanCheckbox id="perm-#{item.menuId}"
+                                value="#{roleController.permissionCheckValue}">
+                                <f:ajax execute="@this" listener="#{roleController.addRemovePermissionList(item)}"/>
+                       </h:selectBooleanCheckbox>
+               
+                </p:column>
+            </p:dataTable>
+            <p:commandButton id="addPermissionButton" value="#{msg.add}" actionListener="#{roleController.addPermissionToRol}" update="roleViewPermissionForm listRolePermissionForm" />
+            </h:form>
+            <h:form id="listRolePermissionForm">
+	            <p:dataTable id="datalistRolePermission"
+	                         value="#{roleController.permissionItems}"
+	                         var="roleItem"
+	                         rowKey="#{roleItem.roleId}"
+	                         paginator="true"
+	                         rows="5"
+	                         rowsPerPageTemplate="10,20,30,40,50"
+	                         selectionMode="single"
+	                         selection="#{roleController.selectedRolePermission}">
+
+               <p:column sortBy="#{roleItem.rolePermissionId}" filterBy="#{roleItem.rolePermissionId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{roleItem.rolePermissionId}"/>
+                </p:column>
+
+                <p:column sortBy="#{roleItem.permissionId.permissionName}" filterBy="#{roleItem.permissionId.permissionName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.permission}"/>
+                    </f:facet>
+                    <h:outputText value="#{roleItem.permissionId.permissionName}"/>
+                </p:column>
+
+                <p:column>
+               		 <h:selectBooleanCheckbox id="perm-#{roleItem.rolePermissionId}"
+                                value="#{roleController.rolePermissionCheckValue}">
+                                <f:ajax execute="@this" listener="#{roleController.addRemoveRolePermission(roleItem)}"/>
+                       </h:selectBooleanCheckbox>
+               
+                </p:column>
+                
+            </p:dataTable>
+            <p:commandButton id="removePermissionButton" value="#{msg.remove}" actionListener="#{roleController.removePermissionFromRol}" update="listRolePermissionForm roleViewPermissionForm" />
+		</h:form>
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

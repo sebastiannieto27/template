@@ -9,13 +9,17 @@ import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 import co.com.core.commons.converter.MenuUtil;
+import co.com.core.commons.converter.PermissionUtil;
 import co.com.core.commons.converter.RoleUtil;
-import co.com.core.domain.RoleMenu;
 import co.com.core.dto.MenuDTO;
+import co.com.core.dto.PermissionDTO;
 import co.com.core.dto.RoleDTO;
 import co.com.core.dto.RoleMenuDTO;
+import co.com.core.dto.RolePermissionDTO;
 import co.com.core.services.IMenuService;
+import co.com.core.services.IPermissionService;
 import co.com.core.services.IRoleMenuService;
+import co.com.core.services.IRolePermissionService;
 import co.com.core.services.IRoleService;
 
 
@@ -24,10 +28,25 @@ public class RoleController {
 	IRoleService roleService;
 	IRoleMenuService roleMenuService;
 	IMenuService menuService;
+	IRolePermissionService rolePermissionService;
+	IPermissionService permissionService;
+	//Menu
 	List<RoleDTO> items;
 	List<RoleMenuDTO> roleItems;
 	List<MenuDTO> menuItems;
 	List<RoleMenuDTO> deleteMenuItems;
+	private List<MenuDTO> menuList;
+	//Permission
+	private List<RolePermissionDTO> permissionItems;
+	private List<PermissionDTO> notAssignedPermissionItems;
+	private List<PermissionDTO> permissionList;
+	private List<RolePermissionDTO> deletePermissionItems;
+	
+	private PermissionDTO selectedPermission;
+	private RolePermissionDTO selectedRolePermission;
+	private boolean permissionCheckValue;
+	private boolean rolePermissionCheckValue;
+	
 	private RoleDTO selected;
 	private Integer userIdSelected;
 	private Integer roleIdSelected;
@@ -35,7 +54,6 @@ public class RoleController {
 	private MenuDTO selectedMenu;
 	private RoleMenuDTO selectedRoleMenu;
 	
-	private List<MenuDTO> menuList;
 	private boolean checkValue;
 	private boolean roleMenuCheckValue;
 	
@@ -47,9 +65,126 @@ public class RoleController {
 	public void init() {
 		menuList = new ArrayList<MenuDTO>();
 		deleteMenuItems = new ArrayList<RoleMenuDTO>();
+		permissionList = new ArrayList<PermissionDTO>();
+		deletePermissionItems = new ArrayList<RolePermissionDTO>();
 		items = roleService.getAll();
 	}
 
+	/*********************************************************************************************************************************
+	*************************************************PERMISSION MANAGE****************************************************************************/
+	/**
+	 * Find the menu items related to the Role
+	 * @param roleDto
+	 */
+	public void findPermissionByRole(RoleDTO roleDto) {
+		this.selectedRole = roleDto;
+		try {
+			permissionItems = rolePermissionService.findByRole(roleDto);
+			String permissionIds = getPermissionIds();
+			notAssignedPermissionItems = permissionService.getNotAssignedPermission(permissionIds);
+		} catch(Exception ex) {
+			logger.error("Error finding permissions by role: " + ex.getMessage());
+		}
+	}
+	
+	/**
+	 * create a string with the permission ids
+	 * @return
+	 */
+	private String getPermissionIds() {
+		int counter = 0;
+		StringBuilder ids = new StringBuilder();
+		if(permissionItems!=null && permissionItems.size() > 0) {
+			for(RolePermissionDTO dto:  permissionItems) {
+				if(counter > 0) {
+					ids.append(",");
+				}
+				ids.append(dto.getPermissionId().getPermissionId());
+				counter++;
+			}
+		}
+		return ids.toString();
+	}
+	
+	/**
+	 * add the item to the creation list
+	 * @param permission
+	 */
+	public void addRemovePermissionList(PermissionDTO permission) {
+
+		try {
+			if(permissionCheckValue) {
+				if(!permissionList.contains(permission)) {
+					permissionList.add(permission);
+				}
+			} else {
+				if(permissionList.contains(permission)) {
+					permissionList.remove(permission);
+				}
+			}
+		} catch(Exception ex) {
+			logger.error("Error addRemovePermissionList: " + ex.getMessage());
+		}
+	}
+	
+	/**
+	 * add the selected permission to the list
+	 */
+	public void addPermissionToRol() {
+		try {
+			if(permissionList!=null && permissionList.size() > 0) {
+				for(PermissionDTO permission : permissionList) {
+					RolePermissionDTO dto = new RolePermissionDTO();
+					dto.setRoleId(RoleUtil.getEntityFromDto(selectedRole));
+					dto.setPermissionId(PermissionUtil.getEntityFromDto(permission));
+					rolePermissionService.create(dto);
+				}
+			}
+		} catch(Exception ex) {
+			logger.error("Throwed Exception [RoleController.addPermissionToRol]: " +ex.getMessage());
+		} finally {
+			permissionList = new ArrayList<PermissionDTO>();
+			findPermissionByRole(selectedRole);
+		}
+	}
+	
+	/**
+	 * add the item to the deletion list
+	 * @param rolePermission
+	 */
+	public void addRemoveRolePermission(RolePermissionDTO rolePermission) {
+
+		try {
+			if(rolePermissionCheckValue) {
+				if(!deletePermissionItems.contains(rolePermission)) {
+					deletePermissionItems.add(rolePermission);
+				}
+			} else {
+				if(deletePermissionItems.contains(rolePermission)) {
+					deletePermissionItems.remove(rolePermission);
+				}
+			}
+		} catch(Exception ex) {
+			logger.error("Error addRemoveRolePermission: " + ex.getMessage());
+		}
+	}
+	
+	public void removePermissionFromRol() {
+		try {
+			if(deletePermissionItems!=null && deletePermissionItems.size() > 0) {
+				for(RolePermissionDTO rolePermission : deletePermissionItems) {
+					rolePermissionService.delete(rolePermission);
+				}
+			}
+		} catch(Exception ex) {
+			logger.error("Throwed Exception [RoleController.removePermissionFromRol]: " +ex.getMessage());
+		}  finally {
+			deletePermissionItems = new ArrayList<RolePermissionDTO>();
+			findPermissionByRole(selectedRole);
+		}
+	}
+	/*********************************************************************************************************************************
+	*************************************************ROLE MANAGE****************************************************************************/
 	/**
 	 * Find the menu items related to the Role
 	 * @param roleDto
@@ -90,7 +225,7 @@ public class RoleController {
 	}
 	
 	/**
-	 * craeate a string with the menu ids
+	 * create a string with the menu ids
 	 * @return
 	 */
 	private String getMenuIds() {
@@ -164,7 +299,8 @@ public class RoleController {
 			findMenuByRole(this.selectedRole);
 		}
 	}
-	
+	/*********************************************************************************************************************************
+	*************************************************ADMIN****************************************************************************/
 	/**
 	 * creates a new entry
 	 */
@@ -232,6 +368,11 @@ public class RoleController {
 		selected = new RoleDTO();
 	}
 
+	/*
+	 * ***********************************************************************************************************************************************
+	 * ***************************************************GET & SET**********************************************************************************
+	 */
+	
 	public IRoleService getRoleService() {
 		return roleService;
 	}
@@ -328,8 +469,6 @@ public class RoleController {
 		this.selectedMenu = selectedMenu;
 	}
 
-	
-
 	public boolean isRoleMenuCheckValue() {
 		return roleMenuCheckValue;
 	}
@@ -344,6 +483,80 @@ public class RoleController {
 
 	public void setSelectedRoleMenu(RoleMenuDTO selectedRoleMenu) {
 		this.selectedRoleMenu = selectedRoleMenu;
+	}
+
+	public IRolePermissionService getRolePermissionService() {
+		return rolePermissionService;
+	}
+
+	public void setRolePermissionService(
+			IRolePermissionService rolePermissionService) {
+		this.rolePermissionService = rolePermissionService;
+	}
+
+	public IPermissionService getPermissionService() {
+		return permissionService;
+	}
+
+	public void setPermissionService(IPermissionService permissionService) {
+		this.permissionService = permissionService;
+	}
+
+	public List<RolePermissionDTO> getPermissionItems() {
+		return permissionItems;
+	}
+
+	public void setPermissionItems(List<RolePermissionDTO> permissionItems) {
+		this.permissionItems = permissionItems;
+	}
+
+	public List<PermissionDTO> getNotAssignedPermissionItems() {
+		return notAssignedPermissionItems;
+	}
+
+	public void setNotAssignedPermissionItems(
+			List<PermissionDTO> notAssignedPermissionItems) {
+		this.notAssignedPermissionItems = notAssignedPermissionItems;
+	}
+
+	public List<PermissionDTO> getPermissionList() {
+		return permissionList;
+	}
+
+	public void setPermissionList(List<PermissionDTO> permissionList) {
+		this.permissionList = permissionList;
+	}
+
+	public PermissionDTO getSelectedPermission() {
+		return selectedPermission;
+	}
+
+	public void setSelectedPermission(PermissionDTO selectedPermission) {
+		this.selectedPermission = selectedPermission;
+	}
+
+	public RolePermissionDTO getSelectedRolePermission() {
+		return selectedRolePermission;
+	}
+
+	public void setSelectedRolePermission(RolePermissionDTO selectedRolePermission) {
+		this.selectedRolePermission = selectedRolePermission;
+	}
+
+	public boolean isPermissionCheckValue() {
+		return permissionCheckValue;
+	}
+
+	public void setPermissionCheckValue(boolean permissionCheckValue) {
+		this.permissionCheckValue = permissionCheckValue;
+	}
+
+	public boolean isRolePermissionCheckValue() {
+		return rolePermissionCheckValue;
+	}
+
+	public void setRolePermissionCheckValue(boolean rolePermissionCheckValue) {
+		this.rolePermissionCheckValue = rolePermissionCheckValue;
 	}
 	
 }

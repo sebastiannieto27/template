@@ -57,10 +57,17 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.menu}"/>
                     </f:facet>
-                    <p:commandLink id="viewMenuLink" value="#{msg.menu}" update=":roleViewMenuForm,:listRoleMenuForm" 
+                    <p:commandLink id="viewMenuLink" value="#{msg.menu}" update=":roleViewMenuForm,:listRoleMenuForm,:listRoleMenuForm" 
                     		oncomplete="PF('roleViewMenuDialog').show()" actionListener="#{roleController.findMenuByRole(item)}"/>
                 </p:column>
                 
+                 <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.menu}"/>
+                    </f:facet>
+                    <p:commandLink id="viewPermissionLink" value="#{msg.permission}" update=":roleViewPermissionForm,:listRolePermissionForm" 
+                    		oncomplete="PF('roleViewPermissionDialog').show()" actionListener="#{roleController.findPermissionByRole(item)}"/>
+                </p:column>
                 
             </p:dataTable>
             <p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{roleController.init()}" update=":roleListForm" />

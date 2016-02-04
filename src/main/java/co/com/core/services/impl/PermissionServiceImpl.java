@@ -5,10 +5,18 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import co.com.core.commons.converter.MenuUtil;
 import co.com.core.commons.converter.PermissionUtil;
+import co.com.core.commons.converter.RoleMenuUtil;
+import co.com.core.commons.converter.RoleUtil;
 import co.com.core.dao.PermissionDAO;
+import co.com.core.domain.Menu;
 import co.com.core.domain.Permission;
+import co.com.core.domain.RoleMenu;
+import co.com.core.dto.MenuDTO;
 import co.com.core.dto.PermissionDTO;
+import co.com.core.dto.RoleDTO;
+import co.com.core.dto.RoleMenuDTO;
 import co.com.core.services.IPermissionService;
 
 public class PermissionServiceImpl implements IPermissionService {
@@ -51,5 +59,16 @@ public class PermissionServiceImpl implements IPermissionService {
 		this.permissionDAO = PermissionDAO;
 	}
 
+	@Override
+	public List<PermissionDTO> getNotAssignedPermission(String ids) {
+		List<PermissionDTO> dtoList = new ArrayList<PermissionDTO>();
+		List<Permission> entityList = this.permissionDAO.getNotAssignedPermission(ids);
+		if(entityList!=null && entityList.size() > 0) {
+			for(Permission entity: entityList) {
+				dtoList.add(PermissionUtil.getDtoFromEntity(entity));
+			}
+		}
+		return dtoList;
+	}
 	
 }
