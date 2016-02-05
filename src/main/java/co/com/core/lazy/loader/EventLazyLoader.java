@@ -6,9 +6,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import co.com.core.controller.EventController;
 import co.com.core.dto.EventDTO;
 import co.com.core.lazy.sorter.EventLazySorter;
 import co.com.core.services.IEventService;
@@ -19,6 +21,8 @@ public class EventLazyLoader extends LazyDataModel<EventDTO> {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private static final Logger logger = Logger.getLogger(EventLazyLoader.class);
+	
 	private List<EventDTO> datasource;
     
     public EventLazyLoader(IEventService eventServiceImpl) {
@@ -27,9 +31,13 @@ public class EventLazyLoader extends LazyDataModel<EventDTO> {
     
     @Override
     public EventDTO getRowData(String rowKey) {
+    	logger.info("getRowData: " + rowKey);
+    	int intRowKey = Integer.parseInt(rowKey);
         for(EventDTO event : datasource) {
-            if(event.getEventId().equals(rowKey))
-                return event;
+            if(event.getEventId() == intRowKey){
+            	logger.info("EQUALS: " + event.getName());
+            	return event;
+            }
         }
         return null;
     }

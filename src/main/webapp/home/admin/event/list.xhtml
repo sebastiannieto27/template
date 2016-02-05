@@ -10,10 +10,10 @@
 	    <ui:composition>
 		<h:form id="eventListForm">
 	            <p:contextMenu id="eventDataTableContextMenu" for="datalist">  
-	            <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('eventListForm:createButton').click();" icon="ui-icon-plus"/>
-	            <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('eventListForm:viewButton').click();" icon="ui-icon-search"/>
-	            <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('eventListForm:editButton').click();" icon="ui-icon-pencil"/>
-	            <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('eventListForm:deleteButton').click();" icon="ui-icon-trash"/>
+	            <p:menuitem value="#{msg.create}" onclick="document.getElementById('eventListForm:createButton').click();" icon="ui-icon-plus"/>
+	            <p:menuitem value="#{msg.view}" onclick="document.getElementById('eventListForm:viewButton').click();" icon="ui-icon-search"/>
+	            <p:menuitem value="#{msg.edit}" onclick="document.getElementById('eventListForm:editButton').click();" icon="ui-icon-pencil"/>
+	            <p:menuitem value="#{msg.delete}" onclick="document.getElementById('eventListForm:deleteButton').click();" icon="ui-icon-trash"/>
             </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{eventController.lazyModel}"
@@ -28,10 +28,8 @@
                          lazy="true">
 
                 <p:ajax event="rowSelect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:eventDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:eventDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('eventListForm:viewButton').click();"/>
-
+<!-- 					<p:ajax event="rowSelect" listener="#{eventController.onRowSelectNavigate}" global="true" immediate="true" update=":eventListForm"/> -->
+               
                 <p:column sortBy="#{item.eventId}" filterBy="#{item.eventId}">
                     <f:facet name="header">
                         <h:outputText value="#{msg.id}"/>

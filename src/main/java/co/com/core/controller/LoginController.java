@@ -29,23 +29,36 @@ public class LoginController {
 	public String validateLogin() {
 
 		try {
-			
+			String encryptedPasswd = EncryptDecrypt.encrypt("12345");
+			logger.info("PASSWROD: " + encryptedPasswd);
 			String encrypted = EncryptDecrypt.encrypt(userPassword);
 			
 			userDto = userService.login(userEmail, encrypted);
 			
+			logger.info("USUARIO: " + userDto);
+			
 			if(userDto != null) {
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.getExternalContext().getSessionMap().put("user", userDto);
-				this.isLogged = true;
-	            menuController.loadMenu(userDto);
-		            
-	            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,
-		                            "Login Successful","Welcome"));
-		           // FacesContext.getCurrentInstance().getExternalContext().redirect("home/profile.xhtml");
-		            
-		            return "home/profile.xhtml?faces-redirect=true";
-					//return "home/profile.xhtml";
+				
+				if(userDto.getActive()) {
+					logger.info("USUARIO ACTIVO: " + userDto.getActive());
+					FacesContext context = FacesContext.getCurrentInstance();
+					context.getExternalContext().getSessionMap().put("user", userDto);
+					this.isLogged = true;
+		            menuController.loadMenu(userDto);
+			            
+		            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,
+			                            "Login Successful","Welcome"));
+		            //FacesContext.getCurrentInstance().getExternalContext().redirect("festivities/home/profile.xhtml");
+			            return "home/profile.xhtml?faces-redirect=true";
+				} else {
+					logger.info("USUARIO INACTIVO: " + userDto.getActive());
+					this.isLogged = false;
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+		                            "Usuario Inactivo", "Usuario Inactivo"));
+					//FacesContext.getCurrentInstance().getExternalContext().redirect("festivities/login.xhtml");
+					return "/login.xhtml?faces-redirect=true";
+				}
+				
 			} else {
 				this.isLogged = false;
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,

@@ -67,9 +67,10 @@
 				<p:column sortBy="#{item.idNumber}" filterBy="#{item.idNumber}">
 					<f:facet name="header">
 						<h:outputText value="#{myBundle.ListuserTitle_idNumber}" />
-					∫</f:facet>
+					</f:facet>
 					<h:outputText value="#{item.idNumber}" />
 				</p:column>
+				
 				<p:column sortBy="#{item.active}" filterBy="#{item.active}">
 					<f:facet name="header">
 						<h:outputText value="#{myBundle.ListuserTitle_active}" />
@@ -77,6 +78,10 @@
 					<h:selectBooleanCheckbox id="active" value="#{item.active}"
 						title="#{myBundle.EdituserTitle_active}" disabled="true" />
 				</p:column>
+
+ 				<p:column>
+                    <p:commandLink id="resetUserPasswd" value="#{msg.resetPassword}" update=":growl" actionListener="#{userController.resetPassword(item)}"/>
+                </p:column>
 
 			</p:dataTable>
 			<p:commandButton id="searchButton" icon="ui-icon-search"

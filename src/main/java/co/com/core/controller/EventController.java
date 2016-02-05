@@ -1,6 +1,5 @@
 package co.com.core.controller;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -17,12 +16,11 @@ import co.com.core.services.IEventService;
 
 
 
-public class EventController implements Serializable {
+public class EventController {
 
 	private static final Logger logger = Logger.getLogger(EventController.class);
 	
 	IEventService eventService;
-	//PriorityBO priorityBO;
 	List<EventDTO> items;
 	private EventDTO selected;
 	private Integer priorityIdSelected;
@@ -34,6 +32,11 @@ public class EventController implements Serializable {
 		lazyModel = new EventLazyLoader(eventService);
 	}
 
+	//org.primefaces.event.SelectEvent
+	public void rowSelection(SelectEvent event) {
+		logger.info("Event: " + event.getObject());
+	}
+	
 	public void saveNew() {
 		try {
 			Priority p = new Priority(priorityIdSelected);

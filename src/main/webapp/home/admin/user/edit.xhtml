@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-        <p:dialog id="userEditDlg" widgetVar="userEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.editUserTitle}" closeOnEscape="true">
+        <p:dialog id="userEditDlg" widgetVar="userEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.edit} #{msg.user}" closeOnEscape="true">
 
             <h:form id="userEditForm">
 
@@ -30,10 +30,10 @@
                         <p:selectBooleanCheckbox id="active" value="#{userController.selected.active}" />
                       
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{userController.save}" value="#{myBundle.Save}" update="display,:userListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('userEditDialog'));">
-                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    <p:commandButton actionListener="#{userController.save}" value="#{msg.save}" update="display,:userListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('userEditDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
-                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('userEditDialog').hide()"/>
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('userEditDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>

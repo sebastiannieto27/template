@@ -20,6 +20,7 @@ public class UserController {
 	private UserDTO selected;
 	private LazyDataModel<UserDTO> lazyModel;
 	private static final Logger logger = Logger.getLogger(UserController.class);
+	private static final String DEFAULT_PASSWORD = "12345";
 	
 	public void init() {
 		items = userService.getAll();
@@ -88,9 +89,19 @@ public class UserController {
 		}
 	}
 
+	public void resetPassword(UserDTO userDto) {
+		String encryptedPasswd = EncryptDecrypt.encrypt(DEFAULT_PASSWORD);
+		userDto.setPassword(encryptedPasswd);
+		userService.update(userDto);
+		FacesContext.getCurrentInstance().addMessage(
+				null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Contraseña Actualizada", "Usuario"));
+	}
+	
 	public void selectOne() {
 		System.out.println("selected: " + selected);
 	}
+	
 	public void prepareCreate() {
 		selected = new UserDTO();
 	}
