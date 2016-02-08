@@ -32,7 +32,6 @@ public class TemplateController {
 				} else {
 					boolean validPage = validateAllowedPage(userDto, viewId);
 					if(!validPage) {
-						//context.getExternalContext().invalidateSession();
 						context.getExternalContext().redirect("/friogan/home/profile.xhtml");
 						logger.info("Invalid page access: " + userDto.getFirstName() + "Page: " + viewId);
 					}

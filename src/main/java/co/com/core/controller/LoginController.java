@@ -6,6 +6,7 @@ import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 import co.com.core.commons.EncryptDecrypt;
+import static co.com.core.commons.LoadBundle.geProperty;
 import co.com.core.dto.UserDTO;
 import co.com.core.services.IUserService;
 
@@ -19,7 +20,7 @@ public class LoginController {
 	private IUserService userService;
 	private MenuController menuController;
 	private UserDTO userDto;
-
+	
 	private static final Logger logger = Logger.getLogger(LoginController.class);
 	
 	public void init () {
@@ -29,41 +30,22 @@ public class LoginController {
 	public String validateLogin() {
 
 		try {
-			String encryptedPasswd = EncryptDecrypt.encrypt("12345");
-			logger.info("PASSWROD: " + encryptedPasswd);
+			FacesContext context = FacesContext.getCurrentInstance();
 			String encrypted = EncryptDecrypt.encrypt(userPassword);
-			
 			userDto = userService.login(userEmail, encrypted);
-			
-			logger.info("USUARIO: " + userDto);
-			
 			if(userDto != null) {
-				
 				if(userDto.getActive()) {
-					logger.info("USUARIO ACTIVO: " + userDto.getActive());
-					FacesContext context = FacesContext.getCurrentInstance();
 					context.getExternalContext().getSessionMap().put("user", userDto);
 					this.isLogged = true;
 		            menuController.loadMenu(userDto);
-			            
-		            context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,
-			                            "Login Successful","Welcome"));
-		            //FacesContext.getCurrentInstance().getExternalContext().redirect("festivities/home/profile.xhtml");
-			            return "home/profile.xhtml?faces-redirect=true";
+		            return "home/profile.xhtml?faces-redirect=true";
 				} else {
-					logger.info("USUARIO INACTIVO: " + userDto.getActive());
 					this.isLogged = false;
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-		                            "Usuario Inactivo", "Usuario Inactivo"));
-					//FacesContext.getCurrentInstance().getExternalContext().redirect("festivities/login.xhtml");
-					return "/login.xhtml?faces-redirect=true";
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("inactiveUser"), geProperty("pleaseVerifySummary")));
 				}
-				
 			} else {
 				this.isLogged = false;
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-	                            "Incorrect Username and Passowrd", "Please enter correct username and Password"));
-				return "/login.xhtml?faces-redirect=true";
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("wrongUserPassword"), geProperty("pleaseVerifySummary")));
 			}
 		} catch(Exception ex) {
 			logger.error("Throwed Exception [LoginController.validateLogin]: " +ex.getMessage());
