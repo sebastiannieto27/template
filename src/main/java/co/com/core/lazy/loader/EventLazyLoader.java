@@ -31,11 +31,9 @@ public class EventLazyLoader extends LazyDataModel<EventDTO> {
     
     @Override
     public EventDTO getRowData(String rowKey) {
-    	logger.info("getRowData: " + rowKey);
     	int intRowKey = Integer.parseInt(rowKey);
         for(EventDTO event : datasource) {
             if(event.getEventId() == intRowKey){
-            	logger.info("EQUALS: " + event.getName());
             	return event;
             }
         }

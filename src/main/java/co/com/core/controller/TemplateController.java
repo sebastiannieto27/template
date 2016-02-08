@@ -28,12 +28,12 @@ public class TemplateController {
 				UserDTO userDto = (UserDTO) context.getExternalContext().getSessionMap().get("user");
 				
 				if(userDto==null) {
-					context.getExternalContext().redirect("/festivities/login.xhtml");
+					context.getExternalContext().redirect("/friogan/login.xhtml");
 				} else {
 					boolean validPage = validateAllowedPage(userDto, viewId);
 					if(!validPage) {
 						//context.getExternalContext().invalidateSession();
-						context.getExternalContext().redirect("/festivities/home/profile.xhtml");
+						context.getExternalContext().redirect("/friogan/home/profile.xhtml");
 						logger.info("Invalid page access: " + userDto.getFirstName() + "Page: " + viewId);
 					}
 					logger.info("Valid session: " + userDto.getFirstName() + "Page: " + viewId);

@@ -79,14 +79,11 @@ public class EventController {
 	}
 
 	public void save() {
-		//logger.error("SAVE NEW METHOD");
 		if (this.selected != null) {
 			try {
-				//Priority p = priorityBO.getPriorityById(priorityIdSelected);
-				//logger.error("priority: " + p.toString());
-				//selected.setPriorityId(p);
-				eventService.updateHQL(selected);
-				//eventBO.update(selected);;
+				Priority p = new Priority(priorityIdSelected);
+				selected.setPriorityId(p);
+				eventService.update(selected);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -115,14 +112,6 @@ public class EventController {
 	public List<EventDTO> getAllEvents() {
 		return eventService.getAll();
 	}
-	
-	public void onRowSelect(SelectEvent event) {
-		System.out.println("--- " + event);
-		//EventDTO myEvent = (EventDTO) event.getObject();
-		//System.out.println("ON ROW SELECT " + myEvent);
-        //FacesMessage msg = new FacesMessage("Event Selected", ((EventDTO) event.getObject()).getEventId().toString());
-        //FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
 	
 	public Integer getPriorityIdSelected() {
 		return priorityIdSelected;
@@ -155,14 +144,6 @@ public class EventController {
 	public void setSelected(EventDTO selected) {
 		this.selected = selected;
 	}
-
-	/*public PriorityBO getPriorityBO() {
-		return priorityBO;
-	}
-
-	public void setPriorityBO(PriorityBO priorityBO) {
-		this.priorityBO = priorityBO;
-	}*/
 
 	public LazyDataModel<EventDTO> getLazyModel() {
 		return lazyModel;
