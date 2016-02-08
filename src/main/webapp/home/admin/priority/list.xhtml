@@ -11,10 +11,10 @@
 	
 		<h:form id="priorityListForm">
 	            <p:contextMenu id="priorityDataTableContextMenu" for="datalist">  
-	            <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('priorityListForm:createButton').click();" icon="ui-icon-plus"/>
-	            <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('priorityListForm:viewButton').click();" icon="ui-icon-search"/>
-	            <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('priorityListForm:editButton').click();" icon="ui-icon-pencil"/>
-	            <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('priorityListForm:deleteButton').click();" icon="ui-icon-trash"/>
+	            <p:menuitem value="#{msg.create}" onclick="document.getElementById('priorityListForm:createButton').click();" icon="ui-icon-plus"/>
+	            <p:menuitem value="#{msg.view}" onclick="document.getElementById('priorityListForm:viewButton').click();" icon="ui-icon-search"/>
+	            <p:menuitem value="#{msg.edit}" onclick="document.getElementById('priorityListForm:editButton').click();" icon="ui-icon-pencil"/>
+	            <p:menuitem value="#{msg.delete}" onclick="document.getElementById('priorityListForm:deleteButton').click();" icon="ui-icon-trash"/>
             </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{priorityController.items}"
@@ -37,7 +37,6 @@
                     </f:facet>
                     <h:outputText value="#{item.priorityId}"/>
                 </p:column>
-
 
                 <p:column sortBy="#{item.name}" filterBy="#{item.name}">
                     <f:facet name="header">

@@ -1,5 +1,7 @@
 package co.com.core.controller;
 
+import static co.com.core.commons.LoadBundle.geProperty;
+
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -38,75 +40,69 @@ public class EventController {
 	}
 	
 	public void saveNew() {
+		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			Priority p = new Priority(priorityIdSelected);
-			selected.setPriorityId(p);
-			eventService.createEvent(selected);
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Creación exitosa", "Evento"));
+			if(priorityIdSelected!=null && priorityIdSelected!=0) {
+				Priority p = new Priority(priorityIdSelected);
+				selected.setPriorityId(p);
+				eventService.createEvent(selected);
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));
+			} else {
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, geProperty("priorityRequiredMessage"), geProperty("pleaseVerifySummary")));
+			}
+
 		} catch (Exception ex) {
 			logger.error("Throwed Exception [EventController.saveNew]: " +ex.getMessage());
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Error en creación", "Evento"));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("creationError"), null));
 		} finally {
 			items = eventService.getAll();
 		}
 
 	}
 
-	public void delete() {
-		if (this.selected != null) {
-			try {
-				eventService.delete(selected);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO,
-								"Eliminado", "Evento"));
-			} catch (Exception ex) {
-				logger.error("Throwed Exception [EventController.delete]: " +ex.getMessage());
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-								"Error en eliminación", "Evento"));
-			} finally {
-				items = eventService.getAll();
-			}
-		}
-	}
-
 	public void save() {
 		if (this.selected != null) {
+			FacesContext context = FacesContext.getCurrentInstance();
 			try {
-				Priority p = new Priority(priorityIdSelected);
-				selected.setPriorityId(p);
-				eventService.update(selected);
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO,
-								"Actualizado", "Evento"));
+				logger.info("SELECTED: " + priorityIdSelected);
+				if(priorityIdSelected!=null && priorityIdSelected!=0) {
+					Priority p = new Priority(priorityIdSelected);
+					selected.setPriorityId(p);
+					eventService.update(selected);
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulEdition"), null));
+				} else {
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, geProperty("priorityRequiredMessage"), geProperty("pleaseVerifySummary")));
+				}
 			} catch (Exception ex) {
 				logger.error("Throwed Exception [EventController.save]: " +ex.getMessage());
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-								"Error en actualización", "Evento"));
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("editionError"), null));
 			} finally {
 				items = eventService.getAll();
 			}
 		}
 	}
-
+	
+	public void delete() {
+		if (this.selected != null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			try {
+				eventService.delete(selected);
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulDeletion"), null));
+			} catch (Exception ex) {
+				logger.error("Throwed Exception [EventController.delete]: " +ex.getMessage());
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("deletionError"), null));
+			} finally {
+				items = eventService.getAll();
+			}
+		}
+	}
 
 	public void prepareCreate() {
 		selected = new EventDTO();
 	}
 
 	public void prepareEdit() {
-		this.priorityIdSelected = selected.getPriorityId().getPriorityId();
+		this.priorityIdSelected = 0;
 	}
 	
 	public List<EventDTO> getAllEvents() {

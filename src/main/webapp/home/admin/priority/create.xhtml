@@ -21,7 +21,7 @@
                         <p:inputText id="color" value="#{priorityController.selected.color}" title="#{msg.color}" size="100" maxlength="100"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{priorityController.saveNew}" value="#{msg.save}" update="display,:priorityListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('priorityCreateDialog'));">
-                        <p:confirm header="Sure" message="Sure" icon="ui-icon-alert"/>
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{msg.cancel}" onclick="PF('priorityCreateDialog').hide()"/>
                 </h:panelGroup>

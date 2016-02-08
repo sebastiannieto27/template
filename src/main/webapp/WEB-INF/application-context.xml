@@ -95,8 +95,16 @@
      
     <bean id="rolePermissionDAO" class="co.com.core.dao.impl.RolePermissionDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-    </bean>    
-	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services -->
+    </bean>  
+     
+    <bean id="priorityDAO" class="co.com.core.dao.impl.PriorityDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>  
+         
+	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
+	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
+	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
+	
     <bean id="baseService" class="co.com.core.services.impl.BaseServiceImpl">
     	<property name="baseDAO" ref="baseDAO" />
     </bean>
@@ -136,7 +144,14 @@
     <bean id="rolePermissionService" class="co.com.core.services.impl.RolePermissionServiceImpl">
     	<property name="rolePermissionDAO" ref="rolePermissionDAO" />
     </bean> 
-   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers -->
+   	                
+    <bean id="priorityService" class="co.com.core.services.impl.PriorityServiceImpl">
+    	<property name="priorityDAO" ref="priorityDAO" />
+    </bean> 
+   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
+   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
+   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
+   	
     <bean id="baseController" scope="session" class="co.com.core.controller.BaseController">
     	<property name="baseService" ref="baseService" />
     	<property name="personDAO" ref="personDAO" />
@@ -190,5 +205,9 @@
                        
     <bean id="rolePermissionController" scope="session" class="co.com.core.controller.RolePermissionController" init-method="init">
     	<property name="rolePermissionService" ref="rolePermissionService" />
+    </bean>
+                           
+    <bean id="priorityController" scope="session" class="co.com.core.controller.PriorityController" init-method="init">
+    	<property name="priorityService" ref="priorityService" />
     </bean>
 </beans>

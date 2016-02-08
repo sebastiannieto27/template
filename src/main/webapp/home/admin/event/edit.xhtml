@@ -18,7 +18,7 @@
                         <p:inputText id="eventName" value="#{eventController.selected.name}" title="#{msg.name}" required="true" requiredMessage="#{msg.name}" size="45" maxlength="45"/>
 
 						<p:outputLabel value="#{msg.priority}" for="priorityId" />
-                        <p:selectOneMenu id="priorityId" value="#{eventController.selected.priorityId.priorityId}" requiredMessage="#{msg.priority}">
+                        <p:selectOneMenu id="priorityId" value="#{eventController.priorityIdSelected}" requiredMessage="#{msg.priority}">
                             <f:selectItem itemLabel="Select One"/>
                             <f:selectItems value="#{priorityController.items}"
                                            var="priorityIdItem"

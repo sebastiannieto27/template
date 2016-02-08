@@ -67,6 +67,7 @@ public class RoleMenuDAOImpl implements RoleMenuDAO {
 				session.close();
 			}
 		}
+		
 		@Override
 		public void delete(RoleMenu entity) {
 			try {

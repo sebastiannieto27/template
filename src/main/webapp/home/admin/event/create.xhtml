@@ -19,7 +19,7 @@
 
 						<p:outputLabel value="#{msg.priority}" for="priorityId" />
                         <p:selectOneMenu id="priorityId" value="#{eventController.priorityIdSelected}" requiredMessage="#{msg.priority}">
-                            <f:selectItem itemLabel="Select One"/>
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{priorityController.items}"
                                            var="priorityIdItem"
                                            itemValue="#{priorityIdItem.priorityId}"
@@ -36,7 +36,7 @@
 
                     </p:panelGrid>
                     <p:commandButton actionListener="#{eventController.saveNew}" value="#{msg.save}" update="display,:eventListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('eventCreateDialog'));">
-                        <p:confirm header="Sure" message="Sure" icon="ui-icon-alert"/>
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{msg.cancel}" onclick="PF('eventCreateDialog').hide()"/>
                 </h:panelGroup>

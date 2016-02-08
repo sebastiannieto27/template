@@ -28,7 +28,6 @@
                          lazy="true">
 
                 <p:ajax event="rowSelect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:eventDataTableContextMenu"/>
-<!-- 					<p:ajax event="rowSelect" listener="#{eventController.onRowSelectNavigate}" global="true" immediate="true" update=":eventListForm"/> -->
                
                 <p:column sortBy="#{item.eventId}" filterBy="#{item.eventId}">
                     <f:facet name="header">
@@ -70,7 +69,7 @@
             <p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{eventController.init()}" update=":eventListForm" />
             <p:commandButton id="createButton" icon="ui-icon-plus" value="#{msg.create}" actionListener="#{eventController.prepareCreate}" update=":eventCreateForm" oncomplete="PF('eventCreateDialog').show()" />
             <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{msg.view}" update=":eventViewForm" oncomplete="PF('eventViewDialog').show()" disabled="#{empty eventController.selected}"/>
-            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{msg.edit}" actionListener="#{eventController.prepareEdit}" update=":eventEditForm" oncomplete="PF('eventEditDialog').show()" disabled="#{empty eventController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{msg.edit}" update=":eventEditForm" oncomplete="PF('eventEditDialog').show()" disabled="#{empty eventController.selected}"/>
             <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{eventController.delete}" update=":eventListForm:datalist,:growl" disabled="#{empty eventController.selected}">
                 <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
             </p:commandButton>
