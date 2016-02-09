@@ -6,11 +6,13 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import co.com.core.commons.converter.PagePermissionUtil;
+import co.com.core.commons.converter.PageUtil;
 import co.com.core.commons.converter.PermissionUtil;
 import co.com.core.commons.converter.RoleUtil;
 import co.com.core.dao.PagePermissionDAO;
 import co.com.core.domain.PagePermission;
 import co.com.core.domain.Permission;
+import co.com.core.dto.PageDTO;
 import co.com.core.dto.PermissionDTO;
 import co.com.core.dto.RoleDTO;
 import co.com.core.dto.PagePermissionDTO;
@@ -66,5 +68,17 @@ public class PagePermissionServiceImpl implements IPagePermissionService {
 			}
 		}
 		return dtoList;
+	}
+
+	@Override
+	public PagePermissionDTO validatePermission(PageDTO pageDto,
+			PermissionDTO permissionDto) {
+		PagePermissionDTO dto = null;
+		PagePermission entity = this.pagePermissionDAO.getPermissionByPageCode(PageUtil.getEntityFromDto(pageDto), PermissionUtil.getEntityFromDto(permissionDto));
+		
+		if(entity!=null) {
+			dto = PagePermissionUtil.getDtoFromEntity(entity);
+		}
+		return dto;
 	}
 }

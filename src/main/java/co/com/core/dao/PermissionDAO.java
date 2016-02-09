@@ -17,4 +17,6 @@ public interface PermissionDAO {
 	public void update(Permission entity);
 	
 	public List<Permission> getNotAssignedPermission(String ids);
+
+	public Permission getByCode(String code);
 }

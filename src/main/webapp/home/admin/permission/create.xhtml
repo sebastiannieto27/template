@@ -16,7 +16,11 @@
                     <p:panelGrid columns="2" columnClasses="column">
                         <p:outputLabel value="#{msg.name}" for="permissionName" />
                         <p:inputText id="permissionName" value="#{permissionController.selected.permissionName}" title="#{msg.name}" required="true" requiredMessage="#{msg.nameRequiredMessage}" size="45" maxlength="45"/>
+                  
+                  		<p:outputLabel value="#{msg.code}" for="code" />
+                        <p:inputText id="code" value="#{permissionController.selected.code}" title="#{msg.code}" required="true" requiredMessage="#{msg.codeRequiredMessage}" size="45" maxlength="45"/>
                     </p:panelGrid>
+                    
                     <p:commandButton actionListener="#{permissionController.saveNew}" value="#{msg.save}" update="display,:permissionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('permissionCreateDialog'));">
                         <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
                     </p:commandButton>

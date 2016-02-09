@@ -9,6 +9,7 @@ public class PermissionUtil {
 		PermissionDTO dto = new PermissionDTO();
 		dto.setPermissionId(entity.getPermissionId());
 		dto.setPermissionName(entity.getPermissionName());
+		dto.setCode(entity.getCode());
 		return dto;
 	}
 	
@@ -16,6 +17,7 @@ public class PermissionUtil {
 		Permission entity = new Permission();
 		entity.setPermissionId(dto.getPermissionId());
 		entity.setPermissionName(dto.getPermissionName());
+		entity.setCode(dto.getCode());
 		return entity;
 	}
 }

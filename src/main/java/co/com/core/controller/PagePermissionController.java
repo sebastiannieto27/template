@@ -11,13 +11,19 @@ import org.apache.log4j.Logger;
 
 import co.com.core.domain.Page;
 import co.com.core.domain.Permission;
+import co.com.core.dto.PageDTO;
 import co.com.core.dto.PagePermissionDTO;
+import co.com.core.dto.PermissionDTO;
 import co.com.core.services.IPagePermissionService;
+import co.com.core.services.IPageService;
+import co.com.core.services.IPermissionService;
 
 
 public class PagePermissionController {
 
 	private IPagePermissionService pagePermissionService;
+	private IPermissionService permissionService;
+	private IPageService pageService;
 	private List<PagePermissionDTO> items;
 	private PagePermissionDTO selected;
 	private Integer selectedPageId;
@@ -119,6 +125,26 @@ public class PagePermissionController {
 		selected = new PagePermissionDTO();
 	}
 
+	public boolean validatePermission(String code, String page) {
+		logger.info(code + " -- " + page);
+		boolean valid = false;
+		PermissionDTO permissionDto = permissionService.getByCode(code);
+		
+		if(permissionDto!=null) {
+			PageDTO pageDto = pageService.getPageByURL(page);
+			
+			if(pageDto!=null) {
+				PagePermissionDTO pagePermissionDto = pagePermissionService.validatePermission(pageDto, permissionDto);
+				
+				if(pagePermissionDto!=null) {
+					valid = true;
+				}
+			}
+		}
+		
+		return valid;
+	}
+	
 	public IPagePermissionService getPagePermissionService() {
 		return pagePermissionService;
 	}
@@ -158,4 +184,21 @@ public class PagePermissionController {
 	public void setSelectedPermissionId(Integer selectedPermissionId) {
 		this.selectedPermissionId = selectedPermissionId;
 	}
+
+	public IPermissionService getPermissionService() {
+		return permissionService;
+	}
+
+	public void setPermissionService(IPermissionService permissionService) {
+		this.permissionService = permissionService;
+	}
+
+	public IPageService getPageService() {
+		return pageService;
+	}
+
+	public void setPageService(IPageService pageService) {
+		this.pageService = pageService;
+	}
+	
 }

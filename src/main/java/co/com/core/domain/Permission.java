@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Permission.findAll", query = "SELECT p FROM Permission p"),
     @NamedQuery(name = "Permission.findByPermissionId", query = "SELECT p FROM Permission p WHERE p.permissionId = :permissionId"),
+    @NamedQuery(name = "Permission.findByCode", query = "SELECT p FROM Permission p WHERE p.code = :code"),
     @NamedQuery(name = "Permission.findByPermissionName", query = "SELECT p FROM Permission p WHERE p.permissionName = :permissionName")})
 public class Permission implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -48,6 +49,11 @@ public class Permission implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "permission_name")
     private String permissionName;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "code")
+    private String code;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "permissionId")
     private Collection<PagePermission> pagePermissionCollection;
 
@@ -79,7 +85,15 @@ public class Permission implements Serializable {
         this.permissionName = permissionName;
     }
 
-    @XmlTransient
+    public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	@XmlTransient
     public Collection<PagePermission> getPagePermissionCollection() {
         return pagePermissionCollection;
     }

@@ -32,7 +32,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.name}"/>
                     </f:facet>
-                    <h:outputText value="#{item.permissionId.permissionName}(#{item.pageId.pageName})"/>
+                    <h:outputText value="#{item.permissionId.permissionName} (#{item.pageId.pageName})"/>
                 </p:column>
 
                 <p:column>
@@ -67,7 +67,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.permission}"/>
                     </f:facet>
-                    <h:outputText value="#{roleItem.pagePermissionId.permissionId.permissionName}"/>
+                    <h:outputText value="#{roleItem.pagePermissionId.permissionId.permissionName} (#{roleItem.pagePermissionId.pageId.pageName})"/>
                 </p:column>
 
                 <p:column>

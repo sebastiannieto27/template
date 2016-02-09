@@ -1,5 +1,6 @@
 package co.com.core.dao.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -9,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.PagePermissionDAO;
+import co.com.core.domain.Page;
 import co.com.core.domain.PagePermission;
 import co.com.core.domain.Permission;
 
@@ -103,5 +105,31 @@ public class PagePermissionDAOImpl implements PagePermissionDAO {
 				session.close();
 			}
 			return permissionList;
+		}
+
+		@Override
+		public PagePermission getPermissionByPageCode(Page page, Permission permission) {
+			PagePermission pagePermission = null;
+			
+			try {
+				if(page!=null && permission!=null) {
+					session = this.sessionFactory.openSession();
+					StringBuilder hql = new StringBuilder();
+					hql.append("SELECT p FROM PagePermission p WHERE p.permissionId = :permissionId ");
+					hql.append(" AND p.pageId = :pageId ");
+					Query query = session.createQuery(hql.toString());
+					query.setParameter("permissionId", permission);
+					query.setParameter("pageId", page);
+					List permissionList = query.list();
+					for(Iterator iterator = permissionList.iterator(); iterator.hasNext();) {
+						pagePermission = (PagePermission) iterator.next();
+					}
+				}
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [PagePermissionDAOImpl.getPermissionByPageCode]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return pagePermission;
 		}
 }

@@ -70,5 +70,15 @@ public class PermissionServiceImpl implements IPermissionService {
 		}
 		return dtoList;
 	}
+
+	@Override
+	public PermissionDTO getByCode(String code) {
+		PermissionDTO dto = null;
+		Permission entity = this.permissionDAO.getByCode(code);
+		if(entity!=null) {
+			dto = PermissionUtil.getDtoFromEntity(entity);
+		}
+		return dto;
+	}
 	
 }

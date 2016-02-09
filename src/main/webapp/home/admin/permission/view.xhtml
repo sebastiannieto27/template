@@ -20,6 +20,10 @@
 
                         <h:outputText value="#{msg.name}"/>
                         <h:outputText value="#{permissionController.selected.permissionName}" title="#{msg.name}"/>
+                       
+                        <h:outputText value="#{msg.code}"/>
+                        <h:outputText value="#{permissionController.selected.code}" title="#{msg.code}"/>
+                   
                     </p:panelGrid>
                     <p:commandButton value="#{msg.close}" onclick="PF('permissionViewDialog').hide()"/>
                 </h:panelGroup>

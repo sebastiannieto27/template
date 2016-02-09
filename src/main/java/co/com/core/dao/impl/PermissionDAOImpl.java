@@ -1,5 +1,6 @@
 package co.com.core.dao.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -10,6 +11,7 @@ import org.hibernate.Transaction;
 
 import co.com.core.dao.PermissionDAO;
 import co.com.core.domain.Menu;
+import co.com.core.domain.PagePermission;
 import co.com.core.domain.Permission;
 
 public class PermissionDAOImpl implements PermissionDAO {
@@ -104,5 +106,26 @@ public class PermissionDAOImpl implements PermissionDAO {
 				session.close();
 			}
 			return permissionList;
+		}
+
+
+		@Override
+		public Permission getByCode(String code) {
+			Permission entity = null;
+			try {
+				session = this.sessionFactory.openSession();
+		        Query query = session.getNamedQuery("Permission.findByCode");
+		        query.setParameter("code", code);
+		        List entityList = query.list();
+		        
+		        for(Iterator iterator = entityList.iterator(); iterator.hasNext();) {
+		        	entity = (Permission) iterator.next();
+				}
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [PermissionDAOImpl.getByCode]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return entity;
 		}
 }

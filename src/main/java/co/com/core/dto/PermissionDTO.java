@@ -6,7 +6,14 @@ public class PermissionDTO {
 
 	private Integer permissionId;
     private String permissionName;
+    private String code;
     
+    public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
 	public Integer getPermissionId() {
 		return permissionId;
 	}

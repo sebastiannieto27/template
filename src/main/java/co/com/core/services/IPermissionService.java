@@ -18,4 +18,6 @@ public interface IPermissionService {
 	public void update(PermissionDTO dto);
 	
 	public List<PermissionDTO> getNotAssignedPermission(String ids); 
+
+	public PermissionDTO getByCode(String code); 
 }

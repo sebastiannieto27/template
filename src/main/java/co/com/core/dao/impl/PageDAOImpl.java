@@ -89,7 +89,6 @@ public class PageDAOImpl implements PageDAO{
 		try {
 			session = this.sessionFactory.openSession();
 			StringBuilder hql = new StringBuilder();
-//			hql.append("SELECT * FROM page WHERE url LIKE '%").append(url).append("%'");
 			hql.append("SELECT p FROM Page p WHERE p.url LIKE :url");
 	        Query query = session.createQuery(hql.toString());
 	        query.setParameter("url", "%"+url+"%");
