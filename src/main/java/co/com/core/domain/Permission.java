@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -47,7 +49,7 @@ public class Permission implements Serializable {
     @Column(name = "permission_name")
     private String permissionName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "permissionId")
-    private Collection<RolePermission> rolePermissionCollection;
+    private Collection<PagePermission> pagePermissionCollection;
 
     public Permission() {
     }
@@ -77,15 +79,6 @@ public class Permission implements Serializable {
         this.permissionName = permissionName;
     }
 
-    @XmlTransient
-    public Collection<RolePermission> getRolePermissionCollection() {
-        return rolePermissionCollection;
-    }
-
-    public void setRolePermissionCollection(Collection<RolePermission> rolePermissionCollection) {
-        this.rolePermissionCollection = rolePermissionCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -110,5 +103,15 @@ public class Permission implements Serializable {
     public String toString() {
         return "com.core.entity.Permission[ permissionId=" + permissionId + " ]";
     }
+
+    @XmlTransient
+    public Collection<PagePermission> getPagePermissionCollection() {
+        return pagePermissionCollection;
+    }
+
+    public void setPagePermissionCollection(Collection<PagePermission> pagePermissionCollection) {
+        this.pagePermissionCollection = pagePermissionCollection;
+    }
     
 }
+

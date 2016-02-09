@@ -41,15 +41,13 @@
                     <h:outputText value="#{item.permissionId}"/>
                 </p:column>
 
-
                 <p:column sortBy="#{item.permissionName}" filterBy="#{item.permissionName}">
                     <f:facet name="header">
                         <h:outputText value="#{msg.name}"/>
                     </f:facet>
                     <h:outputText value="#{item.permissionName}"/>
                 </p:column>
-
-
+                
             </p:dataTable>
 
 			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{roleMenuController.init()}" update=":permissionListForm" />

@@ -21,18 +21,18 @@
                          selectionMode="single"
                          selection="#{roleController.selectedPermission}">
 
-               <p:column sortBy="#{item.permissionId}" filterBy="#{item.permissionId}">
+               <p:column sortBy="#{item.idPagePermission}" filterBy="#{item.idPagePermission}">
                     <f:facet name="header">
                         <h:outputText value="#{msg.id}"/>
                     </f:facet>
-                    <h:outputText value="#{item.permissionId}"/>
+                    <h:outputText value="#{item.idPagePermission}"/>
                 </p:column>
 
-                <p:column sortBy="#{item.permissionName}" filterBy="#{item.permissionName}">
+                <p:column sortBy="#{item.permissionId.permissionName}" filterBy="#{item.permissionId.permissionName}">
                     <f:facet name="header">
                         <h:outputText value="#{msg.name}"/>
                     </f:facet>
-                    <h:outputText value="#{item.permissionName}"/>
+                    <h:outputText value="#{item.permissionId.permissionName}(#{item.pageId.pageName})"/>
                 </p:column>
 
                 <p:column>

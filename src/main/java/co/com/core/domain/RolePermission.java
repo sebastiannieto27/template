@@ -33,19 +33,21 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RolePermission.findByRoleId", query = "SELECT r FROM RolePermission r WHERE r.roleId = :roleId"),
     @NamedQuery(name = "RolePermission.findByRolePermissionId", query = "SELECT r FROM RolePermission r WHERE r.rolePermissionId = :rolePermissionId")})
 public class RolePermission implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_permission_id")
     private Integer rolePermissionId;
-    @JoinColumn(name = "permission_id", referencedColumnName = "permission_id")
-    @ManyToOne(optional = false)
-    private Permission permissionId;
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     @ManyToOne(optional = false)
     private Role roleId;
-
+    @JoinColumn(name = "page_permission_id", referencedColumnName = "id_page_permission")
+    @ManyToOne(optional = false)
+    private PagePermission pagePermissionId;
+    
     public RolePermission() {
     }
 
@@ -59,14 +61,6 @@ public class RolePermission implements Serializable {
 
     public void setRolePermissionId(Integer rolePermissionId) {
         this.rolePermissionId = rolePermissionId;
-    }
-
-    public Permission getPermissionId() {
-        return permissionId;
-    }
-
-    public void setPermissionId(Permission permissionId) {
-        this.permissionId = permissionId;
     }
 
     public Role getRoleId() {
@@ -101,6 +95,15 @@ public class RolePermission implements Serializable {
     public String toString() {
         return "com.core.entity.RolePermission[ rolePermissionId=" + rolePermissionId + " ]";
     }
+
+    public PagePermission getPagePermissionId() {
+        return pagePermissionId;
+    }
+
+    public void setPagePermissionId(PagePermission pagePermissionId) {
+        this.pagePermissionId = pagePermissionId;
+    }
     
 }
+
 

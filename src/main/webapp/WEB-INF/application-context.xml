@@ -37,6 +37,7 @@
                 <value>co.com.core.domain.Permission</value>
                 <value>co.com.core.domain.Person</value>
                 <value>co.com.core.domain.Page</value>
+                <value>co.com.core.domain.PagePermission</value>
                 <value>co.com.core.domain.Priority</value>
                 <value>co.com.core.domain.Role</value>
                 <value>co.com.core.domain.RoleMenu</value>
@@ -99,6 +100,10 @@
      
     <bean id="priorityDAO" class="co.com.core.dao.impl.PriorityDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+         
+    <bean id="pagePermissionDAO" class="co.com.core.dao.impl.PagePermissionDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>  
          
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -147,6 +152,10 @@
    	                
     <bean id="priorityService" class="co.com.core.services.impl.PriorityServiceImpl">
     	<property name="priorityDAO" ref="priorityDAO" />
+    </bean>
+       	                
+    <bean id="pagePermissionService" class="co.com.core.services.impl.PagePermissionServiceImpl">
+    	<property name="pagePermissionDAO" ref="pagePermissionDAO" />
     </bean> 
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -191,7 +200,7 @@
     	<property name="roleService" ref="roleService" />
     	<property name="roleMenuService" ref="roleMenuService" />
     	<property name="menuService" ref="menuService" />
-    	<property name="permissionService" ref="permissionService" />
+    	<property name="pagePermissionService" ref="pagePermissionService" />
     	<property name="rolePermissionService" ref="rolePermissionService" />
     </bean> 
                 
@@ -210,4 +219,9 @@
     <bean id="priorityController" scope="session" class="co.com.core.controller.PriorityController" init-method="init">
     	<property name="priorityService" ref="priorityService" />
     </bean>
+                               
+    <bean id="pagePermissionController" scope="session" class="co.com.core.controller.PagePermissionController" init-method="init">
+    	<property name="pagePermissionService" ref="pagePermissionService" />
+    </bean>
+    
 </beans>

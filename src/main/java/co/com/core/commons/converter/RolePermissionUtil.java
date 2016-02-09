@@ -7,7 +7,7 @@ public class RolePermissionUtil {
 
 	public static RolePermissionDTO getDtoFromEntity(RolePermission entity) {
 		RolePermissionDTO dto = new RolePermissionDTO();
-		dto.setPermissionId(entity.getPermissionId());
+		dto.setPagePermissionId(entity.getPagePermissionId());
 		dto.setRoleId(entity.getRoleId());
 		dto.setRolePermissionId(entity.getRolePermissionId());
 		return dto;
@@ -15,7 +15,7 @@ public class RolePermissionUtil {
 	
 	public static RolePermission getEntityFromDto(RolePermissionDTO dto) {
 		RolePermission entity = new RolePermission();
-		entity.setPermissionId(dto.getPermissionId());
+		entity.setPagePermissionId(dto.getPagePermissionId());
 		entity.setRoleId(dto.getRoleId());
 		entity.setRolePermissionId(dto.getRolePermissionId());
 		return entity;

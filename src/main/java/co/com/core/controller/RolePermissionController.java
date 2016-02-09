@@ -7,7 +7,7 @@ import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 
-import co.com.core.domain.Menu;
+import co.com.core.domain.PagePermission;
 import co.com.core.domain.Permission;
 import co.com.core.domain.Role;
 import co.com.core.dto.RolePermissionDTO;
@@ -30,8 +30,8 @@ public class RolePermissionController {
 
 	public void saveNew() {
 		try {
-			Permission permission = new Permission(selectedPermissionId);
-			selected.setPermissionId(permission);
+			PagePermission permission = new PagePermission(selectedPermissionId);//TODO
+			selected.setPagePermissionId(permission);
 			
 			Role role = new Role(selectedRoleId);
 			selected.setRoleId(role);
@@ -77,8 +77,8 @@ public class RolePermissionController {
 		if (this.selected != null) {
 			try {
 
-				Permission permission = new Permission(selectedPermissionId);
-				selected.setPermissionId(permission);
+				PagePermission permission = new PagePermission(selectedPermissionId);
+				selected.setPagePermissionId(permission);//TODO
 				
 				Role role = new Role(selectedRoleId);
 				selected.setRoleId(role);

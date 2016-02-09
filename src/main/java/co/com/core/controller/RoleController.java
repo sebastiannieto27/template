@@ -9,14 +9,17 @@ import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 import co.com.core.commons.converter.MenuUtil;
+import co.com.core.commons.converter.PagePermissionUtil;
 import co.com.core.commons.converter.PermissionUtil;
 import co.com.core.commons.converter.RoleUtil;
 import co.com.core.dto.MenuDTO;
+import co.com.core.dto.PagePermissionDTO;
 import co.com.core.dto.PermissionDTO;
 import co.com.core.dto.RoleDTO;
 import co.com.core.dto.RoleMenuDTO;
 import co.com.core.dto.RolePermissionDTO;
 import co.com.core.services.IMenuService;
+import co.com.core.services.IPagePermissionService;
 import co.com.core.services.IPermissionService;
 import co.com.core.services.IRoleMenuService;
 import co.com.core.services.IRolePermissionService;
@@ -29,7 +32,7 @@ public class RoleController {
 	IRoleMenuService roleMenuService;
 	IMenuService menuService;
 	IRolePermissionService rolePermissionService;
-	IPermissionService permissionService;
+	IPagePermissionService pagePermissionService;
 	//Menu
 	List<RoleDTO> items;
 	List<RoleMenuDTO> roleItems;
@@ -38,8 +41,8 @@ public class RoleController {
 	private List<MenuDTO> menuList;
 	//Permission
 	private List<RolePermissionDTO> permissionItems;
-	private List<PermissionDTO> notAssignedPermissionItems;
-	private List<PermissionDTO> permissionList;
+	private List<PagePermissionDTO> notAssignedPermissionItems;
+	private List<PagePermissionDTO> pagePermissionList;
 	private List<RolePermissionDTO> deletePermissionItems;
 	
 	private PermissionDTO selectedPermission;
@@ -65,7 +68,7 @@ public class RoleController {
 	public void init() {
 		menuList = new ArrayList<MenuDTO>();
 		deleteMenuItems = new ArrayList<RoleMenuDTO>();
-		permissionList = new ArrayList<PermissionDTO>();
+		pagePermissionList = new ArrayList<PagePermissionDTO>();
 		deletePermissionItems = new ArrayList<RolePermissionDTO>();
 		items = roleService.getAll();
 	}
@@ -81,7 +84,7 @@ public class RoleController {
 		try {
 			permissionItems = rolePermissionService.findByRole(roleDto);
 			String permissionIds = getPermissionIds();
-			notAssignedPermissionItems = permissionService.getNotAssignedPermission(permissionIds);
+			notAssignedPermissionItems = pagePermissionService.getNotAssignedPermission(permissionIds);
 		} catch(Exception ex) {
 			logger.error("Error finding permissions by role: " + ex.getMessage());
 		}
@@ -99,7 +102,7 @@ public class RoleController {
 				if(counter > 0) {
 					ids.append(",");
 				}
-				ids.append(dto.getPermissionId().getPermissionId());
+				ids.append(dto.getPagePermissionId().getIdPagePermission());
 				counter++;
 			}
 		}
@@ -110,16 +113,16 @@ public class RoleController {
 	 * add the item to the creation list
 	 * @param permission
 	 */
-	public void addRemovePermissionList(PermissionDTO permission) {
+	public void addRemovePermissionList(PagePermissionDTO pagePermission) {
 
 		try {
 			if(permissionCheckValue) {
-				if(!permissionList.contains(permission)) {
-					permissionList.add(permission);
+				if(!pagePermissionList.contains(pagePermission)) {
+					pagePermissionList.add(pagePermission);
 				}
 			} else {
-				if(permissionList.contains(permission)) {
-					permissionList.remove(permission);
+				if(pagePermissionList.contains(pagePermission)) {
+					pagePermissionList.remove(pagePermission);
 				}
 			}
 		} catch(Exception ex) {
@@ -132,18 +135,18 @@ public class RoleController {
 	 */
 	public void addPermissionToRol() {
 		try {
-			if(permissionList!=null && permissionList.size() > 0) {
-				for(PermissionDTO permission : permissionList) {
+			if(pagePermissionList!=null && pagePermissionList.size() > 0) {
+				for(PagePermissionDTO permission : pagePermissionList) {
 					RolePermissionDTO dto = new RolePermissionDTO();
 					dto.setRoleId(RoleUtil.getEntityFromDto(selectedRole));
-					dto.setPermissionId(PermissionUtil.getEntityFromDto(permission));
+					dto.setPagePermissionId(PagePermissionUtil.getEntityFromDto(permission));
 					rolePermissionService.create(dto);
 				}
 			}
 		} catch(Exception ex) {
 			logger.error("Throwed Exception [RoleController.addPermissionToRol]: " +ex.getMessage());
 		} finally {
-			permissionList = new ArrayList<PermissionDTO>();
+			pagePermissionList = new ArrayList<PagePermissionDTO>();
 			findPermissionByRole(selectedRole);
 		}
 	}
@@ -494,14 +497,6 @@ public class RoleController {
 		this.rolePermissionService = rolePermissionService;
 	}
 
-	public IPermissionService getPermissionService() {
-		return permissionService;
-	}
-
-	public void setPermissionService(IPermissionService permissionService) {
-		this.permissionService = permissionService;
-	}
-
 	public List<RolePermissionDTO> getPermissionItems() {
 		return permissionItems;
 	}
@@ -510,21 +505,30 @@ public class RoleController {
 		this.permissionItems = permissionItems;
 	}
 
-	public List<PermissionDTO> getNotAssignedPermissionItems() {
+	public IPagePermissionService getPagePermissionService() {
+		return pagePermissionService;
+	}
+
+	public void setPagePermissionService(
+			IPagePermissionService pagePermissionService) {
+		this.pagePermissionService = pagePermissionService;
+	}
+
+	public List<PagePermissionDTO> getNotAssignedPermissionItems() {
 		return notAssignedPermissionItems;
 	}
 
 	public void setNotAssignedPermissionItems(
-			List<PermissionDTO> notAssignedPermissionItems) {
+			List<PagePermissionDTO> notAssignedPermissionItems) {
 		this.notAssignedPermissionItems = notAssignedPermissionItems;
 	}
 
-	public List<PermissionDTO> getPermissionList() {
-		return permissionList;
+	public List<PagePermissionDTO> getPagePermissionList() {
+		return pagePermissionList;
 	}
 
-	public void setPermissionList(List<PermissionDTO> permissionList) {
-		this.permissionList = permissionList;
+	public void setPagePermissionList(List<PagePermissionDTO> pagePermissionList) {
+		this.pagePermissionList = pagePermissionList;
 	}
 
 	public PermissionDTO getSelectedPermission() {

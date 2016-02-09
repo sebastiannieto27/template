@@ -1,6 +1,7 @@
 package co.com.core.dto;
 
 
+
 public class PermissionDTO {
 
 	private Integer permissionId;
@@ -18,7 +19,6 @@ public class PermissionDTO {
 	public void setPermissionName(String permissionName) {
 		this.permissionName = permissionName;
 	}
-	
 	@Override
 	public String toString() {
 		return "PermissionDTO [permissionId=" + permissionId

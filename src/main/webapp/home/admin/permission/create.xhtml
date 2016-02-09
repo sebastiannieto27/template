@@ -14,7 +14,6 @@
 
                 <h:panelGroup id="display" rendered="#{permissionController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
-
                         <p:outputLabel value="#{msg.name}" for="permissionName" />
                         <p:inputText id="permissionName" value="#{permissionController.selected.permissionName}" title="#{msg.name}" required="true" requiredMessage="#{msg.nameRequiredMessage}" size="45" maxlength="45"/>
                     </p:panelGrid>

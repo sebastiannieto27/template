@@ -22,7 +22,7 @@
 
                         <p:outputLabel value="#{msg.parentMenu}" for="parentMenuId" />
                         <p:selectOneMenu id="parentMenuId" value="#{menuController.parentMenuId}" >
-                            <f:selectItem itemLabel="#{myBundle3.SelectOneMessage}"/>
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{menuController.items}"
                                            var="parentMenuIdItem"
                                            itemValue="#{parentMenuIdItem.menuId}"
@@ -32,7 +32,7 @@
 
                         <p:outputLabel value="#{msg.page}" for="pageId" />
                         <p:selectOneMenu id="pageId" value="#{menuController.pageId}" >
-                            <f:selectItem itemLabel="#{myBundle3.SelectOneMessage}"/>
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{pageController.items}"
                                            var="pageIdItem"
                                            itemValue="#{pageIdItem.pageId}"
