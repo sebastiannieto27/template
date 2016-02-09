@@ -63,11 +63,11 @@
                     <h:outputText value="#{roleItem.rolePermissionId}"/>
                 </p:column>
 
-                <p:column sortBy="#{roleItem.permissionId.permissionName}" filterBy="#{roleItem.permissionId.permissionName}">
+                <p:column sortBy="#{roleItem.pagePermissionId.permissionId.permissionName}" filterBy="#{roleItem.pagePermissionId.permissionId.permissionName}">
                     <f:facet name="header">
                         <h:outputText value="#{msg.permission}"/>
                     </f:facet>
-                    <h:outputText value="#{roleItem.permissionId.permissionName}"/>
+                    <h:outputText value="#{roleItem.pagePermissionId.permissionId.permissionName}"/>
                 </p:column>
 
                 <p:column>

@@ -36,8 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Page.findByPageName", query = "SELECT p FROM Page p WHERE p.pageName = :pageName"),
     @NamedQuery(name = "Page.findByUrl", query = "SELECT p FROM Page p WHERE p.url = :url")})
 public class Page implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pageId")
-    private Collection<PagePermission> pagePermissionCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +52,8 @@ public class Page implements Serializable {
     @Size(min = 1, max = 200)
     @Column(name = "url")
     private String url;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pageId")
+    private Collection<PagePermission> pagePermissionCollection;
     @OneToMany(mappedBy = "pageId")
     private Collection<Menu> menuCollection;
 
@@ -95,6 +95,15 @@ public class Page implements Serializable {
     }
 
     @XmlTransient
+    public Collection<PagePermission> getPagePermissionCollection() {
+        return pagePermissionCollection;
+    }
+
+    public void setPagePermissionCollection(Collection<PagePermission> pagePermissionCollection) {
+        this.pagePermissionCollection = pagePermissionCollection;
+    }
+
+    @XmlTransient
     public Collection<Menu> getMenuCollection() {
         return menuCollection;
     }
@@ -126,15 +135,6 @@ public class Page implements Serializable {
     @Override
     public String toString() {
         return "com.core.entity.Page[ pageId=" + pageId + " ]";
-    }
-
-    @XmlTransient
-    public Collection<PagePermission> getPagePermissionCollection() {
-        return pagePermissionCollection;
-    }
-
-    public void setPagePermissionCollection(Collection<PagePermission> pagePermissionCollection) {
-        this.pagePermissionCollection = pagePermissionCollection;
     }
     
 }

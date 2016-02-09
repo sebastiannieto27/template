@@ -34,8 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PagePermission.findAll", query = "SELECT p FROM PagePermission p"),
     @NamedQuery(name = "PagePermission.findByIdPagePermission", query = "SELECT p FROM PagePermission p WHERE p.idPagePermission = :idPagePermission")})
 public class PagePermission implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pagePermissionId")
-    private Collection<RolePermission> rolePermissionCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +46,8 @@ public class PagePermission implements Serializable {
     @JoinColumn(name = "permission_id", referencedColumnName = "permission_id")
     @ManyToOne(optional = false)
     private Permission permissionId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pagePermissionId")
+    private Collection<RolePermission> rolePermissionCollection;
 
     public PagePermission() {
     }
@@ -80,6 +80,15 @@ public class PagePermission implements Serializable {
         this.permissionId = permissionId;
     }
 
+    @XmlTransient
+    public Collection<RolePermission> getRolePermissionCollection() {
+        return rolePermissionCollection;
+    }
+
+    public void setRolePermissionCollection(Collection<RolePermission> rolePermissionCollection) {
+        this.rolePermissionCollection = rolePermissionCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -103,15 +112,6 @@ public class PagePermission implements Serializable {
     @Override
     public String toString() {
         return "com.core.entity.PagePermission[ idPagePermission=" + idPagePermission + " ]";
-    }
-
-    @XmlTransient
-    public Collection<RolePermission> getRolePermissionCollection() {
-        return rolePermissionCollection;
-    }
-
-    public void setRolePermissionCollection(Collection<RolePermission> rolePermissionCollection) {
-        this.rolePermissionCollection = rolePermissionCollection;
     }
     
 }

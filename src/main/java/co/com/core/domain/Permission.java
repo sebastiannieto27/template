@@ -79,6 +79,15 @@ public class Permission implements Serializable {
         this.permissionName = permissionName;
     }
 
+    @XmlTransient
+    public Collection<PagePermission> getPagePermissionCollection() {
+        return pagePermissionCollection;
+    }
+
+    public void setPagePermissionCollection(Collection<PagePermission> pagePermissionCollection) {
+        this.pagePermissionCollection = pagePermissionCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -102,15 +111,6 @@ public class Permission implements Serializable {
     @Override
     public String toString() {
         return "com.core.entity.Permission[ permissionId=" + permissionId + " ]";
-    }
-
-    @XmlTransient
-    public Collection<PagePermission> getPagePermissionCollection() {
-        return pagePermissionCollection;
-    }
-
-    public void setPagePermissionCollection(Collection<PagePermission> pagePermissionCollection) {
-        this.pagePermissionCollection = pagePermissionCollection;
     }
     
 }

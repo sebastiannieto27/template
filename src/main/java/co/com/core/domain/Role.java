@@ -50,11 +50,11 @@ public class Role implements Serializable {
     @Column(name = "description")
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
+    private Collection<RoleMenu> roleMenuCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
     private Collection<UserRole> userRoleCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
     private Collection<RolePermission> rolePermissionCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
-    private Collection<RoleMenu> roleMenuCollection;
 
     public Role() {
     }
@@ -93,6 +93,15 @@ public class Role implements Serializable {
     }
 
     @XmlTransient
+    public Collection<RoleMenu> getRoleMenuCollection() {
+        return roleMenuCollection;
+    }
+
+    public void setRoleMenuCollection(Collection<RoleMenu> roleMenuCollection) {
+        this.roleMenuCollection = roleMenuCollection;
+    }
+
+    @XmlTransient
     public Collection<UserRole> getUserRoleCollection() {
         return userRoleCollection;
     }
@@ -108,15 +117,6 @@ public class Role implements Serializable {
 
     public void setRolePermissionCollection(Collection<RolePermission> rolePermissionCollection) {
         this.rolePermissionCollection = rolePermissionCollection;
-    }
-
-    @XmlTransient
-    public Collection<RoleMenu> getRoleMenuCollection() {
-        return roleMenuCollection;
-    }
-
-    public void setRoleMenuCollection(Collection<RoleMenu> roleMenuCollection) {
-        this.roleMenuCollection = roleMenuCollection;
     }
 
     @Override
@@ -145,3 +145,4 @@ public class Role implements Serializable {
     }
     
 }
+

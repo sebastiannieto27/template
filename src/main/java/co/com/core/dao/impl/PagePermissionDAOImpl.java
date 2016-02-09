@@ -89,7 +89,7 @@ public class PagePermissionDAOImpl implements PagePermissionDAO {
 				session = this.sessionFactory.openSession();
 				StringBuilder hql = new StringBuilder();
 				if(ids!=null && !ids.isEmpty()) {
-					hql.append("SELECT p FROM PagePermission p WHERE p.pagePermissionId NOT IN(").append(ids).append(")");
+					hql.append("SELECT p FROM PagePermission p WHERE p.idPagePermission NOT IN(").append(ids).append(")");
 				} else {
 					hql.append("SELECT p FROM PagePermission p");
 				}
