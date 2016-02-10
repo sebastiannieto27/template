@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.RolePermissionDAO;
+import co.com.core.domain.PagePermission;
 import co.com.core.domain.Role;
 import co.com.core.domain.RoleMenu;
 import co.com.core.domain.RolePermission;
@@ -99,5 +100,30 @@ public class RolePermissionDAOImpl implements RolePermissionDAO {
 				session.close();
 			}
 			return entityList;
+		}
+
+
+		@Override
+		public RolePermission findByRolePagePermission(Role role, PagePermission pagePermission) {
+			RolePermission entity = null;
+			try {
+				session = this.sessionFactory.openSession();
+		        Query query = session.getNamedQuery("RolePermission.findByRolePagePermissionId");
+		        query.setParameter("roleId", role);
+		        query.setParameter("pagePermissionId", pagePermission);
+		        List<RolePermission> entityList = query.list();
+		        
+		        if(entityList!=null && entityList.size()>0) {
+		        	 for(RolePermission rolePermission : entityList) {
+		        		 entity = rolePermission;
+			        }
+		        }
+		        
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [RolePermissionDAOImpl.findByRolePagePermission]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return entity;
 		}
 }

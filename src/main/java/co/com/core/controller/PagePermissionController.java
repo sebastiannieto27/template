@@ -9,20 +9,28 @@ import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 
+import co.com.core.commons.converter.RoleUtil;
 import co.com.core.domain.Page;
 import co.com.core.domain.Permission;
 import co.com.core.dto.PageDTO;
 import co.com.core.dto.PagePermissionDTO;
 import co.com.core.dto.PermissionDTO;
+import co.com.core.dto.RolePermissionDTO;
+import co.com.core.dto.UserDTO;
+import co.com.core.dto.UserRoleDTO;
+import co.com.core.services.IMenuService;
 import co.com.core.services.IPagePermissionService;
 import co.com.core.services.IPageService;
 import co.com.core.services.IPermissionService;
+import co.com.core.services.IRolePermissionService;
 
 
 public class PagePermissionController {
 
 	private IPagePermissionService pagePermissionService;
+	private IRolePermissionService rolePermissionService;
 	private IPermissionService permissionService;
+	private IMenuService menuService;
 	private IPageService pageService;
 	private List<PagePermissionDTO> items;
 	private PagePermissionDTO selected;
@@ -125,19 +133,41 @@ public class PagePermissionController {
 		selected = new PagePermissionDTO();
 	}
 
+	/**
+	 * Validates if the user have permission related to the code and page
+	 * @param code
+	 * @param page
+	 * @return
+	 */
 	public boolean validatePermission(String code, String page) {
-		logger.info(code + " -- " + page);
+		FacesContext context = FacesContext.getCurrentInstance();
 		boolean valid = false;
-		PermissionDTO permissionDto = permissionService.getByCode(code);
+		logger.info(code + " -- " + page);
+		UserDTO userDto = (UserDTO) context.getExternalContext().getSessionMap().get("user");
 		
-		if(permissionDto!=null) {
-			PageDTO pageDto = pageService.getPageByURL(page);
+		if(userDto!=null) {
+			List<UserRoleDTO> roleList = menuService.getUserRoles(userDto);
 			
-			if(pageDto!=null) {
-				PagePermissionDTO pagePermissionDto = pagePermissionService.validatePermission(pageDto, permissionDto);
+			if(roleList!=null && roleList.size()>0) {
+				PermissionDTO permissionDto = permissionService.getByCode(code);
 				
-				if(pagePermissionDto!=null) {
-					valid = true;
+				if(permissionDto!=null) {
+					PageDTO pageDto = pageService.getPageByURL(page);
+					
+					if(pageDto!=null) {
+						PagePermissionDTO pagePermissionDto = pagePermissionService.validatePermission(pageDto, permissionDto);
+						
+						if(pagePermissionDto!=null) {
+							for(UserRoleDTO userRole : roleList) {
+								RolePermissionDTO dto = rolePermissionService.
+										findByRolePagePermission(RoleUtil.getDtoFromEntity(userRole.getRoleId()), pagePermissionDto);
+								
+								if(dto!=null) {
+									return true;
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -199,6 +229,23 @@ public class PagePermissionController {
 
 	public void setPageService(IPageService pageService) {
 		this.pageService = pageService;
+	}
+
+	public IRolePermissionService getRolePermissionService() {
+		return rolePermissionService;
+	}
+
+	public void setRolePermissionService(
+			IRolePermissionService rolePermissionService) {
+		this.rolePermissionService = rolePermissionService;
+	}
+
+	public IMenuService getMenuService() {
+		return menuService;
+	}
+
+	public void setMenuService(IMenuService menuService) {
+		this.menuService = menuService;
 	}
 	
 }

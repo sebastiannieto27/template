@@ -224,6 +224,8 @@
     	<property name="pagePermissionService" ref="pagePermissionService" />
     	<property name="permissionService" ref="permissionService" />
     	<property name="pageService" ref="pageService" />
+    	<property name="rolePermissionService" ref="rolePermissionService" />
+    	<property name="menuService" ref="menuService" />
     </bean>
     
 </beans>

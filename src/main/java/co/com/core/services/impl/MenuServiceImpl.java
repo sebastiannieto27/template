@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.com.core.commons.converter.MenuUtil;
+import co.com.core.commons.converter.UserRoleUtil;
+import co.com.core.commons.converter.UserUtil;
 import co.com.core.dao.MenuDAO;
 import co.com.core.domain.Menu;
 import co.com.core.domain.RoleMenu;
 import co.com.core.domain.User;
 import co.com.core.domain.UserRole;
 import co.com.core.dto.MenuDTO;
+import co.com.core.dto.UserDTO;
+import co.com.core.dto.UserRoleDTO;
 import co.com.core.services.IMenuService;
 
 public class MenuServiceImpl implements IMenuService {
@@ -42,6 +46,21 @@ public class MenuServiceImpl implements IMenuService {
 		return userMenuDto;
 	}
 	
+	@Override
+	public List<UserRoleDTO> getUserRoles(UserDTO userDto) {
+		List<UserRoleDTO> dtoList = null;
+		
+		List<UserRole> userRoles = menuDAO.getUserRoles(UserUtil.getEntityFromDto(userDto));
+		
+		if(userRoles!=null && userRoles.size()>0) {
+			dtoList = new ArrayList<UserRoleDTO>();
+			for(UserRole entity : userRoles) {
+				dtoList.add(UserRoleUtil.getDtoFromEntity(entity));
+			}
+		}
+		
+		return dtoList;
+	}
 	/*******************ADMIN************************/
 	@Override
 	public List<MenuDTO> getAll() {
@@ -89,6 +108,4 @@ public class MenuServiceImpl implements IMenuService {
 		}
 		return dtoList;
 	}
-	
-	
 }

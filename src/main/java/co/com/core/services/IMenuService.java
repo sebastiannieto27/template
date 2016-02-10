@@ -4,7 +4,8 @@ import java.util.List;
 
 import co.com.core.domain.User;
 import co.com.core.dto.MenuDTO;
-import co.com.core.dto.RoleDTO;
+import co.com.core.dto.UserDTO;
+import co.com.core.dto.UserRoleDTO;
 
 public interface IMenuService {
 
@@ -21,4 +22,6 @@ public interface IMenuService {
 	public void delete(MenuDTO menuDto);
 	
 	public void update(MenuDTO menuDto);
+	
+	public List<UserRoleDTO> getUserRoles(UserDTO userDto);
 }
