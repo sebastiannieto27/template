@@ -3,9 +3,49 @@
   xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
                       http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
 
+<!-- Land page mapping  Land page mapping  Land page mapping  Land page mapping  Land page mapping -->
 	<url-mapping id="login">
-		<pattern value="/log" />
+		<pattern value="/inicio" />
 		<view-id value="/login.xhtml" />
 	</url-mapping>
 
+	<url-mapping id="profile">
+		<pattern value="/bienvenido" />
+		<view-id value="/home/profile.xhtml" />
+	</url-mapping>
+<!-- admin module mapping  admin module mapping  admin module mapping  admin module mapping  admin module mapping -->
+	<url-mapping id="priority">
+		<pattern value="/admin/prioridad" />
+		<view-id value="/home/admin/priority/index.xhtml" />
+	</url-mapping>	
+	
+	<url-mapping id="role">
+		<pattern value="/admin/rol" />
+		<view-id value="/home/admin/role/index.xhtml" />
+	</url-mapping>	
+	
+	<url-mapping id="event">
+		<pattern value="/admin/evento" />
+		<view-id value="/home/admin/event/index.xhtml" />
+	</url-mapping>	
+	
+	<url-mapping id="page">
+		<pattern value="/admin/pagina" />
+		<view-id value="/home/admin/page/index.xhtml" />
+	</url-mapping>	
+		
+	<url-mapping id="menu">
+		<pattern value="/admin/menu" />
+		<view-id value="/home/admin/menu/index.xhtml" />
+	</url-mapping>	
+		
+	<url-mapping id="user">
+		<pattern value="/admin/usuario" />
+		<view-id value="/home/admin/user/index.xhtml" />
+	</url-mapping>	
+		
+	<url-mapping id="permission">
+		<pattern value="/admin/permisos" />
+		<view-id value="/home/admin/permission/index.xhtml" />
+	</url-mapping>	
 </pretty-config>
