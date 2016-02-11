@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="userRoleViewDlg" widgetVar="userRoleViewDialog" modal="true" resizable="true" width="50%" appendTo="@(body)" header="#{msg.userRole}" closeOnEscape="true">
+
+            <h:form id="userRoleViewForm">
+            <p:dataTable id="datalist"
+                         value="#{userController.notAssignedRoleItems}"
+                         var="item"
+                         rowKey="#{item.roleId}"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{userController.selectedRole}">
+
+              <p:column sortBy="#{item.roleId}" filterBy="#{item.roleId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.roleId}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.roleName}" filterBy="#{item.roleName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.roleName}"/>
+                </p:column>
+
+                <p:column>
+               		 <h:selectBooleanCheckbox id="perm-#{item.menuId}"
+                                value="#{userController.roleCheckValue}">
+                                <f:ajax execute="@this" listener="#{userController.addRemoveRoleList(item)}"/>
+                       </h:selectBooleanCheckbox>
+               
+                </p:column>
+            </p:dataTable>
+            <p:commandButton id="addRoleButton" value="#{msg.add}" actionListener="#{userController.addRoleToUser}" update="userRoleViewForm listUserRoleForm" />
+            </h:form>
+            <h:form id="listUserRoleForm">
+	            <p:dataTable id="datalistUserRole"
+	                         value="#{userController.userRoleQueryItems}"
+	                         var="roleItem"
+	                         rowKey="#{roleItem.roleId}"
+	                         paginator="true"
+	                         rows="5"
+	                         rowsPerPageTemplate="10,20,30,40,50"
+	                         selectionMode="single"
+	                         selection="#{userController.selectedUserRole}">
+
+               <p:column sortBy="#{roleItem.userRoleId}" filterBy="#{roleItem.userRoleId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{roleItem.userRoleId}"/>
+                </p:column>
+
+                <p:column sortBy="#{roleItem.roleId.roleName}" filterBy="#{roleItem.roleId.roleName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.role}"/>
+                    </f:facet>
+                    <h:outputText value="#{roleItem.roleId.roleName}"/>
+                </p:column>
+
+                <p:column>
+               		 <h:selectBooleanCheckbox id="perm-#{roleItem.userRoleId}"
+                                value="#{userController.userRoleCheckValue}">
+                                <f:ajax execute="@this" listener="#{userController.addRemoveUserRole(roleItem)}"/>
+                       </h:selectBooleanCheckbox>
+               
+                </p:column>
+                
+            </p:dataTable>
+            <p:commandButton id="removeRoleButton" value="#{msg.remove}" actionListener="#{userController.removeRoleFromUser}" update="userRoleViewForm listUserRoleForm" />
+		</h:form>
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

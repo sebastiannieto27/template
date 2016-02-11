@@ -176,6 +176,8 @@
 
     <bean id="userController" scope="session" class="co.com.core.controller.UserController" init-method="init">
     	<property name="userService" ref="userService" />
+    	<property name="userRoleService" ref="userRoleService" />
+    	<property name="roleService" ref="roleService" />
     </bean>   
     
     <bean id="eventController" scope="session" class="co.com.core.controller.EventController" init-method="init">

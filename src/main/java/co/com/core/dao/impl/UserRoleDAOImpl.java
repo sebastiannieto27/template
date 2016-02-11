@@ -9,6 +9,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.UserRoleDAO;
+import co.com.core.domain.RolePermission;
+import co.com.core.domain.User;
 import co.com.core.domain.UserRole;
 
 public class UserRoleDAOImpl implements UserRoleDAO {
@@ -79,5 +81,22 @@ public class UserRoleDAOImpl implements UserRoleDAO {
 			} finally {
 				session.close();
 			}
+		}
+
+
+		@Override
+		public List<UserRole> findByUser(User user) {
+			List<UserRole> entityList = null;
+			try {
+				session = this.sessionFactory.openSession();
+		        Query query = session.getNamedQuery("UserRole.findByUserId");
+		        query.setParameter("userId", user);
+		        entityList = query.list();
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [UserRoleDAOImpl.findByUser]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return entityList;
 		}
 }

@@ -5,9 +5,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import co.com.core.commons.converter.PagePermissionUtil;
 import co.com.core.commons.converter.RoleUtil;
 import co.com.core.dao.RoleDAO;
+import co.com.core.domain.PagePermission;
 import co.com.core.domain.Role;
+import co.com.core.dto.PagePermissionDTO;
 import co.com.core.dto.RoleDTO;
 import co.com.core.services.IRoleService;
 
@@ -49,5 +52,17 @@ public class RoleServiceImpl implements IRoleService {
 
 	public void setRoleDAO(RoleDAO RoleDAO) {
 		this.roleDAO = RoleDAO;
+	}
+
+	@Override
+	public List<RoleDTO> getNotAssignedRole(String ids) {
+		List<RoleDTO> dtoList = new ArrayList<RoleDTO>();
+		List<Role> entityList = this.roleDAO.getNotAssignedRole(ids);
+		if(entityList!=null && entityList.size() > 0) {
+			for(Role entity: entityList) {
+				dtoList.add(RoleUtil.getDtoFromEntity(entity));
+			}
+		}
+		return dtoList;
 	}
 }

@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.RoleDAO;
+import co.com.core.domain.PagePermission;
 import co.com.core.domain.Role;
 import co.com.core.domain.UserRole;
 
@@ -81,5 +82,29 @@ public class RoleDAOImpl implements RoleDAO {
 			} finally {
 				session.close();
 			}
+		}
+
+
+		@Override
+		public List<Role> getNotAssignedRole(String ids) {
+			List<Role> entityList = null;
+			try {
+				session = this.sessionFactory.openSession();
+				StringBuilder hql = new StringBuilder();
+				if(ids!=null && !ids.isEmpty()) {
+					hql.append("SELECT r FROM Role r WHERE r.roleId NOT IN(").append(ids).append(")");
+				} else {
+					hql.append("SELECT r FROM Role r");
+				}
+				
+				Query query = session.createQuery(hql.toString());
+				entityList = query.list();
+				
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [RoleDAOImpl.getNotAssignedRole]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return entityList;
 		}
 }
