@@ -4,23 +4,44 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	<ui:define name="title">HOME</ui:define>
+	<ui:define name="title">Perfil</ui:define>
 
 	<ui:define name="content">
 		
 		<p:panelGrid style="margin-top:20px; width:100%;">
 			<f:facet name="header">
 				<p:row>
+					<p:column colspan="2">
+						<p:commandLink id="changePasswdLink" value="#{msg.changePassword}" update="updatePasswdForm" 
+                   		oncomplete="PF('updatePasswdDialog').show()"/>
+					</p:column>
+				</p:row>
+				<p:row>
 					<p:column>
-						<h:form>
-							<p:panelGrid columns="2">
-								<h:outputLabel value="Hi there" />
-							</p:panelGrid>
-						</h:form>		
+						<h:outputLabel value="Noticias" />
+					</p:column>
+					<p:column>
+						<h:outputLabel value="Calendario" />
 					</p:column>
 				</p:row>
 			</f:facet>
 		</p:panelGrid>	
+
+		<p:dialog id="updatePasswdDlg" widgetVar="updatePasswdDialog" modal="true" resizable="true" appendTo="@(body)" header="#{msg.changePassword}" closeOnEscape="true">
+            <h:form id="updatePasswdForm">
+            	<p:messages id="messages" showDetail="false" autoUpdate="true" />
+            	<h:panelGrid columns="2" id="matchGrid" cellpadding="5">                   
+			        <h:outputLabel for="pwd1" value="#{msg.password}: *" />
+			        <p:password id="pwd1" value="#{userController.newPassword}" match="pwd2" label="#{msg.password}" required="true" 
+			        validatorMessage="#{msg.validateChangePasswdMsg}" />
+			 
+			        <h:outputLabel for="pwd2" value="#{msg.confirmPassword}: *" />
+			        <p:password id="pwd2" value="#{userController.confirmPassword}" label="#{msg.confirmPassword}" required="true" />
+			    </h:panelGrid>
+			 
+			    <p:commandButton update="updatePasswdForm" value="#{msg.save}" action="#{userController.updatePassword}" />
+            </h:form>
+        </p:dialog>
 
 	</ui:define>
 </ui:composition>

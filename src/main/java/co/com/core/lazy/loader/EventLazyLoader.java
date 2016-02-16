@@ -1,5 +1,6 @@
 package co.com.core.lazy.loader;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -10,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import co.com.core.controller.EventController;
 import co.com.core.dto.EventDTO;
 import co.com.core.lazy.sorter.EventLazySorter;
 import co.com.core.services.IEventService;
@@ -56,7 +56,9 @@ public class EventLazyLoader extends LazyDataModel<EventDTO> {
         			try {
         				String filterProperty = it.next();
                         Object filterValue = filters.get(filterProperty);
-                        String fieldValue = String.valueOf(event.getClass().getField(filterProperty).get(event));
+                        Field privateField = event.getClass().getDeclaredField(filterProperty);
+                        privateField.setAccessible(true);
+                        String fieldValue = String.valueOf(privateField.get(event));
                         if(filterValue == null || fieldValue.startsWith(filterValue.toString())) {
                         	match = true;
                         } else {
@@ -65,6 +67,7 @@ public class EventLazyLoader extends LazyDataModel<EventDTO> {
                         }
         			} catch(Exception ex) {
         				match = false;
+        				logger.error("Exception : " + ex.getMessage());
         			}
         		}
         	}

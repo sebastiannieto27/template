@@ -34,11 +34,11 @@
                         <p:selectBooleanCheckbox id="active" value="#{userController.selected.active}" />
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{userController.saveNew}" value="#{myBundle.Save}" update="display,:userListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('userCreateDialog'));">
-                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    <p:commandButton actionListener="#{userController.saveNew}" value="#{msg.save}" update="display,:userListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('userCreateDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
 
-                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('userCreateDialog').hide()"/>
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('userCreateDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>

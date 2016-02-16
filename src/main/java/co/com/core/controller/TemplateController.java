@@ -28,7 +28,7 @@ public class TemplateController {
 				UserDTO userDto = (UserDTO) context.getExternalContext().getSessionMap().get("user");
 				
 				if(userDto==null) {
-					context.getExternalContext().redirect("/friogan/login.xhtml");
+					context.getExternalContext().redirect("/friogan/inicio");
 				} else {
 					boolean validPage = validateAllowedPage(userDto, viewId);
 					if(!validPage) {

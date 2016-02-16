@@ -1,6 +1,9 @@
 package co.com.core.controller;
 
+import static co.com.core.commons.LoadBundle.geProperty;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -12,9 +15,7 @@ import org.primefaces.model.LazyDataModel;
 import co.com.core.commons.EncryptDecrypt;
 import co.com.core.commons.converter.RoleUtil;
 import co.com.core.commons.converter.UserUtil;
-import co.com.core.dto.PagePermissionDTO;
 import co.com.core.dto.RoleDTO;
-import co.com.core.dto.RolePermissionDTO;
 import co.com.core.dto.UserDTO;
 import co.com.core.dto.UserRoleDTO;
 import co.com.core.services.IRoleService;
@@ -43,6 +44,40 @@ public class UserController {
 	private List<UserRoleDTO> deleteUserRoleItems;
 	private UserRoleDTO selectedUserRole;
 	private boolean userRoleCheckValue;
+	
+	
+	//update password
+	private String newPassword;
+	private String confirmPassword;
+	
+	/**
+	 * updates the user password
+	 */
+	public void updatePassword() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			UserDTO userDto = (UserDTO) context.getExternalContext().getSessionMap().get("user");
+			
+			if(userDto==null) {
+				context.getExternalContext().redirect("/friogan/login.xhtml");
+			} else {
+				if(newPassword.equals(confirmPassword)) {
+					String encryptedPasswd = EncryptDecrypt.encrypt(newPassword);
+					userDto.setPassword(encryptedPasswd);
+					userService.update(userDto);
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("passwordConfirmationMsg"), null));
+					logger.info("Updated password: " + userDto.getUserId() + "--" + new Date());
+					context.getExternalContext().invalidateSession();
+					context.getExternalContext().redirect("/friogan/inicio");
+				} else {
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("editionError"), null));
+				}
+			}
+		} catch(Exception ex) {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("editionError"), null));
+			logger.error("Throwed Exception [UserRoleController.updatePassword]: " +ex.getMessage());
+		}
+	}
 	
 	/**
 	 * Find the menu items related to the Role
@@ -153,8 +188,6 @@ public class UserController {
 		//lazyModel = new UserLazyLoader(userService);
 	}
 
-	
-	
 	
 	public void saveNew() {
 		try {
@@ -331,4 +364,19 @@ public class UserController {
 		this.userRoleQueryItems = userRoleQueryItems;
 	}
 	
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 }
