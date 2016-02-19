@@ -146,23 +146,27 @@ public class PagePermissionController {
 		UserDTO userDto = (UserDTO) context.getExternalContext().getSessionMap().get("user");
 		
 		if(userDto!=null) {
+			logger.info("USERDTO : " + userDto);
 			List<UserRoleDTO> roleList = menuService.getUserRoles(userDto);
 			
 			if(roleList!=null && roleList.size()>0) {
 				PermissionDTO permissionDto = permissionService.getByCode(code);
 				
 				if(permissionDto!=null) {
+					logger.info("permissionDto : " + permissionDto);
 					PageDTO pageDto = pageService.getPageByURL(page);
 					
 					if(pageDto!=null) {
 						PagePermissionDTO pagePermissionDto = pagePermissionService.validatePermission(pageDto, permissionDto);
-						
+						logger.info("pageDto : " + pageDto);
 						if(pagePermissionDto!=null) {
+							logger.info("pagePermissionDto : " + pagePermissionDto);
 							for(UserRoleDTO userRole : roleList) {
 								RolePermissionDTO dto = rolePermissionService.
 										findByRolePagePermission(RoleUtil.getDtoFromEntity(userRole.getRoleId()), pagePermissionDto);
 								
 								if(dto!=null) {
+									logger.info("dto!=null : " + dto);
 									return true;
 								}
 							}

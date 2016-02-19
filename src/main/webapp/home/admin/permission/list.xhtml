@@ -54,8 +54,8 @@
                         <h:outputText value="#{item.code}"/>
                     </p:column>
             </p:dataTable>
-
-			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{roleMenuController.init()}" update=":permissionListForm" />
+			<p:commandButton id="exeCommandButton" value="execute" actionListener="#{permissionController.executeCommandLine()}" />
+			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{rpermissionController.init()}" update=":permissionListForm" />
             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{permissionController.prepareCreate}" update=":permissionCreateForm" oncomplete="PF('permissionCreateDialog').show()"/>
             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{msg.view}" update=":permissionViewForm" oncomplete="PF('permissionViewDialog').show()" disabled="#{empty permissionController.selected}"/>
             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{msg.edit}" update=":permissionEditForm" oncomplete="PF('permissionEditDialog').show()" disabled="#{empty permissionController.selected}"/>

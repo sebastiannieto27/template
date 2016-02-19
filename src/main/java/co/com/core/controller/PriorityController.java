@@ -15,8 +15,8 @@ import co.com.core.services.IPriorityService;
 
 public class PriorityController {
 
-	IPriorityService priorityService;
-	List<PriorityDTO> items;
+	private IPriorityService priorityService;
+	private List<PriorityDTO> items;
 	private PriorityDTO selected;
 	
 	private static final Logger logger = Logger.getLogger(PriorityController.class);

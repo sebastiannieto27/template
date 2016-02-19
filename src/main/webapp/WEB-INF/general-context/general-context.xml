@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.1.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<!-- DATASOURCE -->
+	<bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/test" />
+        <property name="username" value="root" />
+        <property name="password" value="admin" />
+    </bean>
+    
+	<!-- Hibernate 3 Annotation SessionFactory Bean definition-->
+    <bean id="hibernate4AnnotatedSessionFactory2"
+        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="mysqlDataSource" />
+        <property name="annotatedClasses">
+            <list>
+                <value>co.com.core.domain.Event</value>
+                <value>co.com.core.domain.Priority</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.current_session_context_class">thread</prop>
+                <prop key="hibernate.show_sql">false</prop>
+            </props>
+        </property>
+    </bean>
+    
+	<bean id="priorityDAO" class="co.com.core.dao.impl.PriorityDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory2" />
+    </bean>
+    
+    <bean id="eventDAO" class="co.com.core.dao.impl.EventDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory2" />
+    </bean>
+         
+	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
+	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
+	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
+    <bean id="eventService" class="co.com.core.services.impl.EventServiceImpl">
+    	<property name="eventDAO" ref="eventDAO" />
+    </bean>
+    
+    <bean id="priorityService" class="co.com.core.services.impl.PriorityServiceImpl">
+    	<property name="priorityDAO" ref="priorityDAO" />
+    </bean>
+   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
+   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
+   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
+   	
+    
+    <bean id="eventController" scope="session" class="co.com.core.controller.EventController" init-method="init">
+    	<property name="eventService" ref="eventService" />
+    </bean> 
+    
+    <bean id="priorityController" scope="session" class="co.com.core.controller.PriorityController" init-method="init">
+    	<property name="priorityService" ref="priorityService" />
+    </bean>
+                               
+</beans>

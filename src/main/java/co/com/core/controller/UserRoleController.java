@@ -20,7 +20,7 @@ public class UserRoleController {
 	private UserRoleDTO selected;
 	private Integer userIdSelected;
 	private Integer roleIdSelected;
-	
+
 	private static final Logger logger = Logger.getLogger(UserRoleController.class);
 	
 	public void init() {

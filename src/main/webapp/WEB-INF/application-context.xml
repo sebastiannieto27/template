@@ -82,9 +82,9 @@
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
     
-    <bean id="eventDAO" class="co.com.core.dao.impl.EventDAOImpl">
-        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-    </bean>   
+<!--     <bean id="eventDAO" class="co.com.core.dao.impl.EventDAOImpl"> -->
+<!--         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" /> -->
+<!--     </bean>    -->
  
     <bean id="roleMenuDAO" class="co.com.core.dao.impl.RoleMenuDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
@@ -98,9 +98,9 @@
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>  
      
-    <bean id="priorityDAO" class="co.com.core.dao.impl.PriorityDAOImpl">
-        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-    </bean>
+<!--     <bean id="priorityDAO" class="co.com.core.dao.impl.PriorityDAOImpl"> -->
+<!--         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" /> -->
+<!--     </bean> -->
          
     <bean id="pagePermissionDAO" class="co.com.core.dao.impl.PagePermissionDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
@@ -130,9 +130,9 @@
     	<property name="userRoleDAO" ref="userRoleDAO" />
     </bean>    
     
-    <bean id="eventService" class="co.com.core.services.impl.EventServiceImpl">
-    	<property name="eventDAO" ref="eventDAO" />
-    </bean>
+<!--     <bean id="eventService" class="co.com.core.services.impl.EventServiceImpl"> -->
+<!--     	<property name="eventDAO" ref="eventDAO" /> -->
+<!--     </bean> -->
         
     <bean id="roleService" class="co.com.core.services.impl.RoleServiceImpl">
     	<property name="roleDAO" ref="roleDAO" />
@@ -150,9 +150,9 @@
     	<property name="rolePermissionDAO" ref="rolePermissionDAO" />
     </bean> 
    	                
-    <bean id="priorityService" class="co.com.core.services.impl.PriorityServiceImpl">
-    	<property name="priorityDAO" ref="priorityDAO" />
-    </bean>
+<!--     <bean id="priorityService" class="co.com.core.services.impl.PriorityServiceImpl"> -->
+<!--     	<property name="priorityDAO" ref="priorityDAO" /> -->
+<!--     </bean> -->
        	                
     <bean id="pagePermissionService" class="co.com.core.services.impl.PagePermissionServiceImpl">
     	<property name="pagePermissionDAO" ref="pagePermissionDAO" />
@@ -180,9 +180,9 @@
     	<property name="roleService" ref="roleService" />
     </bean>   
     
-    <bean id="eventController" scope="session" class="co.com.core.controller.EventController" init-method="init">
-    	<property name="eventService" ref="eventService" />
-    </bean> 
+<!--     <bean id="eventController" scope="session" class="co.com.core.controller.EventController" init-method="init"> -->
+<!--     	<property name="eventService" ref="eventService" /> -->
+<!--     </bean>  -->
     
     <bean id="loginController" scope="session" class="co.com.core.controller.LoginController" init-method="init">
     	<property name="userService" ref="userService" />
@@ -218,9 +218,9 @@
     	<property name="rolePermissionService" ref="rolePermissionService" />
     </bean>
                            
-    <bean id="priorityController" scope="session" class="co.com.core.controller.PriorityController" init-method="init">
-    	<property name="priorityService" ref="priorityService" />
-    </bean>
+<!--     <bean id="priorityController" scope="session" class="co.com.core.controller.PriorityController" init-method="init"> -->
+<!--     	<property name="priorityService" ref="priorityService" /> -->
+<!--     </bean> -->
                                
     <bean id="pagePermissionController" scope="session" class="co.com.core.controller.PagePermissionController" init-method="init">
     	<property name="pagePermissionService" ref="pagePermissionService" />

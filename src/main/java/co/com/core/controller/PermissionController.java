@@ -2,6 +2,8 @@ package co.com.core.controller;
 
 import static co.com.core.commons.LoadBundle.geProperty;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -25,6 +27,29 @@ public class PermissionController {
 		items = permissionService.getAll();
 	}
 
+	public void executeCommandLine() {
+		StringBuffer output = new StringBuffer();
+		StringBuilder command = new StringBuilder();
+		command.append("cd /usr/local/mysql/bin/").append("\n");
+		command.append("ls").append("\n");
+		Process p;
+		try {
+			p = Runtime.getRuntime().exec(command.toString());
+			p.waitFor();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            String line = "";			
+			while ((line = reader.readLine())!= null) {
+				output.append(line + "\n");
+			}
+		} catch(Exception ex) {
+			logger.error("ERROR WRITING TO CONSOLE: " + ex.getMessage());
+		}
+		
+		logger.info("OUTPUT: " + output.toString());
+	}
+	
+	
 	public void saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
