@@ -75,8 +75,8 @@
                     <h:selectBooleanCheckbox id="general" value="#{item.general}" title="#{msg.general}"  disabled="true"/>
                 </p:column>
 
-                
             </p:dataTable>
+            <p:commandButton id="excelBtn" icon="ui-icon-search" value="excel" actionListener="#{menuController.createReport()}" update=":menuListForm" />
             <p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{menuController.init()}" update=":menuListForm" />
             <p:commandButton id="createButton" icon="ui-icon-plus" value="#{msg.create}" actionListener="#{menuController.prepareCreate}" update=":menuCreateForm" oncomplete="PF('menuCreateDialog').show()" />
             <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{msg.view}" update=":menuViewForm" oncomplete="PF('menuViewDialog').show()" disabled="#{empty menuController.selected}"/>
