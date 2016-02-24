@@ -7,101 +7,113 @@
 	<ui:define name="title">Perfil</ui:define>
 
 	<ui:define name="content">
-		
+
 		<p:panelGrid style="margin-top:20px; width:100%;">
 			<f:facet name="header">
 				<p:row>
 					<p:column colspan="2">
-						<p:commandLink id="changePasswdLink" value="#{msg.changePassword}" update="updatePasswdForm" 
-                   		oncomplete="PF('updatePasswdDialog').show()"/>
+						<p:commandLink id="changePasswdLink" value="#{msg.changePassword}"
+							update="updatePasswdForm"
+							oncomplete="PF('updatePasswdDialog').show()" />
 					</p:column>
 				</p:row>
 				<p:row>
 					<p:column>
 						<h:outputLabel value="Noticias" />
 					</p:column>
-					<p:column>
-						<h:outputLabel value="#{msg.messages}" />
-						<h:form id="MessageListForm">
+					<p:column style="width:500px;">
+						<h:form id="messageListForm">
 
-					        <p:panel header="#{msg.messages}">
-					            <p:dataTable id="datalist"
-					                         value="#{messageController.lazyModel}"
-					                         var="item"
-					                         rowKey="#{item.eventId}"
-					                         paginator="true"
-					                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-					                         rows="10"
-					                         rowsPerPageTemplate="10,20,30,40,50"
-					                         selectionMode="single"
-					                         selection="#{eventController.selected}"
-					                         lazy="true">
-					
-					                <p:ajax event="rowSelect" update="@form:deleteButton"/>
-					
-					                <p:column sortBy="#{item.title}" filterBy="#{item.title}">
-					                    <f:facet name="header">
-					                        <h:outputText value="#{msg.title}"/>
-					                    </f:facet>
-					                    <h:outputText value="#{item.title}"/>
-					                </p:column>
-					
-					
-					                <p:column sortBy="#{item.body}" filterBy="#{item.body}">
-					                    <f:facet name="header">
-					                        <h:outputText value="#{msg.messages}"/>
-					                    </f:facet>
-					                    <h:outputText value="#{item.body}"/>
-					                </p:column>
-					
-					
-					                <p:column sortBy="#{item.date}" filterBy="#{item.date}">
-					                    <f:facet name="header">
-					                        <h:outputText value="#{msg.date}"/>
-					                    </f:facet>
-					                    <h:outputText value="#{item.date}">
-					                        <f:convertDateTime pattern="MM/dd/yyyy" />
-					                    </h:outputText>
-					                </p:column>
-					
-					
-					                <p:column sortBy="#{item.senderId.firstName}" filterBy="#{item.senderId.firstName}">
-					                    <f:facet name="header">
-					                        <h:outputText value="#{msg.sender}"/>
-					                    </f:facet>
-					                    <h:outputText value="#{item.senderId.firstName}"/>
-					                </p:column>
-					
+			                <h:panelGroup id="display" style="width:500px;">
+			                    <p:panelGrid style="width:500px;" columns="4" columnClasses="column">
+				                    <p:outputLabel for="startDate" value="#{msg.startDate}:" />
+									<p:calendar id="startDate" value="#{messageController.startDate}" pattern="MM/dd/yyyy HH:mm:ss" effect="fold"/>
+									
+									<p:outputLabel for="endDate" value="#{msg.endDate}:" />
+									<p:calendar id="endDate" value="#{messageController.endDate}" pattern="MM/dd/yyyy HH:mm:ss" effect="fold"/>
+			   								
+									<p:outputLabel value="#{msg.title}:" for="msgTilte" />
+			                       <p:inputText id="msgTilte" value="#{messageController.msgTitle}" title="#{msg.title}"/>
+			                       
+			                       <p:outputLabel value="#{msg.sender}:" for="msgSender" />
+			                       <p:inputText id="msgSender" title="#{msg.sender}:" />
+			                    </p:panelGrid>
+			                    <p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{messageController.init()}" update=":messageListForm" />
+			                </h:panelGroup>
+
+							<p:panel>
+								<p:dataTable id="datalist"
+									value="#{messageController.lazyModel}" var="item"
+									rowKey="#{item.messageId}" paginator="true"
+									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+									rows="10" rowsPerPageTemplate="10,20,30,40,50"
+									selectionMode="single" selection="#{messageController.selected}"
+									lazy="true">
+
+									<p:ajax event="rowSelect" update="@form:deleteButton" />
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="#{msg.title}" />
+										</f:facet>
+										<h:outputText value="#{item.title}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="#{msg.date}" />
+										</f:facet>
+										<p:calendar disabled="true" value="#{item.date}" pattern="MM/dd/yyyy HH:mm:ss"/>
+									</p:column>
+
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="#{msg.sender}" />
+										</f:facet>
+										<h:outputText value="#{item.senderId.firstName}" style="border-style: none;"/>
+									</p:column>
+
 								</p:dataTable>
-					            
-					            
-					            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{messageController.delete}" update=":growl,datalist" disabled="#{empty messageController.selected}">
-					                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-					            </p:commandButton>
-					
-					        </p:panel>
-					        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
-					    </h:form>
+
+
+								<p:commandButton id="deleteButton"
+									icon="ui-icon-trash" value="#{msg.delete}"
+									actionListener="#{messageController.delete}"
+									update=":growl,datalist"
+									disabled="#{empty messageController.selected}">
+									<p:confirm header="#{msg.ConfirmationHeader}"
+										message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert" />
+								</p:commandButton>
+
+							</p:panel>
+							<ui:include src="/WEB-INF/templates/confirmation.xhtml" />
+						</h:form>
 					</p:column>
 				</p:row>
 			</f:facet>
-		</p:panelGrid>	
+		</p:panelGrid>
 
-		<p:dialog id="updatePasswdDlg" widgetVar="updatePasswdDialog" modal="true" resizable="true" appendTo="@(body)" header="#{msg.changePassword}" closeOnEscape="true">
-            <h:form id="updatePasswdForm">
-            	<p:messages id="messages" showDetail="false" autoUpdate="true" />
-            	<h:panelGrid columns="2" id="matchGrid" cellpadding="5">                   
-			        <h:outputLabel for="pwd1" value="#{msg.password}: *" />
-			        <p:password id="pwd1" value="#{userController.newPassword}" match="pwd2" label="#{msg.password}" required="true" 
-			        validatorMessage="#{msg.validateChangePasswdMsg}" />
-			 
-			        <h:outputLabel for="pwd2" value="#{msg.confirmPassword}: *" />
-			        <p:password id="pwd2" value="#{userController.confirmPassword}" label="#{msg.confirmPassword}" required="true" />
-			    </h:panelGrid>
-			 
-			    <p:commandButton update="updatePasswdForm" value="#{msg.save}" action="#{userController.updatePassword}" />
-            </h:form>
-        </p:dialog>
+		<p:dialog id="updatePasswdDlg" widgetVar="updatePasswdDialog"
+			modal="true" resizable="true" appendTo="@(body)"
+			header="#{msg.changePassword}" closeOnEscape="true">
+			<h:form id="updatePasswdForm">
+				<p:messages id="messages" showDetail="false" autoUpdate="true" />
+				<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
+					<h:outputLabel for="pwd1" value="#{msg.password}: *" />
+					<p:password id="pwd1" value="#{userController.newPassword}"
+						match="pwd2" label="#{msg.password}" required="true"
+						validatorMessage="#{msg.validateChangePasswdMsg}" />
+
+					<h:outputLabel for="pwd2" value="#{msg.confirmPassword}: *" />
+					<p:password id="pwd2" value="#{userController.confirmPassword}"
+						label="#{msg.confirmPassword}" required="true" />
+				</h:panelGrid>
+
+				<p:commandButton update="updatePasswdForm" value="#{msg.save}"
+					action="#{userController.updatePassword}" />
+			</h:form>
+		</p:dialog>
 
 	</ui:define>
 </ui:composition>

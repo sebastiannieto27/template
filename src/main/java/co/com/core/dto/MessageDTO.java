@@ -1,5 +1,6 @@
 package co.com.core.dto;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import co.com.core.domain.MessageStatus;
@@ -11,7 +12,7 @@ public class MessageDTO {
 	private Integer messageId;
     private String title;
     private String body;
-    private Date date;
+    private Timestamp date;
     private User senderId;
     private User receiverId;
     private Priority priorityId;
@@ -35,10 +36,10 @@ public class MessageDTO {
 	public void setBody(String body) {
 		this.body = body;
 	}
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 	public User getSenderId() {
@@ -69,8 +70,6 @@ public class MessageDTO {
 	@Override
 	public String toString() {
 		return "MessageDTO [messageId=" + messageId + ", title=" + title
-				+ ", body=" + body + ", date=" + date + ", senderId="
-				+ senderId + ", receiverId=" + receiverId + ", priorityId="
-				+ priorityId + ", messageStatusId=" + messageStatusId + "]";
+				+ ", body=" + body + ", date=" + date + "]";
 	}
 }

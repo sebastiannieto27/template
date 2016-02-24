@@ -2,6 +2,7 @@ package co.com.core.controller;
 
 import static co.com.core.commons.LoadBundle.geProperty;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -10,7 +11,6 @@ import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 
-import co.com.core.domain.Priority;
 import co.com.core.dto.MessageDTO;
 import co.com.core.lazy.loader.MessageLazyLoader;
 import co.com.core.services.IMessageService;
@@ -24,8 +24,14 @@ public class MessageController {
 	IMessageService messageService;
 	List<MessageDTO> items;
 	private MessageDTO selected;
-	
 	private LazyDataModel<MessageDTO> lazyModel;
+
+	/**
+	 * Filter
+	 */
+	private Date startDate;
+	private Date endDate;
+	private String msgTitle;
 	
 	public void init() {
 		lazyModel = new MessageLazyLoader(messageService);
@@ -114,5 +120,30 @@ public class MessageController {
 	public void setLazyModel(LazyDataModel<MessageDTO> lazyModel) {
 		this.lazyModel = lazyModel;
 	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getMsgTitle() {
+		return msgTitle;
+	}
+
+	public void setMsgTitle(String msgTitle) {
+		this.msgTitle = msgTitle;
+	}
+	
 	
 }

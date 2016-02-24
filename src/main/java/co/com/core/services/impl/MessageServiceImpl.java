@@ -21,8 +21,8 @@ public class MessageServiceImpl implements IMessageService {
 		List<MessageDTO> Messages = new ArrayList<MessageDTO>();
 		List<Message> entityList = messageDAO.getAll();
 		if(entityList!=null && entityList.size() > 0) {
-			for(Message Message : entityList) {
-				Messages.add(MessageUtil.getDtoFromEntity(Message));
+			for(Message message : entityList) {
+				Messages.add(MessageUtil.getDtoFromEntity(message));
 			}
 		}
 		return Messages;

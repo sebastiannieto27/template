@@ -6,7 +6,9 @@
 package co.com.core.domain;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,8 +60,8 @@ public class Message implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    //@Temporal(TemporalType.DATE)
+    private Timestamp date;
     @JoinColumn(name = "sender_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
     private User senderId;
@@ -80,7 +82,7 @@ public class Message implements Serializable {
         this.messageId = messageId;
     }
 
-    public Message(Integer messageId, String title, String body, Date date) {
+    public Message(Integer messageId, String title, String body, Timestamp date) {
         this.messageId = messageId;
         this.title = title;
         this.body = body;
@@ -111,11 +113,11 @@ public class Message implements Serializable {
         this.body = body;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -172,8 +174,9 @@ public class Message implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "com.core.entity.Message[ messageId=" + messageId + " ]";
-    }
+	public String toString() {
+		return "Message [messageId=" + messageId + ", title=" + title
+				+ ", date=" + date + "]";
+	}
     
 }
