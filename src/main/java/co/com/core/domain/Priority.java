@@ -7,12 +7,10 @@ package co.com.core.domain;
 
 import java.io.Serializable;
 import java.util.Collection;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,6 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Priority.findByName", query = "SELECT p FROM Priority p WHERE p.name = :name"),
     @NamedQuery(name = "Priority.findByColor", query = "SELECT p FROM Priority p WHERE p.color = :color")})
 public class Priority implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "priorityId")
+    private Collection<Message> messageCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -124,10 +124,17 @@ public class Priority implements Serializable {
     }
 
     @Override
-	public String toString() {
-		return "Priority [priorityId=" + priorityId + ", name=" + name
-				+ ", color=" + color + ", eventCollection=" + eventCollection
-				+ "]";
-	}
+    public String toString() {
+        return "com.core.entity.Priority[ priorityId=" + priorityId + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Message> getMessageCollection() {
+        return messageCollection;
+    }
+
+    public void setMessageCollection(Collection<Message> messageCollection) {
+        this.messageCollection = messageCollection;
+    }
     
 }

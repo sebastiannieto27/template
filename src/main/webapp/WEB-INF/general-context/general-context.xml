@@ -17,7 +17,7 @@
 	<bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource"
         destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/test" />
+        <property name="url" value="jdbc:mysql://localhost:3306/mydb" />
         <property name="username" value="root" />
         <property name="password" value="admin" />
     </bean>
@@ -30,6 +30,8 @@
             <list>
                 <value>co.com.core.domain.Event</value>
                 <value>co.com.core.domain.Priority</value>
+                <value>co.com.core.domain.MessageStatus</value>
+                <value>co.com.core.domain.Message</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -48,7 +50,11 @@
     <bean id="eventDAO" class="co.com.core.dao.impl.EventDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory2" />
     </bean>
-         
+    
+    <bean id="messageStatusDAO" class="co.com.core.dao.impl.MessageStatusDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory2" />
+    </bean>
+                  
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -59,6 +65,10 @@
     <bean id="priorityService" class="co.com.core.services.impl.PriorityServiceImpl">
     	<property name="priorityDAO" ref="priorityDAO" />
     </bean>
+    
+    <bean id="messageStatusService" class="co.com.core.services.impl.MessageStatusServiceImpl">
+    	<property name="messageStatusDAO" ref="messageStatusDAO" />
+    </bean>    
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -71,5 +81,8 @@
     <bean id="priorityController" scope="session" class="co.com.core.controller.PriorityController" init-method="init">
     	<property name="priorityService" ref="priorityService" />
     </bean>
-                               
+    
+    <bean id="messageStatusController" scope="session" class="co.com.core.controller.MessageStatusController" init-method="init">
+    	<property name="messageStatusService" ref="messageStatusService" />
+    </bean>                               
 </beans>

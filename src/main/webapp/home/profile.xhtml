@@ -21,7 +21,67 @@
 						<h:outputLabel value="Noticias" />
 					</p:column>
 					<p:column>
-						<h:outputLabel value="Calendario" />
+						<h:outputLabel value="#{msg.messages}" />
+						<h:form id="MessageListForm">
+
+					        <p:panel header="#{msg.messages}">
+					            <p:dataTable id="datalist"
+					                         value="#{messageController.lazyModel}"
+					                         var="item"
+					                         rowKey="#{item.eventId}"
+					                         paginator="true"
+					                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					                         rows="10"
+					                         rowsPerPageTemplate="10,20,30,40,50"
+					                         selectionMode="single"
+					                         selection="#{eventController.selected}"
+					                         lazy="true">
+					
+					                <p:ajax event="rowSelect" update="@form:deleteButton"/>
+					
+					                <p:column sortBy="#{item.title}" filterBy="#{item.title}">
+					                    <f:facet name="header">
+					                        <h:outputText value="#{msg.title}"/>
+					                    </f:facet>
+					                    <h:outputText value="#{item.title}"/>
+					                </p:column>
+					
+					
+					                <p:column sortBy="#{item.body}" filterBy="#{item.body}">
+					                    <f:facet name="header">
+					                        <h:outputText value="#{msg.messages}"/>
+					                    </f:facet>
+					                    <h:outputText value="#{item.body}"/>
+					                </p:column>
+					
+					
+					                <p:column sortBy="#{item.date}" filterBy="#{item.date}">
+					                    <f:facet name="header">
+					                        <h:outputText value="#{msg.date}"/>
+					                    </f:facet>
+					                    <h:outputText value="#{item.date}">
+					                        <f:convertDateTime pattern="MM/dd/yyyy" />
+					                    </h:outputText>
+					                </p:column>
+					
+					
+					                <p:column sortBy="#{item.senderId.firstName}" filterBy="#{item.senderId.firstName}">
+					                    <f:facet name="header">
+					                        <h:outputText value="#{msg.sender}"/>
+					                    </f:facet>
+					                    <h:outputText value="#{item.senderId.firstName}"/>
+					                </p:column>
+					
+								</p:dataTable>
+					            
+					            
+					            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{messageController.delete}" update=":growl,datalist" disabled="#{empty messageController.selected}">
+					                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+					            </p:commandButton>
+					
+					        </p:panel>
+					        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+					    </h:form>
 					</p:column>
 				</p:row>
 			</f:facet>

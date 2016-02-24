@@ -84,6 +84,10 @@ public class User implements Serializable {
     @JoinColumn(name = "city_city_id", referencedColumnName = "city_id")
     @ManyToOne
     private City cityCityId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderId")
+    private Collection<Message> messageCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverId")
+    private Collection<Message> messageCollection1;
 
     public User() {
     }
@@ -182,6 +186,24 @@ public class User implements Serializable {
         this.cityCityId = cityCityId;
     }
 
+    @XmlTransient
+    public Collection<Message> getMessageCollection() {
+        return messageCollection;
+    }
+
+    public void setMessageCollection(Collection<Message> messageCollection) {
+        this.messageCollection = messageCollection;
+    }
+
+    @XmlTransient
+    public Collection<Message> getMessageCollection1() {
+        return messageCollection1;
+    }
+
+    public void setMessageCollection1(Collection<Message> messageCollection1) {
+        this.messageCollection1 = messageCollection1;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

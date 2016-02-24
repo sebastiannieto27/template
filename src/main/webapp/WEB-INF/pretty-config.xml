@@ -48,4 +48,9 @@
 		<pattern value="/admin/permisos" />
 		<view-id value="/home/admin/permission/index.xhtml" />
 	</url-mapping>	
+			
+	<url-mapping id="messageStatus">
+		<pattern value="/admin/estado-mensaje" />
+		<view-id value="/home/admin/messageStatus/index.xhtml" />
+	</url-mapping>	
 </pretty-config>
