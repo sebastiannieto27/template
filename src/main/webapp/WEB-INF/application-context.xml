@@ -46,6 +46,7 @@
                 <value>co.com.core.domain.Priority</value>
                 <value>co.com.core.domain.MessageStatus</value>
                 <value>co.com.core.domain.Message</value>
+                <value>co.com.core.domain.LoginAttempt</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -114,7 +115,11 @@
          
     <bean id="messageDAO" class="co.com.core.dao.impl.MessageDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-    </bean>          
+    </bean>      
+             
+    <bean id="loginAttemptDAO" class="co.com.core.dao.impl.LoginAttemptDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>    
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -174,6 +179,10 @@
     <bean id="messageService" class="co.com.core.services.impl.MessageServiceImpl">
     	<property name="messageDAO" ref="messageDAO" />
     </bean> 
+    
+    <bean id="loginAttemptService" class="co.com.core.services.impl.LoginAttemptServiceImpl">
+    	<property name="loginAttemptDAO" ref="loginAttemptDAO" />
+    </bean> 
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -199,6 +208,7 @@
     
     <bean id="loginController" scope="session" class="co.com.core.controller.LoginController" init-method="init">
     	<property name="userService" ref="userService" />
+    	<property name="loginAttemptService" ref="loginAttemptService" />
     	<property name="menuController" ref="menuController" />
     </bean> 
     

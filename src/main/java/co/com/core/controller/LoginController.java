@@ -1,13 +1,21 @@
 package co.com.core.controller;
 
+import static co.com.core.commons.LoadBundle.geProperty;
+
+import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
 import co.com.core.commons.EncryptDecrypt;
-import static co.com.core.commons.LoadBundle.geProperty;
+import co.com.core.commons.SessionUtil;
+import co.com.core.dto.LoginAttemptDTO;
 import co.com.core.dto.UserDTO;
+import co.com.core.services.ILoginAttemptService;
 import co.com.core.services.IUserService;
 
 public class LoginController {
@@ -20,6 +28,8 @@ public class LoginController {
 	private IUserService userService;
 	private MenuController menuController;
 	private UserDTO userDto;
+	
+	private ILoginAttemptService loginAttemptService;
 	
 	private static final Logger logger = Logger.getLogger(LoginController.class);
 	
@@ -34,6 +44,8 @@ public class LoginController {
 			String encrypted = EncryptDecrypt.encrypt(userPassword);
 			userDto = userService.login(userEmail, encrypted);
 			if(userDto != null) {
+				//register a valid login attempt
+				registerSessionAttemp((short)1, userEmail);
 				if(userDto.getActive()) {
 					context.getExternalContext().getSessionMap().put("user", userDto);
 					this.isLogged = true;
@@ -44,6 +56,8 @@ public class LoginController {
 					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("inactiveUser"), geProperty("pleaseVerifySummary")));
 				}
 			} else {
+				//register a failed login attempt
+				registerSessionAttemp((short)0, userEmail);
 				this.isLogged = false;
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("wrongUserPassword"), geProperty("pleaseVerifySummary")));
 			}
@@ -59,6 +73,31 @@ public class LoginController {
 		this.isLogged = false;	
 		return "/login.xhtml?faces-redirect=true";
    }
+	
+	private void registerSessionAttemp(Short validAttempt, String userMail) {
+		try {
+			LoginAttemptDTO attempt = new LoginAttemptDTO();
+			HttpServletRequest request =  SessionUtil.getRequest();
+			
+			String userAgent = SessionUtil.getRequest().getHeader("User-Agent");
+			attempt.setUserAgent(userAgent);
+			
+			String ipAddress = request.getHeader("X-FORWARDED-FOR");
+			if (ipAddress == null) {
+			    ipAddress = request.getRemoteAddr();
+			}
+			attempt.setIpAddress(ipAddress);
+			//current date and time
+			attempt.setDateAttempt(new Timestamp(new Date().getTime()));
+			attempt.setUserMail(userMail);
+			attempt.setValidAttempt(validAttempt);
+			loginAttemptService.create(attempt);
+		} catch(Exception ex) {
+			logger.error("Throwed Exception [LoginController.registerSessionAttemp]: " +ex.getMessage());
+		}
+		
+		
+	}
 	
 	public String getUserEmail() {
 		return userEmail;
@@ -120,6 +159,14 @@ public class LoginController {
 
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
+	}
+
+	public ILoginAttemptService getLoginAttemptService() {
+		return loginAttemptService;
+	}
+
+	public void setLoginAttemptService(ILoginAttemptService loginAttemptService) {
+		this.loginAttemptService = loginAttemptService;
 	}
 	
 	

@@ -88,7 +88,9 @@ public class User implements Serializable {
     private Collection<Message> messageCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverId")
     private Collection<Message> messageCollection1;
-
+    @Column(name = "account_locked")
+    private Short accountLocked;
+    
     public User() {
     }
 
@@ -204,6 +206,14 @@ public class User implements Serializable {
         this.messageCollection1 = messageCollection1;
     }
     
+    public Short getAccountLocked() {
+        return accountLocked;
+    }
+
+    public void setAccountLocked(Short accountLocked) {
+        this.accountLocked = accountLocked;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
