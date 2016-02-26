@@ -43,6 +43,16 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
+	public UserDTO getByMail(String userEmail) {
+		UserDTO userDto = null;
+		User user = userDAO.getByMail(userEmail);
+		if (user!=null) {
+			userDto = UserUtil.getDtoFromEntity(user);
+		}
+		return userDto;
+	}
+	
+	@Override
 	public void createUser(UserDTO UserDto) {
 		userDAO.createUser(UserUtil.getEntityFromDto(UserDto));
 	}

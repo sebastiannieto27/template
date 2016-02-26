@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
+import co.com.core.commons.ApplicationConstants;
 import co.com.core.commons.EncryptDecrypt;
 import co.com.core.commons.SessionUtil;
 import co.com.core.dto.LoginAttemptDTO;
@@ -24,81 +25,121 @@ public class LoginController {
 	private String userPassword;
 	private Integer userId;
 	private boolean isLogged;
-	
+
 	private IUserService userService;
 	private MenuController menuController;
 	private UserDTO userDto;
-	
+
 	private ILoginAttemptService loginAttemptService;
-	
-	private static final Logger logger = Logger.getLogger(LoginController.class);
-	
-	public void init () {
+
+	private static final Logger logger = Logger
+			.getLogger(LoginController.class);
+
+	public void init() {
 		menuController.loadGeneralMenu();
 	}
-	
+
 	public String validateLogin() {
 
 		try {
 			FacesContext context = FacesContext.getCurrentInstance();
 			String encrypted = EncryptDecrypt.encrypt(userPassword);
 			userDto = userService.login(userEmail, encrypted);
-			if(userDto != null) {
-				//register a valid login attempt
-				registerSessionAttemp((short)1, userEmail);
-				if(userDto.getActive()) {
-					context.getExternalContext().getSessionMap().put("user", userDto);
-					this.isLogged = true;
-		            menuController.loadMenu(userDto);
-		            return "home/profile.xhtml?faces-redirect=true";
+			if (userDto != null) {
+				short isLockedAccount = (userDto.getAccountLocked() == null ? 0 : userDto.getAccountLocked().shortValue());
+				if (isLockedAccount == ApplicationConstants.USER_ACCOUNT_UNLOCKED) {
+					if (userDto.getActive()) {
+						context.getExternalContext().getSessionMap().put("user", userDto);
+						this.isLogged = true;
+						menuController.loadMenu(userDto);
+						return "home/profile.xhtml?faces-redirect=true";
+					} else {
+						this.isLogged = false;
+						context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+								geProperty("inactiveUser"),geProperty("pleaseVerifySummary")));
+					}
 				} else {
 					this.isLogged = false;
-					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("inactiveUser"), geProperty("pleaseVerifySummary")));
+					context.addMessage(null, new FacesMessage(
+							FacesMessage.SEVERITY_INFO,
+							geProperty("userAccountLocked"),
+							geProperty("pleaseVerifySummary")));
 				}
 			} else {
-				//register a failed login attempt
-				registerSessionAttemp((short)0, userEmail);
+				// register a failed login attempt
+				registerSessionAttemp((short) 0, userEmail);
 				this.isLogged = false;
-				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("wrongUserPassword"), geProperty("pleaseVerifySummary")));
+				long invalidAttemps = loginAttemptService.invalidLoginAttemps(userEmail);
+				//if the invalid attempts are over the threshold locks the user account
+				if (invalidAttemps >= ApplicationConstants.INVALID_LOGIN_ATTEMPS_ALLOWED) {
+					lockUserAccount(userEmail);
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+							geProperty("userAccountLocked"),geProperty("userAccountLockedSummary")));
+				} else {
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+							geProperty("wrongUserPassword"),geProperty("pleaseVerifySummary")));
+				}
 			}
-		} catch(Exception ex) {
-			logger.error("Throwed Exception [LoginController.validateLogin]: " +ex.getMessage());
+		} catch (Exception ex) {
+			logger.error("Throwed Exception [LoginController.validateLogin]: "+ ex.getMessage());
 		}
 		return null;
 	}
 
-
 	public String logout() {
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		this.isLogged = false;	
+		FacesContext.getCurrentInstance().getExternalContext()
+				.invalidateSession();
+		this.isLogged = false;
 		return "/login.xhtml?faces-redirect=true";
-   }
+	}
+
+	/**
+	 * the current user gets the account locked
+	 * @param currentUser
+	 */
+	private void lockUserAccount(String currentUserMail) {
+		try {
+			UserDTO currentUser = userService.getByMail(currentUserMail);
+			if (currentUser != null) {
+				currentUser.setAccountLocked(ApplicationConstants.USER_ACCOUNT_LOCKED);
+				userService.update(currentUser);
+			}
+		} catch (Exception ex) {
+			logger.error("Throwed Exception [LoginController.lockUserAccount]: "+ ex.getMessage());
+		}
+	}
 	
+	/**
+	 * Register the login attempt
+	 * 
+	 * @param validAttempt
+	 * @param userMail
+	 */
 	private void registerSessionAttemp(Short validAttempt, String userMail) {
 		try {
 			LoginAttemptDTO attempt = new LoginAttemptDTO();
-			HttpServletRequest request =  SessionUtil.getRequest();
-			
+			HttpServletRequest request = SessionUtil.getRequest();
+
 			String userAgent = SessionUtil.getRequest().getHeader("User-Agent");
 			attempt.setUserAgent(userAgent);
-			
+
 			String ipAddress = request.getHeader("X-FORWARDED-FOR");
 			if (ipAddress == null) {
-			    ipAddress = request.getRemoteAddr();
+				ipAddress = request.getRemoteAddr();
 			}
 			attempt.setIpAddress(ipAddress);
-			//current date and time
+			// current date and time
 			attempt.setDateAttempt(new Timestamp(new Date().getTime()));
 			attempt.setUserMail(userMail);
-			attempt.setValidAttempt(validAttempt);
+			attempt.setValidAttempt(validAttempt.shortValue());
 			loginAttemptService.create(attempt);
-		} catch(Exception ex) {
-			logger.error("Throwed Exception [LoginController.registerSessionAttemp]: " +ex.getMessage());
+		} catch (Exception ex) {
+			logger.error("Throwed Exception [LoginController.registerSessionAttemp]: "
+					+ ex.getMessage());
 		}
-		
-		
+
 	}
-	
+
 	public String getUserEmail() {
 		return userEmail;
 	}
@@ -168,6 +209,5 @@ public class LoginController {
 	public void setLoginAttemptService(ILoginAttemptService loginAttemptService) {
 		this.loginAttemptService = loginAttemptService;
 	}
-	
-	
+
 }

@@ -50,4 +50,16 @@ public class LoginAttemptServiceImpl implements ILoginAttemptService {
 	public void setLoginAttemptDAO(LoginAttemptDAO LoginAttemptDAO) {
 		this.loginAttemptDAO = LoginAttemptDAO;
 	}
+
+	@Override
+	public long invalidLoginAttemps(String userMail) {
+		long attempts = 0;
+		
+		Long objAttempts = this.loginAttemptDAO.invalidLoginAttemps(userMail);
+		
+		if(objAttempts!=null) {
+			attempts = objAttempts.longValue();
+		}
+		return attempts;
+	}
 }

@@ -11,6 +11,7 @@ public class UserDTO {
     private String idNumber;
     private Boolean active;
     private String creationDate;
+    private Short accountLocked;
     
 	public Integer getUserId() {
 		return userId;
@@ -61,11 +62,18 @@ public class UserDTO {
 		this.creationDate = creationDate;
 	}
 	
+	public Short getAccountLocked() {
+		return accountLocked;
+	}
+	public void setAccountLocked(Short accountLocked) {
+		this.accountLocked = accountLocked;
+	}
 	@Override
 	public String toString() {
 		return "UserDTO [userId=" + userId + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", email=" + email + ", password="
 				+ password + ", idNumber=" + idNumber + ", active=" + active
-				+ ", creationDate=" + creationDate + "]";
+				+ ", creationDate=" + creationDate + ", accountLocked="
+				+ accountLocked + "]";
 	}
 }

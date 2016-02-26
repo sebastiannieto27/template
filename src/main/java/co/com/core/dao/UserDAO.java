@@ -17,4 +17,6 @@ public interface UserDAO {
 	public void delete(User user);
 	
 	public void update(User user);
+	
+	public User getByMail(String userEmail);
 }

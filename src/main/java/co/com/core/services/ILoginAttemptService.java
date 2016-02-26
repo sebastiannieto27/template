@@ -14,4 +14,6 @@ public interface ILoginAttemptService {
 	public void delete(LoginAttemptDTO dto);
 	
 	public void update(LoginAttemptDTO dto);
+	
+	public long invalidLoginAttemps(String userMail);
 }

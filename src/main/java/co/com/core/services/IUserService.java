@@ -18,4 +18,6 @@ public interface IUserService {
 	public void delete(UserDTO UserDto);
 	
 	public void update(UserDTO UserDto);
+	
+	public UserDTO getByMail(String userEmail);
 }

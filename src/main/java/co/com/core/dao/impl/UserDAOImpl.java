@@ -120,4 +120,27 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 
+	@Override
+	public User getByMail(String userEmail) {
+		User user = null;
+		try {
+			session = this.sessionFactory.openSession();
+			StringBuilder hql = new StringBuilder();
+			hql.append("SELECT u FROM User u WHERE u.email = '").append(userEmail).append("'");
+			Query query = session.createQuery(hql.toString());
+			List users = query.list();
+			
+			for(Iterator iterator = users.iterator(); iterator.hasNext();) {
+				user = (User) iterator.next();
+			}
+			
+		} catch(Exception ex) {
+			logger.error("Throwed Exception [UserDAOImpl.getByMail]: " +ex.getMessage());
+		} finally {
+			session.close();
+		}
+		
+		return user;
+	}
+
 }

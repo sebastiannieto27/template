@@ -14,4 +14,5 @@ public interface LoginAttemptDAO {
 	
 	public void update(LoginAttempt entity);
 	
+	public Long invalidLoginAttemps(String userMail);
 }

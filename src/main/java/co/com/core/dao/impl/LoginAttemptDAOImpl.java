@@ -1,5 +1,8 @@
 package co.com.core.dao.impl;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -8,6 +11,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import co.com.core.commons.ApplicationConstants;
+import co.com.core.commons.ApplicationUtil;
 import co.com.core.dao.LoginAttemptDAO;
 import co.com.core.domain.LoginAttempt;
 
@@ -80,5 +85,42 @@ public class LoginAttemptDAOImpl implements LoginAttemptDAO {
 			} finally {
 				session.close();
 			}
+		}
+
+
+		@Override
+		public Long invalidLoginAttemps(String userMail) {
+			Long count = null;
+			try {
+				StringBuilder hql = new StringBuilder();
+				
+				String endStr = ApplicationUtil.getFormattedDate(new Date(), ApplicationConstants.SIMPLE_DATE_FORMAT, ApplicationConstants.END_OF_DAY_TIME);
+				String startStr = ApplicationUtil.getFormattedDate(new Date(), ApplicationConstants.SIMPLE_DATE_FORMAT, ApplicationConstants.START_OF_DAY_TIME);
+				
+				Date startDate = ApplicationUtil.getDateFromString(startStr, ApplicationConstants.FULL_DATE_FORMAT);
+				Timestamp startTime = new java.sql.Timestamp(startDate.getTime());
+				Date endDate = ApplicationUtil.getDateFromString(endStr, ApplicationConstants.FULL_DATE_FORMAT);
+				Timestamp endTime = new java.sql.Timestamp(endDate.getTime());
+				
+				hql.append("SELECT COUNT(*) FROM LoginAttempt l WHERE l.userMail=:userMail ");
+				hql.append("AND  l.validAttempt=:validAttempt ");
+				hql.append("AND l.dateAttempt BETWEEN :startDate AND :endDate ");
+				
+				session = this.sessionFactory.openSession();
+		        Query query = session.createQuery(hql.toString());
+		        query.setParameter("userMail", userMail);
+		        query.setParameter("validAttempt", (short)0);
+		        query.setParameter("startDate", startTime);
+		        query.setParameter("endDate", endTime);
+		        
+		        count = (Long) query.uniqueResult();
+		        
+			} catch (Exception ex) {
+				logger.error("Throwed Exception [LoginAttemptDAOImpl.invalidLoginAttemps]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			
+			return count;
 		}
 }

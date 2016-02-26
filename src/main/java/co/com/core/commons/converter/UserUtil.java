@@ -16,7 +16,7 @@ public class UserUtil {
 		userDto.setIdNumber(user.getIdNumber());
 		userDto.setPassword(user.getPassword());
 		userDto.setUserId(user.getUserId());
-		
+		userDto.setAccountLocked(user.getAccountLocked());
 		return userDto;
 	}
 	
@@ -30,6 +30,7 @@ public class UserUtil {
 		user.setEmail(userDto.getEmail());
 		user.setIdNumber(userDto.getIdNumber());
 		user.setPassword(userDto.getPassword());
+		user.setAccountLocked(userDto.getAccountLocked());
 		return user;
 	}
 }
