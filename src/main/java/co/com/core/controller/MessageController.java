@@ -2,6 +2,7 @@ package co.com.core.controller;
 
 import static co.com.core.commons.LoadBundle.geProperty;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -21,8 +22,8 @@ public class MessageController {
 
 	private static final Logger logger = Logger.getLogger(MessageController.class);
 	
-	IMessageService messageService;
-	List<MessageDTO> items;
+	private IMessageService messageService;
+	private List<MessageDTO> items;
 	private MessageDTO selected;
 	private LazyDataModel<MessageDTO> lazyModel;
 
@@ -32,11 +33,22 @@ public class MessageController {
 	private Date startDate;
 	private Date endDate;
 	private String msgTitle;
+	private String msgBody;
 	
 	public void init() {
 		lazyModel = new MessageLazyLoader(messageService);
 	}
 
+	/**
+	 * 
+	 * @param item
+	 */
+	public void setBodyMessage(MessageDTO item) {
+		if(item!=null) {
+			this.msgBody =  item.getBody();
+		}
+	}
+	
 	public void saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
@@ -85,6 +97,10 @@ public class MessageController {
 		selected = new MessageDTO();
 	}
 
+	public String getFormattedDate(Timestamp date) {
+		return date.toString();
+	}
+	
 	public List<MessageDTO> getAllMessages() {
 		return messageService.getAll();
 	}
@@ -143,6 +159,18 @@ public class MessageController {
 
 	public void setMsgTitle(String msgTitle) {
 		this.msgTitle = msgTitle;
+	}
+
+	public void setMsgBody(String msgBody) {
+		this.msgBody = msgBody;
+	}
+
+	public static Logger getLogger() {
+		return logger;
+	}
+
+	public String getMsgBody() {
+		return msgBody;
 	}
 	
 	

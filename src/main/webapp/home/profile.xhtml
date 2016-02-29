@@ -43,14 +43,16 @@
 
 							<p:panel>
 								<p:dataTable id="datalist"
-									value="#{messageController.lazyModel}" var="item"
-									rowKey="#{item.messageId}" paginator="true"
+									value="#{messageController.lazyModel}" 
+									var="item"
+									rowKey="#{item.messageId}" 
+									paginator="true"
 									paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-									rows="10" rowsPerPageTemplate="10,20,30,40,50"
-									selectionMode="single" selection="#{messageController.selected}"
+									rows="10" 
+									rowsPerPageTemplate="10,20,30,40,50"
+									selectionMode="single" 
+									selection="#{messageController.selected}"
 									lazy="true">
-
-									<p:ajax event="rowSelect" oncomplete="PF('messageViewDialog').show()" />
 
 									<p:column>
 										<f:facet name="header">
@@ -63,9 +65,8 @@
 										<f:facet name="header">
 											<h:outputText value="#{msg.date}" />
 										</f:facet>
-										<p:calendar disabled="true" value="#{item.date}" pattern="MM/dd/yyyy HH:mm:ss"/>
+										<h:outputText value="#{messageController.getFormattedDate(item.date)}" />
 									</p:column>
-
 
 									<p:column>
 										<f:facet name="header">
@@ -73,7 +74,11 @@
 										</f:facet>
 										<h:outputText value="#{item.senderId.firstName} #{item.senderId.lastName}" style="border-style: none;"/>
 									</p:column>
-
+									
+					                 <p:column>
+					                    <p:commandLink id="viewBodyLink" value="Leer" update="messageViewForm" 
+					                    		actionListener="#{messageController.setBodyMessage(item)}" oncomplete="PF('messageViewDialog').show()"/>
+					                </p:column>
 								</p:dataTable>
 
 							</p:panel>
@@ -82,27 +87,19 @@
 					</p:column>
 				</p:row>
 			</f:facet>
-			
-			
-			     <p:dialog id="messageViewDlg" widgetVar="messageViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.message}" closeOnEscape="true">
-
-		           	<h:form id="messageViewForm">
-		
-		                <h:panelGroup id="display">
-		                    <p:panelGrid columns="2" columnClasses="column" rendered="#{messageController.selected != null}">
-		
-		                        <h:outputText value="#{messageController.selected.title}"/>
-								<p:separator/>
-		                        <h:outputText value="#{messageController.selected.body}"/>
-		                    </p:panelGrid>
-		                    <p:commandButton value="#{msg.close}" onclick="PF('messageViewDialog').hide()"/>
-		                </h:panelGroup>
-		
-		            </h:form>
-		
-		        </p:dialog>
-			
 		</p:panelGrid>
+
+	     <p:dialog id="messageViewDlg" widgetVar="messageViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.message}" closeOnEscape="true">
+           	<h:form id="messageViewForm">
+                <h:panelGroup id="display" rendered="#{messageController.selected != null}">
+                    <p:panelGrid columnClasses="column">
+                        <h:outputText value="#{messageController.selected.title}" styleClass="ui-title-font-style"/>
+						<p:separator/>
+                        <h:outputText value="#{messageController.msgBody}"/>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
 
 		<p:dialog id="updatePasswdDlg" widgetVar="updatePasswdDialog"
 			modal="true" resizable="true" appendTo="@(body)"

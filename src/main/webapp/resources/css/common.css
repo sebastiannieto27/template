@@ -48,3 +48,8 @@
 	.ui-datascroller .ui-datascroller-list .ui-datascroller-content {
 		height: 200px !important;
 	}
+	
+	.ui-title-font-style {
+		font-size: 14px;
+		font-weight: bold;
+	}
