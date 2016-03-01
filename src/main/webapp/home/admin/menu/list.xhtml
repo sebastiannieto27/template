@@ -76,6 +76,8 @@
                 </p:column>
 
             </p:dataTable>
+            <h:commandButton actionListener="#{menuController.jasperTestOne}" value="Jasper PDF" />
+            <p:commandButton id="pdfBtn" icon="ui-icon-search" value="PDF" actionListener="#{menuController.jasperTestOne}" update=":menuListForm" />
             <p:commandButton id="excelBtn" icon="ui-icon-search" value="excel" actionListener="#{menuController.createReport()}" update=":menuListForm" />
             <p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{menuController.init()}" update=":menuListForm" />
             <p:commandButton id="createButton" icon="ui-icon-plus" value="#{msg.create}" actionListener="#{menuController.prepareCreate}" update=":menuCreateForm" oncomplete="PF('menuCreateDialog').show()" />

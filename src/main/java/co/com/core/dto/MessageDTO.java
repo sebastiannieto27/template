@@ -7,7 +7,7 @@ import co.com.core.domain.MessageStatus;
 import co.com.core.domain.Priority;
 import co.com.core.domain.User;
 
-public class MessageDTO {
+public class MessageDTO implements IBaseDTO {
 
 	private Integer messageId;
     private String title;

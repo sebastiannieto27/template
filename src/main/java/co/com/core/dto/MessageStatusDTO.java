@@ -1,7 +1,7 @@
 package co.com.core.dto;
 
 
-public class MessageStatusDTO {
+public class MessageStatusDTO implements IBaseDTO {
 	private Integer messageStatusId;
     private String name;
     

@@ -1,7 +1,7 @@
 package co.com.core.dto;
 
 
-public class RoleDTO {
+public class RoleDTO implements IBaseDTO {
 
 	private Integer roleId;
     private String roleName;

@@ -3,7 +3,7 @@ package co.com.core.dto;
 import co.com.core.domain.Page;
 import co.com.core.domain.Permission;
 
-public class PagePermissionDTO {
+public class PagePermissionDTO implements IBaseDTO {
 
     private Integer idPagePermission;
     private Page pageId;

@@ -1,6 +1,6 @@
 package co.com.core.dto;
 
-public class PriorityDTO {
+public class PriorityDTO implements IBaseDTO {
 
 	private Integer priorityId;
 	private String name;

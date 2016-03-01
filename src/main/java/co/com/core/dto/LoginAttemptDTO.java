@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import co.com.core.domain.User;
 
-public class LoginAttemptDTO {
+public class LoginAttemptDTO implements IBaseDTO {
 	private Integer loginAttemptId;
     private String userAgent;
     private String ipAddress;

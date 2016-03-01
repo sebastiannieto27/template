@@ -2,7 +2,7 @@ package co.com.core.dto;
 
 
 
-public class PermissionDTO {
+public class PermissionDTO implements IBaseDTO {
 
 	private Integer permissionId;
     private String permissionName;

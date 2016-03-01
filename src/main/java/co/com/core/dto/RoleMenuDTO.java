@@ -1,12 +1,9 @@
 package co.com.core.dto;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import co.com.core.domain.Menu;
 import co.com.core.domain.Role;
 
-public class RoleMenuDTO {
+public class RoleMenuDTO implements IBaseDTO {
 	private Integer roleMenuId;
 	private Menu menuId;
 	private Role roleId;

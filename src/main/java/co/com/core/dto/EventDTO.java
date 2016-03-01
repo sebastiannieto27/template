@@ -5,7 +5,7 @@ import java.util.Date;
 import co.com.core.domain.Priority;
 
 
-public class EventDTO {
+public class EventDTO implements IBaseDTO {
 
 	 	private Integer eventId;
 	    private String name;

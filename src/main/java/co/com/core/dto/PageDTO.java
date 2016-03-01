@@ -1,7 +1,7 @@
 package co.com.core.dto;
 
 
-public class PageDTO {
+public class PageDTO implements IBaseDTO {
 
     private Integer pageId;
     private String pageName;

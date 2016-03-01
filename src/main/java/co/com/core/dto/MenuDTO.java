@@ -4,7 +4,7 @@ import co.com.core.domain.Menu;
 import co.com.core.domain.Page;
 
 
-public class MenuDTO {
+public class MenuDTO implements IBaseDTO {
 
 	private Integer menuId;
 	private String menuName;

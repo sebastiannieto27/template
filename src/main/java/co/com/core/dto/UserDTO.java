@@ -1,7 +1,7 @@
 package co.com.core.dto;
 
 
-public class UserDTO {
+public class UserDTO implements IBaseDTO {
 
 	private Integer userId;
     private String firstName;

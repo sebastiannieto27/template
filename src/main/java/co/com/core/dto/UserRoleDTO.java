@@ -3,7 +3,7 @@ package co.com.core.dto;
 import co.com.core.domain.Role;
 import co.com.core.domain.User;
 
-public class UserRoleDTO {
+public class UserRoleDTO implements IBaseDTO {
 
     private Integer userRoleId;
     private Role roleId;

@@ -1,11 +1,33 @@
 package co.com.core.controller;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.report.builder.DynamicReports;
+import net.sf.dynamicreports.report.builder.column.Columns;
+import net.sf.dynamicreports.report.builder.component.Components;
+import net.sf.dynamicreports.report.builder.datatype.DataTypes;
+import net.sf.dynamicreports.report.constant.HorizontalAlignment;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -22,8 +44,11 @@ import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
 
+import co.com.core.commons.ApplicationConstants;
+import co.com.core.commons.ApplicationUtil;
 import co.com.core.commons.converter.UserUtil;
 import co.com.core.commons.reports.ExcelReportUtil;
+import co.com.core.commons.reports.jasper.BaseJasperPDFReport;
 import co.com.core.domain.Menu;
 import co.com.core.domain.Page;
 import co.com.core.domain.User;
@@ -51,6 +76,93 @@ public class MenuController {
 	public void init() {
 		model = new DefaultMenuModel();
 		items = menuService.getAll();
+	}
+	
+
+	public void jasperTestOne() {
+			Map<String,Object> parametros= new HashMap<String,Object>();
+			parametros.put("PRINT_BY", "Diego Nieto");
+			
+			String jPath = "/Users/dienieto/Documents/DocumentsDiego/projects/friogan/reports/pdf/jasper/test.jasper";
+			BaseJasperPDFReport reporter = new BaseJasperPDFReport(parametros, jPath, this.getItems());
+			String currDateStr = ApplicationUtil.getFormattedDate(new Date(), ApplicationConstants.SIMPLE_DATE_FORMAT, null);
+			String reportName = "test" + currDateStr;
+			try {
+				reporter.createPDFReport(reportName);
+			} catch (JRException e) {
+				System.out.println("JRException");
+			} catch (IOException e) {
+				System.out.println("IOException");
+			}
+	}
+	
+	public void createPDF3() {
+		
+		try {
+			Connection connection = null;
+			
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection(
+	                    "jdbc:mysql://localhost:3306/mydb","root", "admin");
+			
+			java.sql.Statement stmt = connection.createStatement();
+
+		    ResultSet rs = stmt.executeQuery("SELECT menu_id, menu_name, submenu, page_id FROM menu;");
+
+		    JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(rs);
+
+		    final Map<String, Object> parameter = new HashMap<String, Object>();
+		    parameter.put("menu_id", "ID");
+		    parameter.put("menu_name", "NAME");
+		    parameter.put("submenu", "Submenu");
+		    parameter.put("page_id", "PAGE");
+
+		    ClassLoader classloader = getClass().getClassLoader();
+		    InputStream url = null;
+		    url = classloader.getResourceAsStream("OK/report3.jrxml");
+		    JasperReport jasperReport = JasperCompileManager.compileReport(url);
+
+		    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameter, resultSetDataSource);
+
+		    JasperViewer.viewReport(jasperPrint, false);
+		} catch(Exception ex) {
+			
+		}
+		
+		
+	}
+	
+	
+	public void createPDF2() {
+		Connection connection = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection(
+	                    "jdbc:mysql://localhost:3306/mydb","root", "admin");
+			
+			JasperReportBuilder report = DynamicReports.report();
+			Columns.column("Menu Id", "menu_id", DataTypes.integerType());
+			report
+			  .columns(
+			    Columns.column("Customer Id", "menu_id", DataTypes.integerType()),
+			    Columns.column("Name", "menu_name", DataTypes.stringType()),
+			    Columns.column("Submenu", "submenu", DataTypes.stringType()),
+			    Columns.column("Page", "page_id", DataTypes.integerType()));
+			
+			report.title(//title of the report
+					    Components.text("SimpleReportExample")
+					      .setHorizontalAlignment(HorizontalAlignment.CENTER))
+					  .pageFooter(Components.pageXofY());//show page number on the page footer
+			report.setDataSource("SELECT menu_id, menu_name, submenu, page_id FROM menu", 
+                    connection);
+			report.show();
+
+            //export the report to a pdf file
+			report.toPdf(new FileOutputStream("/Users/dienieto/Documents/DocumentsDiego/projects/friogan/reports/pdf/report.pdf"));
+		} catch(Exception ex) {
+			System.out.println("ERROR: " + ex);
+		}
 	}
 	
 	public void createReport() {
@@ -102,16 +214,6 @@ public class MenuController {
 		            row.createCell(4).setCellValue("item.getParentMenuId().getMenuName()");
 		            row.createCell(5).setCellValue("item.getPageId().getUrl()");
 		            
-		            /*if(item.getParentMenuId()!=null) {
-		            	row.createCell(4).setCellValue(item.getParentMenuId().getMenuName());
-		            } else {
-		            	row.createCell(4).setCellValue("-");
-		            }
-		            if(item.getPageId()!=null) {
-		            	row.createCell(5).setCellValue(item.getPageId().getUrl());
-		            } else {
-		            	row.createCell(5).setCellValue("-");
-		            }*/
 		            rowCounter++;
 		        }
 		       
