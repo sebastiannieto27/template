@@ -46,7 +46,7 @@
                       
                     </p:panelGrid>
                     <p:commandButton actionListener="#{menuController.saveNew}" value="#{msg.save}" update="display,:menuListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('menuCreateDialog'));">
-                        <p:confirm header="Sure" message="Sure" icon="ui-icon-alert"/>
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{msg.cancel}" onclick="PF('menuCreateDialog').hide()"/>
                 </h:panelGroup>

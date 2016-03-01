@@ -30,11 +30,9 @@ public class EventController {
 	private LazyDataModel<EventDTO> lazyModel;
 	
 	public void init() {
-		//items = eventService.getAll();
 		lazyModel = new EventLazyLoader(eventService);
 	}
 
-	//org.primefaces.event.SelectEvent
 	public void rowSelection(SelectEvent event) {
 		logger.info("Event: " + event.getObject());
 	}
@@ -64,7 +62,6 @@ public class EventController {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
-				logger.info("SELECTED: " + priorityIdSelected);
 				if(priorityIdSelected!=null && priorityIdSelected!=0) {
 					Priority p = new Priority(priorityIdSelected);
 					selected.setPriorityId(p);

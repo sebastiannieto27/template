@@ -87,7 +87,18 @@
 					</p:column>
 				</p:row>
 			</f:facet>
+				<p:row>
+					<p:column>
+						<h:form enctype="multipart/form-data" prependId="false">
+						    <p:fileUpload mode="simple" value="#{templateController.file}" />
+						    <p:commandButton value="Upload" actionListener="#{templateController.upload}" ajax="false" />
+						</h:form>	
+					</p:column>
+				</p:row>
 		</p:panelGrid>
+
+
+
 
 	     <p:dialog id="messageViewDlg" widgetVar="messageViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.message}" closeOnEscape="true">
            	<h:form id="messageViewForm">

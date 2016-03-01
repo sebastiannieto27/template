@@ -63,7 +63,7 @@
                 
                  <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.menu}"/>
+                        <h:outputText value="#{msg.permission}"/>
                     </f:facet>
                     <p:commandLink id="viewPermissionLink" value="#{msg.permission}" update=":roleViewPermissionForm,:listRolePermissionForm" 
                     		oncomplete="PF('roleViewPermissionDialog').show()" actionListener="#{roleController.findPermissionByRole(item)}"/>

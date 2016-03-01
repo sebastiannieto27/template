@@ -21,7 +21,7 @@
                         <p:inputText id="description" value="#{roleController.selected.description}" title="#{msg.description}" size="100" maxlength="100"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{roleController.saveNew}" value="#{msg.save}" update="display,:roleListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('roleCreateDialog'));">
-                        <p:confirm header="Sure" message="Sure" icon="ui-icon-alert"/>
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{msg.cancel}" onclick="PF('roleCreateDialog').hide()"/>
                 </h:panelGroup>

@@ -1,5 +1,7 @@
 package co.com.core.controller;
 
+import static co.com.core.commons.LoadBundle.geProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,6 +136,7 @@ public class RoleController {
 	 * add the selected permission to the list
 	 */
 	public void addPermissionToRol() {
+		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			if(pagePermissionList!=null && pagePermissionList.size() > 0) {
 				for(PagePermissionDTO permission : pagePermissionList) {
@@ -142,8 +145,10 @@ public class RoleController {
 					dto.setPagePermissionId(PagePermissionUtil.getEntityFromDto(permission));
 					rolePermissionService.create(dto);
 				}
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("addItemSuccess"), null));
 			}
 		} catch(Exception ex) {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("addItemError"), null));
 			logger.error("Throwed Exception [RoleController.addPermissionToRol]: " +ex.getMessage());
 		} finally {
 			pagePermissionList = new ArrayList<PagePermissionDTO>();
@@ -173,13 +178,16 @@ public class RoleController {
 	}
 	
 	public void removePermissionFromRol() {
+		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			if(deletePermissionItems!=null && deletePermissionItems.size() > 0) {
 				for(RolePermissionDTO rolePermission : deletePermissionItems) {
 					rolePermissionService.delete(rolePermission);
 				}
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("removeItemSucces"), null));
 			}
 		} catch(Exception ex) {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("removeItemError"), null));
 			logger.error("Throwed Exception [RoleController.removePermissionFromRol]: " +ex.getMessage());
 		}  finally {
 			deletePermissionItems = new ArrayList<RolePermissionDTO>();
@@ -198,8 +206,6 @@ public class RoleController {
 			roleItems = roleMenuService.findMenuByRole(roleDto);
 			String menuIds = getMenuIds();
 			menuItems = menuService.getNotAssignedMenu(menuIds);
-			logger.info("ROLE: " + roleItems);
-			logger.info("MENU NOT ADDED: " + roleItems);
 		} catch(Exception ex) {
 			logger.error("Error finding menus by role: " + ex.getMessage());
 		}
@@ -209,17 +215,19 @@ public class RoleController {
 	 * add the selected menu to the list
 	 */
 	public void addMenuToRol() {
+		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			if(menuList!=null && menuList.size() > 0) {
 				for(MenuDTO menu : menuList) {
 					RoleMenuDTO dto = new RoleMenuDTO();
 					dto.setMenuId(MenuUtil.getEntityFromDto(menu));
 					dto.setRoleId(RoleUtil.getEntityFromDto(selectedRole));
-					
 					roleMenuService.create(dto);
 				}
 			}
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("addItemSuccess"), null));
 		} catch(Exception ex) {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("addItemError"), null));
 			logger.error("Throwed Exception [RoleController.addMenuToRol]: " +ex.getMessage());
 		} finally {
 			menuList = new ArrayList<MenuDTO>();
@@ -251,7 +259,6 @@ public class RoleController {
 	 * @param menu
 	 */
 	public void addRemoveMenuList(MenuDTO menu) {
-
 		try {
 			if(checkValue) {
 				if(!menuList.contains(menu)) {
@@ -289,13 +296,16 @@ public class RoleController {
 	}
 	
 	public void removeMenuFromRol() {
+		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			if(deleteMenuItems!=null && deleteMenuItems.size() > 0) {
 				for(RoleMenuDTO roleMenu : deleteMenuItems) {
 					roleMenuService.delete(roleMenu);
 				}
 			}
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("removeItemSucces"), null));
 		} catch(Exception ex) {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("removeItemError"), null));
 			logger.error("Throwed Exception [RoleController.removeMenuFromRol]: " +ex.getMessage());
 		}  finally {
 			deleteMenuItems = new ArrayList<RoleMenuDTO>();

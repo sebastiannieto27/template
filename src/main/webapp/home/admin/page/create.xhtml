@@ -22,7 +22,7 @@
                    
                     </p:panelGrid>
                     <p:commandButton actionListener="#{pageController.saveNew}" value="#{msg.save}" update="display,:pageListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('pageCreateDialog'));">
-                        <p:confirm header="Sure" message="Sure" icon="ui-icon-alert"/>
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{msg.cancel}" onclick="PF('pageCreateDialog').hide()"/>
                 </h:panelGroup>
