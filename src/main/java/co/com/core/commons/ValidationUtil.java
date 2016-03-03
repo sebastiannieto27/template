@@ -6,7 +6,7 @@ public class ValidationUtil {
 		String output = null;
 		
 		output = input.replaceAll("['\"\\\\]", "");
-		
+		output = output.trim();
 		return output;
 	}
 }

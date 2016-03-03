@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 
 import co.com.core.commons.EncryptDecrypt;
+import co.com.core.commons.ValidationUtil;
 import co.com.core.commons.converter.RoleUtil;
 import co.com.core.commons.converter.UserUtil;
 import co.com.core.dto.RoleDTO;
@@ -65,7 +66,8 @@ public class UserController {
 	public void advancedSearch() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		if(userNameSearch!=null && userNameSearch.length()>4) {
-			searchResultItems = userService.getUserByName(userNameSearch);
+			String localNameSearch = ValidationUtil.cleanString(userNameSearch);
+			searchResultItems = userService.getUserByName(localNameSearch.toLowerCase());
 			if(searchResultItems!=null && searchResultItems.size() > 0) {
 				showSearchData = true;
 			} else {
@@ -81,6 +83,7 @@ public class UserController {
 		userIdSearchResult = dto.getUserId();
 		userNameSearch = dto.getCompleteName();
 		showSearchData = false;
+		searchResultItems = new ArrayList<UserDTO>();
 	}
 	
 	/**

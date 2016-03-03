@@ -43,10 +43,11 @@
 					                        <span><h:graphicImage url="resources/images/magnifier_16.png" width="17" height="17" /></span>
 					                    </p:commandLink>
 							            
-							            <p:dialog id="advanceSearchViewDlg" widgetVar="advanceSearchViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.message}" closeOnEscape="true">
+							            <p:dialog id="advanceSearchViewDlg" widgetVar="advanceSearchViewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
 								                <p:dataScroller id="dataScroller" value="#{userController.searchResultItems}" var="result" chunkSize="5" >
 											        <f:facet name="loader">
-											            <p:commandButton type="button" value="#{msg.more}" icon="ui-icon-circle-triangle-s"/>
+											            <p:commandButton type="button" value="#{msg.more}" icon="ui-icon-circle-triangle-s" rendered="#{userController.showSearchData}"/>
+											        	<h:outputText value="#{msg.emptySearch}" rendered="#{!userController.showSearchData}" style="font-weight: bold"/>
 											        </f:facet>
 											        <h:panelGrid columns="2" style="width:100%">
 											            <p:outputPanel>

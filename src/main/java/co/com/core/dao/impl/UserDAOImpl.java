@@ -150,7 +150,7 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			session = this.sessionFactory.openSession();
 			StringBuilder hql = new StringBuilder();
-			hql.append("SELECT u FROM User u WHERE u.completeName LIKE :completeName");
+			hql.append("SELECT u FROM User u WHERE lower(u.completeName) LIKE :completeName");
 	        Query query = session.createQuery(hql.toString());
 	        query.setParameter("completeName", "%"+name+"%");
 	        entityList = query.list();
