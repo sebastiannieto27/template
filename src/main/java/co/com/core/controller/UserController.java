@@ -33,6 +33,15 @@ public class UserController {
 	private static final String DEFAULT_PASSWORD = "12345";
 	
 	/**
+	 * text field search
+	 */
+	private String userNameSearch; 
+	private Integer userIdSearchResult; 
+	private boolean showSearchData;
+	private List<UserDTO> searchResultItems;
+	
+	private UserDTO listBoxUser;
+	/**
 	 * user-role
 	 */
 	private List<RoleDTO> notAssignedRoleItems; 
@@ -49,6 +58,30 @@ public class UserController {
 	//update password
 	private String newPassword;
 	private String confirmPassword;
+	
+	/**
+	 * search an item using the advance search component
+	 */
+	public void advancedSearch() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		if(userNameSearch!=null && userNameSearch.length()>4) {
+			searchResultItems = userService.getUserByName(userNameSearch);
+			if(searchResultItems!=null && searchResultItems.size() > 0) {
+				showSearchData = true;
+			} else {
+				showSearchData = false;
+			}
+		} else {
+			System.out.println("menos de 4 letras");
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "menos de 4 letras", null));
+		}
+	}
+	
+	public void selectResult(UserDTO dto) {
+		userIdSearchResult = dto.getUserId();
+		userNameSearch = dto.getCompleteName();
+		showSearchData = false;
+	}
 	
 	/**
 	 * updates the user password
@@ -188,7 +221,12 @@ public class UserController {
 		//lazyModel = new UserLazyLoader(userService);
 	}
 
-	
+	/**
+	 * USER ADMIN ---  USER ADMIN ---  USER ADMIN ---  USER ADMIN ---  USER ADMIN ---  USER ADMIN ---  USER ADMIN ---  USER ADMIN --- 
+	 */
+	/**
+	 * 
+	 */
 	public void saveNew() {
 		try {
 			String encryptedPasswd = EncryptDecrypt.encrypt(selected.getPassword());
@@ -209,6 +247,9 @@ public class UserController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void delete() {
 		if (this.selected != null) {
 			try {
@@ -229,6 +270,9 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void save() {
 		if (this.selected != null) {
 			try {
@@ -251,6 +295,10 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param userDto
+	 */
 	public void resetPassword(UserDTO userDto) {
 		String encryptedPasswd = EncryptDecrypt.encrypt(DEFAULT_PASSWORD);
 		userDto.setPassword(encryptedPasswd);
@@ -379,4 +427,46 @@ public class UserController {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
+
+	public UserDTO getListBoxUser() {
+		return listBoxUser;
+	}
+
+	public void setListBoxUser(UserDTO listBoxUser) {
+		this.listBoxUser = listBoxUser;
+	}
+
+	public String getUserNameSearch() {
+		return userNameSearch;
+	}
+
+	public void setUserNameSearch(String userNameSearch) {
+		this.userNameSearch = userNameSearch;
+	}
+
+	public Integer getUserIdSearchResult() {
+		return userIdSearchResult;
+	}
+
+	public void setUserIdSearchResult(Integer userIdSearchResult) {
+		this.userIdSearchResult = userIdSearchResult;
+	}
+
+	public boolean isShowSearchData() {
+		return showSearchData;
+	}
+
+	public void setShowSearchData(boolean showSearchData) {
+		this.showSearchData = showSearchData;
+	}
+
+	public List<UserDTO> getSearchResultItems() {
+		return searchResultItems;
+	}
+
+
+	public void setSearchResultItems(List<UserDTO> searchResultItems) {
+		this.searchResultItems = searchResultItems;
+	}
+	
 }

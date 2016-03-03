@@ -33,14 +33,41 @@
 									<p:calendar id="endDate" value="#{messageController.endDate}" pattern="MM/dd/yyyy HH:mm:ss" effect="fold"/>
 			   								
 									<p:outputLabel value="#{msg.title}:" for="msgTilte" />
-			                       <p:inputText id="msgTilte" value="#{messageController.msgTitle}" title="#{msg.title}"/>
+			                       	<p:inputText id="msgTilte" value="#{messageController.msgTitle}" title="#{msg.title}"/>
 			                       
-			                       <p:outputLabel value="#{msg.sender}:" for="msgSender" />
-			                       <p:inputText id="msgSender" title="#{msg.sender}:" />
+			                       <p:outputLabel value="#{msg.sender}:"  />
+			                       <h:panelGrid columns="2" style="width:100%" border="1">
+					                    <p:inputText id="txtInputSearch" value="#{userController.userNameSearch}" onblur="inputTextBlur( this, '#{userController.userNameSearch}' );" onfocus="inputTextFocus( this, '#{userController.userNameSearch}' );" />
+					                    <p:commandLink id="cmdLink" actionListener="#{userController.advancedSearch}" update="messageListForm:advanceSearchViewDlg" 
+					                    		oncomplete="PF('advanceSearchViewDialog').show()">
+					                        <span><h:graphicImage url="resources/images/magnifier_16.png" width="17" height="17" /></span>
+					                    </p:commandLink>
+							            
+							            <p:dialog id="advanceSearchViewDlg" widgetVar="advanceSearchViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.message}" closeOnEscape="true">
+								                <p:dataScroller id="dataScroller" value="#{userController.searchResultItems}" var="result" chunkSize="5" >
+											        <f:facet name="loader">
+											            <p:commandButton type="button" value="#{msg.more}" icon="ui-icon-circle-triangle-s"/>
+											        </f:facet>
+											        <h:panelGrid columns="2" style="width:100%">
+											            <p:outputPanel>
+											                <h:panelGrid columns="3">
+											                	<f:ajax execute="@form" render="@all" onevent="PF('advanceSearchViewDialog').hide()">
+												                    <h:outputText value="#{result.completeName}" style="font-weight: bold"/>
+												                    <h:commandLink id="result-#{result.userId}" action="#{userController.selectResult(result)}">
+												                        <span><h:graphicImage url="resources/images/accept_16.png" width="12" height="12" /></span>
+												                    </h:commandLink>
+											                    </f:ajax>
+											                </h:panelGrid>
+											            </p:outputPanel>
+											        </h:panelGrid>
+											    </p:dataScroller>
+								        </p:dialog>
+							            
+			                       </h:panelGrid>
 			                    </p:panelGrid>
 			                    <p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{messageController.init()}" update=":messageListForm" />
 			                </h:panelGroup>
-
+							
 							<p:panel>
 								<p:dataTable id="datalist"
 									value="#{messageController.lazyModel}" 
@@ -89,16 +116,20 @@
 			</f:facet>
 				<p:row>
 					<p:column>
-						<h:form enctype="multipart/form-data" prependId="false">
-						    <p:fileUpload mode="simple" value="#{templateController.file}" />
-						    <p:commandButton value="Upload" actionListener="#{templateController.upload}" ajax="false" />
-						</h:form>	
+					<h:form enctype="multipart/form-data" prependId="false">
+                            <p:fileUpload mode="simple" value="#{templateController.file}" />
+                            <p:commandButton value="Upload" actionListener="#{templateController.upload}" ajax="false" />
+                        </h:form>
+						
+					</p:column>
+					<p:column>
+						<h:form prependId="false">
+				            <label>#{msg.search}</label>
+				            
+				        </h:form>
 					</p:column>
 				</p:row>
 		</p:panelGrid>
-
-
-
 
 	     <p:dialog id="messageViewDlg" widgetVar="messageViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.message}" closeOnEscape="true">
            	<h:form id="messageViewForm">

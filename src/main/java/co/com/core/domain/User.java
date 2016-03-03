@@ -58,6 +58,11 @@ public class User implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "last_name")
     private String lastName;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "complete_name")
+    private String completeName;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
@@ -171,7 +176,15 @@ public class User implements Serializable {
         this.creationDate = creationDate;
     }
 
-    @XmlTransient
+    public String getCompleteName() {
+		return completeName;
+	}
+
+	public void setCompleteName(String completeName) {
+		this.completeName = completeName;
+	}
+
+	@XmlTransient
     public Collection<UserRole> getUserRoleCollection() {
         return userRoleCollection;
     }

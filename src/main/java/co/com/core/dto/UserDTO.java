@@ -6,6 +6,7 @@ public class UserDTO implements IBaseDTO {
 	private Integer userId;
     private String firstName;
     private String lastName;
+    private String completeName;
     private String email;
     private String password;
     private String idNumber;
@@ -67,6 +68,13 @@ public class UserDTO implements IBaseDTO {
 	}
 	public void setAccountLocked(Short accountLocked) {
 		this.accountLocked = accountLocked;
+	}
+	
+	public String getCompleteName() {
+		return completeName;
+	}
+	public void setCompleteName(String completeName) {
+		this.completeName = completeName;
 	}
 	@Override
 	public String toString() {

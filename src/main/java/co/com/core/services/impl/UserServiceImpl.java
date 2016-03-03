@@ -53,6 +53,20 @@ public class UserServiceImpl implements IUserService {
 	}
 	
 	@Override
+	public List<UserDTO> getUserByName(String name) {
+		List<UserDTO> userDtoList = null;
+		List<User> userList = userDAO.getUserByName(name);
+		if (userList!=null) {
+			userDtoList = new ArrayList<UserDTO>();
+			for(User entity: userList) {
+				userDtoList.add(UserUtil.getDtoFromEntity(entity));
+			}
+		}
+		return userDtoList;
+	}
+	
+	
+	@Override
 	public void createUser(UserDTO UserDto) {
 		userDAO.createUser(UserUtil.getEntityFromDto(UserDto));
 	}

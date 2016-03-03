@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.UserDAO;
+import co.com.core.domain.Page;
 import co.com.core.domain.User;
 
 
@@ -143,4 +144,22 @@ public class UserDAOImpl implements UserDAO {
 		return user;
 	}
 
+	@Override
+	public List<User> getUserByName(String name) {
+		List<User> entityList = null;
+		try {
+			session = this.sessionFactory.openSession();
+			StringBuilder hql = new StringBuilder();
+			hql.append("SELECT u FROM User u WHERE u.completeName LIKE :completeName");
+	        Query query = session.createQuery(hql.toString());
+	        query.setParameter("completeName", "%"+name+"%");
+	        entityList = query.list();
+		} catch(Exception ex) {
+			logger.error("Throwed Exception [UserDAOImpl.getUserByName]: " +ex.getMessage());
+		} finally {
+			session.close();
+		}
+		
+		return entityList;
+	}
 }

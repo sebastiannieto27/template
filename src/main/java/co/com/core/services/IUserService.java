@@ -20,4 +20,6 @@ public interface IUserService {
 	public void update(UserDTO UserDto);
 	
 	public UserDTO getByMail(String userEmail);
+	
+	public List<UserDTO> getUserByName(String name); 
 }

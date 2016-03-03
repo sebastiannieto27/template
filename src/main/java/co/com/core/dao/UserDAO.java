@@ -19,4 +19,6 @@ public interface UserDAO {
 	public void update(User user);
 	
 	public User getByMail(String userEmail);
+	
+	public List<User> getUserByName(String name);
 }
