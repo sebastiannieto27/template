@@ -53,4 +53,9 @@
 		<pattern value="/admin/estado-mensaje" />
 		<view-id value="/home/admin/messageStatus/index.xhtml" />
 	</url-mapping>	
+				
+	<url-mapping id="uploadedFile">
+		<pattern value="/admin/archivos" />
+		<view-id value="/home/admin/uploadedFile/index.xhtml" />
+	</url-mapping>	
 </pretty-config>

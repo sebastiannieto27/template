@@ -274,4 +274,8 @@
     <bean id="messageController" scope="session" class="co.com.core.controller.MessageController" init-method="init">
     	<property name="messageService" ref="messageService" />
     </bean> 
+        
+    <bean id="uploadedFileController" scope="session" class="co.com.core.controller.UploadedFileController" init-method="init">
+    	<property name="uploadedFileService" ref="uploadedFileService" />
+    </bean>     
 </beans>
