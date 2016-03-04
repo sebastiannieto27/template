@@ -95,6 +95,8 @@ public class User implements Serializable {
     private Collection<Message> messageCollection1;
     @Column(name = "account_locked")
     private Short accountLocked;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<UploadedFile> uploadedFileCollection;
     
     public User() {
     }

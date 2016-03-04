@@ -47,6 +47,7 @@
                 <value>co.com.core.domain.MessageStatus</value>
                 <value>co.com.core.domain.Message</value>
                 <value>co.com.core.domain.LoginAttempt</value>
+                <value>co.com.core.domain.UploadedFile</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -120,6 +121,10 @@
     <bean id="loginAttemptDAO" class="co.com.core.dao.impl.LoginAttemptDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>    
+                 
+    <bean id="uploadedFileDAO" class="co.com.core.dao.impl.UploadedFileDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -183,6 +188,10 @@
     <bean id="loginAttemptService" class="co.com.core.services.impl.LoginAttemptServiceImpl">
     	<property name="loginAttemptDAO" ref="loginAttemptDAO" />
     </bean> 
+    
+    <bean id="uploadedFileService" class="co.com.core.services.impl.UploadedFileServiceImpl">
+    	<property name="uploadedFileDAO" ref="uploadedFileDAO" />
+    </bean>
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -215,6 +224,7 @@
     <bean id="templateController" scope="session" class="co.com.core.controller.TemplateController">
     	<property name="menuService" ref="menuService" />
     	<property name="pageService" ref="pageService" />
+    	<property name="uploadedFileService" ref="uploadedFileService" />
     </bean> 
         
     <bean id="userRoleController" scope="session" class="co.com.core.controller.UserRoleController" init-method="init">
