@@ -67,6 +67,7 @@
 			                       </h:panelGrid>
 			                    </p:panelGrid>
 			                    <p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{messageController.init()}" update=":messageListForm" />
+			                    <p:commandButton id="mailBtn" icon="ui-icon-search" value="mailer" actionListener="#{templateController.sendMail}" />
 			                </h:panelGroup>
 							
 							<p:panel>

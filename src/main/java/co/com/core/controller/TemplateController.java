@@ -15,6 +15,7 @@ import org.primefaces.model.UploadedFile;
 
 import co.com.core.commons.FileUploader;
 import co.com.core.commons.LoadBundle;
+import co.com.core.commons.SendEmail;
 import co.com.core.commons.converter.UserUtil;
 import co.com.core.domain.User;
 import co.com.core.dto.MenuDTO;
@@ -114,6 +115,11 @@ public class TemplateController {
     	}
     }  
  
+    public void sendMail() {
+    	SendEmail mailer = new SendEmail();
+    	mailer.sendEmail();
+    }
+    
 	public IMenuService getMenuService() {
 		return menuService;
 	}
