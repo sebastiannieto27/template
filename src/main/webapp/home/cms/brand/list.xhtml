@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+    <h:form id="brandListForm">
+
+        <p:panel header="#{msg.brand}">
+        		<h:panelGroup id="searchForm">
+	            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+	            		
+		            			<p:outputLabel for="rtvBrandName" value="#{msg.name}:" />
+								<p:inputText id="rtvBrandName" value="#{brandController.searchName}" title="#{msg.name}:"/>
+
+	            				<p:outputLabel for="rtvBrandAddress" value="#{msg.brandAddress}:" />
+								<p:inputText id="rtvBrandAddress" value="#{brandController.searchAddress}" title="#{msg.brandAddress}:"/>
+
+	            				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{brandController.init()}" update=":brandListForm" />
+               </p:panelGrid>
+               
+               </h:panelGroup>
+        
+            <p:dataTable id="datalist"
+                         value="#{brandController.items}"
+                         var="item"
+                         rowKey="#{item.brandId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{brandController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton" />
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton" />
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('brandListForm:viewButton').click();"/>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.brandId}"/>
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.brandName}"/>
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.brandAddress}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.brandAddress}"/>
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.thumbnail}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.brandThumbImg}"/>
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.image}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.brandBigImg}"/>
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.brandOpenHours}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.brandOpenHours}"/>
+                </p:column>
+
+            </p:dataTable>
+			
+            <p:commandButton id="createButton"  icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{brandController.prepareCreate}" update=":brandCreateForm" oncomplete="PF('brandCreateDialog').show()"/>
+            <p:commandButton id="viewButton"  icon="ui-icon-search" value="#{msg.view}" update=":brandViewForm" oncomplete="PF('brandViewDialog').show()" disabled="#{empty brandController.selected}"/>
+            <p:commandButton id="editButton"  icon="ui-icon-pencil" value="#{msg.edit}" update=":brandEditForm" oncomplete="PF('brandEditDialog').show()" disabled="#{empty brandController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{brandController.delete}" update=":growl,datalist" disabled="#{empty brandController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+    </h:form>
+	    </ui:composition>
+    </body>
+</html>

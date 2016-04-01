@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+        <p:dialog id="brandCreateDlg" widgetVar="brandCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.brand}" closeOnEscape="true">
+
+            <h:form id="brandCreateForm">
+            <p:growl id="messages" showDetail="true" />
+                <h:panelGroup id="display" rendered="#{brandController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.name}" for="brandName" />
+                        <p:inputText id="brandName" value="#{brandController.selected.brandName}" title="#{msg.name}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{msg.brandAddress}" for="brandAddress" />
+                        <p:inputText id="brandAddress" value="#{brandController.selected.brandAddress}" title="#{msg.brandAddress}" size="100" maxlength="100"/>
+                        
+                        <p:outputLabel value="#{msg.brandOpenHours}" for="brandOpenHours" />
+                        <p:inputText id="brandOpenHours" value="#{brandController.selected.brandOpenHours}" title="#{msg.brandOpenHours}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{msg.brandType}" for="brandTypeId" />
+                        <p:selectOneMenu id="brandTypeId" value="#{brandController.selectedBrandTypeId}" required="true" requiredMessage="#{msg.brandTypeRequiredMessage}">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{brandTypeController.items}"
+                                           var="brandTypeIdItem"
+                                           itemValue="#{brandTypeIdItem.brandTypeId}"
+                                           itemLabel="#{brandTypeIdItem.brandTypeName.toString()}"
+                                           />
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{msg.image}" for="brandBigImg" />
+                        <p:fileUpload id="brandBigImg" fileUploadListener="#{brandController.setImageFileUpload}" mode="advanced"
+                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        
+                        <p:outputLabel value="#{msg.thumbnail}" for="brandThumbImg" />
+                        <p:fileUpload id="brandThumbImg" fileUploadListener="#{brandController.setThumbnailFileUpload}" mode="advanced"
+                     		auto="false" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+ 
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{brandController.saveNew}" value="#{msg.save}" update="display,:brandListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('brandCreateDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('brandCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+    </body>
+</html>
+

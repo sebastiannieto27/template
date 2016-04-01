@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ServiceCreateDlg" widgetVar="ServiceCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.CreateServiceTitle}" closeOnEscape="true">
+
+            <h:form id="ServiceCreateForm">
+
+                <h:panelGroup id="display" rendered="#{serviceController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.CreateServiceLabel_serviceId}" for="serviceId" />
+                        <p:inputText id="serviceId" value="#{serviceController.selected.serviceId}" title="#{msg.CreateServiceTitle_serviceId}" required="true" requiredMessage="#{msg.CreateServiceRequiredMessage_serviceId}"/>
+
+                        <p:outputLabel value="#{msg.CreateServiceLabel_serviceName}" for="serviceName" />
+                        <p:inputText id="serviceName" value="#{serviceController.selected.serviceName}" title="#{msg.CreateServiceTitle_serviceName}" required="true" requiredMessage="#{msg.CreateServiceRequiredMessage_serviceName}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.CreateServiceLabel_serviceDesc}" for="serviceDesc" />
+                        <p:inputText id="serviceDesc" value="#{serviceController.selected.serviceDesc}" title="#{msg.CreateServiceTitle_serviceDesc}" size="250" maxlength="250"/>
+
+                        <p:outputLabel value="#{msg.CreateServiceLabel_generalStatusId}" for="generalStatusId" />
+                        <p:inputText id="generalStatusId" value="#{serviceController.selected.generalStatusId}" title="#{msg.CreateServiceTitle_generalStatusId}" required="true" requiredMessage="#{msg.CreateServiceRequiredMessage_generalStatusId}"/>
+
+                        <p:outputLabel value="#{msg.CreateServiceLabel_dateCre}" for="dateCre" />
+                        <p:calendar id="dateCre" pattern="MM/dd/yyyy HH:mm:ss" value="#{serviceController.selected.dateCre}" title="#{msg.CreateServiceTitle_dateCre}" required="true" requiredMessage="#{msg.CreateServiceRequiredMessage_dateCre}" showOn="button"/>
+
+                        <p:outputLabel value="#{msg.CreateServiceLabel_userId}" for="userId" />
+                        <p:selectOneMenu id="userId" value="#{serviceController.selected.userId}" required="true" requiredMessage="#{msg.CreateServiceRequiredMessage_userId}" converter="userConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{userController.items}"
+                                           var="userIdItem"
+                                           itemValue="#{userIdItem}"
+                                           itemLabel="#{userIdItem.firstName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{serviceController.saveNew}" value="#{msg.Save}" update="display,:ServiceListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ServiceCreateDialog'));">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.Cancel}" onclick="PF('ServiceCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

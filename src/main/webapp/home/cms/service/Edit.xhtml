@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ServiceEditDlg" widgetVar="ServiceEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditServiceTitle}" closeOnEscape="true">
+
+            <h:form id="ServiceEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{serviceController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditServiceLabel_serviceId}" for="serviceId" />
+                        <h:outputText id="serviceId" value="#{serviceController.selected.serviceId}" />
+
+                        <p:outputLabel value="#{msg.EditServiceLabel_serviceName}" for="serviceName" />
+                        <p:inputText id="serviceName" value="#{serviceController.selected.serviceName}" title="#{msg.EditServiceTitle_serviceName}" required="true" requiredMessage="#{msg.EditServiceRequiredMessage_serviceName}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.EditServiceLabel_serviceDesc}" for="serviceDesc" />
+                        <p:inputText id="serviceDesc" value="#{serviceController.selected.serviceDesc}" title="#{msg.EditServiceTitle_serviceDesc}" size="250" maxlength="250"/>
+
+                        <p:outputLabel value="#{msg.EditServiceLabel_generalStatusId}" for="generalStatusId" />
+                        <p:inputText id="generalStatusId" value="#{serviceController.selected.generalStatusId}" title="#{msg.EditServiceTitle_generalStatusId}" required="true" requiredMessage="#{msg.EditServiceRequiredMessage_generalStatusId}"/>
+
+                        <p:outputLabel value="#{msg.EditServiceLabel_dateCre}" for="dateCre" />
+                        <p:calendar id="dateCre" pattern="MM/dd/yyyy HH:mm:ss" value="#{serviceController.selected.dateCre}" title="#{msg.EditServiceTitle_dateCre}" required="true" requiredMessage="#{msg.EditServiceRequiredMessage_dateCre}" showOn="button"/>
+
+                        <p:outputLabel value="#{msg.EditServiceLabel_userId}" for="userId" />
+                        <p:selectOneMenu id="userId" value="#{serviceController.selected.userId}" required="true" requiredMessage="#{msg.EditServiceRequiredMessage_userId}" converter="userConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{userController.items}"
+                                           var="userIdItem"
+                                           itemValue="#{userIdItem}"
+                                           itemLabel="#{userIdItem.firstName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{serviceController.save}" value="#{msg.Save}" update="display,:ServiceListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ServiceEditDialog'));">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" onclick="PF('ServiceEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

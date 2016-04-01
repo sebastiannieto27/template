@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NewsTypeCreateDlg" widgetVar="NewsTypeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.CreateNewsTypeTitle}" closeOnEscape="true">
+
+            <h:form id="NewsTypeCreateForm">
+
+                <h:panelGroup id="display" rendered="#{newsTypeController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.CreateNewsTypeLabel_newsTypeId}" for="newsTypeId" />
+                        <p:inputText id="newsTypeId" value="#{newsTypeController.selected.newsTypeId}" title="#{msg.CreateNewsTypeTitle_newsTypeId}" required="true" requiredMessage="#{msg.CreateNewsTypeRequiredMessage_newsTypeId}"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsTypeLabel_newsTypeName}" for="newsTypeName" />
+                        <p:inputText id="newsTypeName" value="#{newsTypeController.selected.newsTypeName}" title="#{msg.CreateNewsTypeTitle_newsTypeName}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsTypeLabel_userId}" for="userId" />
+                        <p:inputText id="userId" value="#{newsTypeController.selected.userId}" title="#{msg.CreateNewsTypeTitle_userId}" required="true" requiredMessage="#{msg.CreateNewsTypeRequiredMessage_userId}"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsTypeLabel_dateCre}" for="dateCre" />
+                        <p:calendar id="dateCre" pattern="MM/dd/yyyy HH:mm:ss" value="#{newsTypeController.selected.dateCre}" title="#{msg.CreateNewsTypeTitle_dateCre}" required="true" requiredMessage="#{msg.CreateNewsTypeRequiredMessage_dateCre}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{newsTypeController.saveNew}" value="#{msg.Save}" update="display,:NewsTypeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('NewsTypeCreateDialog'));">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.Cancel}" onclick="PF('NewsTypeCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

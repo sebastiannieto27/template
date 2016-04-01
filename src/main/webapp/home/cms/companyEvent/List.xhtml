@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CompanyEventListForm">
+
+        <p:panel header="#{msg.ListCompanyEventTitle}">
+            <p:contextMenu id="CompanyEventDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('CompanyEventListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg.View}" onclick="document.getElementById('CompanyEventListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('CompanyEventListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('CompanyEventListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg.CompanyEventMenuItem_userId}" icon="ui-icon-search"  actionListener="#{companyEventController.prepareUserId}" update=":UserViewForm" oncomplete="PF('UserViewDialog').show()" disabled="#{empty companyEventController.selected.userId}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{companyEventController.items}"
+                         var="item"
+                         rowKey="#{item.companyEventId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{companyEventController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CompanyEventDataTableContextMenu" listener="#{companyEventController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CompanyEventDataTableContextMenu" listener="#{companyEventController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{companyEventController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CompanyEventListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.companyEventId}" filterBy="#{item.companyEventId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListCompanyEventTitle_companyEventId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.companyEventId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.companyEventTitle}" filterBy="#{item.companyEventTitle}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListCompanyEventTitle_companyEventTitle}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.companyEventTitle}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.companyEventLocation}" filterBy="#{item.companyEventLocation}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListCompanyEventTitle_companyEventLocation}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.companyEventLocation}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.companyEventDesc}" filterBy="#{item.companyEventDesc}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListCompanyEventTitle_companyEventDesc}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.companyEventDesc}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.companyEventThumbImg}" filterBy="#{item.companyEventThumbImg}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListCompanyEventTitle_companyEventThumbImg}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.companyEventThumbImg}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.companyEventBigImg}" filterBy="#{item.companyEventBigImg}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListCompanyEventTitle_companyEventBigImg}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.companyEventBigImg}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.dateCre}" filterBy="#{item.dateCre}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg.ListCompanyEventTitle_dateCre}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.dateCre}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.userId.firstName}" filterBy="#{item.userId.firstName}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg.ListCompanyEventTitle_userId}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.userId.firstName}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{companyEventController.prepareCreate}" update=":CompanyEventCreateForm" oncomplete="PF('CompanyEventCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":CompanyEventViewForm" oncomplete="PF('CompanyEventViewDialog').show()" disabled="#{empty companyEventController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":CompanyEventEditForm" oncomplete="PF('CompanyEventEditDialog').show()" disabled="#{empty companyEventController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{companyEventController.delete}" update=":growl,datalist" disabled="#{empty companyEventController.selected}">
+                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

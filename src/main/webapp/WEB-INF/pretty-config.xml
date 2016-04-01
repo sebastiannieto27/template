@@ -58,4 +58,16 @@
 		<pattern value="/admin/archivos" />
 		<view-id value="/home/admin/uploadedFile/index.xhtml" />
 	</url-mapping>	
+	
+	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
+	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
+	<url-mapping id="brand">
+		<pattern value="/cms/marca" />
+		<view-id value="/home/cms/brand/index.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="brandType">
+		<pattern value="/cms/tipo-marca" />
+		<view-id value="/home/cms/brandType/index.xhtml" />
+	</url-mapping>	
 </pretty-config>

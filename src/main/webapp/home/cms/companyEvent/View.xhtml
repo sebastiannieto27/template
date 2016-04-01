@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CompanyEventViewDlg" widgetVar="CompanyEventViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewCompanyEventTitle}" closeOnEscape="true">
+
+            <h:form id="CompanyEventViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{companyEventController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewCompanyEventLabel_companyEventId}"/>
+                        <h:outputText value="#{companyEventController.selected.companyEventId}" title="#{msg.ViewCompanyEventTitle_companyEventId}"/>
+
+                        <h:outputText value="#{msg.ViewCompanyEventLabel_companyEventTitle}"/>
+                        <h:outputText value="#{companyEventController.selected.companyEventTitle}" title="#{msg.ViewCompanyEventTitle_companyEventTitle}"/>
+
+                        <h:outputText value="#{msg.ViewCompanyEventLabel_companyEventLocation}"/>
+                        <h:outputText value="#{companyEventController.selected.companyEventLocation}" title="#{msg.ViewCompanyEventTitle_companyEventLocation}"/>
+
+                        <h:outputText value="#{msg.ViewCompanyEventLabel_companyEventDesc}"/>
+                        <h:outputText value="#{companyEventController.selected.companyEventDesc}" title="#{msg.ViewCompanyEventTitle_companyEventDesc}"/>
+
+                        <h:outputText value="#{msg.ViewCompanyEventLabel_companyEventThumbImg}"/>
+                        <h:outputText value="#{companyEventController.selected.companyEventThumbImg}" title="#{msg.ViewCompanyEventTitle_companyEventThumbImg}"/>
+
+                        <h:outputText value="#{msg.ViewCompanyEventLabel_companyEventBigImg}"/>
+                        <h:outputText value="#{companyEventController.selected.companyEventBigImg}" title="#{msg.ViewCompanyEventTitle_companyEventBigImg}"/>
+
+                        <h:outputText value="#{msg.ViewCompanyEventLabel_dateCre}"/>
+                        <h:outputText value="#{companyEventController.selected.dateCre}" title="#{msg.ViewCompanyEventTitle_dateCre}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg.ViewCompanyEventLabel_userId}"/>
+                        <h:outputText value="#{companyEventController.selected.userId.firstName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="PF('CompanyEventViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

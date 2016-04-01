@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BrandServiceCreateDlg" widgetVar="BrandServiceCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.CreateBrandServiceTitle}" closeOnEscape="true">
+
+            <h:form id="BrandServiceCreateForm">
+
+                <h:panelGroup id="display" rendered="#{brandServiceController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.CreateBrandServiceLabel_userId}" for="userId" />
+                        <p:inputText id="userId" value="#{brandServiceController.selected.userId}" title="#{msg.CreateBrandServiceTitle_userId}" required="true" requiredMessage="#{msg.CreateBrandServiceRequiredMessage_userId}"/>
+
+                        <p:outputLabel value="#{msg.CreateBrandServiceLabel_dateCre}" for="dateCre" />
+                        <p:calendar id="dateCre" pattern="MM/dd/yyyy HH:mm:ss" value="#{brandServiceController.selected.dateCre}" title="#{msg.CreateBrandServiceTitle_dateCre}" required="true" requiredMessage="#{msg.CreateBrandServiceRequiredMessage_dateCre}" showOn="button"/>
+
+                        <p:outputLabel value="#{msg.CreateBrandServiceLabel_serviceId}" for="serviceId" />
+                        <p:selectOneMenu id="serviceId" value="#{brandServiceController.selected.serviceId}" required="true" requiredMessage="#{msg.CreateBrandServiceRequiredMessage_serviceId}" converter="serviceConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{serviceController.items}"
+                                           var="serviceIdItem"
+                                           itemValue="#{serviceIdItem}"
+                                           itemLabel="#{serviceIdItem.serviceName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{msg.CreateBrandServiceLabel_brandId}" for="brandId" />
+                        <p:selectOneMenu id="brandId" value="#{brandServiceController.selected.brandId}" required="true" requiredMessage="#{msg.CreateBrandServiceRequiredMessage_brandId}" converter="brandConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{brandController.items}"
+                                           var="brandIdItem"
+                                           itemValue="#{brandIdItem}"
+                                           itemLabel="#{brandIdItem.brandName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{brandServiceController.saveNew}" value="#{msg.Save}" update="display,:BrandServiceListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BrandServiceCreateDialog'));">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.Cancel}" onclick="PF('BrandServiceCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

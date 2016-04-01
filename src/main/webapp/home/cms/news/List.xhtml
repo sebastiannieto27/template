@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="NewsListForm">
+
+        <p:panel header="#{msg.ListNewsTitle}">
+            <p:contextMenu id="NewsDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('NewsListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg.View}" onclick="document.getElementById('NewsListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('NewsListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('NewsListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg.NewsMenuItem_userId}" icon="ui-icon-search"  actionListener="#{newsController.prepareUserId}" update=":UserViewForm" oncomplete="PF('UserViewDialog').show()" disabled="#{empty newsController.selected.userId}"/>  
+                <p:menuitem value="#{msg.NewsMenuItem_newsTypeId}" icon="ui-icon-search"  actionListener="#{newsController.prepareNewsTypeId}" update=":NewsTypeViewForm" oncomplete="PF('NewsTypeViewDialog').show()" disabled="#{empty newsController.selected.newsTypeId}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{newsController.items}"
+                         var="item"
+                         rowKey="#{item.newId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{newsController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:NewsDataTableContextMenu" listener="#{newsController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:NewsDataTableContextMenu" listener="#{newsController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{newsController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('NewsListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.newId}" filterBy="#{item.newId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListNewsTitle_newId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.newId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.newsTitle}" filterBy="#{item.newsTitle}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListNewsTitle_newsTitle}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.newsTitle}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.generalStatusId}" filterBy="#{item.generalStatusId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListNewsTitle_generalStatusId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.generalStatusId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.newsDateStart}" filterBy="#{item.newsDateStart}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListNewsTitle_newsDateStart}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.newsDateStart}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.newsDateExpire}" filterBy="#{item.newsDateExpire}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListNewsTitle_newsDateExpire}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.newsDateExpire}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.newsShortDescr}" filterBy="#{item.newsShortDescr}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListNewsTitle_newsShortDescr}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.newsShortDescr}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.newsLongDesc}" filterBy="#{item.newsLongDesc}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg.ListNewsTitle_newsLongDesc}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.newsLongDesc}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.newsBigImgPath}" filterBy="#{item.newsBigImgPath}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg.ListNewsTitle_newsBigImgPath}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.newsBigImgPath}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.newsImgPath}" filterBy="#{item.newsImgPath}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg.ListNewsTitle_newsImgPath}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.newsImgPath}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.newsThumbImgPath}" filterBy="#{item.newsThumbImgPath}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg.ListNewsTitle_newsThumbImgPath}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.newsThumbImgPath}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.dateCre}" filterBy="#{item.dateCre}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg.ListNewsTitle_dateCre}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.dateCre}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.userId.firstName}" filterBy="#{item.userId.firstName}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg.ListNewsTitle_userId}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.userId.firstName}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.newsTypeId.newsTypeName}" filterBy="#{item.newsTypeId.newsTypeName}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg.ListNewsTitle_newsTypeId}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.newsTypeId.newsTypeName}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{newsController.prepareCreate}" update=":NewsCreateForm" oncomplete="PF('NewsCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":NewsViewForm" oncomplete="PF('NewsViewDialog').show()" disabled="#{empty newsController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":NewsEditForm" oncomplete="PF('NewsEditDialog').show()" disabled="#{empty newsController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{newsController.delete}" update=":growl,datalist" disabled="#{empty newsController.selected}">
+                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

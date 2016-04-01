@@ -29,8 +29,8 @@ public class UploadedFileServiceImpl implements IUploadedFileService {
 	}
 
 	@Override
-	public void create(UploadedFileDTO dto) {
-		uploadedFileDAO.create(UploadedFileUtil.getEntityFromDto(dto));
+	public UploadedFile create(UploadedFileDTO dto) {
+		return uploadedFileDAO.create(UploadedFileUtil.getEntityFromDto(dto));
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import co.com.core.dto.UserDTO;
+
 public class SessionUtil {
 	 
 	public static HttpSession getSession() {
@@ -29,4 +31,20 @@ public class SessionUtil {
         else
             return null;
     }
+    
+    public static UserDTO getSessionUser() {
+    	FacesContext context = FacesContext.getCurrentInstance();
+    	UserDTO userDto = (UserDTO) context.getExternalContext().getSessionMap().get("user");
+    	return userDto;
+    }
+    
+    public static Integer getSessionUserId() {
+    	FacesContext context = FacesContext.getCurrentInstance();
+		UserDTO userDto = (UserDTO) context.getExternalContext().getSessionMap().get("user");
+		if(userDto.getUserId()!=null) {
+			return userDto.getUserId();
+		}
+		return null;
+    }
+    
 }

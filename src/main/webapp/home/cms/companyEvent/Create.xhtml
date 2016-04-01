@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CompanyEventCreateDlg" widgetVar="CompanyEventCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.CreateCompanyEventTitle}" closeOnEscape="true">
+
+            <h:form id="CompanyEventCreateForm">
+
+                <h:panelGroup id="display" rendered="#{companyEventController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_companyEventId}" for="companyEventId" />
+                        <p:inputText id="companyEventId" value="#{companyEventController.selected.companyEventId}" title="#{msg.CreateCompanyEventTitle_companyEventId}" required="true" requiredMessage="#{msg.CreateCompanyEventRequiredMessage_companyEventId}"/>
+
+                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_companyEventTitle}" for="companyEventTitle" />
+                        <p:inputText id="companyEventTitle" value="#{companyEventController.selected.companyEventTitle}" title="#{msg.CreateCompanyEventTitle_companyEventTitle}" required="true" requiredMessage="#{msg.CreateCompanyEventRequiredMessage_companyEventTitle}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_companyEventLocation}" for="companyEventLocation" />
+                        <p:inputText id="companyEventLocation" value="#{companyEventController.selected.companyEventLocation}" title="#{msg.CreateCompanyEventTitle_companyEventLocation}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_companyEventDesc}" for="companyEventDesc" />
+                        <p:inputTextarea rows="4" cols="30" id="companyEventDesc" value="#{companyEventController.selected.companyEventDesc}" title="#{msg.CreateCompanyEventTitle_companyEventDesc}" />
+
+                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_companyEventThumbImg}" for="companyEventThumbImg" />
+                        <p:inputText id="companyEventThumbImg" value="#{companyEventController.selected.companyEventThumbImg}" title="#{msg.CreateCompanyEventTitle_companyEventThumbImg}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_companyEventBigImg}" for="companyEventBigImg" />
+                        <p:inputText id="companyEventBigImg" value="#{companyEventController.selected.companyEventBigImg}" title="#{msg.CreateCompanyEventTitle_companyEventBigImg}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_dateCre}" for="dateCre" />
+                        <p:calendar id="dateCre" pattern="MM/dd/yyyy HH:mm:ss" value="#{companyEventController.selected.dateCre}" title="#{msg.CreateCompanyEventTitle_dateCre}" required="true" requiredMessage="#{msg.CreateCompanyEventRequiredMessage_dateCre}" showOn="button"/>
+
+                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_userId}" for="userId" />
+                        <p:selectOneMenu id="userId" value="#{companyEventController.selected.userId}" required="true" requiredMessage="#{msg.CreateCompanyEventRequiredMessage_userId}" converter="userConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{userController.items}"
+                                           var="userIdItem"
+                                           itemValue="#{userIdItem}"
+                                           itemLabel="#{userIdItem.firstName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{companyEventController.saveNew}" value="#{msg.Save}" update="display,:CompanyEventListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CompanyEventCreateDialog'));">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.Cancel}" onclick="PF('CompanyEventCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

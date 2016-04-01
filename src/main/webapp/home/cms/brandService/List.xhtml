@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="BrandServiceListForm">
+
+        <p:panel header="#{msg.ListBrandServiceTitle}">
+            <p:contextMenu id="BrandServiceDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('BrandServiceListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg.View}" onclick="document.getElementById('BrandServiceListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('BrandServiceListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('BrandServiceListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg.BrandServiceMenuItem_serviceId}" icon="ui-icon-search"  actionListener="#{brandServiceController.prepareServiceId}" update=":ServiceViewForm" oncomplete="PF('ServiceViewDialog').show()" disabled="#{empty brandServiceController.selected.serviceId}"/>  
+                <p:menuitem value="#{msg.BrandServiceMenuItem_brandId}" icon="ui-icon-search"  actionListener="#{brandServiceController.prepareBrandId}" update=":BrandViewForm" oncomplete="PF('BrandViewDialog').show()" disabled="#{empty brandServiceController.selected.brandId}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{brandServiceController.items}"
+                         var="item"
+                         rowKey="#{item.brandServiceId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{brandServiceController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BrandServiceDataTableContextMenu" listener="#{brandServiceController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BrandServiceDataTableContextMenu" listener="#{brandServiceController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{brandServiceController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('BrandServiceListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.brandServiceId}" filterBy="#{item.brandServiceId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListBrandServiceTitle_brandServiceId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.brandServiceId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.userId}" filterBy="#{item.userId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListBrandServiceTitle_userId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.userId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dateCre}" filterBy="#{item.dateCre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListBrandServiceTitle_dateCre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dateCre}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.serviceId.serviceName}" filterBy="#{item.serviceId.serviceName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListBrandServiceTitle_serviceId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.serviceId.serviceName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.brandId.brandName}" filterBy="#{item.brandId.brandName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListBrandServiceTitle_brandId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.brandId.brandName}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{brandServiceController.prepareCreate}" update=":BrandServiceCreateForm" oncomplete="PF('BrandServiceCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":BrandServiceViewForm" oncomplete="PF('BrandServiceViewDialog').show()" disabled="#{empty brandServiceController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":BrandServiceEditForm" oncomplete="PF('BrandServiceEditDialog').show()" disabled="#{empty brandServiceController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{brandServiceController.delete}" update=":growl,datalist" disabled="#{empty brandServiceController.selected}">
+                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

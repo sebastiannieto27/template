@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NewsTypeViewDlg" widgetVar="NewsTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewNewsTypeTitle}" closeOnEscape="true">
+
+            <h:form id="NewsTypeViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{newsTypeController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewNewsTypeLabel_newsTypeId}"/>
+                        <h:outputText value="#{newsTypeController.selected.newsTypeId}" title="#{msg.ViewNewsTypeTitle_newsTypeId}"/>
+
+                        <h:outputText value="#{msg.ViewNewsTypeLabel_newsTypeName}"/>
+                        <h:outputText value="#{newsTypeController.selected.newsTypeName}" title="#{msg.ViewNewsTypeTitle_newsTypeName}"/>
+
+                        <h:outputText value="#{msg.ViewNewsTypeLabel_userId}"/>
+                        <h:outputText value="#{newsTypeController.selected.userId}" title="#{msg.ViewNewsTypeTitle_userId}"/>
+
+                        <h:outputText value="#{msg.ViewNewsTypeLabel_dateCre}"/>
+                        <h:outputText value="#{newsTypeController.selected.dateCre}" title="#{msg.ViewNewsTypeTitle_dateCre}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="PF('NewsTypeViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

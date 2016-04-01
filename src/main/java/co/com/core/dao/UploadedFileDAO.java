@@ -8,7 +8,7 @@ public interface UploadedFileDAO {
 	
 	public List<UploadedFile> getAll();
 	
-	public void create(UploadedFile entity);
+	public UploadedFile create(UploadedFile entity);
 	
 	public void delete(UploadedFile entity);
 	

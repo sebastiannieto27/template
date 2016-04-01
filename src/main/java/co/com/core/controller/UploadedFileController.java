@@ -5,17 +5,25 @@ import static co.com.core.commons.LoadBundle.geProperty;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
+import co.com.core.commons.FileUploader;
 import co.com.core.commons.LoadBundle;
+import co.com.core.commons.SessionUtil;
+import co.com.core.commons.converter.UploadedFileUtil;
+import co.com.core.commons.converter.UserUtil;
 import co.com.core.dto.UploadedFileDTO;
+import co.com.core.dto.UserDTO;
 import co.com.core.services.IUploadedFileService;
 
 
@@ -47,6 +55,7 @@ public class UploadedFileController {
 			}
 		}
 	}
+	
 	public void downloadFile() {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -79,6 +88,45 @@ public class UploadedFileController {
 	    }
 
 	}
+	
+    public UploadedFileDTO upload(FileUploadEvent event) {  
+    	UploadedFileDTO resultDto = null;
+    	try {
+    		FacesContext context = FacesContext.getCurrentInstance();
+        	UploadedFile file = event.getFile();
+        	//common upload path
+        	String path = LoadBundle.getApplicationProperty("fileUploadPath");
+        	//creates the file
+        	boolean success = FileUploader.uploadFile(event, path);
+        	
+        	if(success) {
+        		UserDTO userDto = SessionUtil.getSessionUser();
+    			if(userDto!=null) {
+    				UploadedFileDTO dto = new UploadedFileDTO();
+    				dto.setUserId(UserUtil.getEntityFromDto(userDto));
+    				dto.setCreationDate(new Timestamp(new Date().getTime()));
+    				dto.setSize((int) file.getSize());
+    				dto.setName(file.getFileName());
+    				
+    				co.com.core.domain.UploadedFile entity = uploadedFileService.create(dto);
+    				
+    				resultDto = UploadedFileUtil.getDtoFromEntity(entity);
+    				
+    				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));
+    			} else {
+    				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("fileUploadError"), null));
+    				logger.error("Error uploading the file: " + file.getFileName() + " UserDto is null");
+    			}
+        		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("fileUploadSuccess"), null));
+        	} else {
+        		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("fileUploadError"), null));
+        	}
+    	} catch(Exception ex) {
+    		logger.error("Throwed Exception [UploadedFileController.upload]: " +ex.getMessage());
+    	}
+    	return resultDto;
+    } 
+	
 	
 	public String getDownloadPath() {
 		return downloadPath;

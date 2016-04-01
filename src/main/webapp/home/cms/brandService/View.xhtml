@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BrandServiceViewDlg" widgetVar="BrandServiceViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewBrandServiceTitle}" closeOnEscape="true">
+
+            <h:form id="BrandServiceViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{brandServiceController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewBrandServiceLabel_brandServiceId}"/>
+                        <h:outputText value="#{brandServiceController.selected.brandServiceId}" title="#{msg.ViewBrandServiceTitle_brandServiceId}"/>
+
+                        <h:outputText value="#{msg.ViewBrandServiceLabel_userId}"/>
+                        <h:outputText value="#{brandServiceController.selected.userId}" title="#{msg.ViewBrandServiceTitle_userId}"/>
+
+                        <h:outputText value="#{msg.ViewBrandServiceLabel_dateCre}"/>
+                        <h:outputText value="#{brandServiceController.selected.dateCre}" title="#{msg.ViewBrandServiceTitle_dateCre}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg.ViewBrandServiceLabel_serviceId}"/>
+                        <h:outputText value="#{brandServiceController.selected.serviceId.serviceName}"/>
+
+                        <h:outputText value="#{msg.ViewBrandServiceLabel_brandId}"/>
+                        <h:outputText value="#{brandServiceController.selected.brandId.brandName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="PF('BrandServiceViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

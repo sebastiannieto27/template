@@ -37,11 +37,12 @@ public class UploadedFileDAOImpl implements UploadedFileDAO {
 		}
 
 		@Override
-		public void create(UploadedFile entity) {
+		public UploadedFile create(UploadedFile entity) {
+			UploadedFile newEntity = null;
 			try {
 				session = this.sessionFactory.openSession();
 				Transaction tx = session.beginTransaction();
-				session.save(entity);
+				newEntity = (UploadedFile) session.merge(entity);
 				tx.commit();
 			} catch(Exception ex) {
 				logger.error("Throwed Exception [UploadedFileDAOImpl.createUploadedFile]: " +ex.getMessage());
@@ -49,6 +50,7 @@ public class UploadedFileDAOImpl implements UploadedFileDAO {
 			} finally {
 				session.close();
 			}
+			return newEntity;
 		}
 
 		@Override

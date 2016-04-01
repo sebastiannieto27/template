@@ -29,7 +29,7 @@ public class FileUploader {
 	 
 	 public static boolean copyFile(String fileName, InputStream in, String path) {
 	    	try {
-		        OutputStream out = new FileOutputStream(new File(path + fileName));
+		        OutputStream out = new FileOutputStream(new File(path + normalizeFileName(fileName)));
 		        int read = 0;
 		        byte[] bytes = new byte[1024];
 		        while ((read = in.read(bytes)) != -1) {
@@ -46,5 +46,11 @@ public class FileUploader {
 	        	logger.error("Throwed IOException [FileUploader.copyFile]: " +ex.getMessage());
 	        	return false;
 	        }
-	    }
+    }
+
+	 private static String normalizeFileName(String oldName) {
+		 String newName = null;
+		 newName = oldName.replace("\\s","_");
+		 return newName;
+	 }
 }

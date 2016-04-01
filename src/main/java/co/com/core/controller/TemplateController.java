@@ -32,7 +32,7 @@ public class TemplateController {
 	private IPageService pageService;
 	private static final Logger logger = Logger.getLogger(TemplateController.class);
 	
-	private IUploadedFileService uploadedFileService;
+	
 	
 	public void validateUserSession() {
 		try {
@@ -90,31 +90,6 @@ public class TemplateController {
 		return pageDto;
 	}
 	
-    public void upload(FileUploadEvent event) {  
-    	UploadedFile file = event.getFile();
-    	String path = LoadBundle.getApplicationProperty("fileUploadPath");
-    	boolean success = FileUploader.uploadFile(event, path);
-    	FacesContext context = FacesContext.getCurrentInstance();
-    	if(success) {
-    		UserDTO userDto = (UserDTO) context.getExternalContext().getSessionMap().get("user");
-			if(userDto!=null) {
-				UploadedFileDTO dto = new UploadedFileDTO();
-				dto.setUserId(UserUtil.getEntityFromDto(userDto));
-				dto.setCreationDate(new Timestamp(new Date().getTime()));
-				dto.setSize((int) file.getSize());
-				dto.setName(file.getFileName());
-				uploadedFileService.create(dto);
-				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));
-			} else {
-				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("fileUploadError"), null));
-				logger.error("Error uploading the file: " + file.getFileName() + " UserDto is null");
-			}
-    		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("fileUploadSuccess"), null));
-    	} else {
-    		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("fileUploadError"), null));
-    	}
-    }  
- 
     public void sendMail() {
     	SendEmail mailer = new SendEmail();
     	mailer.sendEmail();
@@ -135,14 +110,4 @@ public class TemplateController {
 	public void setPageService(IPageService pageService) {
 		this.pageService = pageService;
 	}
-
-	public IUploadedFileService getUploadedFileService() {
-		return uploadedFileService;
-	}
-
-	public void setUploadedFileService(IUploadedFileService uploadedFileService) {
-		this.uploadedFileService = uploadedFileService;
-	}
-	
-	
 }

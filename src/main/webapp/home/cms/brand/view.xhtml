@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="brandViewDlg" widgetVar="brandViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewbrandTitle}" closeOnEscape="true">
+
+            <h:form id="brandViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{brandController.selected != null}">
+
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{brandController.selected.brandId}" title="#{msg.id}"/>
+
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{brandController.selected.brandName}" title="#{msg.name}"/>
+
+                        <h:outputText value="#{msg.brandAddress}"/>
+                        <h:outputText value="#{brandController.selected.brandAddress}" title="#{msg.brandAddress}"/>
+
+                        <h:outputText value="#{msg.thumbnail}"/>
+                        <h:outputText value="#{brandController.selected.brandThumbImg}" title="#{msg.thumbnail}"/>
+
+                        <h:outputText value="#{msg.image}"/>
+                        <h:outputText value="#{brandController.selected.brandBigImg}" title="#{msg.image}"/>
+
+                        <h:outputText value="#{msg.brandOpenHours}"/>
+                        <h:outputText value="#{brandController.selected.brandOpenHours}" title="#{msg.brandOpenHours}"/>
+
+                        <h:outputText value="#{msg.creationDate}"/>
+                        <h:outputText value="#{brandController.selected.dateCre}" title="#{msg.creationDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg.user}"/>
+                        <h:outputText value="#{brandController.selected.userId.firstName}"/>
+
+                        <h:outputText value="#{msg.brandType}"/>
+                        <h:outputText value="#{brandController.selected.brandTypeId.brandTypeName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.close}" onclick="PF('brandViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

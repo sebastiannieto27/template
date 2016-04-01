@@ -120,7 +120,7 @@
 					<p:column>
 						<p:messages id="uploadMessage" autoUpdate="true" />
 						<h:form id="formUpload" enctype="multipart/form-data">
-                           <p:fileUpload fileUploadListener="#{templateController.upload}" auto="true" update="uploadMessage" label="#{msg.search}" sizeLimit="2097152"/>
+                           <p:fileUpload fileUploadListener="#{UploadedFileController.upload}" auto="true" update="uploadMessage" label="#{msg.search}" sizeLimit="2097152"/>
                         </h:form>
 					</p:column>
 				</p:row>

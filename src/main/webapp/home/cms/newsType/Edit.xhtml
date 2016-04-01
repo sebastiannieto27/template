@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="NewsTypeEditDlg" widgetVar="NewsTypeEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditNewsTypeTitle}" closeOnEscape="true">
+
+            <h:form id="NewsTypeEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{newsTypeController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditNewsTypeLabel_newsTypeId}" for="newsTypeId" />
+                        <h:outputText id="newsTypeId" value="#{newsTypeController.selected.newsTypeId}" />
+
+                        <p:outputLabel value="#{msg.EditNewsTypeLabel_newsTypeName}" for="newsTypeName" />
+                        <p:inputText id="newsTypeName" value="#{newsTypeController.selected.newsTypeName}" title="#{msg.EditNewsTypeTitle_newsTypeName}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.EditNewsTypeLabel_userId}" for="userId" />
+                        <p:inputText id="userId" value="#{newsTypeController.selected.userId}" title="#{msg.EditNewsTypeTitle_userId}" required="true" requiredMessage="#{msg.EditNewsTypeRequiredMessage_userId}"/>
+
+                        <p:outputLabel value="#{msg.EditNewsTypeLabel_dateCre}" for="dateCre" />
+                        <p:calendar id="dateCre" pattern="MM/dd/yyyy HH:mm:ss" value="#{newsTypeController.selected.dateCre}" title="#{msg.EditNewsTypeTitle_dateCre}" required="true" requiredMessage="#{msg.EditNewsTypeRequiredMessage_dateCre}" showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{newsTypeController.save}" value="#{msg.Save}" update="display,:NewsTypeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('NewsTypeEditDialog'));">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" onclick="PF('NewsTypeEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

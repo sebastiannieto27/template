@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NewsCreateDlg" widgetVar="NewsCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.CreateNewsTitle}" closeOnEscape="true">
+
+            <h:form id="NewsCreateForm">
+
+                <h:panelGroup id="display" rendered="#{newsController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_newId}" for="newId" />
+                        <p:inputText id="newId" value="#{newsController.selected.newId}" title="#{msg.CreateNewsTitle_newId}" required="true" requiredMessage="#{msg.CreateNewsRequiredMessage_newId}"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_newsTitle}" for="newsTitle" />
+                        <p:inputText id="newsTitle" value="#{newsController.selected.newsTitle}" title="#{msg.CreateNewsTitle_newsTitle}" required="true" requiredMessage="#{msg.CreateNewsRequiredMessage_newsTitle}" size="200" maxlength="200"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_generalStatusId}" for="generalStatusId" />
+                        <p:inputText id="generalStatusId" value="#{newsController.selected.generalStatusId}" title="#{msg.CreateNewsTitle_generalStatusId}" required="true" requiredMessage="#{msg.CreateNewsRequiredMessage_generalStatusId}"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_newsDateStart}" for="newsDateStart" />
+                        <p:calendar id="newsDateStart" pattern="MM/dd/yyyy HH:mm:ss" value="#{newsController.selected.newsDateStart}" title="#{msg.CreateNewsTitle_newsDateStart}" required="true" requiredMessage="#{msg.CreateNewsRequiredMessage_newsDateStart}" showOn="button"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_newsDateExpire}" for="newsDateExpire" />
+                        <p:calendar id="newsDateExpire" pattern="MM/dd/yyyy HH:mm:ss" value="#{newsController.selected.newsDateExpire}" title="#{msg.CreateNewsTitle_newsDateExpire}" required="true" requiredMessage="#{msg.CreateNewsRequiredMessage_newsDateExpire}" showOn="button"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_newsShortDescr}" for="newsShortDescr" />
+                        <p:inputText id="newsShortDescr" value="#{newsController.selected.newsShortDescr}" title="#{msg.CreateNewsTitle_newsShortDescr}" size="200" maxlength="200"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_newsLongDesc}" for="newsLongDesc" />
+                        <p:inputTextarea rows="4" cols="30" id="newsLongDesc" value="#{newsController.selected.newsLongDesc}" title="#{msg.CreateNewsTitle_newsLongDesc}" />
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_newsBigImgPath}" for="newsBigImgPath" />
+                        <p:inputText id="newsBigImgPath" value="#{newsController.selected.newsBigImgPath}" title="#{msg.CreateNewsTitle_newsBigImgPath}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_newsImgPath}" for="newsImgPath" />
+                        <p:inputText id="newsImgPath" value="#{newsController.selected.newsImgPath}" title="#{msg.CreateNewsTitle_newsImgPath}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_newsThumbImgPath}" for="newsThumbImgPath" />
+                        <p:inputText id="newsThumbImgPath" value="#{newsController.selected.newsThumbImgPath}" title="#{msg.CreateNewsTitle_newsThumbImgPath}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_dateCre}" for="dateCre" />
+                        <p:calendar id="dateCre" pattern="MM/dd/yyyy HH:mm:ss" value="#{newsController.selected.dateCre}" title="#{msg.CreateNewsTitle_dateCre}" required="true" requiredMessage="#{msg.CreateNewsRequiredMessage_dateCre}" showOn="button"/>
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_userId}" for="userId" />
+                        <p:selectOneMenu id="userId" value="#{newsController.selected.userId}" required="true" requiredMessage="#{msg.CreateNewsRequiredMessage_userId}" converter="userConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{userController.items}"
+                                           var="userIdItem"
+                                           itemValue="#{userIdItem}"
+                                           itemLabel="#{userIdItem.firstName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{msg.CreateNewsLabel_newsTypeId}" for="newsTypeId" />
+                        <p:selectOneMenu id="newsTypeId" value="#{newsController.selected.newsTypeId}" required="true" requiredMessage="#{msg.CreateNewsRequiredMessage_newsTypeId}" converter="newsTypeConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{newsTypeController.items}"
+                                           var="newsTypeIdItem"
+                                           itemValue="#{newsTypeIdItem}"
+                                           itemLabel="#{newsTypeIdItem.newsTypeName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{newsController.saveNew}" value="#{msg.Save}" update="display,:NewsListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('NewsCreateDialog'));">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.Cancel}" onclick="PF('NewsCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

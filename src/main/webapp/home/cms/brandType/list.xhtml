@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+    <h:form id="brandTypeListForm">
+
+        <p:panel header="#{msg.brandType}">
+            <p:dataTable id="datalist"
+                         value="#{brandTypeController.items}"
+                         var="item"
+                         rowKey="#{item.brandTypeId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{brandTypeController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('brandTypeListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.brandTypeId}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.brandTypeId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.brandTypeName}" filterBy="#{item.brandTypeName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.brandTypeName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.userId}" filterBy="#{item.userId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.user}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.userId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.dateCre}" filterBy="#{item.dateCre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.creationDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dateCre}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{brandtypeController.init()}" update=":brandTypeListForm" />
+            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{brandTypeController.prepareCreate}" update=":brandTypeCreateForm" oncomplete="PF('brandTypeCreateDialog').show()"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":brandTypeViewForm" oncomplete="PF('brandTypeViewDialog').show()" disabled="#{empty brandTypeController.selected}"/>
+            <p:commandButton id="editButton" icon="ui-icon-pencil" value="#{msg.edit}" update=":brandTypeEditForm" oncomplete="PF('brandTypeEditDialog').show()" disabled="#{empty brandTypeController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{brandTypeController.delete}" update=":growl,datalist" disabled="#{empty brandTypeController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+    </h:form>
+	    </ui:composition>
+    </body>
+</html>
