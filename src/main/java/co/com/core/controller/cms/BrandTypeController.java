@@ -17,14 +17,14 @@ import co.com.core.services.cms.IBrandTypeService;
 
 public class BrandTypeController {
 
-	IBrandTypeService brandService;
+	IBrandTypeService brandTypeService;
 	List<BrandTypeDTO> items;
 	private BrandTypeDTO selected;
 	
 	private static final Logger logger = Logger.getLogger(BrandTypeController.class);
 	
 	public void init() {
-		items = brandService.getAll();
+		items = brandTypeService.getAll();
 	}
 
 	public void saveNew() {
@@ -34,13 +34,13 @@ public class BrandTypeController {
 			Integer userId = SessionUtil.getSessionUserId();
 			selected.setUserId(userId);
 			selected.setDateCre(new Date());
-			brandService.create(selected);
+			brandTypeService.create(selected);
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));
 		} catch (Exception ex) {
 			logger.error("Throwed Exception [BrandTypeController.saveNew]: " +ex.getMessage());
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("creationError"), null));
 		} finally {
-			items = brandService.getAll();
+			items = brandTypeService.getAll();
 		}
 
 	}
@@ -49,13 +49,13 @@ public class BrandTypeController {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
-				brandService.delete(selected);
+				brandTypeService.delete(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulDeletion"), null));
 			} catch (Exception ex) {
 				logger.error("Throwed Exception [BrandTypeController.delete]: " +ex.getMessage());
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("deletionError"), null));
 			} finally {
-				items = brandService.getAll();
+				items = brandTypeService.getAll();
 			}
 		}
 	}
@@ -64,13 +64,13 @@ public class BrandTypeController {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
-				brandService.update(selected);
+				brandTypeService.update(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulEdition"), null));
 			} catch (Exception ex) {
 				logger.error("Throwed Exception [BrandTypeController.save]: " +ex.getMessage());
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("editionError"), null));
 			} finally {
-				items = brandService.getAll();
+				items = brandTypeService.getAll();
 			}
 		}
 	}
@@ -80,11 +80,11 @@ public class BrandTypeController {
 	}
 
 	public IBrandTypeService getBrandTypeService() {
-		return brandService;
+		return brandTypeService;
 	}
 
 	public void setBrandTypeService(IBrandTypeService BrandTypeService) {
-		this.brandService = BrandTypeService;
+		this.brandTypeService = BrandTypeService;
 	}
 
 	public List<BrandTypeDTO> getItems() {

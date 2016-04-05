@@ -89,13 +89,19 @@ public class UploadedFileController {
 
 	}
 	
-    public UploadedFileDTO upload(FileUploadEvent event) {  
+    public UploadedFileDTO upload(FileUploadEvent event, boolean alternativePath) {  
     	UploadedFileDTO resultDto = null;
     	try {
     		FacesContext context = FacesContext.getCurrentInstance();
         	UploadedFile file = event.getFile();
         	//common upload path
-        	String path = LoadBundle.getApplicationProperty("fileUploadPath");
+        	String path  = null;
+        	if(alternativePath) {
+        		path = LoadBundle.getApplicationProperty("serverUploadPath");
+        	} else {
+        		path = LoadBundle.getApplicationProperty("fileUploadPath");
+        	}
+        	
         	//creates the file
         	boolean success = FileUploader.uploadFile(event, path);
         	

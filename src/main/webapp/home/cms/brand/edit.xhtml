@@ -20,12 +20,6 @@
                         <p:outputLabel value="#{msg.brandAddress}" for="brandAddress" />
                         <p:inputText id="brandAddress" value="#{brandController.selected.brandAddress}" title="#{msg.brandAddress}" size="100" maxlength="100"/>
 
-                        <p:outputLabel value="#{msg.thumbnail}" for="brandThumbImg" />
-                        <p:inputText id="brandThumbImg" value="#{brandController.selected.brandThumbImg}" title="#{msg.thumbnail}" size="100" maxlength="100"/>
-
-                        <p:outputLabel value="#{msg.image}" for="brandBigImg" />
-                        <p:inputText id="brandBigImg" value="#{brandController.selected.brandBigImg}" title="#{msg.image}" size="100" maxlength="100"/>
-
                         <p:outputLabel value="#{msg.brandOpenHours}" for="brandOpenHours" />
                         <p:inputText id="brandOpenHours" value="#{brandController.selected.brandOpenHours}" title="#{msg.brandOpenHours}" size="100" maxlength="100"/>
 
@@ -40,6 +34,20 @@
                                            />
                         </p:selectOneMenu>
 
+                        <p:outputLabel value="#{msg.image}"/>
+                        <p:panelGrid columns="2" style="width:100%" id="panelImage">
+	                        <p:fileUpload label="#{msg.upload}" id="brandBigImg" fileUploadListener="#{brandController.setImageFileUpload}" mode="advanced"
+	                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelImage"/>
+                     		<h:graphicImage id="brandImageFile" url="#{brandController.imagePath}" width="150" height="100" rendered="#{brandController.showImageFile}"/>
+                        </p:panelGrid>
+                        
+                        <p:outputLabel value="#{msg.thumbnail}" for="brandThumbImg" />
+                        <p:panelGrid columns="2" style="width:100%" id="panelThumbnail">
+                        <p:fileUpload label="#{msg.upload}" id="brandThumbImg" fileUploadListener="#{brandController.setThumbnailFileUpload}" mode="advanced"
+                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelThumbnail"/>
+                     		<h:graphicImage  id="tumbnailImageFile" url="#{brandController.thumbnailPath}" width="150" height="100" rendered="#{brandController.showThumbnailFile}"/>
+ 						</p:panelGrid>
+ 						
                     </p:panelGrid>
                     <p:commandButton actionListener="#{brandController.save}" value="#{msg.save}" update="display,:brandListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('brandEditDialog'));">
                         <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>

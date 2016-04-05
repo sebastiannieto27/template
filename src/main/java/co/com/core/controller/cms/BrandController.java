@@ -14,9 +14,11 @@ import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.util.StringUtils;
 
+import co.com.core.commons.LoadBundle;
 import co.com.core.commons.SessionUtil;
 import co.com.core.commons.converter.UploadedFileUtil;
 import co.com.core.commons.converter.UserUtil;
+import co.com.core.commons.converter.cms.BrandUtil;
 import co.com.core.controller.UploadedFileController;
 import co.com.core.domain.cms.Brand;
 import co.com.core.domain.cms.BrandType;
@@ -30,11 +32,12 @@ import co.com.core.services.cms.IBrandUploadFileService;
 
 public class BrandController {
 
+	private static final Logger logger = Logger.getLogger(BrandController.class);
+	
 	private IBrandService brandService;
 	private List<BrandDTO> items;
 	private BrandDTO selected;
 	private Integer selectedBrandTypeId;
-	private static final Logger logger = Logger.getLogger(BrandController.class);
 	
 	private FileUploadEvent thumbnail;
 	private FileUploadEvent image;
@@ -44,7 +47,13 @@ public class BrandController {
 	private String searchName;
 	private String searchAddress;
 	
-	
+	private UploadedFileDTO thumbailDto;
+	private UploadedFileDTO imageDto;
+	private boolean showImageFile;
+	private boolean showThumbnailFile;
+	private String imagePath;
+	private String thumbnailPath;
+
 	public void init() {
 		//items = brandService.getAll();
 		Map<String, Object> filter = new HashMap<String, Object>();
@@ -84,10 +93,8 @@ public class BrandController {
 				/*
 				 * start creation of the thumbnail file entry
 				 */
-				UploadedFileDTO thumbailDto = null;
 				if(this.thumbnail!=null) {
 					selected.setBrandThumbImg(this.thumbnail.getFile().getFileName());
-					thumbailDto = createUploadedFile(this.thumbnail);
 					if(thumbailDto!=null) {
 						createBrandUploadReference(thumbailDto, brandEntity);
 					}
@@ -99,10 +106,8 @@ public class BrandController {
 				/*
 				 * start creation of the image file entry
 				 */
-				UploadedFileDTO imageDto = null;
 				if(this.image!=null) {
 					selected.setBrandThumbImg(this.image.getFile().getFileName());
-					imageDto = createUploadedFile(this.image);
 					if(imageDto!=null) {
 						createBrandUploadReference(imageDto, brandEntity);
 					}
@@ -132,7 +137,43 @@ public class BrandController {
 				if(selectedBrandTypeId!=null && selectedBrandTypeId!=0) {
 					BrandType brandType = new BrandType(selectedBrandTypeId);
 					selected.setBrandTypeId(brandType);
+					
+					if(this.thumbnail!=null) {
+						selected.setBrandThumbImg(this.thumbnail.getFile().getFileName());
+					}
+					if(this.image!=null) {
+						selected.setBrandBigImg(this.image.getFile().getFileName());
+					}
+					
+					Brand brandEntity = BrandUtil.getEntityFromDto(selected);
 					brandService.update(selected);
+					
+					/*
+					 * start creation of the thumbnail file entry
+					 */
+					if(this.thumbnail!=null) {
+						selected.setBrandThumbImg(this.thumbnail.getFile().getFileName());
+						if(thumbailDto!=null) {
+							createBrandUploadReference(thumbailDto, brandEntity);
+						}
+					}
+					/*
+					 * end creation of the thumbnail file entry
+					 */
+					
+					/*
+					 * start creation of the image file entry
+					 */
+					if(this.image!=null) {
+						selected.setBrandThumbImg(this.image.getFile().getFileName());
+						if(imageDto!=null) {
+							createBrandUploadReference(imageDto, brandEntity);
+						}
+					}
+					/*
+					 * end creation of the mage file entry
+					 */
+					
 					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulEdition"), null));
 				} else {
 					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, geProperty("brandTypeRequiredMessage"), geProperty("pleaseVerifySummary")));
@@ -162,7 +203,7 @@ public class BrandController {
 	}
 
 	private UploadedFileDTO createUploadedFile(FileUploadEvent event) {
-		return uploadedFileController.upload(event);
+		return uploadedFileController.upload(event, true);
 	}
 	
 	private void createBrandUploadReference(UploadedFileDTO uploadedFileDTO, Brand brandEntity) {
@@ -174,10 +215,28 @@ public class BrandController {
 	
 	public void setThumbnailFileUpload(FileUploadEvent event) {
 		this.thumbnail = event;
+		thumbailDto = createUploadedFile(this.thumbnail);
+		this.showThumbnailFile = true;
 	}
 	
 	public void setImageFileUpload(FileUploadEvent event) {
 		this.image = event;
+		imageDto = createUploadedFile(this.image);
+		this.showImageFile = true;
+	}
+	
+	public String getImagePath() {
+		if(this.imageDto!=null) {
+			return LoadBundle.getApplicationProperty("imagesContextPath") + this.imageDto.getName();
+		}
+		return "";
+	}
+	
+	public String getThumbnailPath() {
+		if(this.thumbailDto!=null) {
+			return LoadBundle.getApplicationProperty("imagesContextPath") + this.thumbailDto.getName();
+		}
+		return "";
 	}
 	
 	public void prepareCreate() {
@@ -249,4 +308,37 @@ public class BrandController {
 	public void setSearchAddress(String searchAddress) {
 		this.searchAddress = searchAddress;
 	}
+
+	public UploadedFileDTO getThumbailDto() {
+		return thumbailDto;
+	}
+
+	public void setThumbailDto(UploadedFileDTO thumbailDto) {
+		this.thumbailDto = thumbailDto;
+	}
+
+	public UploadedFileDTO getImageDto() {
+		return imageDto;
+	}
+
+	public void setImageDto(UploadedFileDTO imageDto) {
+		this.imageDto = imageDto;
+	}
+
+	public boolean isShowImageFile() {
+		return showImageFile;
+	}
+
+	public void setShowImageFile(boolean showImageFile) {
+		this.showImageFile = showImageFile;
+	}
+
+	public boolean isShowThumbnailFile() {
+		return showThumbnailFile;
+	}
+
+	public void setShowThumbnailFile(boolean showThumbnailFile) {
+		this.showThumbnailFile = showThumbnailFile;
+	}
+	
 }
