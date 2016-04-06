@@ -68,16 +68,6 @@ public class BrandDAOImpl implements BrandDAO {
 				        hql.append(sb.toString());
 				}
 				
-				/*
-				for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
-					String filterProperty = it.next();
-                    Object filterValue = filters.get(filterProperty);
-                    
-                    if(StringUtils.hasText(filterProperty) && filterValue != null) {
-                    	hql.append(" lower(b.").append(filterProperty).append(") ").append("LIKE :").append(filterProperty);
-                    }
-				}*/
-				
 				Query query = session.createQuery(hql.toString());
 				 
 				for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {

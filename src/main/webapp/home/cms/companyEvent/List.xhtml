@@ -12,6 +12,22 @@
     <h:form id="companyEventListForm">
 
         <p:panel header="#{msg.companyEvent}">
+        
+        		<h:panelGroup id="searchForm">
+	            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+	            		
+		            			<p:outputLabel for="rtvEventName" value="#{msg.name}:" />
+								<p:inputText id="rtvEventName" value="#{companyEventController.searchName}" title="#{msg.name}:"/>
+
+	            				<p:outputLabel for="rtvEventLocation" value="#{msg.eventLocation}:" />
+								<p:inputText id="rtvEventLocation" value="#{companyEventController.searchLocation}" title="#{msg.eventLocation}:"/>
+
+	            				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{companyEventController.init()}" update=":companyEventListForm" />
+           			</p:panelGrid>
+               
+               </h:panelGroup>
+        
+        
             <p:dataTable id="datalist"
                          value="#{companyEventController.items}"
                          var="item"
@@ -27,7 +43,7 @@
                 <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" />
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('companyEventListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.companyEventId}" filterBy="#{item.companyEventId}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.companyEventId}"/>
                     </f:facet>
@@ -35,7 +51,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.companyEventTitle}" filterBy="#{item.companyEventTitle}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.companyEvent}"/>
                     </f:facet>
@@ -43,7 +59,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.companyEventLocation}" filterBy="#{item.companyEventLocation}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.companyEventLocation}"/>
                     </f:facet>
@@ -51,7 +67,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.companyEventDesc}" filterBy="#{item.companyEventDesc}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.companyEventDesc}"/>
                     </f:facet>
@@ -59,7 +75,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.companyEventThumbImg}" filterBy="#{item.companyEventThumbImg}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.companyEventThumbImg}"/>
                     </f:facet>
@@ -67,7 +83,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.companyEventBigImg}" filterBy="#{item.companyEventBigImg}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.companyEventBigImg}"/>
                     </f:facet>
@@ -75,7 +91,6 @@
                 </p:column>
 
             </p:dataTable>
-
             <p:commandButton id="createButton" icon="ui-icon-plus" value="#{msg.create}" actionListener="#{companyEventController.prepareCreate}" update=":companyEventCreateForm" oncomplete="PF('companyEventCreateDialog').show()"/>
             <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":companyEventViewForm" oncomplete="PF('companyEventViewDialog').show()" disabled="#{empty companyEventController.selected}"/>
             <p:commandButton id="editButton" icon="ui-icon-pencil" value="#{msg.edit}" actionListener="#{companyEventController.prepareEdit}" update=":companyEventEditForm" oncomplete="PF('companyEventEditDialog').show()" disabled="#{empty companyEventController.selected}"/>

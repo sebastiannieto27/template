@@ -3,13 +3,16 @@ package co.com.core.controller.cms;
 import static co.com.core.commons.LoadBundle.geProperty;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
+import org.springframework.util.StringUtils;
 
 import co.com.core.commons.LoadBundle;
 import co.com.core.commons.SessionUtil;
@@ -39,8 +42,21 @@ public class CompanyEventController {
 	private UploadedFileDTO thumbailDto;
 	private UploadedFileDTO imageDto;
 	
+	//filters
+	private String searchName;
+	private String searchLocation;
+	
 	public void init() {
-		items = companyEventService.getAll();
+		//items = companyEventService.getAll();
+		Map<String, Object> filter = new HashMap<String, Object>();
+		if(StringUtils.hasText(searchName)) {
+			filter.put("companyEventTitle", searchName);
+		}
+			
+		if(StringUtils.hasText(searchLocation)) {
+			filter.put("companyEventLocation", searchLocation);
+		}
+		items = companyEventService.getAllFilter(filter);
 	}
 
 	public void saveNew() {
@@ -202,6 +218,22 @@ public class CompanyEventController {
 	public void setUploadedFileController(
 			UploadedFileController uploadedFileController) {
 		this.uploadedFileController = uploadedFileController;
+	}
+
+	public String getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
+	}
+
+	public String getSearchLocation() {
+		return searchLocation;
+	}
+
+	public void setSearchLocation(String searchLocation) {
+		this.searchLocation = searchLocation;
 	}
 	
 }
