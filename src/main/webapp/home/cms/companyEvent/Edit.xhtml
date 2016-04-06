@@ -7,50 +7,41 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-        <p:dialog id="CompanyEventEditDlg" widgetVar="CompanyEventEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditCompanyEventTitle}" closeOnEscape="true">
+        <p:dialog id="companyEventEditDlg" widgetVar="companyEventEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.companyEvent}" closeOnEscape="true">
 
-            <h:form id="CompanyEventEditForm">
+            <h:form id="companyEventEditForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{companyEventController.selected != null}">
 
+                        <p:outputLabel value="#{msg.companyEvent}" for="companyEventTitle" />
+                        <p:inputText id="companyEventTitle" value="#{companyEventController.selected.companyEventTitle}" title="#{msg.companyEvent}" required="true" requiredMessage="#{msg.companyEventRequiredMessage}" size="150" maxlength="150"/>
 
-                        <h:outputLabel value="#{msg.EditCompanyEventLabel_companyEventId}" for="companyEventId" />
-                        <h:outputText id="companyEventId" value="#{companyEventController.selected.companyEventId}" />
+                        <p:outputLabel value="#{msg.companyEventLocation}" for="companyEventLocation" />
+                        <p:inputText id="companyEventLocation" value="#{companyEventController.selected.companyEventLocation}" title="#{msg.companyEventLocation}" size="150" maxlength="150"/>
 
-                        <p:outputLabel value="#{msg.EditCompanyEventLabel_companyEventTitle}" for="companyEventTitle" />
-                        <p:inputText id="companyEventTitle" value="#{companyEventController.selected.companyEventTitle}" title="#{msg.EditCompanyEventTitle_companyEventTitle}" required="true" requiredMessage="#{msg.EditCompanyEventRequiredMessage_companyEventTitle}" size="150" maxlength="150"/>
+                        <p:outputLabel value="#{msg.companyEventDesc}" for="companyEventDesc" />
+                        <p:inputTextarea rows="4" cols="30" id="companyEventDesc" value="#{companyEventController.selected.companyEventDesc}" title="#{msg.companyEventDesc}" />
 
-                        <p:outputLabel value="#{msg.EditCompanyEventLabel_companyEventLocation}" for="companyEventLocation" />
-                        <p:inputText id="companyEventLocation" value="#{companyEventController.selected.companyEventLocation}" title="#{msg.EditCompanyEventTitle_companyEventLocation}" size="150" maxlength="150"/>
-
-                        <p:outputLabel value="#{msg.EditCompanyEventLabel_companyEventDesc}" for="companyEventDesc" />
-                        <p:inputTextarea rows="4" cols="30" id="companyEventDesc" value="#{companyEventController.selected.companyEventDesc}" title="#{msg.EditCompanyEventTitle_companyEventDesc}" />
-
-                        <p:outputLabel value="#{msg.EditCompanyEventLabel_companyEventThumbImg}" for="companyEventThumbImg" />
-                        <p:inputText id="companyEventThumbImg" value="#{companyEventController.selected.companyEventThumbImg}" title="#{msg.EditCompanyEventTitle_companyEventThumbImg}" size="150" maxlength="150"/>
-
-                        <p:outputLabel value="#{msg.EditCompanyEventLabel_companyEventBigImg}" for="companyEventBigImg" />
-                        <p:inputText id="companyEventBigImg" value="#{companyEventController.selected.companyEventBigImg}" title="#{msg.EditCompanyEventTitle_companyEventBigImg}" size="150" maxlength="150"/>
-
-                        <p:outputLabel value="#{msg.EditCompanyEventLabel_dateCre}" for="dateCre" />
-                        <p:calendar id="dateCre" pattern="MM/dd/yyyy HH:mm:ss" value="#{companyEventController.selected.dateCre}" title="#{msg.EditCompanyEventTitle_dateCre}" required="true" requiredMessage="#{msg.EditCompanyEventRequiredMessage_dateCre}" showOn="button"/>
-
-                        <p:outputLabel value="#{msg.EditCompanyEventLabel_userId}" for="userId" />
-                        <p:selectOneMenu id="userId" value="#{companyEventController.selected.userId}" required="true" requiredMessage="#{msg.EditCompanyEventRequiredMessage_userId}" converter="userConverter">
-                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
-                            <f:selectItems value="#{userController.items}"
-                                           var="userIdItem"
-                                           itemValue="#{userIdItem}"
-                                           itemLabel="#{userIdItem.firstName.toString()}"
-                                           />
-
-                        </p:selectOneMenu>
+                         <p:outputLabel value="#{msg.image}"/>
+                        <p:panelGrid columns="2" style="width:100%" id="panelImage">
+	                        <p:fileUpload label="#{msg.upload}" id="companyEventBigImg" fileUploadListener="#{companyEventController.setImageFileUpload}" mode="advanced"
+	                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelImage"/>
+                     		<h:graphicImage id="bigImageFile" url="#{companyEventController.imagePath}" width="150" height="100" rendered="#{companyEventController.showImageFile}"/>
+                        </p:panelGrid>
+                                                
+                        <p:outputLabel value="#{msg.thumbnail}" />
+                        <p:panelGrid columns="2" style="width:100%" id="panelThumbnail">
+                        <p:fileUpload label="#{msg.upload}" id="companyEventThumbImg" fileUploadListener="#{companyEventController.setThumbnailFileUpload}" mode="advanced"
+                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelThumbnail"/>
+                     		<h:graphicImage  id="tumbnailImageFile" url="#{companyEventController.thumbnailPath}" width="150" height="100" rendered="#{companyEventController.showThumbnailFile}"/>
+ 						</p:panelGrid>
+ 						
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{companyEventController.save}" value="#{msg.Save}" update="display,:CompanyEventListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CompanyEventEditDialog'));">
-                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    <p:commandButton actionListener="#{companyEventController.save}" value="#{msg.save}" update="display,:companyEventListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('companyEventEditDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
-                    <p:commandButton value="#{msg.Cancel}" onclick="PF('CompanyEventEditDialog').hide()"/>
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('companyEventEditDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>

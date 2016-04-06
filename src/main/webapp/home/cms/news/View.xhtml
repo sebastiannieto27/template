@@ -8,59 +8,59 @@
 
     <ui:composition>
 
-        <p:dialog id="NewsViewDlg" widgetVar="NewsViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewNewsTitle}" closeOnEscape="true">
+        <p:dialog id="newsViewDlg" widgetVar="newsViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.news}" closeOnEscape="true">
 
-            <h:form id="NewsViewForm">
+            <h:form id="newsViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{newsController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewNewsLabel_newId}"/>
-                        <h:outputText value="#{newsController.selected.newId}" title="#{msg.ViewNewsTitle_newId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{newsController.selected.newId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewNewsLabel_newsTitle}"/>
-                        <h:outputText value="#{newsController.selected.newsTitle}" title="#{msg.ViewNewsTitle_newsTitle}"/>
+                        <h:outputText value="#{msg.news}"/>
+                        <h:outputText value="#{newsController.selected.newsTitle}" title="#{msg.news}"/>
 
-                        <h:outputText value="#{msg.ViewNewsLabel_generalStatusId}"/>
-                        <h:outputText value="#{newsController.selected.generalStatusId}" title="#{msg.ViewNewsTitle_generalStatusId}"/>
+                        <h:outputText value="#{msg.generalStatusId}"/>
+                        <h:outputText value="#{newsController.selected.generalStatusId}" title="#{msg.generalStatusId}"/>
 
-                        <h:outputText value="#{msg.ViewNewsLabel_newsDateStart}"/>
-                        <h:outputText value="#{newsController.selected.newsDateStart}" title="#{msg.ViewNewsTitle_newsDateStart}">
+                        <h:outputText value="#{msg.newsDateStart}"/>
+                        <h:outputText value="#{newsController.selected.newsDateStart}" title="#{msg.newsDateStart}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
 
-                        <h:outputText value="#{msg.ViewNewsLabel_newsDateExpire}"/>
-                        <h:outputText value="#{newsController.selected.newsDateExpire}" title="#{msg.ViewNewsTitle_newsDateExpire}">
+                        <h:outputText value="#{msg.newsDateExpire}"/>
+                        <h:outputText value="#{newsController.selected.newsDateExpire}" title="#{msg.newsDateExpire}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
 
-                        <h:outputText value="#{msg.ViewNewsLabel_newsShortDescr}"/>
-                        <h:outputText value="#{newsController.selected.newsShortDescr}" title="#{msg.ViewNewsTitle_newsShortDescr}"/>
+                        <h:outputText value="#{msg.newsShortDescr}"/>
+                        <h:outputText value="#{newsController.selected.newsShortDescr}" title="#{msg.newsShortDescr}"/>
 
-                        <h:outputText value="#{msg.ViewNewsLabel_newsLongDesc}"/>
-                        <h:outputText value="#{newsController.selected.newsLongDesc}" title="#{msg.ViewNewsTitle_newsLongDesc}"/>
+                        <h:outputText value="#{msg.newsLongDesc}"/>
+                        <h:outputText value="#{newsController.selected.newsLongDesc}" title="#{msg.newsLongDesc}"/>
 
-                        <h:outputText value="#{msg.ViewNewsLabel_newsBigImgPath}"/>
-                        <h:outputText value="#{newsController.selected.newsBigImgPath}" title="#{msg.ViewNewsTitle_newsBigImgPath}"/>
+                        <h:outputText value="#{msg.newsBigImgPath}"/>
+                        <h:outputText value="#{newsController.selected.newsBigImgPath}" title="#{msg.newsBigImgPath}"/>
 
-                        <h:outputText value="#{msg.ViewNewsLabel_newsImgPath}"/>
-                        <h:outputText value="#{newsController.selected.newsImgPath}" title="#{msg.ViewNewsTitle_newsImgPath}"/>
+                        <h:outputText value="#{msg.newsImgPath}"/>
+                        <h:outputText value="#{newsController.selected.newsImgPath}" title="#{msg.newsImgPath}"/>
 
-                        <h:outputText value="#{msg.ViewNewsLabel_newsThumbImgPath}"/>
-                        <h:outputText value="#{newsController.selected.newsThumbImgPath}" title="#{msg.ViewNewsTitle_newsThumbImgPath}"/>
+                        <h:outputText value="#{msg.newsThumbImgPath}"/>
+                        <h:outputText value="#{newsController.selected.newsThumbImgPath}" title="#{msg.newsThumbImgPath}"/>
 
-                        <h:outputText value="#{msg.ViewNewsLabel_dateCre}"/>
-                        <h:outputText value="#{newsController.selected.dateCre}" title="#{msg.ViewNewsTitle_dateCre}">
+                        <h:outputText value="#{msg.dateCre}"/>
+                        <h:outputText value="#{newsController.selected.dateCre}" title="#{msg.dateCre}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
 
-                        <h:outputText value="#{msg.ViewNewsLabel_userId}"/>
+                        <h:outputText value="#{msg.userId}"/>
                         <h:outputText value="#{newsController.selected.userId.firstName}"/>
 
-                        <h:outputText value="#{msg.ViewNewsLabel_newsTypeId}"/>
+                        <h:outputText value="#{msg.newsTypeId}"/>
                         <h:outputText value="#{newsController.selected.newsTypeId.newsTypeName}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="PF('NewsViewDialog').hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="PF('newsViewDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>

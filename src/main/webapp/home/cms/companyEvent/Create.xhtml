@@ -1,57 +1,50 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
 
-    <ui:composition>
+        <p:dialog id="companyEventCreateDlg" widgetVar="companyEventCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.companyEvent}" closeOnEscape="true">
 
-        <p:dialog id="CompanyEventCreateDlg" widgetVar="CompanyEventCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.CreateCompanyEventTitle}" closeOnEscape="true">
-
-            <h:form id="CompanyEventCreateForm">
+            <h:form id="companyEventCreateForm">
 
                 <h:panelGroup id="display" rendered="#{companyEventController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_companyEventId}" for="companyEventId" />
-                        <p:inputText id="companyEventId" value="#{companyEventController.selected.companyEventId}" title="#{msg.CreateCompanyEventTitle_companyEventId}" required="true" requiredMessage="#{msg.CreateCompanyEventRequiredMessage_companyEventId}"/>
+                        <p:outputLabel value="#{msg.companyEvent}" for="companyEventTitle" />
+                        <p:inputText id="companyEventTitle" value="#{companyEventController.selected.companyEventTitle}" title="#{msg.companyEvent}" required="true" requiredMessage="#{msg.companyEventRequiredMessage}" size="80" maxlength="80"/>
 
-                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_companyEventTitle}" for="companyEventTitle" />
-                        <p:inputText id="companyEventTitle" value="#{companyEventController.selected.companyEventTitle}" title="#{msg.CreateCompanyEventTitle_companyEventTitle}" required="true" requiredMessage="#{msg.CreateCompanyEventRequiredMessage_companyEventTitle}" size="150" maxlength="150"/>
+                        <p:outputLabel value="#{msg.companyEventLocation}" for="companyEventLocation" />
+                        <p:inputText id="companyEventLocation" value="#{companyEventController.selected.companyEventLocation}" title="#{msg.companyEventLocation}" size="80" maxlength="80"/>
 
-                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_companyEventLocation}" for="companyEventLocation" />
-                        <p:inputText id="companyEventLocation" value="#{companyEventController.selected.companyEventLocation}" title="#{msg.CreateCompanyEventTitle_companyEventLocation}" size="150" maxlength="150"/>
+                        <p:outputLabel value="#{msg.companyEventDesc}" for="companyEventDesc" />
+                        <p:inputTextarea rows="4" cols="70" id="companyEventDesc" value="#{companyEventController.selected.companyEventDesc}" title="#{msg.companyEventDesc}" />
 
-                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_companyEventDesc}" for="companyEventDesc" />
-                        <p:inputTextarea rows="4" cols="30" id="companyEventDesc" value="#{companyEventController.selected.companyEventDesc}" title="#{msg.CreateCompanyEventTitle_companyEventDesc}" />
+                        <p:outputLabel value="#{msg.image}"/>
+                        <p:panelGrid columns="2" style="width:100%" id="panelImage">
+	                        <p:fileUpload label="#{msg.upload}" id="companyEventBigImg" fileUploadListener="#{companyEventController.setImageFileUpload}" mode="advanced"
+	                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelImage"/>
+                     		<h:graphicImage id="bigImageFile" url="#{companyEventController.imagePath}" width="150" height="100" rendered="#{companyEventController.showImageFile}"/>
+                        </p:panelGrid>
+                                                
+                        <p:outputLabel value="#{msg.thumbnail}" />
+                        <p:panelGrid columns="2" style="width:100%" id="panelThumbnail">
+                        <p:fileUpload label="#{msg.upload}" id="companyEventThumbImg" fileUploadListener="#{companyEventController.setThumbnailFileUpload}" mode="advanced"
+                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelThumbnail"/>
+                     		<h:graphicImage  id="tumbnailImageFile" url="#{companyEventController.thumbnailPath}" width="150" height="100" rendered="#{companyEventController.showThumbnailFile}"/>
+ 						</p:panelGrid>
 
-                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_companyEventThumbImg}" for="companyEventThumbImg" />
-                        <p:inputText id="companyEventThumbImg" value="#{companyEventController.selected.companyEventThumbImg}" title="#{msg.CreateCompanyEventTitle_companyEventThumbImg}" size="150" maxlength="150"/>
-
-                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_companyEventBigImg}" for="companyEventBigImg" />
-                        <p:inputText id="companyEventBigImg" value="#{companyEventController.selected.companyEventBigImg}" title="#{msg.CreateCompanyEventTitle_companyEventBigImg}" size="150" maxlength="150"/>
-
-                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_dateCre}" for="dateCre" />
-                        <p:calendar id="dateCre" pattern="MM/dd/yyyy HH:mm:ss" value="#{companyEventController.selected.dateCre}" title="#{msg.CreateCompanyEventTitle_dateCre}" required="true" requiredMessage="#{msg.CreateCompanyEventRequiredMessage_dateCre}" showOn="button"/>
-
-                        <p:outputLabel value="#{msg.CreateCompanyEventLabel_userId}" for="userId" />
-                        <p:selectOneMenu id="userId" value="#{companyEventController.selected.userId}" required="true" requiredMessage="#{msg.CreateCompanyEventRequiredMessage_userId}" converter="userConverter">
-                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
-                            <f:selectItems value="#{userController.items}"
-                                           var="userIdItem"
-                                           itemValue="#{userIdItem}"
-                                           itemLabel="#{userIdItem.firstName.toString()}"
-                                           />
-
-                        </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{companyEventController.saveNew}" value="#{msg.Save}" update="display,:CompanyEventListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CompanyEventCreateDialog'));">
-                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    <p:commandButton actionListener="#{companyEventController.saveNew}" value="#{msg.save}" update="display,:companyEventListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('companyEventCreateDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
 
-                    <p:commandButton value="#{msg.Cancel}" onclick="PF('CompanyEventCreateDialog').hide()"/>
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('companyEventCreateDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>
@@ -59,5 +52,5 @@
         </p:dialog>
 
     </ui:composition>
-
+    </body>
 </html>

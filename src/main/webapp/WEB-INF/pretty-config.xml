@@ -70,4 +70,25 @@
 		<pattern value="/cms/tipo-marca" />
 		<view-id value="/home/cms/brandType/index.xhtml" />
 	</url-mapping>	
+	
+	<url-mapping id="GeneralStatus">
+		<pattern value="/cms/estado-general" />
+		<view-id value="/home/cms/generalStatus/index.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="newsType">
+		<pattern value="/cms/tipo-noticia" />
+		<view-id value="/home/cms/newsType/index.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="news">
+		<pattern value="/cms/noticia" />
+		<view-id value="/home/cms/news/index.xhtml" />
+	</url-mapping>	
+	
+	<url-mapping id="companyEvent">
+		<pattern value="/cms/evento-friogan" />
+		<view-id value="/home/cms/companyEvent/index.xhtml" />
+	</url-mapping>	
+	
 </pretty-config>

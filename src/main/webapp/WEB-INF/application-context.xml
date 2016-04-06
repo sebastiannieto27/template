@@ -146,8 +146,24 @@
 	    <bean id="brandTypeDAO" class="co.com.core.dao.cms.impl.BrandTypeDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
-    
+	        
 	    <bean id="brandUploadFileDAO" class="co.com.core.dao.cms.impl.BrandUploadFileDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    
+	    <bean id="newsTypeDAO" class="co.com.core.dao.cms.impl.NewsTypeDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    	    
+	    <bean id="newsDAO" class="co.com.core.dao.cms.impl.NewsDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    	    	    
+	    <bean id="generalStatusDAO" class="co.com.core.dao.cms.impl.GeneralStatusDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    	    	    	    
+	    <bean id="companyEventDAO" class="co.com.core.dao.cms.impl.CompanyEventDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -218,7 +234,7 @@
     	<property name="uploadedFileDAO" ref="uploadedFileDAO" />
     </bean>
     
-    	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
+   	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
 	    <bean id="brandService" class="co.com.core.services.cms.impl.BrandServiceImpl">
 	    	<property name="brandDAO" ref="brandDAO" />
 	    </bean>
@@ -229,6 +245,22 @@
 	    	    
    	    <bean id="brandUploadFileService" class="co.com.core.services.cms.impl.BrandUploadFileServiceImpl">
 	    	<property name="brandUploadFileDAO" ref="brandUploadFileDAO" />
+	    </bean>
+	    	    	    
+   	    <bean id="newsTypeService" class="co.com.core.services.cms.impl.NewsTypeServiceImpl">
+	    	<property name="newsTypeDAO" ref="newsTypeDAO" />
+	    </bean>
+	    	    	    	    
+   	    <bean id="newsService" class="co.com.core.services.cms.impl.NewsServiceImpl">
+	    	<property name="newsDAO" ref="newsDAO" />
+	    </bean>
+	    	    	    	    	    
+   	    <bean id="generalStatusService" class="co.com.core.services.cms.impl.GeneralStatusServiceImpl">
+	    	<property name="generalStatusDAO" ref="generalStatusDAO" />
+	    </bean>
+	    	    	    	    	    	    
+   	    <bean id="companyEventService" class="co.com.core.services.cms.impl.CompanyEventServiceImpl">
+	    	<property name="companyEventDAO" ref="companyEventDAO" />
 	    </bean>
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -316,15 +348,32 @@
     	<property name="uploadedFileService" ref="uploadedFileService" />
     </bean>    
     
-    	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS --> 
+   	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS --> 
     	        
-	    <bean id="brandController" scope="session" class="co.com.core.controller.cms.BrandController" init-method="init">
-	    	<property name="brandService" ref="brandService" />
-	    	<property name="brandUploadFileService" ref="brandUploadFileService" />
-	    	<property name="uploadedFileController" ref="uploadedFileController" />
-	    </bean> 
-	    
-	    <bean id="brandTypeController" scope="session" class="co.com.core.controller.cms.BrandTypeController" init-method="init">
-	    	<property name="brandTypeService" ref="brandTypeService" />
-	    </bean>
+    <bean id="brandController" scope="session" class="co.com.core.controller.cms.BrandController" init-method="init">
+    	<property name="brandService" ref="brandService" />
+    	<property name="brandUploadFileService" ref="brandUploadFileService" />
+    	<property name="uploadedFileController" ref="uploadedFileController" />
+    </bean> 
+        
+    <bean id="brandTypeController" scope="session" class="co.com.core.controller.cms.BrandTypeController" init-method="init">
+    	<property name="brandTypeService" ref="brandTypeService" />
+    </bean>
+        
+    <bean id="newsTypeController" scope="session" class="co.com.core.controller.cms.NewsTypeController" init-method="init">
+    	<property name="newsTypeService" ref="newsTypeService" />
+    </bean>
+            
+    <bean id="newsController" scope="session" class="co.com.core.controller.cms.NewsController" init-method="init">
+    	<property name="newsService" ref="newsService" />
+    </bean>
+                
+    <bean id="generalStatusController" scope="session" class="co.com.core.controller.cms.GeneralStatusController" init-method="init">
+    	<property name="generalStatusService" ref="generalStatusService" />
+    </bean>
+                    
+    <bean id="companyEventController" scope="session" class="co.com.core.controller.cms.CompanyEventController" init-method="init">
+    	<property name="companyEventService" ref="companyEventService" />
+   		<property name="uploadedFileController" ref="uploadedFileController" />
+    </bean>
 </beans>

@@ -8,28 +8,28 @@
 
     <ui:composition>
 
-        <p:dialog id="NewsTypeViewDlg" widgetVar="NewsTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewNewsTypeTitle}" closeOnEscape="true">
+        <p:dialog id="newsTypeViewDlg" widgetVar="newsTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.newsType}" closeOnEscape="true">
 
-            <h:form id="NewsTypeViewForm">
+            <h:form id="newsTypeViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{newsTypeController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewNewsTypeLabel_newsTypeId}"/>
-                        <h:outputText value="#{newsTypeController.selected.newsTypeId}" title="#{msg.ViewNewsTypeTitle_newsTypeId}"/>
+                        <h:outputText value="#{msg.newsTypeId}"/>
+                        <h:outputText value="#{newsTypeController.selected.newsTypeId}" title="#{msg.newsTypeId}"/>
 
-                        <h:outputText value="#{msg.ViewNewsTypeLabel_newsTypeName}"/>
-                        <h:outputText value="#{newsTypeController.selected.newsTypeName}" title="#{msg.ViewNewsTypeTitle_newsTypeName}"/>
+                        <h:outputText value="#{msg.newsTypeName}"/>
+                        <h:outputText value="#{newsTypeController.selected.newsTypeName}" title="#{msg.newsTypeName}"/>
 
-                        <h:outputText value="#{msg.ViewNewsTypeLabel_userId}"/>
-                        <h:outputText value="#{newsTypeController.selected.userId}" title="#{msg.ViewNewsTypeTitle_userId}"/>
+                        <h:outputText value="#{msg.userId}"/>
+                        <h:outputText value="#{newsTypeController.selected.userId}" title="#{msg.userId}"/>
 
-                        <h:outputText value="#{msg.ViewNewsTypeLabel_dateCre}"/>
-                        <h:outputText value="#{newsTypeController.selected.dateCre}" title="#{msg.ViewNewsTypeTitle_dateCre}">
+                        <h:outputText value="#{msg.dateCre}"/>
+                        <h:outputText value="#{newsTypeController.selected.dateCre}" title="#{msg.dateCre}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="PF('NewsTypeViewDialog').hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="PF('newsTypeViewDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>
