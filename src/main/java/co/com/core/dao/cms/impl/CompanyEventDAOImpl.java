@@ -51,30 +51,35 @@ public class CompanyEventDAOImpl implements CompanyEventDAO {
 		        hql.append("SELECT c FROM CompanyEvent c ");
 
 				if(filters.size() > 0) {
-					 Map<String, Object> queryData = new HashMap<String, Object>();
-				        queryData.put("where", null);
-				        queryData.put("property0", "c.companyEventTitle");
-				        queryData.put("property0.value", ":companyEventTitle");
-				        queryData.put("property0.conditional", "like");
-				        queryData.put("property0.function", "lower");
-				        //TODO
-				        queryData.put("property1", "c.companyEventLocation");
-				        queryData.put("property1.value", ":companyEventLocation");
-				        queryData.put("property1.operation", "and");
-				        queryData.put("property1.conditional", "like");
-				        queryData.put("property1.function", "lower");
+				 	/*Map<String, Object> queryData = new HashMap<String, Object>();
+			        queryData.put("where", null);
+			        queryData.put("property0", "c.companyEventTitle");
+			        queryData.put("property0.value", ":companyEventTitle");
+			        queryData.put("property0.conditional", "like");
+			        queryData.put("property0.function", "lower");
+			        //TODO
+			        queryData.put("property1", "c.companyEventLocation");
+			        queryData.put("property1.value", ":companyEventLocation");
+			        queryData.put("property1.operation", "and");
+			        queryData.put("property1.conditional", "like");
+			        queryData.put("property1.function", "lower");*/
 				        
-				        StringBuilder sb = QueryUtil.buildQUery(queryData);
-				        hql.append(sb.toString());
+			        StringBuilder sb = QueryUtil.buildQUery(filters);
+			        hql.append(sb.toString());
 				}
 				
 				Query query = session.createQuery(hql.toString());
-				 
-				for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
-					String filterProperty = it.next();
-                    Object filterValue = filters.get(filterProperty);
-                    query.setParameter(filterProperty, "%"+filterValue+"%");
-				}   
+				if(filters.size() > 0) {
+					for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+						String key = it.next();
+	                    
+	                    if(key.contains("queryParam")) {
+	                    	String[] value = filters.get(key).toString().split("/");
+	                    	query.setParameter(value[0], value[1]);
+	                    }
+					} 
+				}
+				  
                     
 		        entityList = query.list();
 			} catch(Exception ex) {
