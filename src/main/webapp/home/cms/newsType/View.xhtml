@@ -15,17 +15,17 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{newsTypeController.selected != null}">
 
-                        <h:outputText value="#{msg.newsTypeId}"/>
-                        <h:outputText value="#{newsTypeController.selected.newsTypeId}" title="#{msg.newsTypeId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{newsTypeController.selected.newsTypeId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.newsTypeName}"/>
-                        <h:outputText value="#{newsTypeController.selected.newsTypeName}" title="#{msg.newsTypeName}"/>
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{newsTypeController.selected.newsTypeName}" title="#{msg.name}"/>
 
-                        <h:outputText value="#{msg.userId}"/>
-                        <h:outputText value="#{newsTypeController.selected.userId}" title="#{msg.userId}"/>
+                        <h:outputText value="#{msg.user}"/>
+                        <h:outputText value="#{newsTypeController.selected.userId}" title="#{msg.user}"/>
 
-                        <h:outputText value="#{msg.dateCre}"/>
-                        <h:outputText value="#{newsTypeController.selected.dateCre}" title="#{msg.dateCre}">
+                        <h:outputText value="#{msg.creationDate}"/>
+                        <h:outputText value="#{newsTypeController.selected.dateCre}" title="#{msg.creationDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                     </p:panelGrid>

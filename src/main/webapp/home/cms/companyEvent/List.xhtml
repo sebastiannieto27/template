@@ -15,18 +15,16 @@
         
         		<h:panelGroup id="searchForm">
 	            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
-	            		
-		            			<p:outputLabel for="rtvEventName" value="#{msg.name}:" />
-								<p:inputText id="rtvEventName" value="#{companyEventController.searchName}" title="#{msg.name}:"/>
+            			<p:outputLabel for="rtvEventName" value="#{msg.name}:" />
+						<p:inputText id="rtvEventName" value="#{companyEventController.searchName}" title="#{msg.name}:"/>
 
-	            				<p:outputLabel for="rtvEventLocation" value="#{msg.eventLocation}:" />
-								<p:inputText id="rtvEventLocation" value="#{companyEventController.searchLocation}" title="#{msg.eventLocation}:"/>
+           				<p:outputLabel for="rtvEventLocation" value="#{msg.companyEventLocation}:" />
+						<p:inputText id="rtvEventLocation" value="#{companyEventController.searchLocation}" title="#{msg.companyEventLocation}:"/>
 
-	            				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{companyEventController.init()}" update=":companyEventListForm" />
+           				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{companyEventController.init()}" update=":companyEventListForm" />
            			</p:panelGrid>
                
                </h:panelGroup>
-        
         
             <p:dataTable id="datalist"
                          value="#{companyEventController.items}"
@@ -45,7 +43,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.companyEventId}"/>
+                        <h:outputText value="#{msg.id}"/>
                     </f:facet>
                     <h:outputText value="#{item.companyEventId}"/>
                 </p:column>
@@ -53,7 +51,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.companyEvent}"/>
+                        <h:outputText value="#{msg.name}"/>
                     </f:facet>
                     <h:outputText value="#{item.companyEventTitle}"/>
                 </p:column>
@@ -69,7 +67,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.companyEventDesc}"/>
+                        <h:outputText value="#{msg.description}"/>
                     </f:facet>
                     <h:outputText value="#{item.companyEventDesc}"/>
                 </p:column>
@@ -77,7 +75,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.companyEventThumbImg}"/>
+                        <h:outputText value="#{msg.thumbnail}"/>
                     </f:facet>
                     <h:outputText value="#{item.companyEventThumbImg}"/>
                 </p:column>
@@ -85,7 +83,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.companyEventBigImg}"/>
+                        <h:outputText value="#{msg.image}"/>
                     </f:facet>
                     <h:outputText value="#{item.companyEventBigImg}"/>
                 </p:column>

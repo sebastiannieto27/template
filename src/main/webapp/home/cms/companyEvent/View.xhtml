@@ -14,30 +14,30 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{companyEventController.selected != null}">
 
-                        <h:outputText value="#{msg.companyEventId}"/>
-                        <h:outputText value="#{companyEventController.selected.companyEventId}" title="#{msg.companyEventId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{companyEventController.selected.companyEventId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.companyEvent}"/>
-                        <h:outputText value="#{companyEventController.selected.companyEventTitle}" title="#{msg.companyEvent}"/>
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{companyEventController.selected.companyEventTitle}" title="#{msg.name}"/>
 
                         <h:outputText value="#{msg.companyEventLocation}"/>
                         <h:outputText value="#{companyEventController.selected.companyEventLocation}" title="#{msg.companyEventLocation}"/>
 
-                        <h:outputText value="#{msg.companyEventDesc}"/>
-                        <h:outputText value="#{companyEventController.selected.companyEventDesc}" title="#{msg.companyEventDesc}"/>
+                        <h:outputText value="#{msg.description}"/>
+                        <h:outputText value="#{companyEventController.selected.companyEventDesc}" title="#{msg.description}"/>
 
-                        <h:outputText value="#{msg.companyEventThumbImg}"/>
-                        <h:outputText value="#{companyEventController.selected.companyEventThumbImg}" title="#{msg.companyEventThumbImg}"/>
+                        <h:outputText value="#{msg.thumbnail}"/>
+                        <h:outputText value="#{companyEventController.selected.companyEventThumbImg}" title="#{msg.thumbnail}"/>
 
-                        <h:outputText value="#{msg.companyEventBigImg}"/>
-                        <h:outputText value="#{companyEventController.selected.companyEventBigImg}" title="#{msg.companyEventBigImg}"/>
+                        <h:outputText value="#{msg.image}"/>
+                        <h:outputText value="#{companyEventController.selected.companyEventBigImg}" title="#{msg.image}"/>
 
-                        <h:outputText value="#{msg.dateCre}"/>
-                        <h:outputText value="#{companyEventController.selected.dateCre}" title="#{msg.dateCre}">
+                        <h:outputText value="#{msg.creationDate}"/>
+                        <h:outputText value="#{companyEventController.selected.dateCre}" title="#{msg.creationDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
 
-                        <h:outputText value="#{msg.userId}"/>
+                        <h:outputText value="#{msg.user}"/>
                         <h:outputText value="#{companyEventController.selected.userId.firstName}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{msg.close}" onclick="PF('companyEventViewDialog').hide()"/>

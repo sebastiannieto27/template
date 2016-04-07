@@ -27,33 +27,33 @@
                 <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('newsTypeListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.newsTypeId}" filterBy="#{item.newsTypeId}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.newsTypeId}"/>
+                        <h:outputText value="#{msg.id}"/>
                     </f:facet>
                     <h:outputText value="#{item.newsTypeId}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.newsTypeName}" filterBy="#{item.newsTypeName}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.newsTypeName}"/>
+                        <h:outputText value="#{msg.name}"/>
                     </f:facet>
                     <h:outputText value="#{item.newsTypeName}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.userId}" filterBy="#{item.userId}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.userId}"/>
+                        <h:outputText value="#{msg.user}"/>
                     </f:facet>
                     <h:outputText value="#{item.userId}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.dateCre}" filterBy="#{item.dateCre}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.dateCre}"/>
+                        <h:outputText value="#{msg.creationDate}"/>
                     </f:facet>
                     <h:outputText value="#{item.dateCre}">
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
