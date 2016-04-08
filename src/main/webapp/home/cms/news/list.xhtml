@@ -9,15 +9,6 @@
     <h:form id="newsListForm">
 
         <p:panel header="#{msg.news}">
-            <p:contextMenu id="newsDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{msg.create}" onclick="document.getElementById('newsListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{msg.view}" onclick="document.getElementById('newsListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{msg.edit}" onclick="document.getElementById('newsListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{msg.delete}" onclick="document.getElementById('newsListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{msg.newsMenuItem}" icon="ui-icon-search"  actionListener="#{newsController.prepareUserId}" update=":UserViewForm" oncomplete="PF('UserViewDialog').show()" disabled="#{empty newsController.selected.userId}"/>  
-                <p:menuitem value="#{msg.newsTypeMenu}" icon="ui-icon-search"  actionListener="#{newsController.preparenewsTypeId}" update=":newsTypeViewForm" oncomplete="PF('newsTypeViewDialog').show()" disabled="#{empty newsController.selected.newsTypeId}"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{newsController.items}"
                          var="item"
@@ -28,12 +19,12 @@
                          selectionMode="single"
                          selection="#{newsController.selected}">
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:newsDataTableContextMenu" listener="#{newsController.resetParents}"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:newsDataTableContextMenu" listener="#{newsController.resetParents}"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{newsController.resetParents}"/>
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('newsListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.newId}" filterBy="#{item.newId}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.id}"/>
                     </f:facet>
@@ -41,7 +32,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.newsTitle}" filterBy="#{item.newsTitle}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.news}"/>
                     </f:facet>
@@ -49,17 +40,17 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.generalStatusId}" filterBy="#{item.generalStatusId}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.generalStatusId}"/>
+                        <h:outputText value="#{msg.status}"/>
                     </f:facet>
                     <h:outputText value="#{item.generalStatusId}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.newsDateStart}" filterBy="#{item.newsDateStart}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.newsDateStart}"/>
+                        <h:outputText value="#{msg.startDate}"/>
                     </f:facet>
                     <h:outputText value="#{item.newsDateStart}">
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
@@ -67,9 +58,9 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.newsDateExpire}" filterBy="#{item.newsDateExpire}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.newsDateExpire}"/>
+                        <h:outputText value="#{msg.endDate}"/>
                     </f:facet>
                     <h:outputText value="#{item.newsDateExpire}">
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
@@ -77,14 +68,12 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.newsShortDescr}" filterBy="#{item.newsShortDescr}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.newsShortDescr}"/>
+                        <h:outputText value="#{msg.shortDescription}"/>
                     </f:facet>
                     <h:outputText value="#{item.newsShortDescr}"/>
                 </p:column>
-
-              
 
             </p:dataTable>
 

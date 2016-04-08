@@ -366,6 +366,7 @@
             
     <bean id="newsController" scope="session" class="co.com.core.controller.cms.NewsController" init-method="init">
     	<property name="newsService" ref="newsService" />
+    	<property name="uploadedFileController" ref="uploadedFileController" />
     </bean>
                 
     <bean id="generalStatusController" scope="session" class="co.com.core.controller.cms.GeneralStatusController" init-method="init">

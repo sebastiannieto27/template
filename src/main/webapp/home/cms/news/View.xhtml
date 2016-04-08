@@ -21,43 +21,31 @@
                         <h:outputText value="#{msg.news}"/>
                         <h:outputText value="#{newsController.selected.newsTitle}" title="#{msg.news}"/>
 
-                        <h:outputText value="#{msg.generalStatusId}"/>
-                        <h:outputText value="#{newsController.selected.generalStatusId}" title="#{msg.generalStatusId}"/>
+                        <h:outputText value="#{msg.status}"/>
+                        <h:outputText value="#{newsController.selected.generalStatusId}" title="#{msg.status}"/>
 
-                        <h:outputText value="#{msg.newsDateStart}"/>
-                        <h:outputText value="#{newsController.selected.newsDateStart}" title="#{msg.newsDateStart}">
+                        <h:outputText value="#{msg.startDate}"/>
+                        <h:outputText value="#{newsController.selected.newsDateStart}" title="#{msg.startDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
 
-                        <h:outputText value="#{msg.newsDateExpire}"/>
-                        <h:outputText value="#{newsController.selected.newsDateExpire}" title="#{msg.newsDateExpire}">
+                        <h:outputText value="#{msg.endDate}"/>
+                        <h:outputText value="#{newsController.selected.newsDateExpire}" title="#{msg.endDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
 
-                        <h:outputText value="#{msg.newsShortDescr}"/>
-                        <h:outputText value="#{newsController.selected.newsShortDescr}" title="#{msg.newsShortDescr}"/>
+                        <h:outputText value="#{msg.shortDescription}"/>
+                        <h:outputText value="#{newsController.selected.newsShortDescr}" title="#{msg.shortDescription}"/>
 
-                        <h:outputText value="#{msg.newsLongDesc}"/>
-                        <h:outputText value="#{newsController.selected.newsLongDesc}" title="#{msg.newsLongDesc}"/>
-
-                        <h:outputText value="#{msg.newsBigImgPath}"/>
-                        <h:outputText value="#{newsController.selected.newsBigImgPath}" title="#{msg.newsBigImgPath}"/>
-
-                        <h:outputText value="#{msg.newsImgPath}"/>
-                        <h:outputText value="#{newsController.selected.newsImgPath}" title="#{msg.newsImgPath}"/>
-
-                        <h:outputText value="#{msg.newsThumbImgPath}"/>
-                        <h:outputText value="#{newsController.selected.newsThumbImgPath}" title="#{msg.newsThumbImgPath}"/>
-
-                        <h:outputText value="#{msg.dateCre}"/>
-                        <h:outputText value="#{newsController.selected.dateCre}" title="#{msg.dateCre}">
+                        <h:outputText value="#{msg.creationDate}"/>
+                        <h:outputText value="#{newsController.selected.dateCre}" title="#{msg.creationDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
 
-                        <h:outputText value="#{msg.userId}"/>
+                        <h:outputText value="#{msg.user}"/>
                         <h:outputText value="#{newsController.selected.userId.firstName}"/>
 
-                        <h:outputText value="#{msg.newsTypeId}"/>
+                        <h:outputText value="#{msg.newsType}"/>
                         <h:outputText value="#{newsController.selected.newsTypeId.newsTypeName}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{msg.close}" onclick="PF('newsViewDialog').hide()"/>

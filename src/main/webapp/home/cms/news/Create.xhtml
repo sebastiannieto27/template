@@ -16,60 +16,62 @@
                 <h:panelGroup id="display" rendered="#{newsController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="#{msg.id}" for="newId" />
-                        <p:inputText id="newId" value="#{newsController.selected.newId}" title="#{msg.id}" required="true" requiredMessage="#{msg.newsRequiredMessage}"/>
+                        <p:outputLabel value="#{msg.title}" for="newsTitle" />
+                        <p:inputText id="newsTitle" value="#{newsController.selected.newsTitle}" title="#{msg.title}" required="true" requiredMessage="#{msg.titleRequiredMessage}" size="80" maxlength="200"/>
 
-                        <p:outputLabel value="#{msg.news}" for="newsTitle" />
-                        <p:inputText id="newsTitle" value="#{newsController.selected.newsTitle}" title="#{msg.news}" required="true" requiredMessage="#{msg.newsRequiredMessage}" size="200" maxlength="200"/>
+						<p:outputLabel value="#{msg.shortDescription}" for="newsShortDescr" />
+                        <p:inputText id="newsShortDescr" value="#{newsController.selected.newsShortDescr}" title="#{msg.shortDescription}" size="80" maxlength="200"/>
 
-                        <p:outputLabel value="#{msg.generalStatusId}" for="generalStatusId" />
-                        <p:inputText id="generalStatusId" value="#{newsController.selected.generalStatusId}" title="#{msg.generalStatusId}" required="true" requiredMessage="#{msg.generalStatusRequiredMessageId}"/>
-
-                        <p:outputLabel value="#{msg.newsDateStart}" for="newsDateStart" />
-                        <p:calendar id="newsDateStart" pattern="MM/dd/yyyy HH:mm:ss" value="#{newsController.selected.newsDateStart}" title="#{msg.newsDateStart}" required="true" requiredMessage="#{msg.newsRequiredMessage_newsDateStart}" showOn="button"/>
-
-                        <p:outputLabel value="#{msg.newsDateExpire}" for="newsDateExpire" />
-                        <p:calendar id="newsDateExpire" pattern="MM/dd/yyyy HH:mm:ss" value="#{newsController.selected.newsDateExpire}" title="#{msg.newsDateExpire}" required="true" requiredMessage="#{msg.newsRequiredMessage_newsDateExpire}" showOn="button"/>
-
-                        <p:outputLabel value="#{msg.newsShortDescr}" for="newsShortDescr" />
-                        <p:inputText id="newsShortDescr" value="#{newsController.selected.newsShortDescr}" title="#{msg.newsShortDescr}" size="200" maxlength="200"/>
-
-                        <p:outputLabel value="#{msg.newsLongDesc}" for="newsLongDesc" />
-                        <p:inputTextarea rows="4" cols="30" id="newsLongDesc" value="#{newsController.selected.newsLongDesc}" title="#{msg.newsLongDesc}" />
-
-                        <p:outputLabel value="#{msg.newsBigImgPath}" for="newsBigImgPath" />
-                        <p:inputText id="newsBigImgPath" value="#{newsController.selected.newsBigImgPath}" title="#{msg.newsBigImgPath}" size="150" maxlength="150"/>
-
-                        <p:outputLabel value="#{msg.newsImgPath}" for="newsImgPath" />
-                        <p:inputText id="newsImgPath" value="#{newsController.selected.newsImgPath}" title="#{msg.newsImgPath}" size="150" maxlength="150"/>
-
-                        <p:outputLabel value="#{msg.newsThumbImgPath}" for="newsThumbImgPath" />
-                        <p:inputText id="newsThumbImgPath" value="#{newsController.selected.newsThumbImgPath}" title="#{msg.newsThumbImgPath}" size="150" maxlength="150"/>
-
-                        <p:outputLabel value="#{msg.dateCre}" for="dateCre" />
-                        <p:calendar id="dateCre" pattern="MM/dd/yyyy HH:mm:ss" value="#{newsController.selected.dateCre}" title="#{msg.dateCre}" required="true" requiredMessage="#{msg.newsTypeRequiredMessage_dateCre}" showOn="button"/>
-
-                        <p:outputLabel value="#{msg.userId}" for="userId" />
-                        <p:selectOneMenu id="userId" value="#{newsController.selected.userId}" required="true" requiredMessage="#{msg.newsTypeRequiredMessage_userId}" converter="userConverter">
-                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
-                            <f:selectItems value="#{userController.items}"
-                                           var="userIdItem"
-                                           itemValue="#{userIdItem}"
-                                           itemLabel="#{userIdItem.firstName.toString()}"
-                                           />
-
-                        </p:selectOneMenu>
-
-                        <p:outputLabel value="#{msg.newsTypeId}" for="newsTypeId" />
-                        <p:selectOneMenu id="newsTypeId" value="#{newsController.selected.newsTypeId}" required="true" requiredMessage="#{msg.newsTypeRequiredMessage}" converter="newsTypeConverter">
+ 						<p:outputLabel value="#{msg.newsType}" for="newsTypeId" />
+                        <p:selectOneMenu id="newsTypeId" value="#{newsController.selectedNewsTypeId}" required="true" requiredMessage="#{msg.newsTypeRequiredMessage}">
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{newsTypeController.items}"
                                            var="newsTypeIdItem"
-                                           itemValue="#{newsTypeIdItem}"
+                                           itemValue="#{newsTypeIdItem.newsTypeId}"
                                            itemLabel="#{newsTypeIdItem.newsTypeName.toString()}"
                                            />
-
                         </p:selectOneMenu>
+
+ 						<p:outputLabel value="#{msg.status}" for="generalStatusId" />
+                        <p:selectOneMenu id="generalStatusId" value="#{newsController.selectedGeneralStatusId}" required="true" requiredMessage="#{msg.statusRequiredMessage}">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{generalStatusController.items}"
+                                           var="generalStatusItem"
+                                           itemValue="#{generalStatusItem.generalStatus}"
+                                           itemLabel="#{generalStatusItem.generalStatusName.toString()}"
+                                           />
+                     	</p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{msg.startDate}" for="newsDateStart" />
+                        <p:calendar id="newsDateStart" pattern="MM/dd/yyyy HH:mm:ss" value="#{newsController.selected.newsDateStart}" title="#{msg.startDate}" required="true" requiredMessage="#{msg.startDateNameRequired}" showOn="button"/>
+
+                        <p:outputLabel value="#{msg.endDate}" for="newsDateExpire" />
+                        <p:calendar id="newsDateExpire" pattern="MM/dd/yyyy HH:mm:ss" value="#{newsController.selected.newsDateExpire}" title="#{msg.endDate}" required="true" requiredMessage="#{msg.endDateNameRequired}" showOn="button"/>
+                        
+                        <p:outputLabel value="#{msg.description}" for="newsLongDesc" />
+                        <p:inputTextarea rows="4" cols="80" id="newsLongDesc" value="#{newsController.selected.newsLongDesc}" title="#{msg.description}" />
+
+ 						<p:outputLabel value="#{msg.hdImage}"/>
+                        <p:panelGrid columns="2" style="width:100%" id="panelHdImage">
+	                        <p:fileUpload label="#{msg.upload}" id="hdImg" fileUploadListener="#{newsController.setHdImageFileUpload}" mode="advanced"
+	                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelHdImage"/>
+                     		<h:graphicImage id="hdImageFile" url="#{newsController.hdImagePath}" width="150" height="100" rendered="#{newsController.showHdImageFile}"/>
+                        </p:panelGrid>
+                        
+ 						<p:outputLabel value="#{msg.image}"/>
+                        <p:panelGrid columns="2" style="width:100%" id="panelImage">
+	                        <p:fileUpload label="#{msg.upload}" id="brandBigImg" fileUploadListener="#{newsController.setImageFileUpload}" mode="advanced"
+	                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelImage"/>
+                     		<h:graphicImage id="brandImageFile" url="#{newsController.imagePath}" width="150" height="100" rendered="#{newsController.showImageFile}"/>
+                        </p:panelGrid>
+                        
+                        <p:outputLabel value="#{msg.thumbnail}" for="brandThumbImg" />
+                        <p:panelGrid columns="2" style="width:100%" id="panelThumbnail">
+                        <p:fileUpload label="#{msg.upload}" id="brandThumbImg" fileUploadListener="#{newsController.setThumbnailFileUpload}" mode="advanced"
+                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelThumbnail"/>
+                     		<h:graphicImage  id="tumbnailImageFile" url="#{newsController.thumbnailPath}" width="150" height="100" rendered="#{newsController.showThumbnailFile}"/>
+ 						</p:panelGrid>
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{newsController.saveNew}" value="#{msg.save}" update="display,:newsListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('newsCreateDialog'));">
                         <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
