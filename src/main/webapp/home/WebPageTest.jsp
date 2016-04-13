@@ -13,6 +13,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Name: <%=factory.getUserName()%></h1>
+	<h1>Complete Name: <%=factory.getUserName()%></h1>
 </body>
 </html>
