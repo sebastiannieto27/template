@@ -5,7 +5,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+      			xmlns:b="http://bootsfaces.net/ui">
     <body>
 	    <ui:composition>
 
@@ -23,7 +24,6 @@
 
 	            				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{brandController.init()}" update=":brandListForm" />
            			</p:panelGrid>
-               
                </h:panelGroup>
         
             <p:dataTable id="datalist"

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.1.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+    
+    
+	<!-- DATASOURCE -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/mydb" />
+        <property name="username" value="root" />
+        <property name="password" value="admin" />
+    </bean>
+	
+	<!-- Hibernate 3 Annotation SessionFactory Bean definition-->
+    <bean id="hibernate4AnnotatedSessionFactory"
+        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="annotatedClasses">
+            <list>
+                <value>co.com.core.domain.City</value>
+                <value>co.com.core.domain.Country</value>
+                <value>co.com.core.domain.Deparment</value>
+                <value>co.com.core.domain.Menu</value>
+                <value>co.com.core.domain.Permission</value>
+                <value>co.com.core.domain.Person</value>
+                <value>co.com.core.domain.Page</value>
+                <value>co.com.core.domain.PagePermission</value>
+                <value>co.com.core.domain.Role</value>
+                <value>co.com.core.domain.RoleMenu</value>
+                <value>co.com.core.domain.RolePermission</value>
+                <value>co.com.core.domain.User</value>
+                <value>co.com.core.domain.UserRole</value>
+                <value>co.com.core.domain.Event</value>
+                <value>co.com.core.domain.Priority</value>
+                <value>co.com.core.domain.MessageStatus</value>
+                <value>co.com.core.domain.Message</value>
+                <value>co.com.core.domain.LoginAttempt</value>
+                <value>co.com.core.domain.UploadedFile</value>
+                
+                <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
+                <value>co.com.core.domain.cms.Brand</value>
+                <value>co.com.core.domain.cms.BrandService</value>
+                <value>co.com.core.domain.cms.BrandType</value>
+                <value>co.com.core.domain.cms.CompanyEvent</value>
+                <value>co.com.core.domain.cms.News</value>
+                <value>co.com.core.domain.cms.NewsType</value>
+                <value>co.com.core.domain.cms.Service</value>
+                <value>co.com.core.domain.cms.BrandUploadFile</value>
+                <value>co.com.core.domain.cms.GeneralStatus</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.current_session_context_class">thread</prop>
+                <prop key="hibernate.show_sql">false</prop>
+            </props>
+        </property>
+    </bean>
+
+	<!-- DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO  DAO -->
+	<bean id="baseDAO" class="co.com.core.dao.impl.BaseDAO"></bean>
+	    
+    <bean id="personDAO" class="co.com.core.dao.impl.PersonDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+	
+    <bean id="pageDAO" class="co.com.core.dao.impl.PageDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+		
+    <bean id="menuDAO" class="co.com.core.dao.impl.MenuDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    
+    <bean id="userDAO" class="co.com.core.dao.impl.UserDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+     
+    <bean id="userRoleDAO" class="co.com.core.dao.impl.UserRoleDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+          
+    <bean id="roleDAO" class="co.com.core.dao.impl.RoleDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    
+	<bean id="priorityDAO" class="co.com.core.dao.impl.PriorityDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    
+    <bean id="eventDAO" class="co.com.core.dao.impl.EventDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    
+    <bean id="messageStatusDAO" class="co.com.core.dao.impl.MessageStatusDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+ 
+    <bean id="roleMenuDAO" class="co.com.core.dao.impl.RoleMenuDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean> 
+ 
+    <bean id="permissionDAO" class="co.com.core.dao.impl.PermissionDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>  
+     
+    <bean id="rolePermissionDAO" class="co.com.core.dao.impl.RolePermissionDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>  
+         
+    <bean id="pagePermissionDAO" class="co.com.core.dao.impl.PagePermissionDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>  
+         
+    <bean id="messageDAO" class="co.com.core.dao.impl.MessageDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>      
+             
+    <bean id="loginAttemptDAO" class="co.com.core.dao.impl.LoginAttemptDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>    
+                 
+    <bean id="uploadedFileDAO" class="co.com.core.dao.impl.UploadedFileDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    
+    	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
+    
+	    <bean id="brandDAO" class="co.com.core.dao.cms.impl.BrandDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+    
+	    <bean id="brandTypeDAO" class="co.com.core.dao.cms.impl.BrandTypeDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	        
+	    <bean id="brandUploadFileDAO" class="co.com.core.dao.cms.impl.BrandUploadFileDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    
+	    <bean id="newsTypeDAO" class="co.com.core.dao.cms.impl.NewsTypeDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    	    
+	    <bean id="newsDAO" class="co.com.core.dao.cms.impl.NewsDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    	    	    
+	    <bean id="generalStatusDAO" class="co.com.core.dao.cms.impl.GeneralStatusDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    	    	    	    
+	    <bean id="companyEventDAO" class="co.com.core.dao.cms.impl.CompanyEventDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
+	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
+	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
+	
+    <bean id="baseService" class="co.com.core.services.impl.BaseServiceImpl">
+    	<property name="baseDAO" ref="baseDAO" />
+    </bean>
+
+    <bean id="pageService" class="co.com.core.services.impl.PageServiceImpl">
+    	<property name="pageDAO" ref="pageDAO" />
+    </bean>
+    
+    <bean id="menuService" class="co.com.core.services.impl.MenuServiceImpl">
+    	<property name="menuDAO" ref="menuDAO" />
+    </bean>
+    
+    <bean id="userService" class="co.com.core.services.impl.UserServiceImpl">
+    	<property name="userDAO" ref="userDAO" />
+    </bean>
+    
+    <bean id="userRoleService" class="co.com.core.services.impl.UserRoleServiceImpl">
+    	<property name="userRoleDAO" ref="userRoleDAO" />
+    </bean>    
+    
+    <bean id="roleService" class="co.com.core.services.impl.RoleServiceImpl">
+    	<property name="roleDAO" ref="roleDAO" />
+    </bean> 
+            
+    <bean id="roleMenuService" class="co.com.core.services.impl.RoleMenuServiceImpl">
+    	<property name="roleMenuDAO" ref="roleMenuDAO" />
+    </bean>
+            
+    <bean id="permissionService" class="co.com.core.services.impl.PermissionServiceImpl">
+    	<property name="permissionDAO" ref="permissionDAO" />
+    </bean>    
+                
+    <bean id="rolePermissionService" class="co.com.core.services.impl.RolePermissionServiceImpl">
+    	<property name="rolePermissionDAO" ref="rolePermissionDAO" />
+    </bean> 
+   	                
+    <bean id="eventService" class="co.com.core.services.impl.EventServiceImpl">
+    	<property name="eventDAO" ref="eventDAO" />
+    </bean>
+    
+    <bean id="priorityService" class="co.com.core.services.impl.PriorityServiceImpl">
+    	<property name="priorityDAO" ref="priorityDAO" />
+    </bean>
+    
+    <bean id="messageStatusService" class="co.com.core.services.impl.MessageStatusServiceImpl">
+    	<property name="messageStatusDAO" ref="messageStatusDAO" />
+    </bean> 
+       	                
+    <bean id="pagePermissionService" class="co.com.core.services.impl.PagePermissionServiceImpl">
+    	<property name="pagePermissionDAO" ref="pagePermissionDAO" />
+    </bean> 
+        
+    <bean id="messageService" class="co.com.core.services.impl.MessageServiceImpl">
+    	<property name="messageDAO" ref="messageDAO" />
+    </bean> 
+    
+    <bean id="loginAttemptService" class="co.com.core.services.impl.LoginAttemptServiceImpl">
+    	<property name="loginAttemptDAO" ref="loginAttemptDAO" />
+    </bean> 
+    
+    <bean id="uploadedFileService" class="co.com.core.services.impl.UploadedFileServiceImpl">
+    	<property name="uploadedFileDAO" ref="uploadedFileDAO" />
+    </bean>
+    
+   	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
+	    <bean id="brandService" class="co.com.core.services.cms.impl.BrandServiceImpl">
+	    	<property name="brandDAO" ref="brandDAO" />
+	    </bean>
+	    
+   	    <bean id="brandTypeService" class="co.com.core.services.cms.impl.BrandTypeServiceImpl">
+	    	<property name="brandTypeDAO" ref="brandTypeDAO" />
+	    </bean>
+	    	    
+   	    <bean id="brandUploadFileService" class="co.com.core.services.cms.impl.BrandUploadFileServiceImpl">
+	    	<property name="brandUploadFileDAO" ref="brandUploadFileDAO" />
+	    </bean>
+	    	    	    
+   	    <bean id="newsTypeService" class="co.com.core.services.cms.impl.NewsTypeServiceImpl">
+	    	<property name="newsTypeDAO" ref="newsTypeDAO" />
+	    </bean>
+	    	    	    	    
+   	    <bean id="newsService" class="co.com.core.services.cms.impl.NewsServiceImpl">
+	    	<property name="newsDAO" ref="newsDAO" />
+	    </bean>
+	    	    	    	    	    
+   	    <bean id="generalStatusService" class="co.com.core.services.cms.impl.GeneralStatusServiceImpl">
+	    	<property name="generalStatusDAO" ref="generalStatusDAO" />
+	    </bean>
+	    	    	    	    	    	    
+   	    <bean id="companyEventService" class="co.com.core.services.cms.impl.CompanyEventServiceImpl">
+	    	<property name="companyEventDAO" ref="companyEventDAO" />
+	    </bean>
+   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
+   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
+   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
+   	
+    <bean id="baseController" scope="session" class="co.com.core.controller.BaseController">
+    	<property name="baseService" ref="baseService" />
+    	<property name="personDAO" ref="personDAO" />
+    </bean>
+
+    <bean id="pageController" scope="session" class="co.com.core.controller.PageController" init-method="init">
+    	<property name="pageService" ref="pageService" />
+    </bean>
+
+    <bean id="menuController" scope="session" class="co.com.core.controller.MenuController" init-method="init">
+    	<property name="menuService" ref="menuService" />
+    </bean>
+
+    <bean id="userController" scope="session" class="co.com.core.controller.UserController" init-method="init">
+    	<property name="userService" ref="userService" />
+    	<property name="userRoleService" ref="userRoleService" />
+    	<property name="roleService" ref="roleService" />
+    </bean>   
+    
+    <bean id="loginController" scope="session" class="co.com.core.controller.LoginController" init-method="init">
+    	<property name="userService" ref="userService" />
+    	<property name="loginAttemptService" ref="loginAttemptService" />
+    	<property name="menuController" ref="menuController" />
+    </bean> 
+    
+    <bean id="templateController" scope="session" class="co.com.core.controller.TemplateController">
+    	<property name="menuService" ref="menuService" />
+    	<property name="pageService" ref="pageService" />
+    </bean> 
+        
+    <bean id="userRoleController" scope="session" class="co.com.core.controller.UserRoleController" init-method="init">
+    	<property name="userRoleService" ref="userRoleService" />
+    </bean> 
+            
+    <bean id="roleController" scope="session" class="co.com.core.controller.RoleController" init-method="init">
+    	<property name="roleService" ref="roleService" />
+    	<property name="roleMenuService" ref="roleMenuService" />
+    	<property name="menuService" ref="menuService" />
+    	<property name="pagePermissionService" ref="pagePermissionService" />
+    	<property name="rolePermissionService" ref="rolePermissionService" />
+    </bean> 
+                
+    <bean id="roleMenuController" scope="session" class="co.com.core.controller.RoleMenuController" init-method="init">
+    	<property name="roleMenuService" ref="roleMenuService" />
+    </bean> 
+                   
+    <bean id="permissionController" scope="session" class="co.com.core.controller.PermissionController" init-method="init">
+    	<property name="permissionService" ref="permissionService" />
+    </bean> 
+                       
+    <bean id="rolePermissionController" scope="session" class="co.com.core.controller.RolePermissionController" init-method="init">
+    	<property name="rolePermissionService" ref="rolePermissionService" />
+    </bean>
+                           
+    <bean id="eventController" scope="session" class="co.com.core.controller.EventController" init-method="init">
+    	<property name="eventService" ref="eventService" />
+    </bean> 
+    
+    <bean id="priorityController" scope="session" class="co.com.core.controller.PriorityController" init-method="init">
+    	<property name="priorityService" ref="priorityService" />
+    </bean>
+    
+    <bean id="messageStatusController" scope="session" class="co.com.core.controller.MessageStatusController" init-method="init">
+    	<property name="messageStatusService" ref="messageStatusService" />
+    </bean> 
+                               
+    <bean id="pagePermissionController" scope="session" class="co.com.core.controller.PagePermissionController" init-method="init">
+    	<property name="pagePermissionService" ref="pagePermissionService" />
+    	<property name="permissionService" ref="permissionService" />
+    	<property name="pageService" ref="pageService" />
+    	<property name="rolePermissionService" ref="rolePermissionService" />
+    	<property name="menuService" ref="menuService" />
+    </bean>
+        
+    <bean id="messageController" scope="session" class="co.com.core.controller.MessageController" init-method="init">
+    	<property name="messageService" ref="messageService" />
+    </bean> 
+        
+    <bean id="uploadedFileController" scope="session" class="co.com.core.controller.UploadedFileController" init-method="init">
+    	<property name="uploadedFileService" ref="uploadedFileService" />
+    </bean>    
+    
+   	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS --> 
+    	        
+    <bean id="brandController" scope="session" class="co.com.core.controller.cms.BrandController" init-method="init">
+    	<property name="brandService" ref="brandService" />
+    	<property name="brandUploadFileService" ref="brandUploadFileService" />
+    	<property name="uploadedFileController" ref="uploadedFileController" />
+    </bean> 
+        
+    <bean id="brandTypeController" scope="session" class="co.com.core.controller.cms.BrandTypeController" init-method="init">
+    	<property name="brandTypeService" ref="brandTypeService" />
+    </bean>
+        
+    <bean id="newsTypeController" scope="session" class="co.com.core.controller.cms.NewsTypeController" init-method="init">
+    	<property name="newsTypeService" ref="newsTypeService" />
+    </bean>
+            
+    <bean id="newsController" scope="session" class="co.com.core.controller.cms.NewsController" init-method="init">
+    	<property name="newsService" ref="newsService" />
+    	<property name="uploadedFileController" ref="uploadedFileController" />
+    </bean>
+                
+    <bean id="generalStatusController" scope="session" class="co.com.core.controller.cms.GeneralStatusController" init-method="init">
+    	<property name="generalStatusService" ref="generalStatusService" />
+    </bean>
+                    
+    <bean id="companyEventController" scope="session" class="co.com.core.controller.cms.CompanyEventController" init-method="init">
+    	<property name="companyEventService" ref="companyEventService" />
+   		<property name="uploadedFileController" ref="uploadedFileController" />
+    </bean>
+</beans>
