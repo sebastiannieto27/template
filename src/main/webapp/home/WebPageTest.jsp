@@ -14,6 +14,6 @@
 </head>
 <body>
 	<h1>Name: <%=factory.getUserName()%></h1>
-		<h1>Test Merge 1</h1>
+		<h1>Test just pushed some .....</h1>
 </body>
 </html>
