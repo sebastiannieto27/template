@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="branchEditDlg" widgetVar="branchEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.branch}" closeOnEscape="true">
+
+            <h:form id="branchEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{branchController.selected != null}">
+                    
+                        <p:outputLabel value="#{msg.name}" for="branchName" />
+                        <p:inputText id="branchName" value="#{branchController.selected.branchName}" title="#{msg.name}" size="70" maxlength="70"/>
+
+                        <p:outputLabel value="#{msg.branchAddress}" for="branchAddress" />
+                        <p:inputText id="branchAddress" value="#{branchController.selected.branchAddress}" title="#{msg.branchAddress}" size="70" maxlength="70"/>
+
+                        <p:outputLabel value="#{msg.branchOpenHours}" for="branchOpenHours" />
+                        <p:inputText id="branchOpenHours" value="#{branchController.selected.branchOpenHours}" title="#{msg.branchOpenHours}" size="70" maxlength="70"/>
+
+                        <p:outputLabel value="#{msg.branchMainPhone}" for="branchMainPhone" />
+                        <p:inputText id="branchMainPhone" value="#{branchController.selected.branchMainPhone}" title="#{msg.branchMainPhone}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{msg.branchAltPhone}" for="branchAltPhone" />
+                        <p:inputText id="branchAltPhone" value="#{branchController.selected.branchAltPhone}" title="#{msg.branchAltPhone}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{msg.branchInternalCode}" for="branchInternalCode" />
+                        <p:inputText id="branchInternalCode" value="#{branchController.selected.branchInternalCode}" title="#{msg.branchInternalCode}" size="50" maxlength="50"/>
+
+                                             <p:outputLabel value="#{msg.branchType}" for="branchTypeId" />
+                        <p:selectOneMenu id="branchTypeId" value="#{branchController.selectedBranchTypeId}" required="true" requiredMessage="#{msg.branchTypeRequiredMessage}">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{branchTypeController.items}"
+                                           var="branchTypeIdItem"
+                                           itemValue="#{branchTypeIdItem.branchTypeId}"
+                                           itemLabel="#{branchTypeIdItem.branchTypeName.toString()}"
+                                           />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{msg.generalStatus}" for="generalStatusId" />
+                        <p:selectOneMenu id="generalStatusId" value="#{branchController.selectedGeneralStatusId}" required="true" requiredMessage="#{msg.statusRequiredMessage}">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{generalStatusController.items}"
+                                           var="generalStatusIdItem"
+                                           itemValue="#{generalStatusIdItem.generalStatusId}"
+                                           itemLabel="#{generalStatusIdItem.generalStatusName.toString()}"
+                                           />
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{msg.image}"/>
+                        <p:panelGrid columns="2" style="width:100%" id="panelImage">
+	                        <p:fileUpload label="#{msg.upload}" id="branchBigImg" fileUploadListener="#{branchController.setImageFileUpload}" mode="advanced"
+	                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelImage"/>
+                     		<h:graphicImage id="branchImageFile" url="#{branchController.imagePath}" width="150" height="100" rendered="#{branchController.showImageFile}"/>
+                        </p:panelGrid>
+                        
+                        <p:outputLabel value="#{msg.thumbnail}" for="branchThumbImg" />
+                        <p:panelGrid columns="2" style="width:100%" id="panelThumbnail">
+                        <p:fileUpload label="#{msg.upload}" id="branchThumbImg" fileUploadListener="#{branchController.setThumbnailFileUpload}" mode="advanced"
+                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelThumbnail"/>
+                     		<h:graphicImage  id="tumbnailImageFile" url="#{branchController.thumbnailPath}" width="150" height="100" rendered="#{branchController.showThumbnailFile}"/>
+ 						</p:panelGrid>
+                    </p:panelGrid>
+                        
+                    <p:commandButton actionListener="#{branchController.save}" value="#{msg.save}" update="display,:branchListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('branchEditDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('branchEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -186,6 +186,28 @@
 		    <artifactId>commons-fileupload</artifactId>
 		    <version>1.2.1</version>
 		</dependency>
+		
+		<!-- Java Mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.6</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.primefaces.extensions</groupId>
+		  <artifactId>all-themes</artifactId>
+		  <version>1.0.8</version>
+		  <scope>compile</scope>
+		</dependency>
+
+		<!-- bootsFaces -->
+		<dependency>
+		    <groupId>net.bootsfaces</groupId>
+		    <artifactId>bootsfaces</artifactId>
+		    <version>0.8.0</version>
+		    <scope>compile</scope>
+		</dependency>
 	</dependencies>
 	
 	<build>

@@ -100,7 +100,7 @@ public class NewsController {
 		this.imageDto = new UploadedFileDTO();
 		this.imageDto.setName(selected.getNewsImgPath());
 		this.hdImageDto = new UploadedFileDTO();
-		this.hdImageDto.setName(selected.getNewsBigImgPath());
+		this.hdImageDto.setName(selected.getNewsFullImgPath());
 		this.showImageFile = true;
 		this.showThumbnailFile = true;
 		this.showHdImageFile = true;
@@ -116,7 +116,7 @@ public class NewsController {
 				selected.setNewsImgPath(this.thumbnail.getFile().getFileName());
 			}
 			if(this.hdImage!=null) {
-				selected.setNewsBigImgPath(this.thumbnail.getFile().getFileName());
+				selected.setNewsFullImgPath(this.thumbnail.getFile().getFileName());
 			}
 			
 			if(selectedNewsTypeId!=null && selectedNewsTypeId!=0) {
@@ -126,7 +126,7 @@ public class NewsController {
 			
 			if(selectedGeneralStatusId!=null && selectedGeneralStatusId!=0) {
 				GeneralStatus generalStatus = new GeneralStatus(selectedGeneralStatusId);
-				//selected.setGeneralStatusId(generalStatus);TODO
+				selected.setGeneralStatusId(generalStatus);
 			}
 			
 			UserDTO userDto = SessionUtil.getSessionUser();
@@ -154,7 +154,7 @@ public class NewsController {
 					selected.setNewsImgPath(this.thumbnail.getFile().getFileName());
 				}
 				if(this.hdImage!=null) {
-					selected.setNewsBigImgPath(this.thumbnail.getFile().getFileName());
+					selected.setNewsFullImgPath(this.thumbnail.getFile().getFileName());
 				}
 				newsService.delete(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulDeletion"), null));
@@ -171,6 +171,15 @@ public class NewsController {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
+				if(selectedNewsTypeId!=null && selectedNewsTypeId!=0) {
+					NewsType newsType = new NewsType(selectedNewsTypeId);
+					selected.setNewsTypeId(newsType);
+				}
+				
+				if(selectedGeneralStatusId!=null && selectedGeneralStatusId!=0) {
+					GeneralStatus generalStatus = new GeneralStatus(selectedGeneralStatusId);
+					selected.setGeneralStatusId(generalStatus);
+				}
 				newsService.update(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulEdition"), null));
 			} catch (Exception ex) {

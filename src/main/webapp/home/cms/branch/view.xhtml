@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="branchViewDlg" widgetVar="branchViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.branch}" closeOnEscape="true">
+
+            <h:form id="branchViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{branchController.selected != null}">
+
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{branchController.selected.branchId}" title="#{msg.id}"/>
+
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{branchController.selected.branchName}" title="#{msg.name}"/>
+
+                        <h:outputText value="#{msg.branchAddress}"/>
+                        <h:outputText value="#{branchController.selected.branchAddress}" title="#{msg.branchAddress}"/>
+
+                        <h:outputText value="#{msg.thumbnail}"/>
+                        <h:outputText value="#{branchController.selected.branchThumbImg}" title="#{msg.thumbnail}"/>
+
+                        <h:outputText value="#{msg.image}"/>
+                        <h:outputText value="#{branchController.selected.branchBigImg}" title="#{msg.image}"/>
+
+                        <h:outputText value="#{msg.branchOpenHours}"/>
+                        <h:outputText value="#{branchController.selected.branchOpenHours}" title="#{msg.branchOpenHours}"/>
+
+                        <h:outputText value="#{msg.branchMainPhone}"/>
+                        <h:outputText value="#{branchController.selected.branchMainPhone}" title="#{msg.branchMainPhone}"/>
+
+                        <h:outputText value="#{msg.branchAltPhone}"/>
+                        <h:outputText value="#{branchController.selected.branchAltPhone}" title="#{msg.branchAltPhone}"/>
+
+                        <h:outputText value="#{msg.branchInternalCode}"/>
+                        <h:outputText value="#{branchController.selected.branchInternalCode}" title="#{msg.branchInternalCode}"/>
+
+                        <h:outputText value="#{msg.creationDate}"/>
+                        <h:outputText value="#{branchController.selected.dateCre}" title="#{msg.creationDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg.branchType}"/>
+                        <h:outputText value="#{branchController.selected.branchTypeId.branchTypeName}"/>
+
+                        <h:outputText value="#{msg.user}"/>
+                        <h:outputText value="#{branchController.selected.userId.firstName}"/>
+
+                        <h:outputText value="#{msg.generalStatus}"/>
+                        <h:outputText value="#{branchController.selected.generalStatusId.generalStatusName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.close}" onclick="PF('branchViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
+

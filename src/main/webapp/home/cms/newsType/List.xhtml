@@ -42,25 +42,6 @@
                     <h:outputText value="#{item.newsTypeName}"/>
                 </p:column>
 
-
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.user}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.userId}"/>
-                </p:column>
-
-
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.creationDate}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.dateCre}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
-
-
             </p:dataTable>
 
             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{newsTypeController.prepareCreate}" update=":newsTypeCreateForm" oncomplete="PF('newsTypeCreateDialog').show()"/>

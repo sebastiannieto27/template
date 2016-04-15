@@ -6,9 +6,11 @@
 package co.com.core.domain.cms;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +20,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import co.com.core.domain.User;
 
@@ -39,6 +43,8 @@ import co.com.core.domain.User;
     @NamedQuery(name = "Service.findByServiceId", query = "SELECT s FROM Service s WHERE s.serviceId = :serviceId"),
     @NamedQuery(name = "Service.findByServiceName", query = "SELECT s FROM Service s WHERE s.serviceName = :serviceName"),
     @NamedQuery(name = "Service.findByServiceDesc", query = "SELECT s FROM Service s WHERE s.serviceDesc = :serviceDesc"),
+    @NamedQuery(name = "Service.findByServiceImgPath", query = "SELECT s FROM Service s WHERE s.serviceImgPath = :serviceImgPath"),
+    @NamedQuery(name = "Service.findByServiceThumbImgPath", query = "SELECT s FROM Service s WHERE s.serviceThumbImgPath = :serviceThumbImgPath"),
     @NamedQuery(name = "Service.findByDateCre", query = "SELECT s FROM Service s WHERE s.dateCre = :dateCre")})
 public class Service implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -55,6 +61,12 @@ public class Service implements Serializable {
     @Size(max = 250)
     @Column(name = "service_desc")
     private String serviceDesc;
+    @Size(max = 150)
+    @Column(name = "service_img_path")
+    private String serviceImgPath;
+    @Size(max = 150)
+    @Column(name = "service_thumb_img_path")
+    private String serviceThumbImgPath;
     @Basic(optional = false)
     @NotNull
     @Column(name = "date_cre")
@@ -63,9 +75,11 @@ public class Service implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
     private User userId;
-    @JoinColumn(name = "general_status_id", referencedColumnName = "general_status")
+    @JoinColumn(name = "general_status_id", referencedColumnName = "general_status_id")
     @ManyToOne(optional = false)
     private GeneralStatus generalStatusId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceId")
+    private Collection<BranchService> branchServiceCollection;
 
     public Service() {
     }
@@ -104,6 +118,22 @@ public class Service implements Serializable {
         this.serviceDesc = serviceDesc;
     }
 
+    public String getServiceImgPath() {
+        return serviceImgPath;
+    }
+
+    public void setServiceImgPath(String serviceImgPath) {
+        this.serviceImgPath = serviceImgPath;
+    }
+
+    public String getServiceThumbImgPath() {
+        return serviceThumbImgPath;
+    }
+
+    public void setServiceThumbImgPath(String serviceThumbImgPath) {
+        this.serviceThumbImgPath = serviceThumbImgPath;
+    }
+
     public Date getDateCre() {
         return dateCre;
     }
@@ -128,6 +158,15 @@ public class Service implements Serializable {
         this.generalStatusId = generalStatusId;
     }
 
+    @XmlTransient
+    public Collection<BranchService> getBranchServiceCollection() {
+        return branchServiceCollection;
+    }
+
+    public void setBranchServiceCollection(Collection<BranchService> branchServiceCollection) {
+        this.branchServiceCollection = branchServiceCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -150,7 +189,7 @@ public class Service implements Serializable {
 
     @Override
     public String toString() {
-        return "co.com.core.domain.cms.Service[ serviceId=" + serviceId + " ]";
+        return "com.co.friogan.db.domain.Service[ serviceId=" + serviceId + " ]";
     }
     
 }

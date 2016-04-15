@@ -14,7 +14,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{newsController.selected != null}">
 
- <p:outputLabel value="#{msg.title}" for="newsTitle" />
+ 						<p:outputLabel value="#{msg.title}" for="newsTitle" />
                         <p:inputText id="newsTitle" value="#{newsController.selected.newsTitle}" title="#{msg.title}" required="true" requiredMessage="#{msg.titleRequiredMessage}" size="80" maxlength="200"/>
 
 						<p:outputLabel value="#{msg.shortDescription}" for="newsShortDescr" />
@@ -35,7 +35,7 @@
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{generalStatusController.items}"
                                            var="generalStatusItem"
-                                           itemValue="#{generalStatusItem.generalStatus}"
+                                           itemValue="#{generalStatusItem.generalStatusId}"
                                            itemLabel="#{generalStatusItem.generalStatusName.toString()}"
                                            />
                      	</p:selectOneMenu>

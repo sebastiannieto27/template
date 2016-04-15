@@ -5,30 +5,22 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-
     <ui:composition>
-
-        <p:dialog id="newsTypeViewDlg" widgetVar="newsTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.newsType}" closeOnEscape="true">
-
-            <h:form id="newsTypeViewForm">
-
+        <p:dialog id="branchTypeViewDlg" widgetVar="branchTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.branchType}" closeOnEscape="true">
+            <h:form id="branchTypeViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{newsTypeController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{branchTypeController.selected != null}">
 
                         <h:outputText value="#{msg.id}"/>
-                        <h:outputText value="#{newsTypeController.selected.newsTypeId}" title="#{msg.id}"/>
+                        <h:outputText value="#{branchTypeController.selected.branchTypeId}" title="#{msg.id}"/>
 
                         <h:outputText value="#{msg.name}"/>
-                        <h:outputText value="#{newsTypeController.selected.newsTypeName}" title="#{msg.name}"/>
+                        <h:outputText value="#{branchTypeController.selected.branchTypeName}" title="#{msg.name}"/>
 
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.close}" onclick="PF('newsTypeViewDialog').hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="PF('branchTypeViewDialog').hide()"/>
                 </h:panelGroup>
-
             </h:form>
-
         </p:dialog>
-
     </ui:composition>
-
 </html>

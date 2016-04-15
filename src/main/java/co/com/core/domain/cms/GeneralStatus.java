@@ -32,41 +32,45 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "GeneralStatus.findAll", query = "SELECT g FROM GeneralStatus g"),
-    @NamedQuery(name = "GeneralStatus.findByGeneralStatus", query = "SELECT g FROM GeneralStatus g WHERE g.generalStatus = :generalStatus"),
+    @NamedQuery(name = "GeneralStatus.findByGeneralStatusId", query = "SELECT g FROM GeneralStatus g WHERE g.generalStatusId = :generalStatusId"),
     @NamedQuery(name = "GeneralStatus.findByGeneralStatusName", query = "SELECT g FROM GeneralStatus g WHERE g.generalStatusName = :generalStatusName")})
 public class GeneralStatus implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "general_status")
-    private Integer generalStatus;
+    @Column(name = "general_status_id")
+    private Integer generalStatusId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 150)
     @Column(name = "general_status_name")
     private String generalStatusName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "generalStatusId")
+    private Collection<News> newsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "generalStatusId")
     private Collection<Service> serviceCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "generalStatusId")
+    private Collection<Branch> branchCollection;
 
     public GeneralStatus() {
     }
 
-    public GeneralStatus(Integer generalStatus) {
-        this.generalStatus = generalStatus;
+    public GeneralStatus(Integer generalStatusId) {
+        this.generalStatusId = generalStatusId;
     }
 
-    public GeneralStatus(Integer generalStatus, String generalStatusName) {
-        this.generalStatus = generalStatus;
+    public GeneralStatus(Integer generalStatusId, String generalStatusName) {
+        this.generalStatusId = generalStatusId;
         this.generalStatusName = generalStatusName;
     }
 
-    public Integer getGeneralStatus() {
-        return generalStatus;
+    public Integer getGeneralStatusId() {
+        return generalStatusId;
     }
 
-    public void setGeneralStatus(Integer generalStatus) {
-        this.generalStatus = generalStatus;
+    public void setGeneralStatusId(Integer generalStatusId) {
+        this.generalStatusId = generalStatusId;
     }
 
     public String getGeneralStatusName() {
@@ -78,6 +82,15 @@ public class GeneralStatus implements Serializable {
     }
 
     @XmlTransient
+    public Collection<News> getNewsCollection() {
+        return newsCollection;
+    }
+
+    public void setNewsCollection(Collection<News> newsCollection) {
+        this.newsCollection = newsCollection;
+    }
+
+    @XmlTransient
     public Collection<Service> getServiceCollection() {
         return serviceCollection;
     }
@@ -86,10 +99,19 @@ public class GeneralStatus implements Serializable {
         this.serviceCollection = serviceCollection;
     }
 
+    @XmlTransient
+    public Collection<Branch> getBranchCollection() {
+        return branchCollection;
+    }
+
+    public void setBranchCollection(Collection<Branch> branchCollection) {
+        this.branchCollection = branchCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (generalStatus != null ? generalStatus.hashCode() : 0);
+        hash += (generalStatusId != null ? generalStatusId.hashCode() : 0);
         return hash;
     }
 
@@ -100,7 +122,7 @@ public class GeneralStatus implements Serializable {
             return false;
         }
         GeneralStatus other = (GeneralStatus) object;
-        if ((this.generalStatus == null && other.generalStatus != null) || (this.generalStatus != null && !this.generalStatus.equals(other.generalStatus))) {
+        if ((this.generalStatusId == null && other.generalStatusId != null) || (this.generalStatusId != null && !this.generalStatusId.equals(other.generalStatusId))) {
             return false;
         }
         return true;
@@ -108,7 +130,7 @@ public class GeneralStatus implements Serializable {
 
     @Override
     public String toString() {
-        return "co.com.core.domain.cms.GeneralStatus[ generalStatus=" + generalStatus + " ]";
+        return "com.co.friogan.db.domain.GeneralStatus[ generalStatusId=" + generalStatusId + " ]";
     }
     
 }

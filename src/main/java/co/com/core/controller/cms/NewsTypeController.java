@@ -11,6 +11,8 @@ import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 import co.com.core.commons.SessionUtil;
+import co.com.core.commons.converter.UserUtil;
+import co.com.core.dto.UserDTO;
 import co.com.core.dto.cms.NewsTypeDTO;
 import co.com.core.services.cms.INewsTypeService;
 
@@ -30,9 +32,8 @@ public class NewsTypeController {
 	public void saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			logger.error(selected);
-			Integer userId = SessionUtil.getSessionUserId();
-			selected.setUserId(userId);
+			UserDTO userDto = SessionUtil.getSessionUser();
+			selected.setUserId(UserUtil.getEntityFromDto(userDto));
 			selected.setDateCre(new Date());
 			newsTypeService.create(selected);
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));

@@ -18,7 +18,7 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
         destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/mydb" />
+        <property name="url" value="jdbc:mysql://localhost:3306/frioganDB" />
         <property name="username" value="root" />
         <property name="password" value="admin" />
     </bean>
@@ -50,14 +50,14 @@
                 <value>co.com.core.domain.UploadedFile</value>
                 
                 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
-                <value>co.com.core.domain.cms.Brand</value>
-                <value>co.com.core.domain.cms.BrandService</value>
-                <value>co.com.core.domain.cms.BrandType</value>
+				<value>co.com.core.domain.cms.Branch</value>
+                <value>co.com.core.domain.cms.BranchService</value>
+                <value>co.com.core.domain.cms.BranchType</value>
                 <value>co.com.core.domain.cms.CompanyEvent</value>
                 <value>co.com.core.domain.cms.News</value>
                 <value>co.com.core.domain.cms.NewsType</value>
                 <value>co.com.core.domain.cms.Service</value>
-                <value>co.com.core.domain.cms.BrandUploadFile</value>
+               
                 <value>co.com.core.domain.cms.GeneralStatus</value>
             </list>
         </property>
@@ -139,15 +139,15 @@
     
     	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
     
-	    <bean id="brandDAO" class="co.com.core.dao.cms.impl.BrandDAOImpl">
+	    <bean id="branchDAO" class="co.com.core.dao.cms.impl.BranchDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
     
-	    <bean id="brandTypeDAO" class="co.com.core.dao.cms.impl.BrandTypeDAOImpl">
+	    <bean id="branchTypeDAO" class="co.com.core.dao.cms.impl.BranchTypeDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
 	        
-	    <bean id="brandUploadFileDAO" class="co.com.core.dao.cms.impl.BrandUploadFileDAOImpl">
+   	    <bean id="branchServiceDAO" class="co.com.core.dao.cms.impl.BranchServiceDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
 	    
@@ -235,16 +235,16 @@
     </bean>
     
    	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
-	    <bean id="brandService" class="co.com.core.services.cms.impl.BrandServiceImpl">
-	    	<property name="brandDAO" ref="brandDAO" />
+		<bean id="branchService" class="co.com.core.services.cms.impl.BranchServiceImpl">
+	    	<property name="branchDAO" ref="branchDAO" />
 	    </bean>
 	    
-   	    <bean id="brandTypeService" class="co.com.core.services.cms.impl.BrandTypeServiceImpl">
-	    	<property name="brandTypeDAO" ref="brandTypeDAO" />
+   	    <bean id="branchTypeService" class="co.com.core.services.cms.impl.BranchTypeServiceImpl">
+	    	<property name="branchTypeDAO" ref="branchTypeDAO" />
 	    </bean>
-	    	    
-   	    <bean id="brandUploadFileService" class="co.com.core.services.cms.impl.BrandUploadFileServiceImpl">
-	    	<property name="brandUploadFileDAO" ref="brandUploadFileDAO" />
+  
+   	    <bean id="branchServiceService" class="co.com.core.services.cms.impl.BranchServiceServiceImpl">
+	    	<property name="branchServiceDAO" ref="branchServiceDAO" />
 	    </bean>
 	    	    	    
    	    <bean id="newsTypeService" class="co.com.core.services.cms.impl.NewsTypeServiceImpl">
@@ -350,15 +350,18 @@
     
    	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS --> 
     	        
-    <bean id="brandController" scope="session" class="co.com.core.controller.cms.BrandController" init-method="init">
-    	<property name="brandService" ref="brandService" />
-    	<property name="brandUploadFileService" ref="brandUploadFileService" />
+    <bean id="branchController" scope="session" class="co.com.core.controller.cms.BranchController" init-method="init">
+    	<property name="branchService" ref="branchService" />
     	<property name="uploadedFileController" ref="uploadedFileController" />
     </bean> 
         
-    <bean id="brandTypeController" scope="session" class="co.com.core.controller.cms.BrandTypeController" init-method="init">
-    	<property name="brandTypeService" ref="brandTypeService" />
+    <bean id="branchTypeController" scope="session" class="co.com.core.controller.cms.BranchTypeController" init-method="init">
+    	<property name="branchTypeService" ref="branchTypeService" />
     </bean>
+    
+    <bean id="branchServiceController" scope="session" class="co.com.core.controller.cms.BranchServiceController" init-method="init">
+    	<property name="branchServiceService" ref="branchServiceService" />
+    </bean> 
         
     <bean id="newsTypeController" scope="session" class="co.com.core.controller.cms.NewsTypeController" init-method="init">
     	<property name="newsTypeService" ref="newsTypeService" />

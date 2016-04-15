@@ -175,7 +175,7 @@ public class CompanyEvent implements Serializable {
 
     @Override
     public String toString() {
-        return "co.com.core.domain.CompanyEvent[ companyEventId=" + companyEventId + " ]";
+        return "com.co.friogan.db.domain.CompanyEvent[ companyEventId=" + companyEventId + " ]";
     }
     
 }

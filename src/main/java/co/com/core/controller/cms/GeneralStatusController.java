@@ -29,9 +29,6 @@ public class GeneralStatusController {
 	public void saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			logger.error(selected);
-			Integer userId = SessionUtil.getSessionUserId();
-			selected.setGeneralStatus(userId);
 			generalStatusService.create(selected);
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));
 		} catch (Exception ex) {
