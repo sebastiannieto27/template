@@ -101,7 +101,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.description}"/>
                     </f:facet>
-                    <p:commandLink id="viewMDescLink" value="#{msg.description}" update=":newsViewDescriptionForm" 
+                    <p:commandLink id="viewDescLink" value="#{msg.description}" update=":newsViewDescriptionForm" 
                     		oncomplete="PF('newsViewDescriptionDialog').show()" actionListener="#{newsController.showItemDescription(item)}"/>
                 </p:column>
 

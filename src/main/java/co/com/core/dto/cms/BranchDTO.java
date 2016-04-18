@@ -117,7 +117,7 @@ public class BranchDTO {
 				+ branchMainPhone + ", branchAltPhone=" + branchAltPhone
 				+ ", branchInternalCode=" + branchInternalCode + ", dateCre="
 				+ dateCre + ", branchTypeId=" + branchTypeId + ", userId="
-				+ userId + ", generalStatusId=" + generalStatusId + "]";
+				 + ", generalStatusId=" + generalStatusId + "]";
 	}
     
 	

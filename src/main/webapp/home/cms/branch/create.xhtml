@@ -61,7 +61,7 @@
                      		<h:graphicImage  id="tumbnailImageFile" url="#{branchController.thumbnailPath}" width="150" height="100" rendered="#{branchController.showThumbnailFile}"/>
  						</p:panelGrid>
 
-                         <p:outputLabel value="#{msg.image}"/>
+                        <p:outputLabel value="#{msg.image}"/>
                         <p:panelGrid columns="2" style="width:100%" id="panelImage">
 	                        <p:fileUpload label="#{msg.upload}" id="brandBigImg" fileUploadListener="#{branchController.setImageFileUpload}" mode="advanced"
 	                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelImage"/>

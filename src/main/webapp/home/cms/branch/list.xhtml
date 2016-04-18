@@ -58,20 +58,6 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.thumbnail}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.branchThumbImg}"/>
-                </p:column>
-
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.image}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.branchBigImg}"/>
-                </p:column>
-
-                <p:column>
-                    <f:facet name="header">
                         <h:outputText value="#{msg.branchOpenHours}"/>
                     </f:facet>
                     <h:outputText value="#{item.branchOpenHours}"/>
@@ -103,7 +89,16 @@
                         <h:outputText value="#{msg.status}"/>
                     </f:facet>
                     <h:outputText value="#{item.generalStatusId.generalStatusName}"/>
-                </p:column>           
+                </p:column>    
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.images}"/>
+                    </f:facet>
+                    <p:commandLink id="viewImgLink" value="#{msg.images}" update=":viewImagesForm" 
+                    		oncomplete="PF('viewImagesDialog').show()" actionListener="#{branchController.showImagesModal(item)}"/>
+                </p:column>
+                       
             </p:dataTable>
 
             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{branchController.prepareCreate}" update=":branchCreateForm" oncomplete="PF('branchCreateDialog').show()"/>

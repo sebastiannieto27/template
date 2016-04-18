@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.util.StringUtils;
 
+import co.com.core.commons.ApplicationConstants;
 import co.com.core.commons.LoadBundle;
 import co.com.core.commons.SessionUtil;
 import co.com.core.commons.converter.UserUtil;
@@ -25,6 +26,7 @@ import co.com.core.domain.cms.GeneralStatus;
 import co.com.core.dto.UploadedFileDTO;
 import co.com.core.dto.UserDTO;
 import co.com.core.dto.cms.BranchDTO;
+import co.com.core.dto.cms.NewsDTO;
 import co.com.core.services.cms.IBranchService;
 
 
@@ -52,7 +54,7 @@ public class BranchController {
 	private boolean showThumbnailFile;
 	private String imagePath;
 	private String thumbnailPath;
-
+	
 	public void init() {
 		//items = brandService.getAll();
 		Map<String, Object> filter = new HashMap<String, Object>();
@@ -232,8 +234,24 @@ public class BranchController {
 		this.selectedGeneralStatusId = selected.getGeneralStatusId().getGeneralStatusId();
 	}
 	
+	public void showImagesModal(BranchDTO item) {
+		this.thumbailDto = new UploadedFileDTO();
+		this.thumbailDto.setName(item.getBranchThumbImg());
+		this.imageDto = new UploadedFileDTO();
+		this.imageDto.setName(item.getBranchBigImg());
+		this.showImageFile = true;
+		this.showThumbnailFile = true;
+	}
+	
+	
 	public void prepareCreate() {
 		selected = new BranchDTO();
+		this.thumbailDto = new UploadedFileDTO();
+		this.imageDto = new UploadedFileDTO();
+		this.showImageFile = false;
+		this.showThumbnailFile = false;
+		this.selectedGeneralStatusId = ApplicationConstants.ZERO_CONSTANT_VALUE;
+		this.selectedBranchTypeId = ApplicationConstants.ZERO_CONSTANT_VALUE;
 	}
 
 	public IBranchService getBranchService() {
@@ -340,5 +358,4 @@ public class BranchController {
 	public void setInternalCode(String internalCode) {
 		this.internalCode = internalCode;
 	}
-	
 }
