@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.util.StringUtils;
 
+import co.com.core.commons.ApplicationConstants;
 import co.com.core.commons.LoadBundle;
 import co.com.core.commons.SessionUtil;
 import co.com.core.commons.converter.UserUtil;
@@ -24,6 +25,7 @@ import co.com.core.controller.UploadedFileController;
 import co.com.core.dto.UploadedFileDTO;
 import co.com.core.dto.UserDTO;
 import co.com.core.dto.cms.CompanyEventDTO;
+import co.com.core.dto.cms.NewsDTO;
 import co.com.core.services.cms.ICompanyEventService;
 
 
@@ -48,6 +50,8 @@ public class CompanyEventController {
 	//filters
 	private String searchName;
 	private String searchLocation;
+	
+	private String descriptionForModal;
 	
 	public void init() {
 		
@@ -113,6 +117,65 @@ public class CompanyEventController {
 		
 	}
 	
+	public void showItemDescription(CompanyEventDTO item) {
+		this.descriptionForModal = item.getCompanyEventDesc();
+	}
+	
+	private UploadedFileDTO createUploadedFile(FileUploadEvent event) {
+		return uploadedFileController.upload(event, true);
+	}
+	
+	public void setThumbnailFileUpload(FileUploadEvent event) {
+		this.thumbnail = event;
+		thumbailDto = createUploadedFile(this.thumbnail);
+		this.showThumbnailFile = true;
+	}
+	
+	public void setImageFileUpload(FileUploadEvent event) {
+		this.image = event;
+		imageDto = createUploadedFile(this.image);
+		this.showImageFile = true;
+	}
+	
+	public String getImagePath() {
+		if(this.imageDto!=null) {
+			return LoadBundle.getApplicationProperty("imagesContextPath") + this.imageDto.getName();
+		}
+		return "";
+	}
+	
+	public String getThumbnailPath() {
+		if(this.thumbailDto!=null) {
+			return LoadBundle.getApplicationProperty("imagesContextPath") + this.thumbailDto.getName();
+		}
+		return "";
+	}
+	
+	public void prepareEdit() {
+		this.thumbailDto = new UploadedFileDTO();
+		this.thumbailDto.setName(selected.getCompanyEventThumbImg());
+		this.imageDto = new UploadedFileDTO();
+		this.imageDto.setName(selected.getCompanyEventBigImg());
+		this.showImageFile = true;
+		this.showThumbnailFile = true;
+	}
+	
+	public void prepareCreate() {
+		selected = new CompanyEventDTO();
+		this.thumbailDto = new UploadedFileDTO();
+		this.imageDto = new UploadedFileDTO();
+		this.showImageFile = false;
+		this.showThumbnailFile = false;
+	}
+	
+	public void showImagesModal(CompanyEventDTO item) {
+		this.thumbailDto = new UploadedFileDTO();
+		this.thumbailDto.setName(item.getCompanyEventThumbImg());
+		this.imageDto = new UploadedFileDTO();
+		this.imageDto.setName(item.getCompanyEventBigImg());
+		this.showImageFile = true;
+		this.showThumbnailFile = true;
+	}
 	
 	public void saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -175,48 +238,7 @@ public class CompanyEventController {
 		}
 	}
 
-	private UploadedFileDTO createUploadedFile(FileUploadEvent event) {
-		return uploadedFileController.upload(event, true);
-	}
 	
-	public void setThumbnailFileUpload(FileUploadEvent event) {
-		this.thumbnail = event;
-		thumbailDto = createUploadedFile(this.thumbnail);
-		this.showThumbnailFile = true;
-	}
-	
-	public void setImageFileUpload(FileUploadEvent event) {
-		this.image = event;
-		imageDto = createUploadedFile(this.image);
-		this.showImageFile = true;
-	}
-	
-	public String getImagePath() {
-		if(this.imageDto!=null) {
-			return LoadBundle.getApplicationProperty("imagesContextPath") + this.imageDto.getName();
-		}
-		return "";
-	}
-	
-	public String getThumbnailPath() {
-		if(this.thumbailDto!=null) {
-			return LoadBundle.getApplicationProperty("imagesContextPath") + this.thumbailDto.getName();
-		}
-		return "";
-	}
-	
-	public void prepareEdit() {
-		this.thumbailDto = new UploadedFileDTO();
-		this.thumbailDto.setName(selected.getCompanyEventThumbImg());
-		this.imageDto = new UploadedFileDTO();
-		this.imageDto.setName(selected.getCompanyEventBigImg());
-		this.showImageFile = true;
-		this.showThumbnailFile = true;
-	}
-	
-	public void prepareCreate() {
-		selected = new CompanyEventDTO();
-	}
 
 	public ICompanyEventService getCompanyEventService() {
 		return companyEventService;
@@ -289,6 +311,14 @@ public class CompanyEventController {
 
 	public void setSearchLocation(String searchLocation) {
 		this.searchLocation = searchLocation;
+	}
+
+	public String getDescriptionForModal() {
+		return descriptionForModal;
+	}
+
+	public void setDescriptionForModal(String descriptionForModal) {
+		this.descriptionForModal = descriptionForModal;
 	}
 	
 }

@@ -64,30 +64,22 @@
                     <h:outputText value="#{item.companyEventLocation}"/>
                 </p:column>
 
-
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.description}"/>
                     </f:facet>
-                    <h:outputText value="#{item.companyEventDesc}"/>
+                    <p:commandLink id="viewDescLink" value="#{msg.description}" update=":viewDescriptionForm" 
+                    		oncomplete="PF('viewDescriptionDialog').show()" actionListener="#{companyEventController.showItemDescription(item)}"/>
                 </p:column>
-
-
+                
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.thumbnail}"/>
+                        <h:outputText value="#{msg.images}"/>
                     </f:facet>
-                    <h:outputText value="#{item.companyEventThumbImg}"/>
+                    <p:commandLink id="viewImgLink" value="#{msg.images}" update=":viewImagesForm" 
+                    		oncomplete="PF('viewImagesDialog').show()" actionListener="#{companyEventController.showImagesModal(item)}"/>
                 </p:column>
-
-
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.image}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.companyEventBigImg}"/>
-                </p:column>
-
+                
             </p:dataTable>
             <p:commandButton id="createButton" icon="ui-icon-plus" value="#{msg.create}" actionListener="#{companyEventController.prepareCreate}" update=":companyEventCreateForm" oncomplete="PF('companyEventCreateDialog').show()"/>
             <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":companyEventViewForm" oncomplete="PF('companyEventViewDialog').show()" disabled="#{empty companyEventController.selected}"/>

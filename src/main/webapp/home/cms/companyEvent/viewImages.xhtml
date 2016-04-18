@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="viewImagesDlg" widgetVar="viewImagesDialog" modal="true" resizable="true"  appendTo="@(body)" header="#{msg.images}" closeOnEscape="true">
+
+            <h:form id="viewImagesForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.image}"/>
+                       	<h:graphicImage id="bigImageFile" url="#{companyEventController.imagePath}" width="150" height="100" rendered="#{companyEventController.showImageFile}"/>
+
+                        <p:outputLabel value="#{msg.thumbnail}" />
+                   		<h:graphicImage  id="tumbnailImageFile" url="#{companyEventController.thumbnailPath}" width="150" height="100" rendered="#{companyEventController.showThumbnailFile}"/>
+
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.close}" onclick="PF('viewDescriptionDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

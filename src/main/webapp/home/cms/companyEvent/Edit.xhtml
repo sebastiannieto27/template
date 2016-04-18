@@ -15,13 +15,13 @@
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{companyEventController.selected != null}">
 
                         <p:outputLabel value="#{msg.name}" for="companyEventTitle" />
-                        <p:inputText id="companyEventTitle" value="#{companyEventController.selected.companyEventTitle}" title="#{msg.name}" required="true" requiredMessage="#{msg.nameRequiredMessage}" size="150" maxlength="150"/>
+                        <p:inputText id="companyEventTitle" value="#{companyEventController.selected.companyEventTitle}" title="#{msg.name}" required="true" requiredMessage="#{msg.nameRequiredMessage}" size="70" maxlength="70"/>
 
                         <p:outputLabel value="#{msg.companyEventLocation}" for="companyEventLocation" />
-                        <p:inputText id="companyEventLocation" value="#{companyEventController.selected.companyEventLocation}" title="#{msg.companyEventLocation}" size="150" maxlength="150"/>
+                        <p:inputText id="companyEventLocation" value="#{companyEventController.selected.companyEventLocation}" title="#{msg.companyEventLocation}" size="70" maxlength="70"/>
 
                         <p:outputLabel value="#{msg.description}" for="companyEventDesc" />
-                        <p:inputTextarea rows="4" cols="30" id="companyEventDesc" value="#{companyEventController.selected.companyEventDesc}" title="#{msg.description}" />
+                        <p:inputTextarea rows="4" cols="60" id="companyEventDesc" value="#{companyEventController.selected.companyEventDesc}" title="#{msg.description}" />
 
                          <p:outputLabel value="#{msg.image}"/>
                         <p:panelGrid columns="2" style="width:100%" id="panelImage">
