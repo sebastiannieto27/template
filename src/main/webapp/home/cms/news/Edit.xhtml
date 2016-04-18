@@ -40,11 +40,11 @@
                                            />
                      	</p:selectOneMenu>
                         
-                        <p:outputLabel value="#{msg.startDate}" for="newsDateStart" />
-                        <p:calendar id="newsDateStart" pattern="MM/dd/yyyy HH:mm:ss" value="#{newsController.selected.newsDateStart}" title="#{msg.startDate}" required="true" requiredMessage="#{msg.startDateNameRequired}" showOn="button"/>
+                   		<p:outputLabel value="#{msg.startDate}" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{newsController.selected.newsDateStart}" title="#{msg.startDate}" required="true" requiredMessage="#{msg.startDate}" effect="fold"/>
 
-                        <p:outputLabel value="#{msg.endDate}" for="newsDateExpire" />
-                        <p:calendar id="newsDateExpire" pattern="MM/dd/yyyy HH:mm:ss" value="#{newsController.selected.newsDateExpire}" title="#{msg.endDate}" required="true" requiredMessage="#{msg.endDateNameRequired}" showOn="button"/>
+                        <p:outputLabel value="#{msg.endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy" value="#{newsController.selected.newsDateExpire}" title="#{msg.endDate}" required="true" requiredMessage="#{msg.endDate}" effect="fold"/>
                         
                         <p:outputLabel value="#{msg.description}" for="newsLongDesc" />
                         <p:inputTextarea rows="4" cols="80" id="newsLongDesc" value="#{newsController.selected.newsLongDesc}" title="#{msg.description}" />

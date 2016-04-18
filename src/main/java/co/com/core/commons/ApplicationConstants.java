@@ -15,4 +15,6 @@ public interface ApplicationConstants {
 	public static final String START_OF_DAY_TIME = "00:00:00";
 	
 	public static final long INVALID_LOGIN_ATTEMPS_ALLOWED = 3;
+	
+	public static final int ZERO_CONSTANT_VALUE = 0;
 }
