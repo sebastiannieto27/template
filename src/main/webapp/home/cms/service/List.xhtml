@@ -6,19 +6,31 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-    <h:form id="ServiceListForm">
+    <h:form id="serviceListForm">
 
-        <p:panel header="#{msg.ListServiceTitle}">
-            <p:contextMenu id="ServiceDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('ServiceListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{msg.View}" onclick="document.getElementById('ServiceListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('ServiceListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('ServiceListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{msg.ServiceMenuItem_brandServiceCollection}" icon="ui-icon-search"  action="#{serviceController.navigateBrandServiceCollection}" disabled="#{empty serviceController.selected.brandServiceCollection}" ajax="false"/>  
-                <p:menuitem value="#{msg.ServiceMenuItem_userId}" icon="ui-icon-search"  actionListener="#{serviceController.prepareUserId}" update=":UserViewForm" oncomplete="PF('UserViewDialog').show()" disabled="#{empty serviceController.selected.userId}"/>  
-            </p:contextMenu>
-            <p:dataTable id="datalist"
+        <p:panel header="#{msg.service}">
+        
+       			<h:panelGroup id="searchForm">
+	            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+	            		
+	           			<p:outputLabel for="rtvServiceName" value="#{msg.name}:" />
+						<p:inputText id="rtvServiceName" value="#{serviceController.searchName}" title="#{msg.name}:"/>
+	
+						<p:outputLabel value="#{msg.status}" for="rtvStatusId" />
+                        <p:selectOneMenu id="rtvStatusId" value="#{serviceController.searchStatusId}">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{generalStatusController.items}"
+                                           var="generalStatusIdItem"
+                                           itemValue="#{generalStatusIdItem.generalStatusId}"
+                                           itemLabel="#{generalStatusIdItem.generalStatusName.toString()}"
+                                           />
+                        </p:selectOneMenu>
+                        
+          				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{serviceController.init()}" update=":serviceListForm" />
+           			</p:panelGrid>
+               </h:panelGroup>
+    
+   			<p:dataTable id="datalist"
                          value="#{serviceController.items}"
                          var="item"
                          rowKey="#{item.serviceId}"
@@ -27,73 +39,69 @@
                          rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
                          selection="#{serviceController.selected}">
-
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ServiceDataTableContextMenu" listener="#{serviceController.resetParents}"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ServiceDataTableContextMenu" listener="#{serviceController.resetParents}"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{serviceController.resetParents}"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ServiceListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.serviceId}" filterBy="#{item.serviceId}">
+                
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton" />
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton" />
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('serviceListForm:viewButton').click();"/>
+                
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListServiceTitle_serviceId}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.serviceId}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.serviceName}" filterBy="#{item.serviceName}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.ListServiceTitle_serviceName}"/>
+                        <h:outputText value="#{msg.name}"/>
                     </f:facet>
                     <h:outputText value="#{item.serviceName}"/>
                 </p:column>
 
-
-                <p:column sortBy="#{item.serviceDesc}" filterBy="#{item.serviceDesc}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListServiceTitle_serviceDesc}"/>
+                        <h:outputText value="#{msg.generalStatus}"/>
                     </f:facet>
-                    <h:outputText value="#{item.serviceDesc}"/>
+                    <h:outputText value="#{item.generalStatusId.generalStatusName}"/>
                 </p:column>
 
-
-                <p:column sortBy="#{item.generalStatusId}" filterBy="#{item.generalStatusId}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListServiceTitle_generalStatusId}"/>
+                        <h:outputText value="#{msg.user}"/>
                     </f:facet>
-                    <h:outputText value="#{item.generalStatusId}"/>
+                    <h:outputText value="#{item.userId.completeName}"/>
                 </p:column>
-
-
-                <p:column sortBy="#{item.dateCre}" filterBy="#{item.dateCre}">
+                
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListServiceTitle_dateCre}"/>
+                        <h:outputText value="#{msg.creationDate}"/>
                     </f:facet>
                     <h:outputText value="#{item.dateCre}">
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                     </h:outputText>
                 </p:column>
-
-
-                <p:column sortBy="#{item.userId.firstName}" filterBy="#{item.userId.firstName}">
+                
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListServiceTitle_userId}"/>
+                        <h:outputText value="#{msg.description}"/>
                     </f:facet>
-                    <h:outputText value="#{item.userId.firstName}"/>
+                    <p:commandLink id="viewDescLink" value="#{msg.description}" update=":viewDescriptionForm" 
+                    		oncomplete="PF('viewDescriptionDialog').show()" actionListener="#{serviceController.showItemDescription(item)}"/>
                 </p:column>
 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.images}"/>
+                    </f:facet>
+                    <p:commandLink id="viewImgLink" value="#{msg.images}" update=":viewImagesForm" 
+                    		oncomplete="PF('viewImagesDialog').show()" actionListener="#{serviceController.showImagesModal(item)}"/>
+                </p:column>
 
             </p:dataTable>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{serviceController.prepareCreate}" update=":ServiceCreateForm" oncomplete="PF('ServiceCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":ServiceViewForm" oncomplete="PF('ServiceViewDialog').show()" disabled="#{empty serviceController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":ServiceEditForm" oncomplete="PF('ServiceEditDialog').show()" disabled="#{empty serviceController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{serviceController.delete}" update=":growl,datalist" disabled="#{empty serviceController.selected}">
-                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{serviceController.prepareCreate}" update=":serviceCreateForm" oncomplete="PF('serviceCreateDialog').show()"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":serviceViewForm" oncomplete="PF('serviceViewDialog').show()" disabled="#{empty serviceController.selected}"/>
+            <p:commandButton id="editButton"  icon="ui-icon-pencil" value="#{msg.edit}" actionListener="#{serviceController.prepareEdit}" update=":serviceEditForm" oncomplete="PF('serviceEditDialog').show()" disabled="#{empty serviceController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{serviceController.delete}" update=":growl,datalist" disabled="#{empty serviceController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
             </p:commandButton>
 
         </p:panel>
-        <ui:include src="/confirmation.xhtml"/>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
     </h:form>
 
 </ui:composition>

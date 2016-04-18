@@ -91,4 +91,8 @@
 		<view-id value="/home/cms/companyEvent/index.xhtml" />
 	</url-mapping>	
 	
+	<url-mapping id="service">
+		<pattern value="/cms/servicio" />
+		<view-id value="/home/cms/service/index.xhtml" />
+	</url-mapping>	
 </pretty-config>

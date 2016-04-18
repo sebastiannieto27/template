@@ -15,7 +15,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="1" columnClasses="column">
 
-                        <h:outputText value="#{newsController.descriptionForModal}"/>
+                        <h:outputText value="#{newsController.descriptionForModal}" styleClass="ui-break-words"/>
 
                     </p:panelGrid>
                     <p:commandButton value="#{msg.close}" onclick="PF('newsViewDescriptionDialog').hide()"/>

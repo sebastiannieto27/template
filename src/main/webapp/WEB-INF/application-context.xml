@@ -166,6 +166,10 @@
 	    <bean id="companyEventDAO" class="co.com.core.dao.cms.impl.CompanyEventDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
+	    	    	    	    	    
+	    <bean id="serviceDAO" class="co.com.core.dao.cms.impl.ServiceDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -261,6 +265,10 @@
 	    	    	    	    	    	    
    	    <bean id="companyEventService" class="co.com.core.services.cms.impl.CompanyEventServiceImpl">
 	    	<property name="companyEventDAO" ref="companyEventDAO" />
+	    </bean>
+	    	    	    	    	    	    	    
+   	    <bean id="serviceService" class="co.com.core.services.cms.impl.ServiceServiceImpl">
+	    	<property name="serviceDAO" ref="serviceDAO" />
 	    </bean>
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -378,6 +386,11 @@
                     
     <bean id="companyEventController" scope="session" class="co.com.core.controller.cms.CompanyEventController" init-method="init">
     	<property name="companyEventService" ref="companyEventService" />
+   		<property name="uploadedFileController" ref="uploadedFileController" />
+    </bean>
+                        
+    <bean id="serviceController" scope="session" class="co.com.core.controller.cms.ServiceController" init-method="init">
+    	<property name="serviceService" ref="serviceService" />
    		<property name="uploadedFileController" ref="uploadedFileController" />
     </bean>
 </beans>

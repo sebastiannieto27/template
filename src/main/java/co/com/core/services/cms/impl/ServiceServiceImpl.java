@@ -2,12 +2,16 @@ package co.com.core.services.cms.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import co.com.core.commons.converter.cms.BranchUtil;
 import co.com.core.commons.converter.cms.ServiceUtil;
 import co.com.core.dao.cms.ServiceDAO;
+import co.com.core.domain.cms.Branch;
 import co.com.core.domain.cms.Service;
+import co.com.core.dto.cms.BranchDTO;
 import co.com.core.dto.cms.ServiceDTO;
 import co.com.core.services.cms.IServiceService;
 
@@ -28,6 +32,18 @@ public class ServiceServiceImpl implements IServiceService {
 		return Services;
 	}
 
+	@Override
+	public List<ServiceDTO> getAllFilter(Map<String, Object> filter) {
+		List<ServiceDTO> dtoList = new ArrayList<ServiceDTO>();
+		List<Service> entityList = serviceDAO.getAllFilter(filter);
+		if(entityList!=null && entityList.size() > 0) {
+			for(Service entity : entityList) {
+				dtoList.add(ServiceUtil.getDtoFromEntity(entity));
+			}
+		}
+		return dtoList;
+	}
+	
 	@Override
 	public void create(ServiceDTO dto) {
 		serviceDAO.create(ServiceUtil.getEntityFromDto(dto));

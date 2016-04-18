@@ -17,7 +17,7 @@
                     <p:panelGrid columns="2" columnClasses="column">
 
                         <p:outputLabel value="#{msg.name}" for="generalStatusName" />
-                        <p:inputText id="generalStatusName" value="#{generalStatusController.selected.generalStatusName}" required="true" requiredMessage="#{msg.nameRequiredMessage}" title="#{msg.name}" size="150" maxlength="150"/>
+                        <p:inputText id="generalStatusName" value="#{generalStatusController.selected.generalStatusName}" required="true" requiredMessage="#{msg.nameRequiredMessage}" title="#{msg.name}" size="50" maxlength="50"/>
                         
                     </p:panelGrid>
                     <p:commandButton actionListener="#{generalStatusController.saveNew}" value="#{msg.save}" update="display,:generalStatusListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('generalStatusCreateDialog'));">

@@ -63,4 +63,7 @@
     	margin: 0 auto;
 	}
 	
+	.ui-break-words {
+		word-wrap: break-word;
+	}
 	

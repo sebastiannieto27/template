@@ -11,6 +11,8 @@ public class ServiceUtil {
 		dto.setServiceName(entity.getServiceName());
 		dto.setServiceDesc(entity.getServiceDesc());
 		dto.setGeneralStatusId(entity.getGeneralStatusId());
+		dto.setServiceImgPath(entity.getServiceImgPath());
+		dto.setServiceThumbImgPath(entity.getServiceThumbImgPath());
 		dto.setDateCre(entity.getDateCre());
 		dto.setUserId(entity.getUserId());
 		return dto;
@@ -21,6 +23,8 @@ public class ServiceUtil {
 		entity.setServiceId(dto.getServiceId());
 		entity.setServiceName(dto.getServiceName());
 		entity.setServiceDesc(dto.getServiceDesc());
+		entity.setServiceImgPath(dto.getServiceImgPath());
+		entity.setServiceThumbImgPath(dto.getServiceThumbImgPath());		
 		entity.setGeneralStatusId(dto.getGeneralStatusId());
 		entity.setDateCre(dto.getDateCre());
 		entity.setUserId(dto.getUserId());
