@@ -94,5 +94,10 @@
 	<url-mapping id="service">
 		<pattern value="/cms/servicio" />
 		<view-id value="/home/cms/service/index.xhtml" />
-	</url-mapping>	
+	</url-mapping>
+		
+	<url-mapping id="branchService">
+		<pattern value="/cms/servicio-sede" />
+		<view-id value="/home/cms/branchService/index.xhtml" />
+	</url-mapping>		
 </pretty-config>

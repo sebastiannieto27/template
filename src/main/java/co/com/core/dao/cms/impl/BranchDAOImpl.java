@@ -63,7 +63,7 @@ public class BranchDAOImpl implements BranchDAO {
 					if(branchName!=null && !branchName.isEmpty()) {
 						where = true;
 						hql.append("WHERE ");
-						hql.append("lower(b.branchName) LIKE :branchName");
+						hql.append(" lower(b.branchName) LIKE :branchName ");
 					}
 					
 					if(branchAddress!=null && !branchAddress.isEmpty()) {
@@ -71,7 +71,12 @@ public class BranchDAOImpl implements BranchDAO {
 							where = true;
 							hql.append("WHERE ");
 						}
-						hql.append("lower(b.branchAddress) LIKE :branchAddress");
+						
+						if(branchName!=null && !branchName.isEmpty()) {
+							hql.append(" AND ");
+						}
+						
+						hql.append(" lower(b.branchAddress) LIKE :branchAddress ");
 					}
 					
 					if(branchInternalCode!=null && !branchInternalCode.isEmpty()) {
@@ -79,7 +84,12 @@ public class BranchDAOImpl implements BranchDAO {
 							where = true;
 							hql.append("WHERE ");
 						}
-						hql.append("lower(b.branchInternalCode) LIKE :branchInternalCode");
+						
+						if((branchName!=null && !branchName.isEmpty()) || (branchAddress!=null && !branchAddress.isEmpty())) {
+							hql.append(" AND ");
+						}
+						
+						hql.append(" lower(b.branchInternalCode) LIKE :branchInternalCode ");
 					}
 				}
 				

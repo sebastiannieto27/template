@@ -60,7 +60,7 @@ public class NewsDAOImpl implements NewsDAO {
 					if(newsTitle!=null && !newsTitle.isEmpty()) {
 						where = true;
 						hql.append("WHERE ");
-						hql.append("lower(n.newsTitle) LIKE :newsTitle");
+						hql.append(" lower(n.newsTitle) LIKE :newsTitle ");
 					}
 					
 					if(type!=null) {
@@ -68,7 +68,13 @@ public class NewsDAOImpl implements NewsDAO {
 							where = true;
 							hql.append("WHERE ");
 						}
-						hql.append("n.newsTypeId = :newsTypeId");
+						
+						if(newsTitle!=null && !newsTitle.isEmpty()) {
+							hql.append(" AND ");
+						}
+						
+						
+						hql.append(" n.newsTypeId = :newsTypeId ");
 					}
 				}
 				

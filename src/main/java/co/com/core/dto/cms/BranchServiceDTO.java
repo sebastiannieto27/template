@@ -16,11 +16,12 @@ import co.com.core.domain.cms.Service;
 
 public class BranchServiceDTO {
 	
-	 private Integer branchServiceId;
+	 	private Integer branchServiceId;
 	    private Date dateCre;
 	    private Service serviceId;
 	    private Branch branchId;
 	    private User userId;
+	    
 		public Integer getBranchServiceId() {
 			return branchServiceId;
 		}
@@ -55,7 +56,7 @@ public class BranchServiceDTO {
 		public String toString() {
 			return "BranchServiceDTO [branchServiceId=" + branchServiceId
 					+ ", dateCre=" + dateCre + ", serviceId=" + serviceId
-					+ ", branchId=" + branchId + ", userId=" + userId + "]";
+					+ ", branchId=" + branchId + ", userId=" + "]";
 		}
     
 	

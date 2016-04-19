@@ -17,22 +17,22 @@
                     <p:panelGrid columns="2" columnClasses="column">
 
                         <p:outputLabel value="#{msg.service}" for="serviceId" />
-                        <p:selectOneMenu id="serviceId" value="#{branchServiceController.selected.serviceId}" required="true" requiredMessage="#{msg.serviceRequiredMessage}" converter="serviceConverter">
+                        <p:selectOneMenu id="serviceId" value="#{branchServiceController.selectedServiceId}" required="true" requiredMessage="#{msg.serviceRequiredMessage}">
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{serviceController.items}"
                                            var="serviceIdItem"
-                                           itemValue="#{serviceIdItem}"
+                                           itemValue="#{serviceIdItem.serviceId}"
                                            itemLabel="#{serviceIdItem.serviceName.toString()}"
                                            />
 
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{msg.branch}" for="branchId" />
-                        <p:selectOneMenu id="branchId" value="#{branchServiceController.selected.branchId}" required="true" requiredMessage="#{msg.branchRequiredMessage}" converter="branchConverter">
+                        <p:selectOneMenu id="branchId" value="#{branchServiceController.selectedBranchId}" required="true" requiredMessage="#{msg.branchRequiredMessage}">
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{branchController.items}"
                                            var="branchIdItem"
-                                           itemValue="#{branchIdItem}"
+                                           itemValue="#{branchIdItem.branchId}"
                                            itemLabel="#{branchIdItem.branchName.toString()}"
                                            />
 

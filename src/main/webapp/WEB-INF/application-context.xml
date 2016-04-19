@@ -170,6 +170,7 @@
 	    <bean id="serviceDAO" class="co.com.core.dao.cms.impl.ServiceDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
+    
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -270,6 +271,7 @@
    	    <bean id="serviceService" class="co.com.core.services.cms.impl.ServiceServiceImpl">
 	    	<property name="serviceDAO" ref="serviceDAO" />
 	    </bean>
+	    	    	    	    	    	    	    	    
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
