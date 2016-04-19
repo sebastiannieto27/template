@@ -9,19 +9,23 @@
     <body>
 	    <ui:composition>
 
-    <h:form id="AccountAgeListForm">
+    <h:form id="accountAgeListForm">
 
         <p:panel header="#{msg.accountage}">
-            <p:contextMenu id="AccountAgeDataTableContextMenu" for="datalist">  
-<!--                 <p:menuitem value="#{msg.Create}" onclick="document.getElementById('AccountAgeListForm:createButton').click();" icon="ui-icon-plus"/> -->
-                <p:menuitem value="#{msg.View}" onclick="document.getElementById('AccountAgeListForm:viewButton').click();" icon="ui-icon-search"/>
-<!--                 <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('AccountAgeListForm:editButton').click();" icon="ui-icon-pencil"/> -->
-<!--                 <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('AccountAgeListForm:deleteButton').click();" icon="ui-icon-trash"/> -->
-                <p:separator/>
-                <p:menuitem value="#{msg.childmenuitem msg.branchclient}" icon="ui-icon-search"  actionListener="#{accountAgeController.prepareBranchClientId}" update=":BranchClientViewForm" oncomplete="BranchClientViewDialog.show()" disabled="#{empty accountAgeController.selected.branchClientId}"/>  
-                <p:menuitem value="#{msg.childmenuitem msg.clientid}" icon="ui-icon-search"  actionListener="#{accountAgeController.prepareClientId}" update=":ClientViewForm" oncomplete="ClientViewDialog.show()" disabled="#{empty accountAgeController.selected.clientId}"/>  
-                <p:menuitem value="#{msg.childmenuitem msg.accountagedet}" icon="ui-icon-search"  action="#{accountAgeController.navigateAccountAgeDetCollection}" disabled="#{empty accountAgeController.selected.accountAgeDetCollection}" ajax="false"/>  
-            </p:contextMenu>
+            
+            <h:panelGroup id="searchForm">
+	            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+	            		
+            			<p:outputLabel for="rtvName" value="#{msg.name}:" />
+						<p:inputText id="rtvName" value="----" title="#{msg.name}:"/>
+
+           				<p:outputLabel for="rtvClient" value="#{msg.brandAddress}:" />
+						<p:inputText id="rtvClient" value="---" title="#{msg.brandAddress}:"/>
+
+           				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{accountAgeController.init()}" update=":accountAgeListForm" />
+           			</p:panelGrid>
+               </h:panelGroup>
+               
             <p:dataTable id="datalist"
                          value="#{accountAgeController.items}"
                          var="item"
@@ -32,19 +36,12 @@
                          selectionMode="single"
                          selection="#{accountAgeController.selected}">
 
-                <p:ajax event="rowSelect"   update="@form:viewButton,@form:AccountAgeDataTableContextMenu" listener="#{accountAgeController.resetParents}"/>
-                <p:ajax event="rowUnselect" update="@form:viewButton,@form:AccountAgeDataTableContextMenu" listener="#{accountAgeController.resetParents}"/>
-                <p:ajax event="contextMenu" update="@form:viewButton  " listener="#{accountAgeController.resetParents}"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('AccountAgeListForm:viewButton').click();"/>
+                <p:ajax event="rowSelect"   update="@form:viewButton" />
+                <p:ajax event="rowUnse1lect" update="@form:viewButton" />
+                <p:ajax event="contextMenu" update="@form:viewButton" />
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('accountAgeListForm:viewButton').click();"/>
 
-<!--                 <p:column sortBy="#{item.accountAgeId}" filterBy="#{item.accountAgeId}"> -->
-<!--                     <f:facet name="header"> -->
-<!--                         <h:outputText value="#{msg.ListAccountAgeTitle_accountAgeId}"/> -->
-<!--                     </f:facet> -->
-<!--                     <h:outputText value="#{item.accountAgeId}"/> -->
-<!--                 </p:column> -->
-
-                <p:column sortBy="#{item.branchClientId.branchClName}" filterBy="#{item.branchClientId.branchClName}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.branchclient}"/>
                     </f:facet>
@@ -62,12 +59,7 @@
 
             </p:dataTable>
 
-<!--             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{accountAgeController.prepareCreate}" update=":AccountAgeCreateForm" oncomplete="AccountAgeCreateDialog.show()"/> -->
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":AccountAgeViewForm" oncomplete="AccountAgeViewDialog.show()" disabled="#{empty accountAgeController.selected}"/>
-<!--             <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":AccountAgeEditForm" oncomplete="AccountAgeEditDialog.show()" disabled="#{empty accountAgeController.selected}"/> -->
-<!--             <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{accountAgeController.delete}" update=":growl,datalist" disabled="#{empty accountAgeController.selected}"> -->
-<!--                 <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/> -->
-            </p:commandButton>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":accountAgeViewForm" oncomplete="accountAgeViewDialog.show()" disabled="#{empty accountAgeController.selected}"/>
 
         </p:panel>
              <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>

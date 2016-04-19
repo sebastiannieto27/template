@@ -1,8 +1,5 @@
 package co.com.core.dto.financial.account;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import co.com.core.domain.financial.account.BranchClient;
 import co.com.core.domain.financial.account.Client;
 

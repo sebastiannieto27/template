@@ -9,11 +9,4 @@ public interface AccountAgeDAO {
 
 	public List<AccountAge> getAll();
 	
-//	public void createAccountAge(AccountAge AccountAge);
-//	
-//	public void delete(AccountAge AccountAge);
-//	
-//	public void update(AccountAge AccountAge);
-	
-//	public List<AccountAge> getAccountAgeByURL(String url);
 }

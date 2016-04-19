@@ -4,7 +4,7 @@ import java.util.List;
 
 import co.com.core.dto.financial.account.AccountAgeDTO;
 
-public interface IAccountAge {
+public interface IAccountAgeService {
 	
 	public List<AccountAgeDTO> getAll(); 
 	

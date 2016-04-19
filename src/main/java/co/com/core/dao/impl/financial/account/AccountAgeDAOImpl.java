@@ -36,11 +36,5 @@ public class AccountAgeDAOImpl implements AccountAgeDAO {
 		}
 		return entityList;
 	}
-//
-//	@Override
-//	public List<AccountAge> getAccountAgeByURL(String url) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 	
 }
