@@ -18,19 +18,11 @@
                         <h:outputText value="#{msg.service}"/>
                         <h:outputText value="#{branchServiceController.selected.branchServiceId}" title="#{msg.service}"/>
 
-                        <h:outputText value="#{msg.user}"/>
-                        <h:outputText value="#{branchServiceController.selected.userId}" title="#{msg.user}"/>
-
-                        <h:outputText value="#{msg.creationDate}"/>
-                        <h:outputText value="#{branchServiceController.selected.dateCre}" title="#{msg.creationDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
-
                         <h:outputText value="#{msg.name}"/>
-                        <h:outputText value="#{branchServiceController.selected.serviceId.serviceName}"/>
+                        <h:outputText value="#{branchServiceController.selected.serviceId.serviceName.toString()}"/>
 
                         <h:outputText value="#{msg.branch}"/>
-                        <h:outputText value="#{branchServiceController.selected.branchId.branchName}"/>
+                        <h:outputText value="#{branchServiceController.selected.branchId.branchName.toString()}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{msg.close}" onclick="PF('branchServiceViewDialog').hide()"/>
                 </h:panelGroup>
