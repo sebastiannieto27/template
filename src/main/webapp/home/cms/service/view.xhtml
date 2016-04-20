@@ -25,7 +25,7 @@
                         <h:outputText value="#{serviceController.selected.serviceDesc}" title="#{msg.description}"/>
 
                         <h:outputText value="#{msg.generalStatus}"/>
-                        <h:outputText value="#{serviceController.selected.generalStatusId}" title="#{msg.generalStatus}"/>
+                        <h:outputText value="#{serviceController.selected.generalStatusId.generalStatusName.toString()}" title="#{msg.generalStatus}"/>
 
                         <h:outputText value="#{msg.creationDate}"/>
                         <h:outputText value="#{serviceController.selected.dateCre}" title="#{msg.creationDate}">
