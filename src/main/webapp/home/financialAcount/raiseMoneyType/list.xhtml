@@ -1,22 +1,32 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
 
-    <h:form id="RaiseMoneyTypeListForm">
+    <h:form id="raiseMoneyTypeListForm">
 
-        <p:panel header="#{msg.ListRaiseMoneyTypeTitle}">
-            <p:contextMenu id="RaiseMoneyTypeDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('RaiseMoneyTypeListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{msg.View}" onclick="document.getElementById('RaiseMoneyTypeListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('RaiseMoneyTypeListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('RaiseMoneyTypeListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{msg.RaiseMoneyTypeMenuItem_raiseMoneyCollection}" icon="ui-icon-search"  action="#{raiseMoneyTypeController.navigateRaiseMoneyCollection}" disabled="#{empty raiseMoneyTypeController.selected.raiseMoneyCollection}" ajax="false"/>  
+        <p:panel header="#{msg.raiseMoneyType}">
+        
+        	<h:panelGroup id="searchForm">
+            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+            		
+           			<p:outputLabel for="rtvName" value="#{msg.name}:" />
+					<p:inputText id="rtvName" value="#{raiseMoneyTypeController.searchName}" title="#{msg.name}:"/>
+
+         			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{raiseMoneyTypeController.init()}" update=":raiseMoneyTypeListForm" />
+       			</p:panelGrid>
+           	</h:panelGroup>
+        
+            <p:contextMenu id="raiseMoneyTypeDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.view}" onclick="document.getElementById('raiseMoneyTypeListForm:viewButton').click();" icon="ui-icon-search"/>
             </p:contextMenu>
+            
             <p:dataTable id="datalist"
                          value="#{raiseMoneyTypeController.items}"
                          var="item"
@@ -27,22 +37,22 @@
                          selectionMode="single"
                          selection="#{raiseMoneyTypeController.selected}">
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:RaiseMoneyTypeDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:RaiseMoneyTypeDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('RaiseMoneyTypeListForm:viewButton').click();"/>
+                <p:ajax event="rowSelect"   update="@form:viewButton,@form:raiseMoneyTypeDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:viewButton,@form:raiseMoneyTypeDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:viewButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('raiseMoneyTypeListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.raiseMoneyTypeId}" filterBy="#{item.raiseMoneyTypeId}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListRaiseMoneyTypeTitle_raiseMoneyTypeId}"/>
+                        <h:outputText value="#{msg.id}"/>
                     </f:facet>
                     <h:outputText value="#{item.raiseMoneyTypeId}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.raiseMonTypeName}" filterBy="#{item.raiseMonTypeName}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListRaiseMoneyTypeTitle_raiseMonTypeName}"/>
+                        <h:outputText value="#{msg.name}"/>
                     </f:facet>
                     <h:outputText value="#{item.raiseMonTypeName}"/>
                 </p:column>
@@ -50,15 +60,11 @@
 
             </p:dataTable>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{raiseMoneyTypeController.prepareCreate}" update=":RaiseMoneyTypeCreateForm" oncomplete="RaiseMoneyTypeCreateDialog.show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":RaiseMoneyTypeViewForm" oncomplete="RaiseMoneyTypeViewDialog.show()" disabled="#{empty raiseMoneyTypeController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":RaiseMoneyTypeEditForm" oncomplete="RaiseMoneyTypeEditDialog.show()" disabled="#{empty raiseMoneyTypeController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{raiseMoneyTypeController.delete}" update=":growl,datalist" disabled="#{empty raiseMoneyTypeController.selected}">
-                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":raiseMoneyTypeViewForm" oncomplete="raiseMoneyTypeViewDialog.show()" disabled="#{empty raiseMoneyTypeController.selected}"/>
 
         </p:panel>
-        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
-    </h:form>
-
-</ui:composition>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+</h:form>
+     </ui:composition>
+    </body>
+</html>

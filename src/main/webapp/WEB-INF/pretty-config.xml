@@ -107,4 +107,10 @@
 		<pattern value="/cartera/impuesto" />
 		<view-id value="/home/financialAcount/tax/index.xhtml" />
 	</url-mapping>	
+	
+	<url-mapping id="raiseMoneyType">
+		<pattern value="/cartera/tasa-cambio" />
+		<view-id value="/home/financialAcount/raiseMoneyType/index.xhtml" />
+	</url-mapping>	
+	
 </pretty-config>

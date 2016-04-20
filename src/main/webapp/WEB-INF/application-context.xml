@@ -156,7 +156,7 @@
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
     
-    	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
+<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
     
 	    <bean id="branchDAO" class="co.com.core.dao.cms.impl.BranchDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
@@ -190,13 +190,13 @@
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
     
-	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
-	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
-	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
-	    
 <!-- Account Financial Module  Account Financial Module  Account Financial Module -->
 	    
   	    <bean id="taxDAO" class="co.com.core.dao.impl.financial.account.TaxDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    	    
+  	    <bean id="raiseMoneyTypeDAO" class="co.com.core.dao.impl.financial.account.RaiseMoneyTypeDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -267,7 +267,7 @@
     	<property name="uploadedFileDAO" ref="uploadedFileDAO" />
     </bean>
     
-   	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
+<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
 		<bean id="branchService" class="co.com.core.services.cms.impl.BranchServiceImpl">
 	    	<property name="branchDAO" ref="branchDAO" />
 	    </bean>
@@ -299,16 +299,16 @@
    	    <bean id="serviceService" class="co.com.core.services.cms.impl.ServiceServiceImpl">
 	    	<property name="serviceDAO" ref="serviceDAO" />
 	    </bean>
+	
 	    	    	    	    	    	    	    	    
-   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
-   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
-   	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
-
 <!-- Account Financial Module  Account Financial Module  Account Financial Module -->
    	    <bean id="taxService" class="co.com.core.services.impl.financial.account.TaxServiceImpl">
 	    	<property name="taxDAO" ref="taxDAO" />
 	    </bean>
-
+	    
+   	    <bean id="raiseMoneyTypeService" class="co.com.core.services.impl.financial.account.RaiseMoneyTypeServiceImpl">
+	    	<property name="raiseMoneyTypeDAO" ref="raiseMoneyTypeDAO" />
+	    </bean>
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -437,4 +437,9 @@
     <bean id="taxController" scope="session" class="co.com.core.controller.financial.account.TaxController" init-method="init">
     	<property name="taxService" ref="taxService" />
     </bean>
+    
+    <bean id="raiseMoneyTypeController" scope="session" class="co.com.core.controller.financial.account.RaiseMoneyTypeController" init-method="init">
+    	<property name="raiseMoneyTypeService" ref="raiseMoneyTypeService" />
+    </bean>
+    
 </beans>

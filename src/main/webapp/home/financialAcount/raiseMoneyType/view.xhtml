@@ -8,20 +8,20 @@
 
     <ui:composition>
 
-        <p:dialog id="RaiseMoneyTypeViewDlg" widgetVar="RaiseMoneyTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewRaiseMoneyTypeTitle}" closeOnEscape="true">
+        <p:dialog id="raiseMoneyTypeViewDlg" widgetVar="raiseMoneyTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.raiseMoneyType}" closeOnEscape="true">
 
-            <h:form id="RaiseMoneyTypeViewForm">
+            <h:form id="raiseMoneyTypeViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{raiseMoneyTypeController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewRaiseMoneyTypeLabel_raiseMoneyTypeId}"/>
-                        <h:outputText value="#{raiseMoneyTypeController.selected.raiseMoneyTypeId}" title="#{msg.ViewRaiseMoneyTypeTitle_raiseMoneyTypeId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{raiseMoneyTypeController.selected.raiseMoneyTypeId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewRaiseMoneyTypeLabel_raiseMonTypeName}"/>
-                        <h:outputText value="#{raiseMoneyTypeController.selected.raiseMonTypeName}" title="#{msg.ViewRaiseMoneyTypeTitle_raiseMonTypeName}"/>
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{raiseMoneyTypeController.selected.raiseMonTypeName}" title="#{msg.name}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="RaiseMoneyTypeViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="raiseMoneyTypeViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>
