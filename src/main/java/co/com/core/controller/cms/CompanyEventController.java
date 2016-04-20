@@ -55,67 +55,18 @@ public class CompanyEventController {
 	
 	public void init() {
 		
-		List<FilterBean> fiilterList = new ArrayList<FilterBean>();
-		FilterBean property0 = null;
-		if(searchName!=null && !searchName.isEmpty()) {
-			property0 = new FilterBean();
-			property0.setKey("property0");
-			property0.setName("c.companyEventTitle");
-			property0.setQueryParameterName("companyEventTitle");
-			property0.setHQLName(":companyEventTitle");
-			property0.setConditional("like");
-			property0.setFunction("lower");
-			property0.setValue(searchName);
-			property0.setQueryParameter("%"+searchName+"%");
-			fiilterList.add(property0);
+		Map<String, Object> filter = new HashMap<String, Object>();
+		if(StringUtils.hasText(searchName)) {
+			filter.put("companyEventTitle", searchName);
 		}
 		
-		if(searchLocation!=null && !searchLocation.isEmpty()) {
-			FilterBean property1 = new FilterBean();
-			property1.setKey("property1");
-			property1.setName("c.companyEventLocation");
-			property1.setHQLName(":companyEventLocation");
-			property1.setQueryParameterName("companyEventLocation");
-			property1.setConditional("like");
-			property1.setFunction("lower");
-			if(property0!=null){
-				property1.setOperation("and");
-			}
-			property1.setValue(searchLocation);
-			property1.setQueryParameter("%"+searchLocation+"%");
-			fiilterList.add(property1);
+		if(StringUtils.hasText(searchLocation)) {
+			filter.put("companyEventLocation", searchLocation);
 		}
-		
-		
-		Map<String, Object> queryData = createFilters(fiilterList);
-		items = companyEventService.getAllFilter(queryData);
+			
+		items = companyEventService.getAllFilter(filter);
 	}
 
-	private Map<String, Object> createFilters(List<FilterBean> fiilterList) {
-		Map<String, Object> queryData = new HashMap<String, Object>();
-		if(fiilterList.size()>0) {
-			queryData.put("where", null);
-			for(FilterBean bean : fiilterList) {
-				queryData.put(bean.getKey(), bean.getName());
-				queryData.put(bean.getKey()+".value", bean.getHQLName());
-				if(bean.getConditional()!=null) {
-					queryData.put(bean.getKey()+".conditional", bean.getConditional());
-				}
-				if(bean.getFunction()!=null) {
-					queryData.put(bean.getKey()+".function", bean.getFunction());
-				}
-				if(bean.getOperation()!=null) {
-					queryData.put(bean.getKey()+".operation", bean.getOperation());
-				}
-				if(bean.getQueryParameter()!=null) {
-					queryData.put(bean.getKey()+"queryParam", bean.getQueryParameterName()+"/"+bean.getQueryParameter());
-				}
-			}
-		}
-		
-		return queryData;
-		
-	}
 	
 	public void showItemDescription(CompanyEventDTO item) {
 		this.descriptionForModal = item.getCompanyEventDesc();
