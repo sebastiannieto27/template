@@ -1,6 +1,8 @@
 package co.com.core.dao.cms.impl;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
@@ -21,7 +23,6 @@ public class NewsTypeDAOImpl implements NewsTypeDAO {
 	        this.sessionFactory = sessionFactory;
 	    }
 		
-		
 		@Override
 		public List<NewsType> getAll() {
 			List<NewsType> entityList = null;
@@ -37,6 +38,44 @@ public class NewsTypeDAOImpl implements NewsTypeDAO {
 			return entityList;
 		}
 
+		@Override
+		public List<NewsType> getAllFilter(Map<String, Object> filters) {
+			List<NewsType> entityList = null;
+			try {
+				session = this.sessionFactory.openSession();
+		        StringBuilder hql = new StringBuilder();
+		        hql.append("SELECT n FROM NewsType n ");
+
+		        String newsTypeName = null;
+		        boolean where = false;
+				if(filters.size() > 0) {
+					 
+					newsTypeName = (String) filters.get("newsTypeName");
+					
+					if(newsTypeName!=null && !newsTypeName.isEmpty()) {
+						where = true;
+						hql.append("WHERE ");
+						hql.append(" lower(n.newsTypeName) LIKE :newsTypeName ");
+					}
+				}
+				
+				Query query = session.createQuery(hql.toString());
+				 
+				for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+					String filterProperty = it.next();
+                    String filterValue = filters.get(filterProperty).toString();
+                    query.setParameter(filterProperty, "%"+filterValue.toLowerCase()+"%");
+				}   
+                    
+		        entityList = query.list();
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [BranchDAOImpl.getAllFilter]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return entityList;
+		}
+		
 		@Override
 		public void create(NewsType entity) {
 			try {

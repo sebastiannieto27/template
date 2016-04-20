@@ -7,8 +7,28 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <h:form id="newsListForm">
-
         <p:panel header="#{msg.news}">
+        
+        	<h:panelGroup id="searchForm">
+	            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+	            		
+	           			<p:outputLabel for="rtvNewsTitle" value="#{msg.title}:" />
+						<p:inputText id="rtvNewsTitle" value="#{newsController.searchTitle}" title="#{msg.title}:"/>
+	
+						<p:outputLabel value="#{msg.newsType}" for="newsTypeId" />
+                        <p:selectOneMenu id="newsTypeId" value="#{newsController.searchNewsTypeId}">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{newsTypeController.items}"
+                                           var="newsTypeIdItem"
+                                           itemValue="#{newsTypeIdItem.newsTypeId}"
+                                           itemLabel="#{newsTypeIdItem.newsTypeName.toString()}"
+                                           />
+                        </p:selectOneMenu>
+	
+          				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{newsController.init()}" update=":newsListForm" />
+           			</p:panelGrid>
+               </h:panelGroup>
+        
             <p:dataTable id="datalist"
                          value="#{newsController.items}"
                          var="item"
@@ -31,22 +51,33 @@
                     <h:outputText value="#{item.newId}"/>
                 </p:column>
 
-
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.news}"/>
+                        <h:outputText value="#{msg.title}"/>
                     </f:facet>
                     <h:outputText value="#{item.newsTitle}"/>
                 </p:column>
 
-
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.shortDescription}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.newsShortDescr}"/>
+                </p:column>
+                
+               	<p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.newsType}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.newsTypeId.newsTypeName}"/>
+                </p:column>
+                
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.status}"/>
                     </f:facet>
-                    <h:outputText value="#{item.generalStatusId}"/>
+                    <h:outputText value="#{item.generalStatusId.generalStatusName}"/>
                 </p:column>
-
 
                 <p:column>
                     <f:facet name="header">
@@ -57,7 +88,6 @@
                     </h:outputText>
                 </p:column>
 
-
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.endDate}"/>
@@ -67,19 +97,26 @@
                     </h:outputText>
                 </p:column>
 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.description}"/>
+                    </f:facet>
+                    <p:commandLink id="viewDescLink" value="#{msg.description}" update=":newsViewDescriptionForm" 
+                    		oncomplete="PF('newsViewDescriptionDialog').show()" actionListener="#{newsController.showItemDescription(item)}"/>
+                </p:column>
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.shortDescription}"/>
+                        <h:outputText value="#{msg.images}"/>
                     </f:facet>
-                    <h:outputText value="#{item.newsShortDescr}"/>
+                    <p:commandLink id="viewImgLink" value="#{msg.images}" update=":newsViewImagesForm" 
+                    		oncomplete="PF('newsViewImagesDialog').show()" actionListener="#{newsController.showImagesModal(item)}"/>
                 </p:column>
-
             </p:dataTable>
 
             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{newsController.prepareCreate}" update=":newsCreateForm" oncomplete="PF('newsCreateDialog').show()"/>
             <p:commandButton id="viewButton"  icon="ui-icon-search" value="#{msg.view}" update=":newsViewForm" oncomplete="PF('newsViewDialog').show()" disabled="#{empty newsController.selected}"/>
-            <p:commandButton id="editButton"  icon="ui-icon-pencil" value="#{msg.edit}" update=":newsEditForm" oncomplete="PF('newsEditDialog').show()" disabled="#{empty newsController.selected}"/>
+            <p:commandButton id="editButton"  icon="ui-icon-pencil" value="#{msg.edit}" actionListener="#{newsController.prepareEdit}" update=":newsEditForm" oncomplete="PF('newsEditDialog').show()" disabled="#{empty newsController.selected}"/>
             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{newsController.delete}" update=":growl,datalist" disabled="#{empty newsController.selected}">
                 <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
             </p:commandButton>

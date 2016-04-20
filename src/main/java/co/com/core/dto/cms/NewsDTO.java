@@ -12,22 +12,25 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import co.com.core.domain.User;
+import co.com.core.domain.cms.GeneralStatus;
 import co.com.core.domain.cms.NewsType;
 
 public class NewsDTO {
 	
 	private Integer newId;
     private String newsTitle;
-    private int generalStatusId;
     private Date newsDateStart;
     private Date newsDateExpire;
     private String newsShortDescr;
     private String newsLongDesc;
-    private String newsBigImgPath;
+    private String newsImgCaption;
+    private String newsFullImgPath;
     private String newsImgPath;
     private String newsThumbImgPath;
+    private String newsRelativeLink;
     private Date dateCre;
     private User userId;
+    private GeneralStatus generalStatusId;
     private NewsType newsTypeId;
 	public Integer getNewId() {
 		return newId;
@@ -40,12 +43,6 @@ public class NewsDTO {
 	}
 	public void setNewsTitle(String newsTitle) {
 		this.newsTitle = newsTitle;
-	}
-	public int getGeneralStatusId() {
-		return generalStatusId;
-	}
-	public void setGeneralStatusId(int generalStatusId) {
-		this.generalStatusId = generalStatusId;
 	}
 	public Date getNewsDateStart() {
 		return newsDateStart;
@@ -71,11 +68,17 @@ public class NewsDTO {
 	public void setNewsLongDesc(String newsLongDesc) {
 		this.newsLongDesc = newsLongDesc;
 	}
-	public String getNewsBigImgPath() {
-		return newsBigImgPath;
+	public String getNewsImgCaption() {
+		return newsImgCaption;
 	}
-	public void setNewsBigImgPath(String newsBigImgPath) {
-		this.newsBigImgPath = newsBigImgPath;
+	public void setNewsImgCaption(String newsImgCaption) {
+		this.newsImgCaption = newsImgCaption;
+	}
+	public String getNewsFullImgPath() {
+		return newsFullImgPath;
+	}
+	public void setNewsFullImgPath(String newsFullImgPath) {
+		this.newsFullImgPath = newsFullImgPath;
 	}
 	public String getNewsImgPath() {
 		return newsImgPath;
@@ -89,6 +92,12 @@ public class NewsDTO {
 	public void setNewsThumbImgPath(String newsThumbImgPath) {
 		this.newsThumbImgPath = newsThumbImgPath;
 	}
+	public String getNewsRelativeLink() {
+		return newsRelativeLink;
+	}
+	public void setNewsRelativeLink(String newsRelativeLink) {
+		this.newsRelativeLink = newsRelativeLink;
+	}
 	public Date getDateCre() {
 		return dateCre;
 	}
@@ -101,6 +110,12 @@ public class NewsDTO {
 	public void setUserId(User userId) {
 		this.userId = userId;
 	}
+	public GeneralStatus getGeneralStatusId() {
+		return generalStatusId;
+	}
+	public void setGeneralStatusId(GeneralStatus generalStatusId) {
+		this.generalStatusId = generalStatusId;
+	}
 	public NewsType getNewsTypeId() {
 		return newsTypeId;
 	}
@@ -110,15 +125,16 @@ public class NewsDTO {
 	@Override
 	public String toString() {
 		return "NewsDTO [newId=" + newId + ", newsTitle=" + newsTitle
-				+ ", generalStatusId=" + generalStatusId + ", newsDateStart="
-				+ newsDateStart + ", newsDateExpire=" + newsDateExpire
-				+ ", newsShortDescr=" + newsShortDescr + ", newsLongDesc="
-				+ newsLongDesc + ", newsBigImgPath=" + newsBigImgPath
+				+ ", newsDateStart=" + newsDateStart + ", newsDateExpire="
+				+ newsDateExpire + ", newsShortDescr=" + newsShortDescr
+				+ ", newsLongDesc=" + newsLongDesc + ", newsImgCaption="
+				+ newsImgCaption + ", newsFullImgPath=" + newsFullImgPath
 				+ ", newsImgPath=" + newsImgPath + ", newsThumbImgPath="
-				+ newsThumbImgPath + ", dateCre=" + dateCre + ", userId="
-				+ userId + ", newsTypeId=" + newsTypeId + "]";
+				+ newsThumbImgPath + ", newsRelativeLink=" + newsRelativeLink
+				+ ", dateCre=" + dateCre + ", userId=" + userId
+				+ ", generalStatusId=" + generalStatusId + ", newsTypeId="
+				+ newsTypeId + "]";
 	}
-    
-    
 
+    
 }

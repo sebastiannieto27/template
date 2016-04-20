@@ -7,44 +7,47 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-        <p:dialog id="ServiceEditDlg" widgetVar="ServiceEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditServiceTitle}" closeOnEscape="true">
+        <p:dialog id="serviceEditDlg" widgetVar="serviceEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditserviceTitle}" closeOnEscape="true">
 
-            <h:form id="ServiceEditForm">
+            <h:form id="serviceEditForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{serviceController.selected != null}">
 
+                       <p:outputLabel value="#{msg.name}" for="serviceName" />
+                        <p:inputText id="serviceName" value="#{serviceController.selected.serviceName}" title="#{msg.name}" required="true" requiredMessage="#{msg.nameRequiredMessage}" size="70" maxlength="70"/>
 
-                        <h:outputLabel value="#{msg.EditServiceLabel_serviceId}" for="serviceId" />
-                        <h:outputText id="serviceId" value="#{serviceController.selected.serviceId}" />
+                        <p:outputLabel value="#{msg.description}" for="serviceDesc" />
+                        <p:inputTextarea rows="4" cols="70" id="serviceDesc" value="#{serviceController.selected.serviceDesc}" maxlength="249"/>
 
-                        <p:outputLabel value="#{msg.EditServiceLabel_serviceName}" for="serviceName" />
-                        <p:inputText id="serviceName" value="#{serviceController.selected.serviceName}" title="#{msg.EditServiceTitle_serviceName}" required="true" requiredMessage="#{msg.EditServiceRequiredMessage_serviceName}" size="150" maxlength="150"/>
-
-                        <p:outputLabel value="#{msg.EditServiceLabel_serviceDesc}" for="serviceDesc" />
-                        <p:inputText id="serviceDesc" value="#{serviceController.selected.serviceDesc}" title="#{msg.EditServiceTitle_serviceDesc}" size="250" maxlength="250"/>
-
-                        <p:outputLabel value="#{msg.EditServiceLabel_generalStatusId}" for="generalStatusId" />
-                        <p:inputText id="generalStatusId" value="#{serviceController.selected.generalStatusId}" title="#{msg.EditServiceTitle_generalStatusId}" required="true" requiredMessage="#{msg.EditServiceRequiredMessage_generalStatusId}"/>
-
-                        <p:outputLabel value="#{msg.EditServiceLabel_dateCre}" for="dateCre" />
-                        <p:calendar id="dateCre" pattern="MM/dd/yyyy HH:mm:ss" value="#{serviceController.selected.dateCre}" title="#{msg.EditServiceTitle_dateCre}" required="true" requiredMessage="#{msg.EditServiceRequiredMessage_dateCre}" showOn="button"/>
-
-                        <p:outputLabel value="#{msg.EditServiceLabel_userId}" for="userId" />
-                        <p:selectOneMenu id="userId" value="#{serviceController.selected.userId}" required="true" requiredMessage="#{msg.EditServiceRequiredMessage_userId}" converter="userConverter">
+ 						<p:outputLabel value="#{msg.generalStatus}" for="generalStatusId" />
+                        <p:selectOneMenu id="generalStatusId" value="#{serviceController.selectedGeneralStatusId}" required="true" requiredMessage="#{msg.statusRequiredMessage}">
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
-                            <f:selectItems value="#{userController.items}"
-                                           var="userIdItem"
-                                           itemValue="#{userIdItem}"
-                                           itemLabel="#{userIdItem.firstName.toString()}"
+                            <f:selectItems value="#{generalStatusController.items}"
+                                           var="generalStatusIdItem"
+                                           itemValue="#{generalStatusIdItem.generalStatusId}"
+                                           itemLabel="#{generalStatusIdItem.generalStatusName.toString()}"
                                            />
-
                         </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{msg.thumbnail}" for="brandThumbImg" />
+                        <p:panelGrid columns="2" style="width:100%" id="panelThumbnail">
+                        <p:fileUpload label="#{msg.upload}" id="brandThumbImg" fileUploadListener="#{serviceController.setThumbnailFileUpload}" mode="advanced"
+                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelThumbnail"/>
+                     		<h:graphicImage  id="tumbnailImageFile" url="#{serviceController.thumbnailPath}" width="150" height="100" rendered="#{serviceController.showThumbnailFile}"/>
+ 						</p:panelGrid>
+
+                        <p:outputLabel value="#{msg.image}"/>
+                        <p:panelGrid columns="2" style="width:100%" id="panelImage">
+	                        <p:fileUpload label="#{msg.upload}" id="brandBigImg" fileUploadListener="#{serviceController.setImageFileUpload}" mode="advanced"
+	                     		auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="panelImage"/>
+                     		<h:graphicImage id="brandImageFile" url="#{serviceController.imagePath}" width="150" height="100" rendered="#{serviceController.showImageFile}"/>
+                        </p:panelGrid>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{serviceController.save}" value="#{msg.Save}" update="display,:ServiceListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ServiceEditDialog'));">
-                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    <p:commandButton actionListener="#{serviceController.save}" value="#{msg.save}" update="display,:serviceListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('serviceEditDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
-                    <p:commandButton value="#{msg.Cancel}" onclick="PF('ServiceEditDialog').hide()"/>
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('serviceEditDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>

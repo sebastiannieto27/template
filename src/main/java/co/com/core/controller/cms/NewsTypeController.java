@@ -3,36 +3,48 @@ package co.com.core.controller.cms;
 import static co.com.core.commons.LoadBundle.geProperty;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
+import org.springframework.util.StringUtils;
 
 import co.com.core.commons.SessionUtil;
+import co.com.core.commons.converter.UserUtil;
+import co.com.core.dto.UserDTO;
 import co.com.core.dto.cms.NewsTypeDTO;
 import co.com.core.services.cms.INewsTypeService;
 
 
 public class NewsTypeController {
 
-	INewsTypeService newsTypeService;
-	List<NewsTypeDTO> items;
-	private NewsTypeDTO selected;
-	
 	private static final Logger logger = Logger.getLogger(NewsTypeController.class);
 	
+	private INewsTypeService newsTypeService;
+	private List<NewsTypeDTO> items;
+	private NewsTypeDTO selected;
+	
+	//filters
+	private String searchName;
+	
 	public void init() {
-		items = newsTypeService.getAll();
+		Map<String, Object> filter = new HashMap<String, Object>();
+		if(StringUtils.hasText(searchName)) {
+			filter.put("newsTypeName", searchName);
+		}
+			
+		items = newsTypeService.getAllFilter(filter);
 	}
 
 	public void saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			logger.error(selected);
-			Integer userId = SessionUtil.getSessionUserId();
-			selected.setUserId(userId);
+			UserDTO userDto = SessionUtil.getSessionUser();
+			selected.setUserId(UserUtil.getEntityFromDto(userDto));
 			selected.setDateCre(new Date());
 			newsTypeService.create(selected);
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));
@@ -102,4 +114,13 @@ public class NewsTypeController {
 	public void setSelected(NewsTypeDTO selected) {
 		this.selected = selected;
 	}
+
+	public String getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
+	}
+	
 }

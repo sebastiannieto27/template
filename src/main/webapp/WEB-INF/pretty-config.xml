@@ -61,17 +61,17 @@
 	
 	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
 	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
-	<url-mapping id="brand">
-		<pattern value="/cms/marca" />
-		<view-id value="/home/cms/brand/index.xhtml" />
+	<url-mapping id="branch">
+		<pattern value="/cms/sede" />
+		<view-id value="/home/cms/branch/index.xhtml" />
 	</url-mapping>
 	
-	<url-mapping id="brandType">
-		<pattern value="/cms/tipo-marca" />
-		<view-id value="/home/cms/brandType/index.xhtml" />
+	<url-mapping id="brachType">
+		<pattern value="/cms/tipo-sede" />
+		<view-id value="/home/cms/branchType/index.xhtml" />
 	</url-mapping>	
 	
-	<url-mapping id="GeneralStatus">
+	<url-mapping id="generalStatus">
 		<pattern value="/cms/estado-general" />
 		<view-id value="/home/cms/generalStatus/index.xhtml" />
 	</url-mapping>
@@ -91,4 +91,20 @@
 		<view-id value="/home/cms/companyEvent/index.xhtml" />
 	</url-mapping>	
 	
+	<url-mapping id="service">
+		<pattern value="/cms/servicio" />
+		<view-id value="/home/cms/service/index.xhtml" />
+	</url-mapping>
+		
+	<url-mapping id="branchService">
+		<pattern value="/cms/servicio-sede" />
+		<view-id value="/home/cms/branchService/index.xhtml" />
+	</url-mapping>		
+
+<!-- Account Financial Module  Account Financial Module  Account Financial Module -->  
+<!-- Account Financial Module  Account Financial Module  Account Financial Module -->  
+	<url-mapping id="tax">
+		<pattern value="/cartera/impuesto" />
+		<view-id value="/home/financialAcount/tax/index.xhtml" />
+	</url-mapping>	
 </pretty-config>

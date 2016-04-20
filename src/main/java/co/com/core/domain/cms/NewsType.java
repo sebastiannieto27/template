@@ -16,6 +16,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -26,6 +28,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import co.com.core.domain.User;
 
 /**
  *
@@ -38,7 +42,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "NewsType.findAll", query = "SELECT n FROM NewsType n"),
     @NamedQuery(name = "NewsType.findByNewsTypeId", query = "SELECT n FROM NewsType n WHERE n.newsTypeId = :newsTypeId"),
     @NamedQuery(name = "NewsType.findByNewsTypeName", query = "SELECT n FROM NewsType n WHERE n.newsTypeName = :newsTypeName"),
-    @NamedQuery(name = "NewsType.findByUserId", query = "SELECT n FROM NewsType n WHERE n.userId = :userId"),
     @NamedQuery(name = "NewsType.findByDateCre", query = "SELECT n FROM NewsType n WHERE n.dateCre = :dateCre")})
 public class NewsType implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -52,15 +55,14 @@ public class NewsType implements Serializable {
     private String newsTypeName;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "user_id")
-    private int userId;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "date_cre")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "newsTypeId")
     private Collection<News> newsCollection;
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @ManyToOne(optional = false)
+    private User userId;
 
     public NewsType() {
     }
@@ -69,9 +71,8 @@ public class NewsType implements Serializable {
         this.newsTypeId = newsTypeId;
     }
 
-    public NewsType(Integer newsTypeId, int userId, Date dateCre) {
+    public NewsType(Integer newsTypeId, Date dateCre) {
         this.newsTypeId = newsTypeId;
-        this.userId = userId;
         this.dateCre = dateCre;
     }
 
@@ -91,14 +92,6 @@ public class NewsType implements Serializable {
         this.newsTypeName = newsTypeName;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public Date getDateCre() {
         return dateCre;
     }
@@ -114,6 +107,14 @@ public class NewsType implements Serializable {
 
     public void setNewsCollection(Collection<News> newsCollection) {
         this.newsCollection = newsCollection;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -138,7 +139,7 @@ public class NewsType implements Serializable {
 
     @Override
     public String toString() {
-        return "co.com.core.domain.NewsType[ newsTypeId=" + newsTypeId + " ]";
+        return "com.co.friogan.db.domain.NewsType[ newsTypeId=" + newsTypeId + " ]";
     }
     
 }

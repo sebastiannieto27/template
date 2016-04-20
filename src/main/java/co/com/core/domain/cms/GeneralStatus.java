@@ -7,6 +7,7 @@ package co.com.core.domain.cms;
 
 import java.io.Serializable;
 import java.util.Collection;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +24,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import co.com.core.domain.Branch;
 import co.com.core.domain.financial.account.BillHead;
 
 /**
@@ -57,10 +57,13 @@ public class GeneralStatus implements Serializable {
     private String generalStatusName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "generalStatusId")
     private Collection<News> newsCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "generalStatusId")
     private Collection<Branch> branchCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "generalStatusId")
     private Collection<Service> serviceCollection;
+    
 
     public GeneralStatus() {
     }
@@ -108,7 +111,6 @@ public class GeneralStatus implements Serializable {
         this.branchCollection = branchCollection;
     }
 
-    @XmlTransient
     public Collection<Service> getServiceCollection() {
         return serviceCollection;
     }

@@ -50,35 +50,43 @@ public class CompanyEventDAOImpl implements CompanyEventDAO {
 		        StringBuilder hql = new StringBuilder();
 		        hql.append("SELECT c FROM CompanyEvent c ");
 
-				if(filters.size() > 0) {
-				 	/*Map<String, Object> queryData = new HashMap<String, Object>();
-			        queryData.put("where", null);
-			        queryData.put("property0", "c.companyEventTitle");
-			        queryData.put("property0.value", ":companyEventTitle");
-			        queryData.put("property0.conditional", "like");
-			        queryData.put("property0.function", "lower");
-			        //TODO
-			        queryData.put("property1", "c.companyEventLocation");
-			        queryData.put("property1.value", ":companyEventLocation");
-			        queryData.put("property1.operation", "and");
-			        queryData.put("property1.conditional", "like");
-			        queryData.put("property1.function", "lower");*/
-				        
-			        StringBuilder sb = QueryUtil.buildQUery(filters);
-			        hql.append(sb.toString());
+		        String companyEventTitle = null;
+		        String companyEventLocation = null;
+		        boolean where = false;
+
+		        if(filters.size() > 0) {
+					 
+		        	companyEventTitle = (String) filters.get("companyEventTitle");
+		        	companyEventLocation = (String) filters.get("companyEventLocation");
+					
+					if(companyEventTitle!=null && !companyEventTitle.isEmpty()) {
+						where = true;
+						hql.append("WHERE ");
+						hql.append(" lower(c.companyEventTitle) LIKE :companyEventTitle ");
+					}
+					
+					if(companyEventLocation!=null && !companyEventLocation.isEmpty()) {
+						if(!where) {
+							where = true;
+							hql.append("WHERE ");
+						}
+						
+						if(companyEventTitle!=null && !companyEventTitle.isEmpty()) {
+							hql.append(" AND ");
+						}
+						
+						hql.append(" lower(c.companyEventLocation) LIKE :companyEventLocation ");
+					}
+					
 				}
 				
 				Query query = session.createQuery(hql.toString());
-				if(filters.size() > 0) {
-					for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
-						String key = it.next();
-	                    
-	                    if(key.contains("queryParam")) {
-	                    	String[] value = filters.get(key).toString().split("/");
-	                    	query.setParameter(value[0], value[1]);
-	                    }
-					} 
-				}
+				 
+				for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+					String filterProperty = it.next();
+                    String filterValue = filters.get(filterProperty).toString();
+                    query.setParameter(filterProperty, "%"+filterValue.toLowerCase()+"%");
+				}   
 				  
                     
 		        entityList = query.list();

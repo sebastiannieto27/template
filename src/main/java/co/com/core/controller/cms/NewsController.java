@@ -3,14 +3,18 @@ package co.com.core.controller.cms;
 import static co.com.core.commons.LoadBundle.geProperty;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
+import org.springframework.util.StringUtils;
 
+import co.com.core.commons.ApplicationConstants;
 import co.com.core.commons.LoadBundle;
 import co.com.core.commons.SessionUtil;
 import co.com.core.commons.converter.UserUtil;
@@ -31,6 +35,11 @@ public class NewsController {
 	private List<NewsDTO> items;
 	private NewsDTO selected;
 
+	private String descriptionForModal;
+	
+	private String searchTitle;
+	private Integer searchNewsTypeId;
+	
 	private Integer selectedNewsTypeId;
 	private Integer selectedGeneralStatusId;
 	
@@ -48,7 +57,16 @@ public class NewsController {
 	private UploadedFileDTO hdImageDto;
 	
 	public void init() {
-		items = newsService.getAll();
+		Map<String, Object> filter = new HashMap<String, Object>();
+		if(StringUtils.hasText(searchTitle)) {
+			filter.put("newsTitle", searchTitle);
+		}
+		
+		if(searchNewsTypeId!=null && searchNewsTypeId!=0) {
+			NewsType searchType = new NewsType(searchNewsTypeId);
+			filter.put("newsTypeId", searchType);
+		}
+		items = newsService.getAllFilter(filter);
 	}
 	
 	public void setHdImageFileUpload(FileUploadEvent event) {
@@ -100,7 +118,25 @@ public class NewsController {
 		this.imageDto = new UploadedFileDTO();
 		this.imageDto.setName(selected.getNewsImgPath());
 		this.hdImageDto = new UploadedFileDTO();
-		this.hdImageDto.setName(selected.getNewsBigImgPath());
+		this.hdImageDto.setName(selected.getNewsFullImgPath());
+		this.showImageFile = true;
+		this.showThumbnailFile = true;
+		this.showHdImageFile = true;
+		this.selectedGeneralStatusId = selected.getGeneralStatusId().getGeneralStatusId();
+		this.selectedNewsTypeId = selected.getNewsTypeId().getNewsTypeId();
+	}
+	
+	public void showItemDescription(NewsDTO item) {
+		this.descriptionForModal = item.getNewsLongDesc();
+	}
+	
+	public void showImagesModal(NewsDTO item) {
+		this.thumbailDto = new UploadedFileDTO();
+		this.thumbailDto.setName(item.getNewsThumbImgPath());
+		this.imageDto = new UploadedFileDTO();
+		this.imageDto.setName(item.getNewsImgPath());
+		this.hdImageDto = new UploadedFileDTO();
+		this.hdImageDto.setName(item.getNewsFullImgPath());
 		this.showImageFile = true;
 		this.showThumbnailFile = true;
 		this.showHdImageFile = true;
@@ -110,13 +146,13 @@ public class NewsController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			if(this.thumbnail!=null) {
-				selected.setNewsThumbImgPath(this.image.getFile().getFileName());
+				selected.setNewsThumbImgPath(this.thumbnail.getFile().getFileName());
 			}
 			if(this.image!=null) {
-				selected.setNewsImgPath(this.thumbnail.getFile().getFileName());
+				selected.setNewsImgPath(this.image.getFile().getFileName());
 			}
 			if(this.hdImage!=null) {
-				selected.setNewsBigImgPath(this.thumbnail.getFile().getFileName());
+				selected.setNewsFullImgPath(this.hdImage.getFile().getFileName());
 			}
 			
 			if(selectedNewsTypeId!=null && selectedNewsTypeId!=0) {
@@ -126,7 +162,7 @@ public class NewsController {
 			
 			if(selectedGeneralStatusId!=null && selectedGeneralStatusId!=0) {
 				GeneralStatus generalStatus = new GeneralStatus(selectedGeneralStatusId);
-				//selected.setGeneralStatusId(generalStatus);TODO
+				selected.setGeneralStatusId(generalStatus);
 			}
 			
 			UserDTO userDto = SessionUtil.getSessionUser();
@@ -147,15 +183,7 @@ public class NewsController {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
-				if(this.thumbnail!=null) {
-					selected.setNewsThumbImgPath(this.image.getFile().getFileName());
-				}
-				if(this.image!=null) {
-					selected.setNewsImgPath(this.thumbnail.getFile().getFileName());
-				}
-				if(this.hdImage!=null) {
-					selected.setNewsBigImgPath(this.thumbnail.getFile().getFileName());
-				}
+				
 				newsService.delete(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulDeletion"), null));
 			} catch (Exception ex) {
@@ -171,6 +199,24 @@ public class NewsController {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
+				if(selectedNewsTypeId!=null && selectedNewsTypeId!=0) {
+					NewsType newsType = new NewsType(selectedNewsTypeId);
+					selected.setNewsTypeId(newsType);
+				}
+				
+				if(selectedGeneralStatusId!=null && selectedGeneralStatusId!=0) {
+					GeneralStatus generalStatus = new GeneralStatus(selectedGeneralStatusId);
+					selected.setGeneralStatusId(generalStatus);
+				}
+				if(this.thumbnail!=null) {
+					selected.setNewsThumbImgPath(this.thumbnail.getFile().getFileName());
+				}
+				if(this.image!=null) {
+					selected.setNewsImgPath(this.image.getFile().getFileName());
+				}
+				if(this.hdImage!=null) {
+					selected.setNewsFullImgPath(this.hdImage.getFile().getFileName());
+				}
 				newsService.update(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulEdition"), null));
 			} catch (Exception ex) {
@@ -184,6 +230,14 @@ public class NewsController {
 
 	public void prepareCreate() {
 		selected = new NewsDTO();
+		this.thumbailDto = new UploadedFileDTO();
+		this.imageDto = new UploadedFileDTO();
+		this.hdImageDto = new UploadedFileDTO();
+		this.showImageFile = false;
+		this.showThumbnailFile = false;
+		this.showHdImageFile = false;
+		this.selectedGeneralStatusId = ApplicationConstants.ZERO_CONSTANT_VALUE;
+		this.selectedNewsTypeId = ApplicationConstants.ZERO_CONSTANT_VALUE;
 	}
 
 	public INewsService getNewsService() {
@@ -258,5 +312,28 @@ public class NewsController {
 	public void setShowHdImageFile(boolean showHdImageFile) {
 		this.showHdImageFile = showHdImageFile;
 	}
-	
+
+	public String getSearchTitle() {
+		return searchTitle;
+	}
+
+	public void setSearchTitle(String searchTitle) {
+		this.searchTitle = searchTitle;
+	}
+
+	public Integer getSearchNewsTypeId() {
+		return searchNewsTypeId;
+	}
+
+	public void setSearchNewsTypeId(Integer searchNewsTypeId) {
+		this.searchNewsTypeId = searchNewsTypeId;
+	}
+
+	public String getDescriptionForModal() {
+		return descriptionForModal;
+	}
+
+	public void setDescriptionForModal(String descriptionForModal) {
+		this.descriptionForModal = descriptionForModal;
+	}
 }

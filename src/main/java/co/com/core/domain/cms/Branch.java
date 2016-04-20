@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.com.core.domain;
+package co.com.core.domain.cms;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,11 +29,11 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import co.com.core.domain.cms.GeneralStatus;
+import co.com.core.domain.User;
 
 /**
  *
- * @author root
+ * @author dienieto
  */
 @Entity
 @Table(name = "branch")
@@ -85,19 +86,17 @@ public class Branch implements Serializable {
     @Column(name = "date_cre")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "branchId")
-    private Collection<BranchService> branchServiceCollection;
-    @JoinColumn(name = "general_status_id", referencedColumnName = "general_status_id")
-    @ManyToOne(optional = false)
-    private GeneralStatus generalStatusId;
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    @ManyToOne(optional = false)
-    private User userId;
     @JoinColumn(name = "branch_type_id", referencedColumnName = "branch_type_id")
     @ManyToOne(optional = false)
     private BranchType branchTypeId;
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @ManyToOne(optional = false)
+    private User userId;
+    @JoinColumn(name = "general_status_id", referencedColumnName = "general_status_id")
+    @ManyToOne(optional = false)
+    private GeneralStatus generalStatusId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "branchId")
-    private Collection<BranchUploadFile> branchUploadFileCollection;
+    private Collection<BranchService> branchServiceCollection;
 
     public Branch() {
     }
@@ -191,21 +190,12 @@ public class Branch implements Serializable {
         this.dateCre = dateCre;
     }
 
-    @XmlTransient
-    public Collection<BranchService> getBranchServiceCollection() {
-        return branchServiceCollection;
+    public BranchType getBranchTypeId() {
+        return branchTypeId;
     }
 
-    public void setBranchServiceCollection(Collection<BranchService> branchServiceCollection) {
-        this.branchServiceCollection = branchServiceCollection;
-    }
-
-    public GeneralStatus getGeneralStatusId() {
-        return generalStatusId;
-    }
-
-    public void setGeneralStatusId(GeneralStatus generalStatusId) {
-        this.generalStatusId = generalStatusId;
+    public void setBranchTypeId(BranchType branchTypeId) {
+        this.branchTypeId = branchTypeId;
     }
 
     public User getUserId() {
@@ -216,21 +206,21 @@ public class Branch implements Serializable {
         this.userId = userId;
     }
 
-    public BranchType getBranchTypeId() {
-        return branchTypeId;
+    public GeneralStatus getGeneralStatusId() {
+        return generalStatusId;
     }
 
-    public void setBranchTypeId(BranchType branchTypeId) {
-        this.branchTypeId = branchTypeId;
+    public void setGeneralStatusId(GeneralStatus generalStatusId) {
+        this.generalStatusId = generalStatusId;
     }
 
     @XmlTransient
-    public Collection<BranchUploadFile> getBranchUploadFileCollection() {
-        return branchUploadFileCollection;
+    public Collection<BranchService> getBranchServiceCollection() {
+        return branchServiceCollection;
     }
 
-    public void setBranchUploadFileCollection(Collection<BranchUploadFile> branchUploadFileCollection) {
-        this.branchUploadFileCollection = branchUploadFileCollection;
+    public void setBranchServiceCollection(Collection<BranchService> branchServiceCollection) {
+        this.branchServiceCollection = branchServiceCollection;
     }
 
     @Override
@@ -255,7 +245,7 @@ public class Branch implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Branch[ branchId=" + branchId + " ]";
+        return "com.co.friogan.db.domain.Branch[ branchId=" + branchId + " ]";
     }
     
 }

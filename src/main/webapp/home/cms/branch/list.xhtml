@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+    <h:form id="branchListForm">
+    	<p:panel header="#{msg.branch}">
+   				<h:panelGroup id="searchForm">
+	            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+	            		
+	           			<p:outputLabel for="rtvBranchName" value="#{msg.name}:" />
+						<p:inputText id="rtvBranchName" value="#{branchController.searchName}" title="#{msg.name}:"/>
+	
+          				<p:outputLabel for="rtvBranchAddress" value="#{msg.branchAddress}:" />
+						<p:inputText id="rtvBranchAddress" value="#{branchController.searchAddress}" title="#{msg.branchAddress}:"/>
+
+          				<p:outputLabel for="rtvBranchIntCode" value="#{msg.branchInternalCode}:" />
+						<p:inputText id="rtvBranchIntCode" value="#{branchController.internalCode}" title="#{msg.branchInternalCode}:"/>
+	
+          				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{branchController.init()}" update=":branchListForm" />
+           			</p:panelGrid>
+               </h:panelGroup>
+    
+    		<p:dataTable id="datalist"
+                         value="#{branchController.items}"
+                         var="item"
+                         rowKey="#{item.branchId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{branchController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton" />
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton" />
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('brandListForm:viewButton').click();"/>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.branchName}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.branchAddress}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.branchAddress}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.branchOpenHours}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.branchOpenHours}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.branchMainPhone}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.branchMainPhone}"/>
+                </p:column>
+ 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.branchAltPhone}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.branchAltPhone}"/>
+                </p:column>    
+                 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.branchInternalCode}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.branchInternalCode}"/>
+                </p:column>  
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.status}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.generalStatusId.generalStatusName}"/>
+                </p:column>    
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.images}"/>
+                    </f:facet>
+                    <p:commandLink id="viewImgLink" value="#{msg.images}" update=":viewImagesForm" 
+                    		oncomplete="PF('viewImagesDialog').show()" actionListener="#{branchController.showImagesModal(item)}"/>
+                </p:column>
+                       
+            </p:dataTable>
+
+            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{branchController.prepareCreate}" update=":branchCreateForm" oncomplete="PF('branchCreateDialog').show()"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":branchViewForm" oncomplete="PF('branchViewDialog').show()" disabled="#{empty branchController.selected}"/>
+            <p:commandButton id="editButton" icon="ui-icon-pencil" value="#{msg.edit}" actionListener="#{branchController.prepareEdit}" update=":branchEditForm" oncomplete="PF('branchEditDialog').show()" disabled="#{empty branchController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{branchController.delete}" update=":growl,datalist" disabled="#{empty branchController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+    </h:form>
+</ui:composition>
+    </body>
+</html>

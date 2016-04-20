@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.com.core.domain;
+package co.com.core.domain.cms;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,11 +24,11 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import co.com.core.domain.cms.Service;
+import co.com.core.domain.User;
 
 /**
  *
- * @author root
+ * @author dienieto
  */
 @Entity
 @Table(name = "branch_service")
@@ -48,15 +49,15 @@ public class BranchService implements Serializable {
     @Column(name = "date_cre")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCre;
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    @ManyToOne(optional = false)
-    private User userId;
-    @JoinColumn(name = "branch_id", referencedColumnName = "branch_id")
-    @ManyToOne(optional = false)
-    private Branch branchId;
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
     @ManyToOne(optional = false)
     private Service serviceId;
+    @JoinColumn(name = "branch_id", referencedColumnName = "branch_id")
+    @ManyToOne(optional = false)
+    private Branch branchId;
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @ManyToOne(optional = false)
+    private User userId;
 
     public BranchService() {
     }
@@ -86,12 +87,12 @@ public class BranchService implements Serializable {
         this.dateCre = dateCre;
     }
 
-    public User getUserId() {
-        return userId;
+    public Service getServiceId() {
+        return serviceId;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setServiceId(Service serviceId) {
+        this.serviceId = serviceId;
     }
 
     public Branch getBranchId() {
@@ -102,12 +103,12 @@ public class BranchService implements Serializable {
         this.branchId = branchId;
     }
 
-    public Service getServiceId() {
-        return serviceId;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setServiceId(Service serviceId) {
-        this.serviceId = serviceId;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -132,7 +133,7 @@ public class BranchService implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.BranchService[ branchServiceId=" + branchServiceId + " ]";
+        return "com.co.friogan.db.domain.BranchService[ branchServiceId=" + branchServiceId + " ]";
     }
     
 }

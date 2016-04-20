@@ -3,16 +3,17 @@ package co.com.core.dto.cms;
 
 
 
+
 public class GeneralStatusDTO {
 	
-	private Integer generalStatus;
+    private Integer generalStatusId;
     private String generalStatusName;
     
-	public Integer getGeneralStatus() {
-		return generalStatus;
+	public Integer getGeneralStatusId() {
+		return generalStatusId;
 	}
-	public void setGeneralStatus(Integer generalStatus) {
-		this.generalStatus = generalStatus;
+	public void setGeneralStatusId(Integer generalStatusId) {
+		this.generalStatusId = generalStatusId;
 	}
 	public String getGeneralStatusName() {
 		return generalStatusName;
@@ -22,7 +23,7 @@ public class GeneralStatusDTO {
 	}
 	@Override
 	public String toString() {
-		return "GeneralStatusDTO [generalStatus=" + generalStatus
+		return "GeneralStatusDTO [generalStatus=" + generalStatusId
 				+ ", generalStatusName=" + generalStatusName + "]";
 	}
 	

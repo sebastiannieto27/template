@@ -21,13 +21,6 @@
                         <h:outputText value="#{msg.name}"/>
                         <h:outputText value="#{newsTypeController.selected.newsTypeName}" title="#{msg.name}"/>
 
-                        <h:outputText value="#{msg.user}"/>
-                        <h:outputText value="#{newsTypeController.selected.userId}" title="#{msg.user}"/>
-
-                        <h:outputText value="#{msg.creationDate}"/>
-                        <h:outputText value="#{newsTypeController.selected.dateCre}" title="#{msg.creationDate}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
                     </p:panelGrid>
                     <p:commandButton value="#{msg.close}" onclick="PF('newsTypeViewDialog').hide()"/>
                 </h:panelGroup>

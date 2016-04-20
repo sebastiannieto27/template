@@ -18,7 +18,7 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
         destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/mydb" />
+        <property name="url" value="jdbc:mysql://localhost:3306/frioganDB" />
         <property name="username" value="root" />
         <property name="password" value="admin" />
     </bean>
@@ -50,15 +50,34 @@
                 <value>co.com.core.domain.UploadedFile</value>
                 
                 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
-                <value>co.com.core.domain.cms.Brand</value>
-                <value>co.com.core.domain.cms.BrandService</value>
-                <value>co.com.core.domain.cms.BrandType</value>
+				<value>co.com.core.domain.cms.Branch</value>
+                <value>co.com.core.domain.cms.BranchService</value>
+                <value>co.com.core.domain.cms.BranchType</value>
                 <value>co.com.core.domain.cms.CompanyEvent</value>
                 <value>co.com.core.domain.cms.News</value>
                 <value>co.com.core.domain.cms.NewsType</value>
                 <value>co.com.core.domain.cms.Service</value>
-                <value>co.com.core.domain.cms.BrandUploadFile</value>
                 <value>co.com.core.domain.cms.GeneralStatus</value>
+                
+                <!-- Account Financial Module  Account Financial Module  Account Financial Module -->
+                <value>co.com.core.domain.financial.account.AccountAge</value>
+                <value>co.com.core.domain.financial.account.AccountAgeBill</value>
+                <value>co.com.core.domain.financial.account.AccountAgeDet</value>
+                <value>co.com.core.domain.financial.account.AccountAgeType</value>
+                <value>co.com.core.domain.financial.account.BillDetail</value>
+                <value>co.com.core.domain.financial.account.BillDetailTax</value>
+                <value>co.com.core.domain.financial.account.BillHead</value>
+                <value>co.com.core.domain.financial.account.BranchClient</value>
+                <value>co.com.core.domain.financial.account.Client</value>
+                <value>co.com.core.domain.financial.account.ClientType</value>
+                <value>co.com.core.domain.financial.account.CreditNote</value>
+                <value>co.com.core.domain.financial.account.CreditNoteType</value>
+                <value>co.com.core.domain.financial.account.DutyPay</value>
+                <value>co.com.core.domain.financial.account.Product</value>
+                <value>co.com.core.domain.financial.account.RaiseMoney</value>
+                <value>co.com.core.domain.financial.account.RaiseMoneyType</value>
+                <value>co.com.core.domain.financial.account.Tax</value>
+                
             </list>
         </property>
         <property name="hibernateProperties">
@@ -139,15 +158,15 @@
     
     	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
     
-	    <bean id="brandDAO" class="co.com.core.dao.cms.impl.BrandDAOImpl">
+	    <bean id="branchDAO" class="co.com.core.dao.cms.impl.BranchDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
     
-	    <bean id="brandTypeDAO" class="co.com.core.dao.cms.impl.BrandTypeDAOImpl">
+	    <bean id="branchTypeDAO" class="co.com.core.dao.cms.impl.BranchTypeDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
 	        
-	    <bean id="brandUploadFileDAO" class="co.com.core.dao.cms.impl.BrandUploadFileDAOImpl">
+   	    <bean id="branchServiceDAO" class="co.com.core.dao.cms.impl.BranchServiceDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
 	    
@@ -166,9 +185,23 @@
 	    <bean id="companyEventDAO" class="co.com.core.dao.cms.impl.CompanyEventDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
+	    	    	    	    	    
+	    <bean id="serviceDAO" class="co.com.core.dao.cms.impl.ServiceDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+    
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
+	    
+<!-- Account Financial Module  Account Financial Module  Account Financial Module -->
+	    
+  	    <bean id="taxDAO" class="co.com.core.dao.impl.financial.account.TaxDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
+<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
+<!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 	
     <bean id="baseService" class="co.com.core.services.impl.BaseServiceImpl">
     	<property name="baseDAO" ref="baseDAO" />
@@ -235,16 +268,16 @@
     </bean>
     
    	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
-	    <bean id="brandService" class="co.com.core.services.cms.impl.BrandServiceImpl">
-	    	<property name="brandDAO" ref="brandDAO" />
+		<bean id="branchService" class="co.com.core.services.cms.impl.BranchServiceImpl">
+	    	<property name="branchDAO" ref="branchDAO" />
 	    </bean>
 	    
-   	    <bean id="brandTypeService" class="co.com.core.services.cms.impl.BrandTypeServiceImpl">
-	    	<property name="brandTypeDAO" ref="brandTypeDAO" />
+   	    <bean id="branchTypeService" class="co.com.core.services.cms.impl.BranchTypeServiceImpl">
+	    	<property name="branchTypeDAO" ref="branchTypeDAO" />
 	    </bean>
-	    	    
-   	    <bean id="brandUploadFileService" class="co.com.core.services.cms.impl.BrandUploadFileServiceImpl">
-	    	<property name="brandUploadFileDAO" ref="brandUploadFileDAO" />
+  
+   	    <bean id="branchServiceService" class="co.com.core.services.cms.impl.BranchServiceServiceImpl">
+	    	<property name="branchServiceDAO" ref="branchServiceDAO" />
 	    </bean>
 	    	    	    
    	    <bean id="newsTypeService" class="co.com.core.services.cms.impl.NewsTypeServiceImpl">
@@ -262,9 +295,23 @@
    	    <bean id="companyEventService" class="co.com.core.services.cms.impl.CompanyEventServiceImpl">
 	    	<property name="companyEventDAO" ref="companyEventDAO" />
 	    </bean>
+	    	    	    	    	    	    	    
+   	    <bean id="serviceService" class="co.com.core.services.cms.impl.ServiceServiceImpl">
+	    	<property name="serviceDAO" ref="serviceDAO" />
+	    </bean>
+	    	    	    	    	    	    	    	    
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
+
+<!-- Account Financial Module  Account Financial Module  Account Financial Module -->
+   	    <bean id="taxService" class="co.com.core.services.impl.financial.account.TaxServiceImpl">
+	    	<property name="taxDAO" ref="taxDAO" />
+	    </bean>
+
+<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
+<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
+<!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
    	
     <bean id="baseController" scope="session" class="co.com.core.controller.BaseController">
     	<property name="baseService" ref="baseService" />
@@ -348,17 +395,20 @@
     	<property name="uploadedFileService" ref="uploadedFileService" />
     </bean>    
     
-   	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS --> 
+<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS --> 
     	        
-    <bean id="brandController" scope="session" class="co.com.core.controller.cms.BrandController" init-method="init">
-    	<property name="brandService" ref="brandService" />
-    	<property name="brandUploadFileService" ref="brandUploadFileService" />
+    <bean id="branchController" scope="session" class="co.com.core.controller.cms.BranchController" init-method="init">
+    	<property name="branchService" ref="branchService" />
     	<property name="uploadedFileController" ref="uploadedFileController" />
     </bean> 
         
-    <bean id="brandTypeController" scope="session" class="co.com.core.controller.cms.BrandTypeController" init-method="init">
-    	<property name="brandTypeService" ref="brandTypeService" />
+    <bean id="branchTypeController" scope="session" class="co.com.core.controller.cms.BranchTypeController" init-method="init">
+    	<property name="branchTypeService" ref="branchTypeService" />
     </bean>
+    
+    <bean id="branchServiceController" scope="session" class="co.com.core.controller.cms.BranchServiceController" init-method="init">
+    	<property name="branchServiceService" ref="branchServiceService" />
+    </bean> 
         
     <bean id="newsTypeController" scope="session" class="co.com.core.controller.cms.NewsTypeController" init-method="init">
     	<property name="newsTypeService" ref="newsTypeService" />
@@ -376,5 +426,15 @@
     <bean id="companyEventController" scope="session" class="co.com.core.controller.cms.CompanyEventController" init-method="init">
     	<property name="companyEventService" ref="companyEventService" />
    		<property name="uploadedFileController" ref="uploadedFileController" />
+    </bean>
+                        
+    <bean id="serviceController" scope="session" class="co.com.core.controller.cms.ServiceController" init-method="init">
+    	<property name="serviceService" ref="serviceService" />
+   		<property name="uploadedFileController" ref="uploadedFileController" />
+    </bean>
+    
+<!-- Account Financial Module  Account Financial Module  Account Financial Module -->    
+    <bean id="taxController" scope="session" class="co.com.core.controller.financial.account.TaxController" init-method="init">
+    	<property name="taxService" ref="taxService" />
     </bean>
 </beans>

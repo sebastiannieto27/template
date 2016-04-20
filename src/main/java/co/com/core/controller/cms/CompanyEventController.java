@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.util.StringUtils;
 
+import co.com.core.commons.ApplicationConstants;
 import co.com.core.commons.LoadBundle;
 import co.com.core.commons.SessionUtil;
 import co.com.core.commons.converter.UserUtil;
@@ -24,6 +25,7 @@ import co.com.core.controller.UploadedFileController;
 import co.com.core.dto.UploadedFileDTO;
 import co.com.core.dto.UserDTO;
 import co.com.core.dto.cms.CompanyEventDTO;
+import co.com.core.dto.cms.NewsDTO;
 import co.com.core.services.cms.ICompanyEventService;
 
 
@@ -49,70 +51,82 @@ public class CompanyEventController {
 	private String searchName;
 	private String searchLocation;
 	
+	private String descriptionForModal;
+	
 	public void init() {
 		
-		List<FilterBean> fiilterList = new ArrayList<FilterBean>();
-		FilterBean property0 = null;
-		if(searchName!=null && !searchName.isEmpty()) {
-			property0 = new FilterBean();
-			property0.setKey("property0");
-			property0.setName("c.companyEventTitle");
-			property0.setQueryParameterName("companyEventTitle");
-			property0.setHQLName(":companyEventTitle");
-			property0.setConditional("like");
-			property0.setFunction("lower");
-			property0.setValue(searchName);
-			property0.setQueryParameter("%"+searchName+"%");
-			fiilterList.add(property0);
+		Map<String, Object> filter = new HashMap<String, Object>();
+		if(StringUtils.hasText(searchName)) {
+			filter.put("companyEventTitle", searchName);
 		}
 		
-		if(searchLocation!=null && !searchLocation.isEmpty()) {
-			FilterBean property1 = new FilterBean();
-			property1.setKey("property1");
-			property1.setName("c.companyEventLocation");
-			property1.setHQLName(":companyEventLocation");
-			property1.setQueryParameterName("companyEventLocation");
-			property1.setConditional("like");
-			property1.setFunction("lower");
-			if(property0!=null){
-				property1.setOperation("and");
-			}
-			property1.setValue(searchLocation);
-			property1.setQueryParameter("%"+searchLocation+"%");
-			fiilterList.add(property1);
+		if(StringUtils.hasText(searchLocation)) {
+			filter.put("companyEventLocation", searchLocation);
 		}
-		
-		
-		Map<String, Object> queryData = createFilters(fiilterList);
-		items = companyEventService.getAllFilter(queryData);
+			
+		items = companyEventService.getAllFilter(filter);
 	}
 
-	private Map<String, Object> createFilters(List<FilterBean> fiilterList) {
-		Map<String, Object> queryData = new HashMap<String, Object>();
-		if(fiilterList.size()>0) {
-			queryData.put("where", null);
-			for(FilterBean bean : fiilterList) {
-				queryData.put(bean.getKey(), bean.getName());
-				queryData.put(bean.getKey()+".value", bean.getHQLName());
-				if(bean.getConditional()!=null) {
-					queryData.put(bean.getKey()+".conditional", bean.getConditional());
-				}
-				if(bean.getFunction()!=null) {
-					queryData.put(bean.getKey()+".function", bean.getFunction());
-				}
-				if(bean.getOperation()!=null) {
-					queryData.put(bean.getKey()+".operation", bean.getOperation());
-				}
-				if(bean.getQueryParameter()!=null) {
-					queryData.put(bean.getKey()+"queryParam", bean.getQueryParameterName()+"/"+bean.getQueryParameter());
-				}
-			}
-		}
-		
-		return queryData;
-		
+	
+	public void showItemDescription(CompanyEventDTO item) {
+		this.descriptionForModal = item.getCompanyEventDesc();
 	}
 	
+	private UploadedFileDTO createUploadedFile(FileUploadEvent event) {
+		return uploadedFileController.upload(event, true);
+	}
+	
+	public void setThumbnailFileUpload(FileUploadEvent event) {
+		this.thumbnail = event;
+		thumbailDto = createUploadedFile(this.thumbnail);
+		this.showThumbnailFile = true;
+	}
+	
+	public void setImageFileUpload(FileUploadEvent event) {
+		this.image = event;
+		imageDto = createUploadedFile(this.image);
+		this.showImageFile = true;
+	}
+	
+	public String getImagePath() {
+		if(this.imageDto!=null) {
+			return LoadBundle.getApplicationProperty("imagesContextPath") + this.imageDto.getName();
+		}
+		return "";
+	}
+	
+	public String getThumbnailPath() {
+		if(this.thumbailDto!=null) {
+			return LoadBundle.getApplicationProperty("imagesContextPath") + this.thumbailDto.getName();
+		}
+		return "";
+	}
+	
+	public void prepareEdit() {
+		this.thumbailDto = new UploadedFileDTO();
+		this.thumbailDto.setName(selected.getCompanyEventThumbImg());
+		this.imageDto = new UploadedFileDTO();
+		this.imageDto.setName(selected.getCompanyEventBigImg());
+		this.showImageFile = true;
+		this.showThumbnailFile = true;
+	}
+	
+	public void prepareCreate() {
+		selected = new CompanyEventDTO();
+		this.thumbailDto = new UploadedFileDTO();
+		this.imageDto = new UploadedFileDTO();
+		this.showImageFile = false;
+		this.showThumbnailFile = false;
+	}
+	
+	public void showImagesModal(CompanyEventDTO item) {
+		this.thumbailDto = new UploadedFileDTO();
+		this.thumbailDto.setName(item.getCompanyEventThumbImg());
+		this.imageDto = new UploadedFileDTO();
+		this.imageDto.setName(item.getCompanyEventBigImg());
+		this.showImageFile = true;
+		this.showThumbnailFile = true;
+	}
 	
 	public void saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -175,48 +189,7 @@ public class CompanyEventController {
 		}
 	}
 
-	private UploadedFileDTO createUploadedFile(FileUploadEvent event) {
-		return uploadedFileController.upload(event, true);
-	}
 	
-	public void setThumbnailFileUpload(FileUploadEvent event) {
-		this.thumbnail = event;
-		thumbailDto = createUploadedFile(this.thumbnail);
-		this.showThumbnailFile = true;
-	}
-	
-	public void setImageFileUpload(FileUploadEvent event) {
-		this.image = event;
-		imageDto = createUploadedFile(this.image);
-		this.showImageFile = true;
-	}
-	
-	public String getImagePath() {
-		if(this.imageDto!=null) {
-			return LoadBundle.getApplicationProperty("imagesContextPath") + this.imageDto.getName();
-		}
-		return "";
-	}
-	
-	public String getThumbnailPath() {
-		if(this.thumbailDto!=null) {
-			return LoadBundle.getApplicationProperty("imagesContextPath") + this.thumbailDto.getName();
-		}
-		return "";
-	}
-	
-	public void prepareEdit() {
-		this.thumbailDto = new UploadedFileDTO();
-		this.thumbailDto.setName(selected.getCompanyEventThumbImg());
-		this.imageDto = new UploadedFileDTO();
-		this.imageDto.setName(selected.getCompanyEventBigImg());
-		this.showImageFile = true;
-		this.showThumbnailFile = true;
-	}
-	
-	public void prepareCreate() {
-		selected = new CompanyEventDTO();
-	}
 
 	public ICompanyEventService getCompanyEventService() {
 		return companyEventService;
@@ -289,6 +262,14 @@ public class CompanyEventController {
 
 	public void setSearchLocation(String searchLocation) {
 		this.searchLocation = searchLocation;
+	}
+
+	public String getDescriptionForModal() {
+		return descriptionForModal;
+	}
+
+	public void setDescriptionForModal(String descriptionForModal) {
+		this.descriptionForModal = descriptionForModal;
 	}
 	
 }

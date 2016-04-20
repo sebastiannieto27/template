@@ -14,7 +14,7 @@ public class NewsUtil {
 		dto.setNewsDateExpire(entity.getNewsDateExpire());
 		dto.setNewsShortDescr(entity.getNewsShortDescr());
 		dto.setNewsLongDesc(entity.getNewsLongDesc());
-		dto.setNewsBigImgPath(entity.getNewsBigImgPath());
+		dto.setNewsFullImgPath(entity.getNewsFullImgPath());
 		dto.setNewsImgPath(entity.getNewsImgPath());
 		dto.setNewsThumbImgPath(entity.getNewsThumbImgPath());
 		dto.setDateCre(entity.getDateCre());
@@ -32,7 +32,7 @@ public class NewsUtil {
 		entity.setNewsDateExpire(dto.getNewsDateExpire());
 		entity.setNewsShortDescr(dto.getNewsShortDescr());
 		entity.setNewsLongDesc(dto.getNewsLongDesc());
-		entity.setNewsBigImgPath(dto.getNewsBigImgPath());
+		entity.setNewsFullImgPath(dto.getNewsFullImgPath());  
 		entity.setNewsImgPath(dto.getNewsImgPath());
 		entity.setNewsThumbImgPath(dto.getNewsThumbImgPath());
 		entity.setDateCre(dto.getDateCre());

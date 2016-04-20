@@ -2,42 +2,43 @@ package co.com.core.controller.cms;
 
 import static co.com.core.commons.LoadBundle.geProperty;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
+import org.springframework.util.StringUtils;
 
-import co.com.core.commons.SessionUtil;
-import co.com.core.dto.cms.BrandTypeDTO;
-import co.com.core.services.cms.IBrandTypeService;
+import co.com.core.dto.cms.BranchTypeDTO;
+import co.com.core.services.cms.IBranchTypeService;
 
 
-public class BrandTypeController {
+public class BranchTypeController {
 
-	IBrandTypeService brandTypeService;
-	List<BrandTypeDTO> items;
-	private BrandTypeDTO selected;
-	
-	private static final Logger logger = Logger.getLogger(BrandTypeController.class);
+	IBranchTypeService brandTypeService;
+	List<BranchTypeDTO> items;
+	private BranchTypeDTO selected;
+	private String searchName;
+	private static final Logger logger = Logger.getLogger(BranchTypeController.class);
 	
 	public void init() {
-		items = brandTypeService.getAll();
+		Map<String, Object> filter = new HashMap<String, Object>();
+		if(StringUtils.hasText(searchName)) {
+			filter.put("branchTypeName", searchName);
+		}
+		items = brandTypeService.getAllFilter(filter);
 	}
 
 	public void saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			logger.error(selected);
-			Integer userId = SessionUtil.getSessionUserId();
-			selected.setUserId(userId);
-			selected.setDateCre(new Date());
 			brandTypeService.create(selected);
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));
 		} catch (Exception ex) {
-			logger.error("Throwed Exception [BrandTypeController.saveNew]: " +ex.getMessage());
+			logger.error("Throwed Exception [BranchTypeController.saveNew]: " +ex.getMessage());
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("creationError"), null));
 		} finally {
 			items = brandTypeService.getAll();
@@ -52,7 +53,7 @@ public class BrandTypeController {
 				brandTypeService.delete(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulDeletion"), null));
 			} catch (Exception ex) {
-				logger.error("Throwed Exception [BrandTypeController.delete]: " +ex.getMessage());
+				logger.error("Throwed Exception [BranchTypeController.delete]: " +ex.getMessage());
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("deletionError"), null));
 			} finally {
 				items = brandTypeService.getAll();
@@ -67,7 +68,7 @@ public class BrandTypeController {
 				brandTypeService.update(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulEdition"), null));
 			} catch (Exception ex) {
-				logger.error("Throwed Exception [BrandTypeController.save]: " +ex.getMessage());
+				logger.error("Throwed Exception [BranchTypeController.save]: " +ex.getMessage());
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("editionError"), null));
 			} finally {
 				items = brandTypeService.getAll();
@@ -76,30 +77,47 @@ public class BrandTypeController {
 	}
 
 	public void prepareCreate() {
-		selected = new BrandTypeDTO();
+		selected = new BranchTypeDTO();
 	}
 
-	public IBrandTypeService getBrandTypeService() {
+	public IBranchTypeService getBranchTypeService() {
 		return brandTypeService;
 	}
 
-	public void setBrandTypeService(IBrandTypeService BrandTypeService) {
-		this.brandTypeService = BrandTypeService;
+	public void setBranchTypeService(IBranchTypeService BranchTypeService) {
+		this.brandTypeService = BranchTypeService;
 	}
 
-	public List<BrandTypeDTO> getItems() {
+	public List<BranchTypeDTO> getItems() {
 		return items;
 	}
 
-	public void setItems(List<BrandTypeDTO> items) {
+	public void setItems(List<BranchTypeDTO> items) {
 		this.items = items;
 	}
 
-	public BrandTypeDTO getSelected() {
+	public BranchTypeDTO getSelected() {
 		return selected;
 	}
 
-	public void setSelected(BrandTypeDTO selected) {
+	public void setSelected(BranchTypeDTO selected) {
 		this.selected = selected;
 	}
+
+	public IBranchTypeService getBrandTypeService() {
+		return brandTypeService;
+	}
+
+	public void setBrandTypeService(IBranchTypeService brandTypeService) {
+		this.brandTypeService = brandTypeService;
+	}
+
+	public String getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
+	}
+	
 }

@@ -10,6 +10,8 @@ public class ServiceDTO {
 	private Integer serviceId;
     private String serviceName;
     private String serviceDesc;
+    private String serviceImgPath;
+    private String serviceThumbImgPath;
     private Date dateCre;
     private User userId;
     private GeneralStatus generalStatusId;
@@ -49,6 +51,19 @@ public class ServiceDTO {
 	}
 	public void setGeneralStatusId(GeneralStatus generalStatusId) {
 		this.generalStatusId = generalStatusId;
+	}
+	
+	public String getServiceImgPath() {
+		return serviceImgPath;
+	}
+	public void setServiceImgPath(String serviceImgPath) {
+		this.serviceImgPath = serviceImgPath;
+	}
+	public String getServiceThumbImgPath() {
+		return serviceThumbImgPath;
+	}
+	public void setServiceThumbImgPath(String serviceThumbImgPath) {
+		this.serviceThumbImgPath = serviceThumbImgPath;
 	}
 	@Override
 	public String toString() {

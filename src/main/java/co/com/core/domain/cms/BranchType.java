@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.com.core.domain;
+package co.com.core.domain.cms;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author root
+ * @author dienieto
  */
 @Entity
 @Table(name = "branch_type")
@@ -108,7 +108,7 @@ public class BranchType implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.BranchType[ branchTypeId=" + branchTypeId + " ]";
+        return "com.co.friogan.db.domain.BranchType[ branchTypeId=" + branchTypeId + " ]";
     }
     
 }

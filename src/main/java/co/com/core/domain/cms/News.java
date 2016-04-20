@@ -38,14 +38,15 @@ import co.com.core.domain.User;
     @NamedQuery(name = "News.findAll", query = "SELECT n FROM News n"),
     @NamedQuery(name = "News.findByNewId", query = "SELECT n FROM News n WHERE n.newId = :newId"),
     @NamedQuery(name = "News.findByNewsTitle", query = "SELECT n FROM News n WHERE n.newsTitle = :newsTitle"),
-    @NamedQuery(name = "News.findByGeneralStatusId", query = "SELECT n FROM News n WHERE n.generalStatusId = :generalStatusId"),
     @NamedQuery(name = "News.findByNewsDateStart", query = "SELECT n FROM News n WHERE n.newsDateStart = :newsDateStart"),
     @NamedQuery(name = "News.findByNewsDateExpire", query = "SELECT n FROM News n WHERE n.newsDateExpire = :newsDateExpire"),
     @NamedQuery(name = "News.findByNewsShortDescr", query = "SELECT n FROM News n WHERE n.newsShortDescr = :newsShortDescr"),
     @NamedQuery(name = "News.findByNewsLongDesc", query = "SELECT n FROM News n WHERE n.newsLongDesc = :newsLongDesc"),
-    @NamedQuery(name = "News.findByNewsBigImgPath", query = "SELECT n FROM News n WHERE n.newsBigImgPath = :newsBigImgPath"),
+    @NamedQuery(name = "News.findByNewsImgCaption", query = "SELECT n FROM News n WHERE n.newsImgCaption = :newsImgCaption"),
+    @NamedQuery(name = "News.findByNewsFullImgPath", query = "SELECT n FROM News n WHERE n.newsFullImgPath = :newsFullImgPath"),
     @NamedQuery(name = "News.findByNewsImgPath", query = "SELECT n FROM News n WHERE n.newsImgPath = :newsImgPath"),
     @NamedQuery(name = "News.findByNewsThumbImgPath", query = "SELECT n FROM News n WHERE n.newsThumbImgPath = :newsThumbImgPath"),
+    @NamedQuery(name = "News.findByNewsRelativeLink", query = "SELECT n FROM News n WHERE n.newsRelativeLink = :newsRelativeLink"),
     @NamedQuery(name = "News.findByDateCre", query = "SELECT n FROM News n WHERE n.dateCre = :dateCre")})
 public class News implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -61,17 +62,13 @@ public class News implements Serializable {
     private String newsTitle;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "general_status_id")
-    private int generalStatusId;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "news_date_start")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date newsDateStart;
     @Basic(optional = false)
     @NotNull
     @Column(name = "news_date_expire")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date newsDateExpire;
     @Size(max = 200)
     @Column(name = "news_short_descr")
@@ -80,14 +77,20 @@ public class News implements Serializable {
     @Column(name = "news_long_desc")
     private String newsLongDesc;
     @Size(max = 150)
-    @Column(name = "news_big_img_path")
-    private String newsBigImgPath;
+    @Column(name = "news_img_caption")
+    private String newsImgCaption;
+    @Size(max = 150)
+    @Column(name = "news_full_img_path")
+    private String newsFullImgPath;
     @Size(max = 150)
     @Column(name = "news_img_path")
     private String newsImgPath;
     @Size(max = 150)
     @Column(name = "news_thumb_img_path")
     private String newsThumbImgPath;
+    @Size(max = 250)
+    @Column(name = "news_relative_link")
+    private String newsRelativeLink;
     @Basic(optional = false)
     @NotNull
     @Column(name = "date_cre")
@@ -96,6 +99,9 @@ public class News implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
     private User userId;
+    @JoinColumn(name = "general_status_id", referencedColumnName = "general_status_id")
+    @ManyToOne(optional = false)
+    private GeneralStatus generalStatusId;
     @JoinColumn(name = "news_type_id", referencedColumnName = "news_type_id")
     @ManyToOne(optional = false)
     private NewsType newsTypeId;
@@ -107,10 +113,9 @@ public class News implements Serializable {
         this.newId = newId;
     }
 
-    public News(Integer newId, String newsTitle, int generalStatusId, Date newsDateStart, Date newsDateExpire, Date dateCre) {
+    public News(Integer newId, String newsTitle, Date newsDateStart, Date newsDateExpire, Date dateCre) {
         this.newId = newId;
         this.newsTitle = newsTitle;
-        this.generalStatusId = generalStatusId;
         this.newsDateStart = newsDateStart;
         this.newsDateExpire = newsDateExpire;
         this.dateCre = dateCre;
@@ -130,14 +135,6 @@ public class News implements Serializable {
 
     public void setNewsTitle(String newsTitle) {
         this.newsTitle = newsTitle;
-    }
-
-    public int getGeneralStatusId() {
-        return generalStatusId;
-    }
-
-    public void setGeneralStatusId(int generalStatusId) {
-        this.generalStatusId = generalStatusId;
     }
 
     public Date getNewsDateStart() {
@@ -172,12 +169,20 @@ public class News implements Serializable {
         this.newsLongDesc = newsLongDesc;
     }
 
-    public String getNewsBigImgPath() {
-        return newsBigImgPath;
+    public String getNewsImgCaption() {
+        return newsImgCaption;
     }
 
-    public void setNewsBigImgPath(String newsBigImgPath) {
-        this.newsBigImgPath = newsBigImgPath;
+    public void setNewsImgCaption(String newsImgCaption) {
+        this.newsImgCaption = newsImgCaption;
+    }
+
+    public String getNewsFullImgPath() {
+        return newsFullImgPath;
+    }
+
+    public void setNewsFullImgPath(String newsFullImgPath) {
+        this.newsFullImgPath = newsFullImgPath;
     }
 
     public String getNewsImgPath() {
@@ -196,6 +201,14 @@ public class News implements Serializable {
         this.newsThumbImgPath = newsThumbImgPath;
     }
 
+    public String getNewsRelativeLink() {
+        return newsRelativeLink;
+    }
+
+    public void setNewsRelativeLink(String newsRelativeLink) {
+        this.newsRelativeLink = newsRelativeLink;
+    }
+
     public Date getDateCre() {
         return dateCre;
     }
@@ -210,6 +223,14 @@ public class News implements Serializable {
 
     public void setUserId(User userId) {
         this.userId = userId;
+    }
+
+    public GeneralStatus getGeneralStatusId() {
+        return generalStatusId;
+    }
+
+    public void setGeneralStatusId(GeneralStatus generalStatusId) {
+        this.generalStatusId = generalStatusId;
     }
 
     public NewsType getNewsTypeId() {
@@ -242,7 +263,7 @@ public class News implements Serializable {
 
     @Override
     public String toString() {
-        return "co.com.core.domain.News[ newId=" + newId + " ]";
+        return "com.co.friogan.db.domain.News[ newId=" + newId + " ]";
     }
     
 }

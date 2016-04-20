@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="branchServiceEditDlg" widgetVar="branchServiceEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.branchService}" closeOnEscape="true">
+
+            <h:form id="branchServiceEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{branchServiceController.selected != null}">
+
+                        <p:outputLabel value="#{msg.service}" for="serviceId" />
+                        <p:selectOneMenu id="serviceId" value="#{branchServiceController.selectedServiceId}" required="true" requiredMessage="#{msg.serviceRequiredMessage}" >
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{serviceController.items}"
+                                           var="serviceIdItem"
+                                           itemValue="#{serviceIdItem.serviceId}"
+                                           itemLabel="#{serviceIdItem.serviceName.toString()}"
+                                           />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{msg.branch}" for="branchId" />
+                        <p:selectOneMenu id="branchId" value="#{branchServiceController.selectedBranchId}" required="true" requiredMessage="#{msg.branchRequiredMessage}" >
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{branchController.items}"
+                                           var="branchIdItem"
+                                           itemValue="#{branchIdItem.branchId}"
+                                           itemLabel="#{branchIdItem.branchName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{branchServiceController.save}" value="#{msg.save}" update="display,:branchServiceListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('branchServiceEditDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.cancel}" onclick="PF('branchServiceEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
