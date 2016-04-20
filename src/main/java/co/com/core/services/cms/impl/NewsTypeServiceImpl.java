@@ -2,6 +2,7 @@ package co.com.core.services.cms.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -28,6 +29,18 @@ public class NewsTypeServiceImpl implements INewsTypeService {
 		return NewsTypes;
 	}
 
+	@Override
+	public List<NewsTypeDTO> getAllFilter(Map<String, Object> filter) {
+		List<NewsTypeDTO> dtoList = new ArrayList<NewsTypeDTO>();
+		List<NewsType> entityList = newsTypeDAO.getAllFilter(filter);
+		if(entityList!=null && entityList.size() > 0) {
+			for(NewsType entity : entityList) {
+				dtoList.add(NewsTypeUtil.getDtoFromEntity(entity));
+			}
+		}
+		return dtoList;
+	}
+	
 	@Override
 	public void create(NewsTypeDTO dto) {
 		newsTypeDAO.create(NewsTypeUtil.getEntityFromDto(dto));

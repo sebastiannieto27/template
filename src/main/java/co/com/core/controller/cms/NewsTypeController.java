@@ -3,12 +3,15 @@ package co.com.core.controller.cms;
 import static co.com.core.commons.LoadBundle.geProperty;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
+import org.springframework.util.StringUtils;
 
 import co.com.core.commons.SessionUtil;
 import co.com.core.commons.converter.UserUtil;
@@ -19,14 +22,22 @@ import co.com.core.services.cms.INewsTypeService;
 
 public class NewsTypeController {
 
-	INewsTypeService newsTypeService;
-	List<NewsTypeDTO> items;
-	private NewsTypeDTO selected;
-	
 	private static final Logger logger = Logger.getLogger(NewsTypeController.class);
 	
+	private INewsTypeService newsTypeService;
+	private List<NewsTypeDTO> items;
+	private NewsTypeDTO selected;
+	
+	//filters
+	private String searchName;
+	
 	public void init() {
-		items = newsTypeService.getAll();
+		Map<String, Object> filter = new HashMap<String, Object>();
+		if(StringUtils.hasText(searchName)) {
+			filter.put("newsTypeName", searchName);
+		}
+			
+		items = newsTypeService.getAllFilter(filter);
 	}
 
 	public void saveNew() {
@@ -103,4 +114,13 @@ public class NewsTypeController {
 	public void setSelected(NewsTypeDTO selected) {
 		this.selected = selected;
 	}
+
+	public String getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
+	}
+	
 }

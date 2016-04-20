@@ -26,7 +26,6 @@ public class BranchDAOImpl implements BranchDAO {
 	        this.sessionFactory = sessionFactory;
 	    }
 		
-		
 		@Override
 		public List<Branch> getAll() {
 			List<Branch> entityList = null;

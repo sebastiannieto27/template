@@ -12,7 +12,18 @@
     <h:form id="newsTypeListForm">
 
         <p:panel header="#{msg.newsType}">
-            <p:dataTable id="datalist"
+        
+        	<h:panelGroup id="searchForm">
+	            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+	            		
+	           			<p:outputLabel for="rtvName" value="#{msg.name}:" />
+						<p:inputText id="rtvName" value="#{newsTypeController.searchName}" title="#{msg.Name}:"/>
+	
+          				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{newsTypeController.init()}" update=":newsTypeListForm" />
+           			</p:panelGrid>
+               </h:panelGroup>
+               
+            	<p:dataTable id="datalist"
                          value="#{newsTypeController.items}"
                          var="item"
                          rowKey="#{item.newsTypeId}"

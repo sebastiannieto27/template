@@ -15,7 +15,7 @@
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{newsTypeController.selected != null}">
 
                         <p:outputLabel value="#{msg.name}" for="newsTypeName" />
-                        <p:inputText id="newsTypeName" value="#{newsTypeController.selected.newsTypeName}" required="true" requiredMessage="#{msg.nameRequiredMessage}" title="#{msg.name}" size="150" maxlength="150"/>
+                        <p:inputText id="newsTypeName" value="#{newsTypeController.selected.newsTypeName}" required="true" requiredMessage="#{msg.nameRequiredMessage}" title="#{msg.name}" size="50" maxlength="50"/>
 
                      </p:panelGrid>
                     <p:commandButton actionListener="#{newsTypeController.save}" value="#{msg.save}" update="display,:newsTypeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('newsTypeEditDialog'));">

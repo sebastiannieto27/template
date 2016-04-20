@@ -56,7 +56,6 @@ public class BranchController {
 	private String thumbnailPath;
 	
 	public void init() {
-		//items = brandService.getAll();
 		Map<String, Object> filter = new HashMap<String, Object>();
 		if(StringUtils.hasText(searchName)) {
 			filter.put("branchName", searchName);
