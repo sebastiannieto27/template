@@ -32,7 +32,6 @@
                                            itemValue="#{branchClientIdItem}"
                                            itemLabel="#{branchClientIdItem.branchClName.toString()}"
                                            />
-
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{msg.CreateRaiseMoneyLabel_raiseMoneyTypeId}" for="raiseMoneyTypeId" />
@@ -43,7 +42,6 @@
                                            itemValue="#{raiseMoneyTypeIdItem}"
                                            itemLabel="#{raiseMoneyTypeIdItem.raiseMonTypeName.toString()}"
                                            />
-
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{raiseMoneyController.saveNew}" value="#{msg.Save}" update="display,:RaiseMoneyListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,RaiseMoneyCreateDialog);">

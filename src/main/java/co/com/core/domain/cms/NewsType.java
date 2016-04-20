@@ -41,8 +41,7 @@ import co.com.core.domain.User;
 @NamedQueries({
     @NamedQuery(name = "NewsType.findAll", query = "SELECT n FROM NewsType n"),
     @NamedQuery(name = "NewsType.findByNewsTypeId", query = "SELECT n FROM NewsType n WHERE n.newsTypeId = :newsTypeId"),
-    @NamedQuery(name = "NewsType.findByNewsTypeName", query = "SELECT n FROM NewsType n WHERE n.newsTypeName = :newsTypeName"),
-    @NamedQuery(name = "NewsType.findByDateCre", query = "SELECT n FROM NewsType n WHERE n.dateCre = :dateCre")})
+    @NamedQuery(name = "NewsType.findByNewsTypeName", query = "SELECT n FROM NewsType n WHERE n.newsTypeName = :newsTypeName")})
 public class NewsType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,16 +52,8 @@ public class NewsType implements Serializable {
     @Size(max = 150)
     @Column(name = "news_type_name")
     private String newsTypeName;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "date_cre")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateCre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "newsTypeId")
     private Collection<News> newsCollection;
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    @ManyToOne(optional = false)
-    private User userId;
 
     public NewsType() {
     }
@@ -73,7 +64,6 @@ public class NewsType implements Serializable {
 
     public NewsType(Integer newsTypeId, Date dateCre) {
         this.newsTypeId = newsTypeId;
-        this.dateCre = dateCre;
     }
 
     public Integer getNewsTypeId() {
@@ -92,14 +82,6 @@ public class NewsType implements Serializable {
         this.newsTypeName = newsTypeName;
     }
 
-    public Date getDateCre() {
-        return dateCre;
-    }
-
-    public void setDateCre(Date dateCre) {
-        this.dateCre = dateCre;
-    }
-
     @XmlTransient
     public Collection<News> getNewsCollection() {
         return newsCollection;
@@ -107,14 +89,6 @@ public class NewsType implements Serializable {
 
     public void setNewsCollection(Collection<News> newsCollection) {
         this.newsCollection = newsCollection;
-    }
-
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
     }
 
     @Override

@@ -69,7 +69,7 @@ public class NewsTypeDAOImpl implements NewsTypeDAO {
                     
 		        entityList = query.list();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [BranchDAOImpl.getAllFilter]: " +ex.getMessage());
+				logger.error("Throwed Exception [NewsTypeDAOImpl.getAllFilter]: " +ex.getMessage());
 			} finally {
 				session.close();
 			}

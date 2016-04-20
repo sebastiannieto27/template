@@ -9,8 +9,6 @@ public class NewsTypeUtil {
 		NewsTypeDTO dto = new NewsTypeDTO();
 		dto.setNewsTypeId(entity.getNewsTypeId());
 		dto.setNewsTypeName(entity.getNewsTypeName());
-		dto.setDateCre(entity.getDateCre());
-		dto.setUserId(entity.getUserId());
 		return dto;
 	}
 	
@@ -18,8 +16,6 @@ public class NewsTypeUtil {
 		NewsType entity = new NewsType();
 		entity.setNewsTypeId(dto.getNewsTypeId());
 		entity.setNewsTypeName(dto.getNewsTypeName());
-		entity.setDateCre(dto.getDateCre());
-		entity.setUserId(dto.getUserId());
 		return entity;
 	}
 }
