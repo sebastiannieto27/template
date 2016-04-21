@@ -207,6 +207,10 @@
   	    <bean id="branchClientDAO" class="co.com.core.dao.impl.financial.account.BranchClientDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
+	    	    	    	    	    
+  	    <bean id="billHeadDAO" class="co.com.core.dao.impl.financial.account.BillHeadDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -325,7 +329,10 @@
    	    <bean id="branchClientService" class="co.com.core.services.impl.financial.account.BranchClientServiceImpl">
 	    	<property name="branchClientDAO" ref="branchClientDAO" />
 	    </bean>
-	    
+	    	    	    	    
+   	    <bean id="billHeadService" class="co.com.core.services.impl.financial.account.BillHeadServiceImpl">
+	    	<property name="billHeadDAO" ref="billHeadDAO" />
+	    </bean>
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -465,5 +472,9 @@
         
     <bean id="branchClientController" scope="session" class="co.com.core.controller.financial.account.BranchClientController" init-method="init">
     	<property name="branchClientService" ref="branchClientService" />
+    </bean> 
+            
+    <bean id="billHeadController" scope="session" class="co.com.core.controller.financial.account.BillHeadController" init-method="init">
+    	<property name="billHeadService" ref="billHeadService" />
     </bean> 
 </beans>

@@ -118,9 +118,13 @@
 		<view-id value="/home/financialAcount/client/index.xhtml" />
 	</url-mapping>	
 	
-		
 	<url-mapping id="branchClient">
 		<pattern value="/cartera/sedes-cliente" />
 		<view-id value="/home/financialAcount/branchClient/index.xhtml" />
+	</url-mapping>	
+		
+	<url-mapping id="billHead">
+		<pattern value="/cartera/cuenta-principal" />
+		<view-id value="/home/financialAcount/billHead/index.xhtml" />
 	</url-mapping>	
 </pretty-config>
