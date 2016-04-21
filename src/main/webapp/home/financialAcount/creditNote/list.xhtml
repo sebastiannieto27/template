@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CreditNoteListForm">
+
+        <p:panel header="#{msg.ListCreditNoteTitle}">
+            <p:contextMenu id="CreditNoteDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('CreditNoteListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg.View}" onclick="document.getElementById('CreditNoteListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('CreditNoteListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('CreditNoteListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg.CreditNoteMenuItem_branchClientId}" icon="ui-icon-search"  actionListener="#{creditNoteController.prepareBranchClientId}" update=":BranchClientViewForm" oncomplete="BranchClientViewDialog.show()" disabled="#{empty creditNoteController.selected.branchClientId}"/>  
+                <p:menuitem value="#{msg.CreditNoteMenuItem_billHeadId}" icon="ui-icon-search"  actionListener="#{creditNoteController.prepareBillHeadId}" update=":BillHeadViewForm" oncomplete="BillHeadViewDialog.show()" disabled="#{empty creditNoteController.selected.billHeadId}"/>  
+                <p:menuitem value="#{msg.CreditNoteMenuItem_creditNoteTypeId}" icon="ui-icon-search"  actionListener="#{creditNoteController.prepareCreditNoteTypeId}" update=":CreditNoteTypeViewForm" oncomplete="CreditNoteTypeViewDialog.show()" disabled="#{empty creditNoteController.selected.creditNoteTypeId}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{creditNoteController.items}"
+                         var="item"
+                         rowKey="#{item.creditNoteId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{creditNoteController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CreditNoteDataTableContextMenu" listener="#{creditNoteController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CreditNoteDataTableContextMenu" listener="#{creditNoteController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{creditNoteController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CreditNoteListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.creditNoteId}" filterBy="#{item.creditNoteId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListCreditNoteTitle_creditNoteId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.creditNoteId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.creditNotValue}" filterBy="#{item.creditNotValue}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListCreditNoteTitle_creditNotValue}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.creditNotValue}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.creditNotNum}" filterBy="#{item.creditNotNum}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListCreditNoteTitle_creditNotNum}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.creditNotNum}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.creditNotDate}" filterBy="#{item.creditNotDate}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListCreditNoteTitle_creditNotDate}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.creditNotDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.branchClientId.branchClName}" filterBy="#{item.branchClientId.branchClName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListCreditNoteTitle_branchClientId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.branchClientId.branchClName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.billHeadId.billHeadId}" filterBy="#{item.billHeadId.billHeadId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListCreditNoteTitle_billHeadId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.billHeadId.billHeadId}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.creditNoteTypeId.creditNotTypeName}" filterBy="#{item.creditNoteTypeId.creditNotTypeName}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msg.ListCreditNoteTitle_creditNoteTypeId}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.creditNoteTypeId.creditNotTypeName}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{creditNoteController.prepareCreate}" update=":CreditNoteCreateForm" oncomplete="CreditNoteCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":CreditNoteViewForm" oncomplete="CreditNoteViewDialog.show()" disabled="#{empty creditNoteController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":CreditNoteEditForm" oncomplete="CreditNoteEditDialog.show()" disabled="#{empty creditNoteController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{creditNoteController.delete}" update=":growl,datalist" disabled="#{empty creditNoteController.selected}">
+                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

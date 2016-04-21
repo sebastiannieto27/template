@@ -7,14 +7,14 @@ public class GeneralStatusUtil {
 
 	public static GeneralStatusDTO getDtoFromEntity(GeneralStatus entity) {
 		GeneralStatusDTO dto = new GeneralStatusDTO();
-		dto.setGeneralStatus(entity.getGeneralStatus());
+		dto.setGeneralStatus(entity.getGeneralStatusId());
 		dto.setGeneralStatusName(entity.getGeneralStatusName());
 		return dto;
 	}
 	
 	public static GeneralStatus getEntityFromDto(GeneralStatusDTO dto) {
 		GeneralStatus entity = new GeneralStatus();
-		entity.setGeneralStatus(dto.getGeneralStatus());
+		entity.setGeneralStatusId(dto.getGeneralStatus());
 		entity.setGeneralStatusName(dto.getGeneralStatusName());
 		return entity;
 	}

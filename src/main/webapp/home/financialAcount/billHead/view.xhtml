@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BillHeadViewDlg" widgetVar="BillHeadViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewBillHeadTitle}" closeOnEscape="true">
+
+            <h:form id="BillHeadViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{billHeadController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewBillHeadLabel_billHeadId}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadId}" title="#{msg.ViewBillHeadTitle_billHeadId}"/>
+
+                        <h:outputText value="#{msg.ViewBillHeadLabel_billHeadTotalValue}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadTotalValue}" title="#{msg.ViewBillHeadTitle_billHeadTotalValue}"/>
+
+                        <h:outputText value="#{msg.ViewBillHeadLabel_billHeadTaxValue}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadTaxValue}" title="#{msg.ViewBillHeadTitle_billHeadTaxValue}"/>
+
+                        <h:outputText value="#{msg.ViewBillHeadLabel_billHeadDiscValue}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadDiscValue}" title="#{msg.ViewBillHeadTitle_billHeadDiscValue}"/>
+
+                        <h:outputText value="#{msg.ViewBillHeadLabel_billHeadNum}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadNum}" title="#{msg.ViewBillHeadTitle_billHeadNum}"/>
+
+                        <h:outputText value="#{msg.ViewBillHeadLabel_billHeadDate}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadDate}" title="#{msg.ViewBillHeadTitle_billHeadDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg.ViewBillHeadLabel_billHeadDue}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadDue}" title="#{msg.ViewBillHeadTitle_billHeadDue}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg.ViewBillHeadLabel_branchClientId}"/>
+                        <h:outputText value="#{billHeadController.selected.branchClientId.branchClName}"/>
+
+                        <h:outputText value="#{msg.ViewBillHeadLabel_generalStatusId}"/>
+                        <h:outputText value="#{billHeadController.selected.generalStatusId.generalStatusName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="BillHeadViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

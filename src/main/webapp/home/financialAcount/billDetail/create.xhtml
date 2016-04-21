@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BillDetailCreateDlg" widgetVar="BillDetailCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.CreateBillDetailTitle}" closeOnEscape="true">
+
+            <h:form id="BillDetailCreateForm">
+
+                <h:panelGroup id="display" rendered="#{billDetailController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.CreateBillDetailLabel_billDetailUnitVal}" for="billDetailUnitVal" />
+                        <p:inputText id="billDetailUnitVal" value="#{billDetailController.selected.billDetailUnitVal}" title="#{msg.CreateBillDetailTitle_billDetailUnitVal}"/>
+
+                        <p:outputLabel value="#{msg.CreateBillDetailLabel_billDetailAmount}" for="billDetailAmount" />
+                        <p:inputText id="billDetailAmount" value="#{billDetailController.selected.billDetailAmount}" title="#{msg.CreateBillDetailTitle_billDetailAmount}"/>
+
+                        <p:outputLabel value="#{msg.CreateBillDetailLabel_billDetailTotValue}" for="billDetailTotValue" />
+                        <p:inputText id="billDetailTotValue" value="#{billDetailController.selected.billDetailTotValue}" title="#{msg.CreateBillDetailTitle_billDetailTotValue}"/>
+
+                        <p:outputLabel value="#{msg.CreateBillDetailLabel_billHeadId}" for="billHeadId" />
+                        <p:selectOneMenu id="billHeadId" value="#{billDetailController.selected.billHeadId}" required="true" requiredMessage="#{msg.CreateBillDetailRequiredMessage_billHeadId}" converter="billHeadConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{billHeadController.items}"
+                                           var="billHeadIdItem"
+                                           itemValue="#{billHeadIdItem}"
+                                           itemLabel="#{billHeadIdItem.billHeadId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{msg.CreateBillDetailLabel_productId}" for="productId" />
+                        <p:selectOneMenu id="productId" value="#{billDetailController.selected.productId}" required="true" requiredMessage="#{msg.CreateBillDetailRequiredMessage_productId}" converter="productConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{productController.items}"
+                                           var="productIdItem"
+                                           itemValue="#{productIdItem}"
+                                           itemLabel="#{productIdItem.productName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{billDetailController.saveNew}" value="#{msg.Save}" update="display,:BillDetailListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,BillDetailCreateDialog);">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.Cancel}" onclick="BillDetailCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

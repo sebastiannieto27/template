@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AccountAgeTypeViewDlg" widgetVar="AccountAgeTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewAccountAgeTypeTitle}" closeOnEscape="true">
+
+            <h:form id="AccountAgeTypeViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{accountAgeTypeController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewAccountAgeTypeLabel_accountAgeTypeId}"/>
+                        <h:outputText value="#{accountAgeTypeController.selected.accountAgeTypeId}" title="#{msg.ViewAccountAgeTypeTitle_accountAgeTypeId}"/>
+
+                        <h:outputText value="#{msg.ViewAccountAgeTypeLabel_accountAgeTypeName}"/>
+                        <h:outputText value="#{accountAgeTypeController.selected.accountAgeTypeName}" title="#{msg.ViewAccountAgeTypeTitle_accountAgeTypeName}"/>
+
+                        <h:outputText value="#{msg.ViewAccountAgeTypeLabel_accountAgeTypeBegin}"/>
+                        <h:outputText value="#{accountAgeTypeController.selected.accountAgeTypeBegin}" title="#{msg.ViewAccountAgeTypeTitle_accountAgeTypeBegin}"/>
+
+                        <h:outputText value="#{msg.ViewAccountAgeTypeLabel_accountAgeTypeEnd}"/>
+                        <h:outputText value="#{accountAgeTypeController.selected.accountAgeTypeEnd}" title="#{msg.ViewAccountAgeTypeTitle_accountAgeTypeEnd}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="AccountAgeTypeViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="RaiseMoneyEditDlg" widgetVar="RaiseMoneyEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditRaiseMoneyTitle}" closeOnEscape="true">
+
+            <h:form id="RaiseMoneyEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{raiseMoneyController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditRaiseMoneyLabel_raiseMoneyId}" for="raiseMoneyId" />
+                        <h:outputText id="raiseMoneyId" value="#{raiseMoneyController.selected.raiseMoneyId}" />
+
+                        <p:outputLabel value="#{msg.EditRaiseMoneyLabel_raiseMoneyAmount}" for="raiseMoneyAmount" />
+                        <p:inputText id="raiseMoneyAmount" value="#{raiseMoneyController.selected.raiseMoneyAmount}" title="#{msg.EditRaiseMoneyTitle_raiseMoneyAmount}"/>
+
+                        <p:outputLabel value="#{msg.EditRaiseMoneyLabel_raiseMoneyNum}" for="raiseMoneyNum" />
+                        <p:inputText id="raiseMoneyNum" value="#{raiseMoneyController.selected.raiseMoneyNum}" title="#{msg.EditRaiseMoneyTitle_raiseMoneyNum}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{msg.EditRaiseMoneyLabel_raiseMoneyDate}" for="raiseMoneyDate" />
+                        <p:calendar id="raiseMoneyDate" pattern="MM/dd/yyyy" value="#{raiseMoneyController.selected.raiseMoneyDate}" title="#{msg.EditRaiseMoneyTitle_raiseMoneyDate}"  showOn="button"/>
+
+                        <p:outputLabel value="#{msg.EditRaiseMoneyLabel_branchClientId}" for="branchClientId" />
+                        <p:selectOneMenu id="branchClientId" value="#{raiseMoneyController.selected.branchClientId}" required="true" requiredMessage="#{msg.EditRaiseMoneyRequiredMessage_branchClientId}" converter="branchClientConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{branchClientController.items}"
+                                           var="branchClientIdItem"
+                                           itemValue="#{branchClientIdItem}"
+                                           itemLabel="#{branchClientIdItem.branchClName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{msg.EditRaiseMoneyLabel_raiseMoneyTypeId}" for="raiseMoneyTypeId" />
+                        <p:selectOneMenu id="raiseMoneyTypeId" value="#{raiseMoneyController.selected.raiseMoneyTypeId}"  converter="raiseMoneyTypeConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{raiseMoneyTypeController.items}"
+                                           var="raiseMoneyTypeIdItem"
+                                           itemValue="#{raiseMoneyTypeIdItem}"
+                                           itemLabel="#{raiseMoneyTypeIdItem.raiseMonTypeName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{raiseMoneyController.save}" value="#{msg.Save}" update="display,:RaiseMoneyListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,RaiseMoneyEditDialog);">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" onclick="RaiseMoneyEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

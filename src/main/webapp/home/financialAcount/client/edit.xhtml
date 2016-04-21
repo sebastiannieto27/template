@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ClientEditDlg" widgetVar="ClientEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditClientTitle}" closeOnEscape="true">
+
+            <h:form id="ClientEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{clientController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditClientLabel_clientId}" for="clientId" />
+                        <h:outputText id="clientId" value="#{clientController.selected.clientId}" />
+
+                        <p:outputLabel value="#{msg.EditClientLabel_clientIntCode}" for="clientIntCode" />
+                        <p:inputText id="clientIntCode" value="#{clientController.selected.clientIntCode}" title="#{msg.EditClientTitle_clientIntCode}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{msg.EditClientLabel_clientNumId}" for="clientNumId" />
+                        <p:inputText id="clientNumId" value="#{clientController.selected.clientNumId}" title="#{msg.EditClientTitle_clientNumId}" required="true" requiredMessage="#{msg.EditClientRequiredMessage_clientNumId}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{msg.EditClientLabel_clientName}" for="clientName" />
+                        <p:inputText id="clientName" value="#{clientController.selected.clientName}" title="#{msg.EditClientTitle_clientName}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.EditClientLabel_clientAddress}" for="clientAddress" />
+                        <p:inputText id="clientAddress" value="#{clientController.selected.clientAddress}" title="#{msg.EditClientTitle_clientAddress}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.EditClientLabel_clientDv}" for="clientDv" />
+                        <p:inputText id="clientDv" value="#{clientController.selected.clientDv}" title="#{msg.EditClientTitle_clientDv}"/>
+
+                        <p:outputLabel value="#{msg.EditClientLabel_clientMail}" for="clientMail" />
+                        <p:inputText id="clientMail" value="#{clientController.selected.clientMail}" title="#{msg.EditClientTitle_clientMail}" size="200" maxlength="200"/>
+
+                        <p:outputLabel value="#{msg.EditClientLabel_clientTypeId}" for="clientTypeId" />
+                        <p:selectOneMenu id="clientTypeId" value="#{clientController.selected.clientTypeId}" required="true" requiredMessage="#{msg.EditClientRequiredMessage_clientTypeId}" converter="clientTypeConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{clientTypeController.items}"
+                                           var="clientTypeIdItem"
+                                           itemValue="#{clientTypeIdItem}"
+                                           itemLabel="#{clientTypeIdItem.clientTypeName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{clientController.save}" value="#{msg.Save}" update="display,:ClientListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ClientEditDialog);">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" onclick="ClientEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RaiseMoneyViewDlg" widgetVar="RaiseMoneyViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewRaiseMoneyTitle}" closeOnEscape="true">
+
+            <h:form id="RaiseMoneyViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{raiseMoneyController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewRaiseMoneyLabel_raiseMoneyId}"/>
+                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyId}" title="#{msg.ViewRaiseMoneyTitle_raiseMoneyId}"/>
+
+                        <h:outputText value="#{msg.ViewRaiseMoneyLabel_raiseMoneyAmount}"/>
+                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyAmount}" title="#{msg.ViewRaiseMoneyTitle_raiseMoneyAmount}"/>
+
+                        <h:outputText value="#{msg.ViewRaiseMoneyLabel_raiseMoneyNum}"/>
+                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyNum}" title="#{msg.ViewRaiseMoneyTitle_raiseMoneyNum}"/>
+
+                        <h:outputText value="#{msg.ViewRaiseMoneyLabel_raiseMoneyDate}"/>
+                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyDate}" title="#{msg.ViewRaiseMoneyTitle_raiseMoneyDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg.ViewRaiseMoneyLabel_branchClientId}"/>
+                        <h:outputText value="#{raiseMoneyController.selected.branchClientId.branchClName}"/>
+
+                        <h:outputText value="#{msg.ViewRaiseMoneyLabel_raiseMoneyTypeId}"/>
+                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyTypeId.raiseMonTypeName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="RaiseMoneyViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

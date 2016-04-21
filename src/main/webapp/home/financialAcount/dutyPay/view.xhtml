@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DutyPayViewDlg" widgetVar="DutyPayViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewDutyPayTitle}" closeOnEscape="true">
+
+            <h:form id="DutyPayViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{dutyPayController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewDutyPayLabel_dutyApyId}"/>
+                        <h:outputText value="#{dutyPayController.selected.dutyApyId}" title="#{msg.ViewDutyPayTitle_dutyApyId}"/>
+
+                        <h:outputText value="#{msg.ViewDutyPayLabel_dutyPayValue}"/>
+                        <h:outputText value="#{dutyPayController.selected.dutyPayValue}" title="#{msg.ViewDutyPayTitle_dutyPayValue}"/>
+
+                        <h:outputText value="#{msg.ViewDutyPayLabel_dutyPayNum}"/>
+                        <h:outputText value="#{dutyPayController.selected.dutyPayNum}" title="#{msg.ViewDutyPayTitle_dutyPayNum}"/>
+
+                        <h:outputText value="#{msg.ViewDutyPayLabel_dutyPayDate}"/>
+                        <h:outputText value="#{dutyPayController.selected.dutyPayDate}" title="#{msg.ViewDutyPayTitle_dutyPayDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg.ViewDutyPayLabel_branchClientId}"/>
+                        <h:outputText value="#{dutyPayController.selected.branchClientId.branchClName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="DutyPayViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

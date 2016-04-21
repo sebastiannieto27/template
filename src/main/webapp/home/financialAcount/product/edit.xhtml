@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProductEditDlg" widgetVar="ProductEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditProductTitle}" closeOnEscape="true">
+
+            <h:form id="ProductEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{productController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditProductLabel_productId}" for="productId" />
+                        <h:outputText id="productId" value="#{productController.selected.productId}" />
+
+                        <p:outputLabel value="#{msg.EditProductLabel_productName}" for="productName" />
+                        <p:inputText id="productName" value="#{productController.selected.productName}" title="#{msg.EditProductTitle_productName}" required="true" requiredMessage="#{msg.EditProductRequiredMessage_productName}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.EditProductLabel_productDesc}" for="productDesc" />
+                        <p:inputText id="productDesc" value="#{productController.selected.productDesc}" title="#{msg.EditProductTitle_productDesc}" size="250" maxlength="250"/>
+
+                        <p:outputLabel value="#{msg.EditProductLabel_productIntCode}" for="productIntCode" />
+                        <p:inputText id="productIntCode" value="#{productController.selected.productIntCode}" title="#{msg.EditProductTitle_productIntCode}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productController.save}" value="#{msg.Save}" update="display,:ProductListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ProductEditDialog);">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" onclick="ProductEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

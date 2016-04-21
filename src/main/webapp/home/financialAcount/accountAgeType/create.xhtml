@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AccountAgeTypeCreateDlg" widgetVar="AccountAgeTypeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.CreateAccountAgeTypeTitle}" closeOnEscape="true">
+
+            <h:form id="AccountAgeTypeCreateForm">
+
+                <h:panelGroup id="display" rendered="#{accountAgeTypeController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.CreateAccountAgeTypeLabel_accountAgeTypeName}" for="accountAgeTypeName" />
+                        <p:inputText id="accountAgeTypeName" value="#{accountAgeTypeController.selected.accountAgeTypeName}" title="#{msg.CreateAccountAgeTypeTitle_accountAgeTypeName}" required="true" requiredMessage="#{msg.CreateAccountAgeTypeRequiredMessage_accountAgeTypeName}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.CreateAccountAgeTypeLabel_accountAgeTypeBegin}" for="accountAgeTypeBegin" />
+                        <p:inputText id="accountAgeTypeBegin" value="#{accountAgeTypeController.selected.accountAgeTypeBegin}" title="#{msg.CreateAccountAgeTypeTitle_accountAgeTypeBegin}" required="true" requiredMessage="#{msg.CreateAccountAgeTypeRequiredMessage_accountAgeTypeBegin}"/>
+
+                        <p:outputLabel value="#{msg.CreateAccountAgeTypeLabel_accountAgeTypeEnd}" for="accountAgeTypeEnd" />
+                        <p:inputText id="accountAgeTypeEnd" value="#{accountAgeTypeController.selected.accountAgeTypeEnd}" title="#{msg.CreateAccountAgeTypeTitle_accountAgeTypeEnd}" required="true" requiredMessage="#{msg.CreateAccountAgeTypeRequiredMessage_accountAgeTypeEnd}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{accountAgeTypeController.saveNew}" value="#{msg.Save}" update="display,:AccountAgeTypeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,AccountAgeTypeCreateDialog);">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.Cancel}" onclick="AccountAgeTypeCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="BranchClientEditDlg" widgetVar="BranchClientEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditBranchClientTitle}" closeOnEscape="true">
+
+            <h:form id="BranchClientEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{branchClientController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditBranchClientLabel_branchClientId}" for="branchClientId" />
+                        <h:outputText id="branchClientId" value="#{branchClientController.selected.branchClientId}" />
+
+                        <p:outputLabel value="#{msg.EditBranchClientLabel_branchClName}" for="branchClName" />
+                        <p:inputText id="branchClName" value="#{branchClientController.selected.branchClName}" title="#{msg.EditBranchClientTitle_branchClName}" required="true" requiredMessage="#{msg.EditBranchClientRequiredMessage_branchClName}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.EditBranchClientLabel_branchClIntCode}" for="branchClIntCode" />
+                        <p:inputText id="branchClIntCode" value="#{branchClientController.selected.branchClIntCode}" title="#{msg.EditBranchClientTitle_branchClIntCode}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{msg.EditBranchClientLabel_branchClAddress}" for="branchClAddress" />
+                        <p:inputText id="branchClAddress" value="#{branchClientController.selected.branchClAddress}" title="#{msg.EditBranchClientTitle_branchClAddress}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.EditBranchClientLabel_branchClPhone}" for="branchClPhone" />
+                        <p:inputText id="branchClPhone" value="#{branchClientController.selected.branchClPhone}" title="#{msg.EditBranchClientTitle_branchClPhone}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{msg.EditBranchClientLabel_clientId}" for="clientId" />
+                        <p:selectOneMenu id="clientId" value="#{branchClientController.selected.clientId}" required="true" requiredMessage="#{msg.EditBranchClientRequiredMessage_clientId}" converter="clientConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{clientController.items}"
+                                           var="clientIdItem"
+                                           itemValue="#{clientIdItem}"
+                                           itemLabel="#{clientIdItem.clientName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{branchClientController.save}" value="#{msg.Save}" update="display,:BranchClientListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,BranchClientEditDialog);">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" onclick="BranchClientEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

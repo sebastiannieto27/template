@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import co.com.core.domain.Branch;
-import co.com.core.financial.account.domain.BillHead;
+import co.com.core.domain.financial.account.BillHead;
 
 /**
  *

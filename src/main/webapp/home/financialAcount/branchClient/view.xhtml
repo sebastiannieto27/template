@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BranchClientViewDlg" widgetVar="BranchClientViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewBranchClientTitle}" closeOnEscape="true">
+
+            <h:form id="BranchClientViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{branchClientController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewBranchClientLabel_branchClientId}"/>
+                        <h:outputText value="#{branchClientController.selected.branchClientId}" title="#{msg.ViewBranchClientTitle_branchClientId}"/>
+
+                        <h:outputText value="#{msg.ViewBranchClientLabel_branchClName}"/>
+                        <h:outputText value="#{branchClientController.selected.branchClName}" title="#{msg.ViewBranchClientTitle_branchClName}"/>
+
+                        <h:outputText value="#{msg.ViewBranchClientLabel_branchClIntCode}"/>
+                        <h:outputText value="#{branchClientController.selected.branchClIntCode}" title="#{msg.ViewBranchClientTitle_branchClIntCode}"/>
+
+                        <h:outputText value="#{msg.ViewBranchClientLabel_branchClAddress}"/>
+                        <h:outputText value="#{branchClientController.selected.branchClAddress}" title="#{msg.ViewBranchClientTitle_branchClAddress}"/>
+
+                        <h:outputText value="#{msg.ViewBranchClientLabel_branchClPhone}"/>
+                        <h:outputText value="#{branchClientController.selected.branchClPhone}" title="#{msg.ViewBranchClientTitle_branchClPhone}"/>
+
+                        <h:outputText value="#{msg.ViewBranchClientLabel_clientId}"/>
+                        <h:outputText value="#{branchClientController.selected.clientId.clientName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="BranchClientViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

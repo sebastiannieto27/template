@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AccountAgeViewDlg" widgetVar="AccountAgeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewAccountAgeTitle}" closeOnEscape="true">
+
+            <h:form id="AccountAgeViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{accountAgeController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewAccountAgeLabel_accountAgeId}"/>
+                        <h:outputText value="#{accountAgeController.selected.accountAgeId}" title="#{msg.ViewAccountAgeTitle_accountAgeId}"/>
+
+                        <h:outputText value="#{msg.ViewAccountAgeLabel_branchClientId}"/>
+                        <h:outputText value="#{accountAgeController.selected.branchClientId.branchClName}"/>
+
+                        <h:outputText value="#{msg.ViewAccountAgeLabel_clientId}"/>
+                        <h:outputText value="#{accountAgeController.selected.clientId.clientName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="AccountAgeViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

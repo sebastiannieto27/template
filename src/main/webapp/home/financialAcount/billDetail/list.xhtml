@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="BillDetailListForm">
+
+        <p:panel header="#{msg.ListBillDetailTitle}">
+            <p:contextMenu id="BillDetailDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('BillDetailListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg.View}" onclick="document.getElementById('BillDetailListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('BillDetailListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('BillDetailListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg.BillDetailMenuItem_billHeadId}" icon="ui-icon-search"  actionListener="#{billDetailController.prepareBillHeadId}" update=":BillHeadViewForm" oncomplete="BillHeadViewDialog.show()" disabled="#{empty billDetailController.selected.billHeadId}"/>  
+                <p:menuitem value="#{msg.BillDetailMenuItem_productId}" icon="ui-icon-search"  actionListener="#{billDetailController.prepareProductId}" update=":ProductViewForm" oncomplete="ProductViewDialog.show()" disabled="#{empty billDetailController.selected.productId}"/>  
+                <p:menuitem value="#{msg.BillDetailMenuItem_billDetailTaxCollection}" icon="ui-icon-search"  action="#{billDetailController.navigateBillDetailTaxCollection}" disabled="#{empty billDetailController.selected.billDetailTaxCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{billDetailController.items}"
+                         var="item"
+                         rowKey="#{item.billDetailId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{billDetailController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BillDetailDataTableContextMenu" listener="#{billDetailController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BillDetailDataTableContextMenu" listener="#{billDetailController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{billDetailController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('BillDetailListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.billDetailId}" filterBy="#{item.billDetailId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListBillDetailTitle_billDetailId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.billDetailId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.billDetailUnitVal}" filterBy="#{item.billDetailUnitVal}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListBillDetailTitle_billDetailUnitVal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.billDetailUnitVal}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.billDetailAmount}" filterBy="#{item.billDetailAmount}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListBillDetailTitle_billDetailAmount}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.billDetailAmount}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.billDetailTotValue}" filterBy="#{item.billDetailTotValue}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListBillDetailTitle_billDetailTotValue}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.billDetailTotValue}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.billHeadId.billHeadId}" filterBy="#{item.billHeadId.billHeadId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListBillDetailTitle_billHeadId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.billHeadId.billHeadId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productId.productName}" filterBy="#{item.productId.productName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListBillDetailTitle_productId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productId.productName}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{billDetailController.prepareCreate}" update=":BillDetailCreateForm" oncomplete="BillDetailCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":BillDetailViewForm" oncomplete="BillDetailViewDialog.show()" disabled="#{empty billDetailController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":BillDetailEditForm" oncomplete="BillDetailEditDialog.show()" disabled="#{empty billDetailController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{billDetailController.delete}" update=":growl,datalist" disabled="#{empty billDetailController.selected}">
+                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

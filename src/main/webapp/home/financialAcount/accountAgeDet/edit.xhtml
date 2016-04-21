@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="AccountAgeDetEditDlg" widgetVar="AccountAgeDetEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditAccountAgeDetTitle}" closeOnEscape="true">
+
+            <h:form id="AccountAgeDetEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{accountAgeDetController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditAccountAgeDetLabel_accountAgeDetId}" for="accountAgeDetId" />
+                        <h:outputText id="accountAgeDetId" value="#{accountAgeDetController.selected.accountAgeDetId}" />
+
+                        <p:outputLabel value="#{msg.EditAccountAgeDetLabel_accountAgeDetTotal}" for="accountAgeDetTotal" />
+                        <p:inputText id="accountAgeDetTotal" value="#{accountAgeDetController.selected.accountAgeDetTotal}" title="#{msg.EditAccountAgeDetTitle_accountAgeDetTotal}" required="true" requiredMessage="#{msg.EditAccountAgeDetRequiredMessage_accountAgeDetTotal}"/>
+
+                        <p:outputLabel value="#{msg.EditAccountAgeDetLabel_accountAgeDetAmo}" for="accountAgeDetAmo" />
+                        <p:inputText id="accountAgeDetAmo" value="#{accountAgeDetController.selected.accountAgeDetAmo}" title="#{msg.EditAccountAgeDetTitle_accountAgeDetAmo}" required="true" requiredMessage="#{msg.EditAccountAgeDetRequiredMessage_accountAgeDetAmo}"/>
+
+                        <p:outputLabel value="#{msg.EditAccountAgeDetLabel_accountAgeId}" for="accountAgeId" />
+                        <p:selectOneMenu id="accountAgeId" value="#{accountAgeDetController.selected.accountAgeId}" required="true" requiredMessage="#{msg.EditAccountAgeDetRequiredMessage_accountAgeId}" converter="accountAgeConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{accountAgeController.items}"
+                                           var="accountAgeIdItem"
+                                           itemValue="#{accountAgeIdItem}"
+                                           itemLabel="#{accountAgeIdItem.accountAgeId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{msg.EditAccountAgeDetLabel_accountAgeTypeId}" for="accountAgeTypeId" />
+                        <p:selectOneMenu id="accountAgeTypeId" value="#{accountAgeDetController.selected.accountAgeTypeId}" required="true" requiredMessage="#{msg.EditAccountAgeDetRequiredMessage_accountAgeTypeId}" converter="accountAgeTypeConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{accountAgeTypeController.items}"
+                                           var="accountAgeTypeIdItem"
+                                           itemValue="#{accountAgeTypeIdItem}"
+                                           itemLabel="#{accountAgeTypeIdItem.accountAgeTypeName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{accountAgeDetController.save}" value="#{msg.Save}" update="display,:AccountAgeDetListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,AccountAgeDetEditDialog);">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" onclick="AccountAgeDetEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

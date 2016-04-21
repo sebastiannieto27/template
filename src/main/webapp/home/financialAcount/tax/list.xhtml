@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TaxListForm">
+
+        <p:panel header="#{msg.ListTaxTitle}">
+            <p:contextMenu id="TaxDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('TaxListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg.View}" onclick="document.getElementById('TaxListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('TaxListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('TaxListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg.TaxMenuItem_billDetailTaxCollection}" icon="ui-icon-search"  action="#{taxController.navigateBillDetailTaxCollection}" disabled="#{empty taxController.selected.billDetailTaxCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{taxController.items}"
+                         var="item"
+                         rowKey="#{item.taxId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{taxController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TaxDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:TaxDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TaxListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.taxId}" filterBy="#{item.taxId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListTaxTitle_taxId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.taxId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.taxName}" filterBy="#{item.taxName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListTaxTitle_taxName}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.taxName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.taxPercentage}" filterBy="#{item.taxPercentage}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListTaxTitle_taxPercentage}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.taxPercentage}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.taxValue}" filterBy="#{item.taxValue}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListTaxTitle_taxValue}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.taxValue}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.taxIntCode}" filterBy="#{item.taxIntCode}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListTaxTitle_taxIntCode}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.taxIntCode}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{taxController.prepareCreate}" update=":TaxCreateForm" oncomplete="TaxCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":TaxViewForm" oncomplete="TaxViewDialog.show()" disabled="#{empty taxController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":TaxEditForm" oncomplete="TaxEditDialog.show()" disabled="#{empty taxController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{taxController.delete}" update=":growl,datalist" disabled="#{empty taxController.selected}">
+                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

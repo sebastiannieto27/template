@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="BillDetailEditDlg" widgetVar="BillDetailEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditBillDetailTitle}" closeOnEscape="true">
+
+            <h:form id="BillDetailEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{billDetailController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditBillDetailLabel_billDetailId}" for="billDetailId" />
+                        <h:outputText id="billDetailId" value="#{billDetailController.selected.billDetailId}" />
+
+                        <p:outputLabel value="#{msg.EditBillDetailLabel_billDetailUnitVal}" for="billDetailUnitVal" />
+                        <p:inputText id="billDetailUnitVal" value="#{billDetailController.selected.billDetailUnitVal}" title="#{msg.EditBillDetailTitle_billDetailUnitVal}"/>
+
+                        <p:outputLabel value="#{msg.EditBillDetailLabel_billDetailAmount}" for="billDetailAmount" />
+                        <p:inputText id="billDetailAmount" value="#{billDetailController.selected.billDetailAmount}" title="#{msg.EditBillDetailTitle_billDetailAmount}"/>
+
+                        <p:outputLabel value="#{msg.EditBillDetailLabel_billDetailTotValue}" for="billDetailTotValue" />
+                        <p:inputText id="billDetailTotValue" value="#{billDetailController.selected.billDetailTotValue}" title="#{msg.EditBillDetailTitle_billDetailTotValue}"/>
+
+                        <p:outputLabel value="#{msg.EditBillDetailLabel_billHeadId}" for="billHeadId" />
+                        <p:selectOneMenu id="billHeadId" value="#{billDetailController.selected.billHeadId}" required="true" requiredMessage="#{msg.EditBillDetailRequiredMessage_billHeadId}" converter="billHeadConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{billHeadController.items}"
+                                           var="billHeadIdItem"
+                                           itemValue="#{billHeadIdItem}"
+                                           itemLabel="#{billHeadIdItem.billHeadId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{msg.EditBillDetailLabel_productId}" for="productId" />
+                        <p:selectOneMenu id="productId" value="#{billDetailController.selected.productId}" required="true" requiredMessage="#{msg.EditBillDetailRequiredMessage_productId}" converter="productConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{productController.items}"
+                                           var="productIdItem"
+                                           itemValue="#{productIdItem}"
+                                           itemLabel="#{productIdItem.productName.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{billDetailController.save}" value="#{msg.Save}" update="display,:BillDetailListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,BillDetailEditDialog);">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" onclick="BillDetailEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

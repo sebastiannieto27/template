@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="AccountAgeBillListForm">
+
+        <p:panel header="#{msg.ListAccountAgeBillTitle}">
+            <p:contextMenu id="AccountAgeBillDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('AccountAgeBillListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg.View}" onclick="document.getElementById('AccountAgeBillListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('AccountAgeBillListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('AccountAgeBillListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg.AccountAgeBillMenuItem_accountAgeDetId}" icon="ui-icon-search"  actionListener="#{accountAgeBillController.prepareAccountAgeDetId}" update=":AccountAgeDetViewForm" oncomplete="AccountAgeDetViewDialog.show()" disabled="#{empty accountAgeBillController.selected.accountAgeDetId}"/>  
+                <p:menuitem value="#{msg.AccountAgeBillMenuItem_billHeadId}" icon="ui-icon-search"  actionListener="#{accountAgeBillController.prepareBillHeadId}" update=":BillHeadViewForm" oncomplete="BillHeadViewDialog.show()" disabled="#{empty accountAgeBillController.selected.billHeadId}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{accountAgeBillController.items}"
+                         var="item"
+                         rowKey="#{item.accountAgeBillId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{accountAgeBillController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AccountAgeBillDataTableContextMenu" listener="#{accountAgeBillController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AccountAgeBillDataTableContextMenu" listener="#{accountAgeBillController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{accountAgeBillController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('AccountAgeBillListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.accountAgeBillId}" filterBy="#{item.accountAgeBillId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListAccountAgeBillTitle_accountAgeBillId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.accountAgeBillId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.accountAgeDetId.accountAgeDetId}" filterBy="#{item.accountAgeDetId.accountAgeDetId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListAccountAgeBillTitle_accountAgeDetId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.accountAgeDetId.accountAgeDetId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.billHeadId.billHeadId}" filterBy="#{item.billHeadId.billHeadId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListAccountAgeBillTitle_billHeadId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.billHeadId.billHeadId}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{accountAgeBillController.prepareCreate}" update=":AccountAgeBillCreateForm" oncomplete="AccountAgeBillCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":AccountAgeBillViewForm" oncomplete="AccountAgeBillViewDialog.show()" disabled="#{empty accountAgeBillController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":AccountAgeBillEditForm" oncomplete="AccountAgeBillEditDialog.show()" disabled="#{empty accountAgeBillController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{accountAgeBillController.delete}" update=":growl,datalist" disabled="#{empty accountAgeBillController.selected}">
+                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

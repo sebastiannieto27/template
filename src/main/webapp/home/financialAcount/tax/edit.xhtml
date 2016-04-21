@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="TaxEditDlg" widgetVar="TaxEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditTaxTitle}" closeOnEscape="true">
+
+            <h:form id="TaxEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{taxController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditTaxLabel_taxId}" for="taxId" />
+                        <h:outputText id="taxId" value="#{taxController.selected.taxId}" />
+
+                        <p:outputLabel value="#{msg.EditTaxLabel_taxName}" for="taxName" />
+                        <p:inputText id="taxName" value="#{taxController.selected.taxName}" title="#{msg.EditTaxTitle_taxName}" required="true" requiredMessage="#{msg.EditTaxRequiredMessage_taxName}" size="150" maxlength="150"/>
+
+                        <p:outputLabel value="#{msg.EditTaxLabel_taxPercentage}" for="taxPercentage" />
+                        <p:inputText id="taxPercentage" value="#{taxController.selected.taxPercentage}" title="#{msg.EditTaxTitle_taxPercentage}"/>
+
+                        <p:outputLabel value="#{msg.EditTaxLabel_taxValue}" for="taxValue" />
+                        <p:inputText id="taxValue" value="#{taxController.selected.taxValue}" title="#{msg.EditTaxTitle_taxValue}"/>
+
+                        <p:outputLabel value="#{msg.EditTaxLabel_taxIntCode}" for="taxIntCode" />
+                        <p:inputText id="taxIntCode" value="#{taxController.selected.taxIntCode}" title="#{msg.EditTaxTitle_taxIntCode}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{taxController.save}" value="#{msg.Save}" update="display,:TaxListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,TaxEditDialog);">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" onclick="TaxEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

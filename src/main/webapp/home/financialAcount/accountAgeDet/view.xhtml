@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AccountAgeDetViewDlg" widgetVar="AccountAgeDetViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewAccountAgeDetTitle}" closeOnEscape="true">
+
+            <h:form id="AccountAgeDetViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{accountAgeDetController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewAccountAgeDetLabel_accountAgeDetId}"/>
+                        <h:outputText value="#{accountAgeDetController.selected.accountAgeDetId}" title="#{msg.ViewAccountAgeDetTitle_accountAgeDetId}"/>
+
+                        <h:outputText value="#{msg.ViewAccountAgeDetLabel_accountAgeDetTotal}"/>
+                        <h:outputText value="#{accountAgeDetController.selected.accountAgeDetTotal}" title="#{msg.ViewAccountAgeDetTitle_accountAgeDetTotal}"/>
+
+                        <h:outputText value="#{msg.ViewAccountAgeDetLabel_accountAgeDetAmo}"/>
+                        <h:outputText value="#{accountAgeDetController.selected.accountAgeDetAmo}" title="#{msg.ViewAccountAgeDetTitle_accountAgeDetAmo}"/>
+
+                        <h:outputText value="#{msg.ViewAccountAgeDetLabel_accountAgeId}"/>
+                        <h:outputText value="#{accountAgeDetController.selected.accountAgeId.accountAgeId}"/>
+
+                        <h:outputText value="#{msg.ViewAccountAgeDetLabel_accountAgeTypeId}"/>
+                        <h:outputText value="#{accountAgeDetController.selected.accountAgeTypeId.accountAgeTypeName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="AccountAgeDetViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

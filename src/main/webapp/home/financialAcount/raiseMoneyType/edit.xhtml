@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="RaiseMoneyTypeEditDlg" widgetVar="RaiseMoneyTypeEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditRaiseMoneyTypeTitle}" closeOnEscape="true">
+
+            <h:form id="RaiseMoneyTypeEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{raiseMoneyTypeController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditRaiseMoneyTypeLabel_raiseMoneyTypeId}" for="raiseMoneyTypeId" />
+                        <h:outputText id="raiseMoneyTypeId" value="#{raiseMoneyTypeController.selected.raiseMoneyTypeId}" />
+
+                        <p:outputLabel value="#{msg.EditRaiseMoneyTypeLabel_raiseMonTypeName}" for="raiseMonTypeName" />
+                        <p:inputText id="raiseMonTypeName" value="#{raiseMoneyTypeController.selected.raiseMonTypeName}" title="#{msg.EditRaiseMoneyTypeTitle_raiseMonTypeName}" required="true" requiredMessage="#{msg.EditRaiseMoneyTypeRequiredMessage_raiseMonTypeName}" size="150" maxlength="150"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{raiseMoneyTypeController.save}" value="#{msg.Save}" update="display,:RaiseMoneyTypeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,RaiseMoneyTypeEditDialog);">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" onclick="RaiseMoneyTypeEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

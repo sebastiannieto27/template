@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CreditNoteViewDlg" widgetVar="CreditNoteViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewCreditNoteTitle}" closeOnEscape="true">
+
+            <h:form id="CreditNoteViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{creditNoteController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewCreditNoteLabel_creditNoteId}"/>
+                        <h:outputText value="#{creditNoteController.selected.creditNoteId}" title="#{msg.ViewCreditNoteTitle_creditNoteId}"/>
+
+                        <h:outputText value="#{msg.ViewCreditNoteLabel_creditNotValue}"/>
+                        <h:outputText value="#{creditNoteController.selected.creditNotValue}" title="#{msg.ViewCreditNoteTitle_creditNotValue}"/>
+
+                        <h:outputText value="#{msg.ViewCreditNoteLabel_creditNotNum}"/>
+                        <h:outputText value="#{creditNoteController.selected.creditNotNum}" title="#{msg.ViewCreditNoteTitle_creditNotNum}"/>
+
+                        <h:outputText value="#{msg.ViewCreditNoteLabel_creditNotDate}"/>
+                        <h:outputText value="#{creditNoteController.selected.creditNotDate}" title="#{msg.ViewCreditNoteTitle_creditNotDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{msg.ViewCreditNoteLabel_branchClientId}"/>
+                        <h:outputText value="#{creditNoteController.selected.branchClientId.branchClName}"/>
+
+                        <h:outputText value="#{msg.ViewCreditNoteLabel_billHeadId}"/>
+                        <h:outputText value="#{creditNoteController.selected.billHeadId.billHeadId}"/>
+
+                        <h:outputText value="#{msg.ViewCreditNoteLabel_creditNoteTypeId}"/>
+                        <h:outputText value="#{creditNoteController.selected.creditNoteTypeId.creditNotTypeName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="CreditNoteViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

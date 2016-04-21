@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClientViewDlg" widgetVar="ClientViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewClientTitle}" closeOnEscape="true">
+
+            <h:form id="ClientViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{clientController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewClientLabel_clientId}"/>
+                        <h:outputText value="#{clientController.selected.clientId}" title="#{msg.ViewClientTitle_clientId}"/>
+
+                        <h:outputText value="#{msg.ViewClientLabel_clientIntCode}"/>
+                        <h:outputText value="#{clientController.selected.clientIntCode}" title="#{msg.ViewClientTitle_clientIntCode}"/>
+
+                        <h:outputText value="#{msg.ViewClientLabel_clientNumId}"/>
+                        <h:outputText value="#{clientController.selected.clientNumId}" title="#{msg.ViewClientTitle_clientNumId}"/>
+
+                        <h:outputText value="#{msg.ViewClientLabel_clientName}"/>
+                        <h:outputText value="#{clientController.selected.clientName}" title="#{msg.ViewClientTitle_clientName}"/>
+
+                        <h:outputText value="#{msg.ViewClientLabel_clientAddress}"/>
+                        <h:outputText value="#{clientController.selected.clientAddress}" title="#{msg.ViewClientTitle_clientAddress}"/>
+
+                        <h:outputText value="#{msg.ViewClientLabel_clientDv}"/>
+                        <h:outputText value="#{clientController.selected.clientDv}" title="#{msg.ViewClientTitle_clientDv}"/>
+
+                        <h:outputText value="#{msg.ViewClientLabel_clientMail}"/>
+                        <h:outputText value="#{clientController.selected.clientMail}" title="#{msg.ViewClientTitle_clientMail}"/>
+
+                        <h:outputText value="#{msg.ViewClientLabel_clientTypeId}"/>
+                        <h:outputText value="#{clientController.selected.clientTypeId.clientTypeName}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="ClientViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

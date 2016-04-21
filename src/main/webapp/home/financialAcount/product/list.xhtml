@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ProductListForm">
+
+        <p:panel header="#{msg.ListProductTitle}">
+            <p:contextMenu id="ProductDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('ProductListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg.View}" onclick="document.getElementById('ProductListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('ProductListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('ProductListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg.ProductMenuItem_billDetailCollection}" icon="ui-icon-search"  action="#{productController.navigateBillDetailCollection}" disabled="#{empty productController.selected.billDetailCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{productController.items}"
+                         var="item"
+                         rowKey="#{item.productId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{productController.selected}">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProductDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProductListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.productId}" filterBy="#{item.productId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListProductTitle_productId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productName}" filterBy="#{item.productName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListProductTitle_productName}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productDesc}" filterBy="#{item.productDesc}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListProductTitle_productDesc}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productDesc}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.productIntCode}" filterBy="#{item.productIntCode}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListProductTitle_productIntCode}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.productIntCode}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{productController.prepareCreate}" update=":ProductCreateForm" oncomplete="ProductCreateDialog.show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":ProductViewForm" oncomplete="ProductViewDialog.show()" disabled="#{empty productController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":ProductEditForm" oncomplete="ProductEditDialog.show()" disabled="#{empty productController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{productController.delete}" update=":growl,datalist" disabled="#{empty productController.selected}">
+                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

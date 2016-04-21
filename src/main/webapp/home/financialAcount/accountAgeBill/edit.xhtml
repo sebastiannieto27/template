@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="AccountAgeBillEditDlg" widgetVar="AccountAgeBillEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditAccountAgeBillTitle}" closeOnEscape="true">
+
+            <h:form id="AccountAgeBillEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{accountAgeBillController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditAccountAgeBillLabel_accountAgeBillId}" for="accountAgeBillId" />
+                        <h:outputText id="accountAgeBillId" value="#{accountAgeBillController.selected.accountAgeBillId}" />
+
+                        <p:outputLabel value="#{msg.EditAccountAgeBillLabel_accountAgeDetId}" for="accountAgeDetId" />
+                        <p:selectOneMenu id="accountAgeDetId" value="#{accountAgeBillController.selected.accountAgeDetId}" required="true" requiredMessage="#{msg.EditAccountAgeBillRequiredMessage_accountAgeDetId}" converter="accountAgeDetConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{accountAgeDetController.items}"
+                                           var="accountAgeDetIdItem"
+                                           itemValue="#{accountAgeDetIdItem}"
+                                           itemLabel="#{accountAgeDetIdItem.accountAgeDetId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{msg.EditAccountAgeBillLabel_billHeadId}" for="billHeadId" />
+                        <p:selectOneMenu id="billHeadId" value="#{accountAgeBillController.selected.billHeadId}" required="true" requiredMessage="#{msg.EditAccountAgeBillRequiredMessage_billHeadId}" converter="billHeadConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{billHeadController.items}"
+                                           var="billHeadIdItem"
+                                           itemValue="#{billHeadIdItem}"
+                                           itemLabel="#{billHeadIdItem.billHeadId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{accountAgeBillController.save}" value="#{msg.Save}" update="display,:AccountAgeBillListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,AccountAgeBillEditDialog);">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" onclick="AccountAgeBillEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
