@@ -1,26 +1,37 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
 
-    <h:form id="BranchClientListForm">
 
-        <p:panel header="#{msg.ListBranchClientTitle}">
-            <p:contextMenu id="BranchClientDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('BranchClientListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{msg.View}" onclick="document.getElementById('BranchClientListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('BranchClientListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('BranchClientListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{msg.BranchClientMenuItem_accountAgeCollection}" icon="ui-icon-search"  action="#{branchClientController.navigateAccountAgeCollection}" disabled="#{empty branchClientController.selected.accountAgeCollection}" ajax="false"/>  
-                <p:menuitem value="#{msg.BranchClientMenuItem_dutyPayCollection}" icon="ui-icon-search"  action="#{branchClientController.navigateDutyPayCollection}" disabled="#{empty branchClientController.selected.dutyPayCollection}" ajax="false"/>  
-                <p:menuitem value="#{msg.BranchClientMenuItem_creditNoteCollection}" icon="ui-icon-search"  action="#{branchClientController.navigateCreditNoteCollection}" disabled="#{empty branchClientController.selected.creditNoteCollection}" ajax="false"/>  
-                <p:menuitem value="#{msg.BranchClientMenuItem_clientId}" icon="ui-icon-search"  actionListener="#{branchClientController.prepareClientId}" update=":ClientViewForm" oncomplete="ClientViewDialog.show()" disabled="#{empty branchClientController.selected.clientId}"/>  
-                <p:menuitem value="#{msg.BranchClientMenuItem_raiseMoneyCollection}" icon="ui-icon-search"  action="#{branchClientController.navigateRaiseMoneyCollection}" disabled="#{empty branchClientController.selected.raiseMoneyCollection}" ajax="false"/>  
-                <p:menuitem value="#{msg.BranchClientMenuItem_billHeadCollection}" icon="ui-icon-search"  action="#{branchClientController.navigateBillHeadCollection}" disabled="#{empty branchClientController.selected.billHeadCollection}" ajax="false"/>  
+    <h:form id="branchClientListForm">
+
+        <p:panel header="#{msg.branchClient}">
+        
+        	<h:panelGroup id="searchForm">
+            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+            		
+           			<p:outputLabel for="rtvBranchClName" value="#{msg.name}:" />
+					<p:inputText id="rtvBranchClName" value="#{branchClientController.branchClName}" title="#{msg.name}:"/>
+
+					<p:outputLabel for="rtvbranchClIntCode" value="#{msg.internalCode}:" />
+					<p:inputText id="rtvbranchClIntCode" value="#{branchClientController.branchClIntCode}" title="#{msg.internalCode}:"/>
+					
+					<p:outputLabel for="rtvAddress" value="#{msg.address}:" />
+					<p:inputText id="rtvAddress" value="#{branchClientController.branchClAddress}" title="#{msg.address}:"/>
+										
+         			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{branchClientController.init()}" update=":branchClientListForm" />
+       			</p:panelGrid>
+           	</h:panelGroup>
+        
+            <p:contextMenu id="branchClientDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.view}" onclick="document.getElementById('branchClientListForm:viewButton').click();" icon="ui-icon-search"/>
             </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{branchClientController.items}"
@@ -32,54 +43,54 @@
                          selectionMode="single"
                          selection="#{branchClientController.selected}">
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BranchClientDataTableContextMenu" listener="#{branchClientController.resetParents}"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:BranchClientDataTableContextMenu" listener="#{branchClientController.resetParents}"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{branchClientController.resetParents}"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('BranchClientListForm:viewButton').click();"/>
+                <p:ajax event="rowSelect"   update="@form:viewButton,@form:branchClientDataTableContextMenu" />
+                <p:ajax event="rowUnselect" update="@form:viewButton,@form:branchClientDataTableContextMenu" />
+                <p:ajax event="contextMenu" update="@form:viewButton "/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('branchClientListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.branchClientId}" filterBy="#{item.branchClientId}">
+                <p:column >
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListBranchClientTitle_branchClientId}"/>
+                        <h:outputText value="#{msg.id}"/>
                     </f:facet>
                     <h:outputText value="#{item.branchClientId}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.branchClName}" filterBy="#{item.branchClName}">
+                <p:column >
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListBranchClientTitle_branchClName}"/>
+                        <h:outputText value="#{msg.name}"/>
                     </f:facet>
                     <h:outputText value="#{item.branchClName}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.branchClIntCode}" filterBy="#{item.branchClIntCode}">
+                <p:column >
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListBranchClientTitle_branchClIntCode}"/>
+                        <h:outputText value="#{msg.internalCode}"/>
                     </f:facet>
                     <h:outputText value="#{item.branchClIntCode}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.branchClAddress}" filterBy="#{item.branchClAddress}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListBranchClientTitle_branchClAddress}"/>
+                        <h:outputText value="#{msg.address}"/>
                     </f:facet>
                     <h:outputText value="#{item.branchClAddress}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.branchClPhone}" filterBy="#{item.branchClPhone}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListBranchClientTitle_branchClPhone}"/>
+                        <h:outputText value="#{msg.phone}"/>
                     </f:facet>
                     <h:outputText value="#{item.branchClPhone}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.clientId.clientName}" filterBy="#{item.clientId.clientName}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListBranchClientTitle_clientId}"/>
+                        <h:outputText value="#{msg.client}"/>
                     </f:facet>
                     <h:outputText value="#{item.clientId.clientName}"/>
                 </p:column>
@@ -87,15 +98,11 @@
 
             </p:dataTable>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{branchClientController.prepareCreate}" update=":BranchClientCreateForm" oncomplete="BranchClientCreateDialog.show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":BranchClientViewForm" oncomplete="BranchClientViewDialog.show()" disabled="#{empty branchClientController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":BranchClientEditForm" oncomplete="BranchClientEditDialog.show()" disabled="#{empty branchClientController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{branchClientController.delete}" update=":growl,datalist" disabled="#{empty branchClientController.selected}">
-                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.view}" update=":branchClientViewForm" oncomplete="branchClientViewDialog.show()" disabled="#{empty branchClientController.selected}"/>
 
         </p:panel>
-        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
-    </h:form>
-
-</ui:composition>
+       <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+   </h:form>
+     </ui:composition>
+    </body>
+</html>

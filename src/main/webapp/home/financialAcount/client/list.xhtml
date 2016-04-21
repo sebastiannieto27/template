@@ -1,23 +1,41 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
 
-    <h:form id="ClientListForm">
 
-        <p:panel header="#{msg.ListClientTitle}">
-            <p:contextMenu id="ClientDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('ClientListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{msg.View}" onclick="document.getElementById('ClientListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('ClientListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('ClientListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{msg.ClientMenuItem_accountAgeCollection}" icon="ui-icon-search"  action="#{clientController.navigateAccountAgeCollection}" disabled="#{empty clientController.selected.accountAgeCollection}" ajax="false"/>  
-                <p:menuitem value="#{msg.ClientMenuItem_clientTypeId}" icon="ui-icon-search"  actionListener="#{clientController.prepareClientTypeId}" update=":ClientTypeViewForm" oncomplete="ClientTypeViewDialog.show()" disabled="#{empty clientController.selected.clientTypeId}"/>  
-                <p:menuitem value="#{msg.ClientMenuItem_branchClientCollection}" icon="ui-icon-search"  action="#{clientController.navigateBranchClientCollection}" disabled="#{empty clientController.selected.branchClientCollection}" ajax="false"/>  
+    <h:form id="clientListForm">
+
+        <p:panel header="#{msg.client}">
+        
+        	<h:panelGroup id="searchForm">
+            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+            		
+           			<p:outputLabel for="rtvName" value="#{msg.name}:" />
+					<p:inputText id="rtvName" value="#{clientController.searchName}" title="#{msg.name}:"/>
+
+					<p:outputLabel for="rtvIntCode" value="#{msg.clientInternalCode}:" />
+					<p:inputText id="rtvIntCode" value="#{clientController.searchIntCode}" title="#{msg.clientInternalCode}:"/>
+					
+					<p:outputLabel for="rtvClientNumId" value="#{msg.clientNumId}:" />
+					<p:inputText id="rtvClientNumId" value="#{clientController.searchClientNumId}" title="#{msg.clientNumId}:"/>
+										
+					<p:outputLabel for="rtvClientMail" value="#{msg.clientMail}:" />
+					<p:inputText id="rtvClientMail" value="#{clientController.searchClientMail}" title="#{msg.clientMail}:"/>
+
+         			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{clientController.init()}" update=":clientListForm" />
+       			</p:panelGrid>
+           	</h:panelGroup>
+        
+        
+            <p:contextMenu id="clientDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.view}" onclick="document.getElementById('clientListForm:viewButton').click();" icon="ui-icon-search"/>
             </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{clientController.items}"
@@ -29,86 +47,62 @@
                          selectionMode="single"
                          selection="#{clientController.selected}">
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ClientDataTableContextMenu" listener="#{clientController.resetParents}"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ClientDataTableContextMenu" listener="#{clientController.resetParents}"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{clientController.resetParents}"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ClientListForm:viewButton').click();"/>
+                <p:ajax event="rowSelect"   update="@form:viewButton,@form:clientDataTableContextMenu" />
+                <p:ajax event="rowUnselect" update="@form:viewButton,@form:clientDataTableContextMenu" />
+                <p:ajax event="contextMenu" update="@form:viewButton " />
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('clientListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.clientId}" filterBy="#{item.clientId}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListClientTitle_clientId}"/>
+                        <h:outputText value="#{msg.id}"/>
                     </f:facet>
                     <h:outputText value="#{item.clientId}"/>
                 </p:column>
-
-
-                <p:column sortBy="#{item.clientIntCode}" filterBy="#{item.clientIntCode}">
+                
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListClientTitle_clientIntCode}"/>
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.clientName}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.clientInternalCode}"/>
                     </f:facet>
                     <h:outputText value="#{item.clientIntCode}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.clientNumId}" filterBy="#{item.clientNumId}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListClientTitle_clientNumId}"/>
+                        <h:outputText value="#{msg.clientNumId}"/>
                     </f:facet>
                     <h:outputText value="#{item.clientNumId}"/>
                 </p:column>
 
-
-                <p:column sortBy="#{item.clientName}" filterBy="#{item.clientName}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListClientTitle_clientName}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.clientName}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.clientAddress}" filterBy="#{item.clientAddress}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.ListClientTitle_clientAddress}"/>
+                        <h:outputText value="#{msg.clientAddress}"/>
                     </f:facet>
                     <h:outputText value="#{item.clientAddress}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.clientDv}" filterBy="#{item.clientDv}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListClientTitle_clientDv}"/>
+                        <h:outputText value="#{msg.clientDv}"/>
                     </f:facet>
                     <h:outputText value="#{item.clientDv}"/>
                 </p:column>
 
-                <!--
-                                    <p:column sortBy="#{item.clientMail}" filterBy="#{item.clientMail}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{msg.ListClientTitle_clientMail}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.clientMail}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.clientTypeId.clientTypeName}" filterBy="#{item.clientTypeId.clientTypeName}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{msg.ListClientTitle_clientTypeId}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.clientTypeId.clientTypeName}"/>
-                                    </p:column>
-                -->
-
             </p:dataTable>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{clientController.prepareCreate}" update=":ClientCreateForm" oncomplete="ClientCreateDialog.show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":ClientViewForm" oncomplete="ClientViewDialog.show()" disabled="#{empty clientController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":ClientEditForm" oncomplete="ClientEditDialog.show()" disabled="#{empty clientController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{clientController.delete}" update=":growl,datalist" disabled="#{empty clientController.selected}">
-                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":clientViewForm" oncomplete="clientViewDialog.show()" disabled="#{empty clientController.selected}"/>
 
         </p:panel>
-        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
-    </h:form>
-
-</ui:composition>
+       <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+   </h:form>
+     </ui:composition>
+    </body>
+</html>

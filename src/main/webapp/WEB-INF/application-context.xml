@@ -199,6 +199,14 @@
   	    <bean id="raiseMoneyTypeDAO" class="co.com.core.dao.impl.financial.account.RaiseMoneyTypeDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
+	    	    	    
+  	    <bean id="clientDAO" class="co.com.core.dao.impl.financial.account.ClientDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    	    	    	    
+  	    <bean id="branchClientDAO" class="co.com.core.dao.impl.financial.account.BranchClientDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -309,6 +317,15 @@
    	    <bean id="raiseMoneyTypeService" class="co.com.core.services.impl.financial.account.RaiseMoneyTypeServiceImpl">
 	    	<property name="raiseMoneyTypeDAO" ref="raiseMoneyTypeDAO" />
 	    </bean>
+	    	    
+   	    <bean id="clientService" class="co.com.core.services.impl.financial.account.ClientServiceImpl">
+	    	<property name="clientDAO" ref="clientDAO" />
+	    </bean>
+	    	    	    
+   	    <bean id="branchClientService" class="co.com.core.services.impl.financial.account.BranchClientServiceImpl">
+	    	<property name="branchClientDAO" ref="branchClientDAO" />
+	    </bean>
+	    
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -442,4 +459,11 @@
     	<property name="raiseMoneyTypeService" ref="raiseMoneyTypeService" />
     </bean>
     
+    <bean id="clientController" scope="session" class="co.com.core.controller.financial.account.ClientController" init-method="init">
+    	<property name="clientService" ref="clientService" />
+    </bean>    
+        
+    <bean id="branchClientController" scope="session" class="co.com.core.controller.financial.account.BranchClientController" init-method="init">
+    	<property name="branchClientService" ref="branchClientService" />
+    </bean> 
 </beans>

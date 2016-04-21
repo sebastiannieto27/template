@@ -113,4 +113,14 @@
 		<view-id value="/home/financialAcount/raiseMoneyType/index.xhtml" />
 	</url-mapping>	
 	
+	<url-mapping id="client">
+		<pattern value="/cartera/cliente" />
+		<view-id value="/home/financialAcount/client/index.xhtml" />
+	</url-mapping>	
+	
+		
+	<url-mapping id="branchClient">
+		<pattern value="/cartera/sedes-cliente" />
+		<view-id value="/home/financialAcount/branchClient/index.xhtml" />
+	</url-mapping>	
 </pretty-config>
