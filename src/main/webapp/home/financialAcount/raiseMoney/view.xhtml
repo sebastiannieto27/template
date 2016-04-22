@@ -8,34 +8,34 @@
 
     <ui:composition>
 
-        <p:dialog id="RaiseMoneyViewDlg" widgetVar="RaiseMoneyViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewRaiseMoneyTitle}" closeOnEscape="true">
+        <p:dialog id="raiseMoneyViewDlg" widgetVar="raiseMoneyViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewraiseMoneyTitle}" closeOnEscape="true">
 
-            <h:form id="RaiseMoneyViewForm">
+            <h:form id="raiseMoneyViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{raiseMoneyController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewRaiseMoneyLabel_raiseMoneyId}"/>
-                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyId}" title="#{msg.ViewRaiseMoneyTitle_raiseMoneyId}"/>
+                        <h:outputText value="#{msg.ViewraiseMoneyLabel_raiseMoneyId}"/>
+                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyId}" title="#{msg.ViewraiseMoneyTitle_raiseMoneyId}"/>
 
-                        <h:outputText value="#{msg.ViewRaiseMoneyLabel_raiseMoneyAmount}"/>
-                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyAmount}" title="#{msg.ViewRaiseMoneyTitle_raiseMoneyAmount}"/>
+                        <h:outputText value="#{msg.ViewraiseMoneyLabel_raiseMoneyAmount}"/>
+                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyAmount}" title="#{msg.ViewraiseMoneyTitle_raiseMoneyAmount}"/>
 
-                        <h:outputText value="#{msg.ViewRaiseMoneyLabel_raiseMoneyNum}"/>
-                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyNum}" title="#{msg.ViewRaiseMoneyTitle_raiseMoneyNum}"/>
+                        <h:outputText value="#{msg.ViewraiseMoneyLabel_raiseMoneyNum}"/>
+                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyNum}" title="#{msg.ViewraiseMoneyTitle_raiseMoneyNum}"/>
 
-                        <h:outputText value="#{msg.ViewRaiseMoneyLabel_raiseMoneyDate}"/>
-                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyDate}" title="#{msg.ViewRaiseMoneyTitle_raiseMoneyDate}">
+                        <h:outputText value="#{msg.ViewraiseMoneyLabel_raiseMoneyDate}"/>
+                        <h:outputText value="#{raiseMoneyController.selected.raiseMoneyDate}" title="#{msg.ViewraiseMoneyTitle_raiseMoneyDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
 
-                        <h:outputText value="#{msg.ViewRaiseMoneyLabel_branchClientId}"/>
+                        <h:outputText value="#{msg.ViewraiseMoneyLabel_branchClientId}"/>
                         <h:outputText value="#{raiseMoneyController.selected.branchClientId.branchClName}"/>
 
-                        <h:outputText value="#{msg.ViewRaiseMoneyLabel_raiseMoneyTypeId}"/>
+                        <h:outputText value="#{msg.ViewraiseMoneyLabel_raiseMoneyTypeId}"/>
                         <h:outputText value="#{raiseMoneyController.selected.raiseMoneyTypeId.raiseMonTypeName}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="RaiseMoneyViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.Close}" onclick="raiseMoneyViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>

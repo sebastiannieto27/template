@@ -8,31 +8,31 @@
 
     <ui:composition>
 
-        <p:dialog id="DutyPayViewDlg" widgetVar="DutyPayViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewDutyPayTitle}" closeOnEscape="true">
+        <p:dialog id="dutyPayViewDlg" widgetVar="dutyPayViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.dutyPay}" closeOnEscape="true">
 
-            <h:form id="DutyPayViewForm">
+            <h:form id="dutyPayViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{dutyPayController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewDutyPayLabel_dutyApyId}"/>
-                        <h:outputText value="#{dutyPayController.selected.dutyApyId}" title="#{msg.ViewDutyPayTitle_dutyApyId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{dutyPayController.selected.dutyApyId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewDutyPayLabel_dutyPayValue}"/>
-                        <h:outputText value="#{dutyPayController.selected.dutyPayValue}" title="#{msg.ViewDutyPayTitle_dutyPayValue}"/>
+                        <h:outputText value="#{msg.value}"/>
+                        <h:outputText value="#{dutyPayController.selected.dutyPayValue}" title="#{msg.value}"/>
 
-                        <h:outputText value="#{msg.ViewDutyPayLabel_dutyPayNum}"/>
-                        <h:outputText value="#{dutyPayController.selected.dutyPayNum}" title="#{msg.ViewDutyPayTitle_dutyPayNum}"/>
+                        <h:outputText value="#{msg.dutyPayNum}"/>
+                        <h:outputText value="#{dutyPayController.selected.dutyPayNum}" title="#{msg.dutyPayNum}"/>
 
-                        <h:outputText value="#{msg.ViewDutyPayLabel_dutyPayDate}"/>
-                        <h:outputText value="#{dutyPayController.selected.dutyPayDate}" title="#{msg.ViewDutyPayTitle_dutyPayDate}">
+                        <h:outputText value="#{msg.dutyPayDate}"/>
+                        <h:outputText value="#{dutyPayController.selected.dutyPayDate}" title="#{msg.dutyPayDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
 
-                        <h:outputText value="#{msg.ViewDutyPayLabel_branchClientId}"/>
+                        <h:outputText value="#{msg.branchClient}"/>
                         <h:outputText value="#{dutyPayController.selected.branchClientId.branchClName}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="DutyPayViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="dutyPayViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>

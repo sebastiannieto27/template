@@ -113,6 +113,11 @@
 		<view-id value="/home/financialAcount/raiseMoneyType/index.xhtml" />
 	</url-mapping>	
 	
+	<url-mapping id="raiseMoney">
+		<pattern value="/cartera/recaudo" />
+		<view-id value="/home/financialAcount/raiseMoney/index.xhtml" />
+	</url-mapping>
+	
 	<url-mapping id="client">
 		<pattern value="/cartera/cliente" />
 		<view-id value="/home/financialAcount/client/index.xhtml" />
@@ -126,5 +131,10 @@
 	<url-mapping id="billHead">
 		<pattern value="/cartera/cuenta-principal" />
 		<view-id value="/home/financialAcount/billHead/index.xhtml" />
+	</url-mapping>	
+			
+	<url-mapping id="dutyPay">
+		<pattern value="/cartera/obligacion-pago" />
+		<view-id value="/home/financialAcount/dutyPay/index.xhtml" />
 	</url-mapping>	
 </pretty-config>

@@ -8,26 +8,26 @@
 
     <ui:composition>
 
-        <p:dialog id="ProductViewDlg" widgetVar="ProductViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewProductTitle}" closeOnEscape="true">
+        <p:dialog id="productViewDlg" widgetVar="productViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.product}" closeOnEscape="true">
 
-            <h:form id="ProductViewForm">
+            <h:form id="productViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{productController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewProductLabel_productId}"/>
-                        <h:outputText value="#{productController.selected.productId}" title="#{msg.ViewProductTitle_productId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{productController.selected.productId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewProductLabel_productName}"/>
-                        <h:outputText value="#{productController.selected.productName}" title="#{msg.ViewProductTitle_productName}"/>
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{productController.selected.productName}" title="#{msg.name}"/>
 
-                        <h:outputText value="#{msg.ViewProductLabel_productDesc}"/>
-                        <h:outputText value="#{productController.selected.productDesc}" title="#{msg.ViewProductTitle_productDesc}"/>
+                        <h:outputText value="#{msg.description}"/>
+                        <h:outputText value="#{productController.selected.productDesc}" title="#{msg.description}"/>
 
-                        <h:outputText value="#{msg.ViewProductLabel_productIntCode}"/>
-                        <h:outputText value="#{productController.selected.productIntCode}" title="#{msg.ViewProductTitle_productIntCode}"/>
+                        <h:outputText value="#{msg.internalCode}"/>
+                        <h:outputText value="#{productController.selected.productIntCode}" title="#{msg.internalCode}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="ProductViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="productViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>

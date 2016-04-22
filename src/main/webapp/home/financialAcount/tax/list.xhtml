@@ -82,7 +82,7 @@
             </p:dataTable>
 
 
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":taxViewForm" oncomplete="taxViewDialog.show()" disabled="#{empty taxController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":taxViewForm" oncomplete="taxViewDialog.show()" disabled="#{empty taxController.selected}"/>
 
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>

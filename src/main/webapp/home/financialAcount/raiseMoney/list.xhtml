@@ -17,8 +17,8 @@
         	<h:panelGroup id="searchForm">
             	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
             		
-                        <p:outputLabel value="#{msg.CreateRaiseMoneyLabel_branchClientId}" for="branchClientId" />
-                        <p:selectOneMenu id="branchClientId" value="#{raiseMoneyController.selected.branchClientId}" required="true" requiredMessage="#{msg.branchClient}" >
+                        <p:outputLabel value="#{msg.branchClient}" for="branchClientId" />
+                        <p:selectOneMenu id="branchClientId" value="#{raiseMoneyController.branchClientSearch}" >
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{branchClientController.items}"
                                            var="branchClientIdItem"
@@ -27,8 +27,8 @@
                                            />
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="#{msg.raiseMoneyTypeId}" for="raiseMoneyTypeId" />
-                        <p:selectOneMenu id="raiseMoneyTypeId" value="#{raiseMoneyController.selected.raiseMoneyTypeId}" >
+                        <p:outputLabel value="#{msg.raiseMoneyType}" for="raiseMoneyTypeId" />
+                        <p:selectOneMenu id="raiseMoneyTypeId" value="#{raiseMoneyController.raiseMoneyTypeSearch}" >
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{raiseMoneyTypeController.items}"
                                            var="raiseMoneyTypeIdItem"
@@ -36,7 +36,7 @@
                                            itemLabel="#{raiseMoneyTypeIdItem.raiseMonTypeName.toString()}"
                                            />
                         </p:selectOneMenu>
-         			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{taxController.init()}" update=":taxListForm" />
+         			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{raiseMoneyController.init()}" update=":raiseMoneyListForm" />
        			</p:panelGrid>
            	</h:panelGroup>
         
