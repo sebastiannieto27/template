@@ -8,20 +8,20 @@
 
     <ui:composition>
 
-        <p:dialog id="CreditNoteTypeViewDlg" widgetVar="CreditNoteTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewCreditNoteTypeTitle}" closeOnEscape="true">
+        <p:dialog id="creditNoteTypeViewDlg" widgetVar="creditNoteTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.VcreditNoteType}" closeOnEscape="true">
 
-            <h:form id="CreditNoteTypeViewForm">
+            <h:form id="creditNoteTypeViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{creditNoteTypeController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewCreditNoteTypeLabel_creditNoteTypeId}"/>
-                        <h:outputText value="#{creditNoteTypeController.selected.creditNoteTypeId}" title="#{msg.ViewCreditNoteTypeTitle_creditNoteTypeId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{creditNoteTypeController.selected.creditNoteTypeId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewCreditNoteTypeLabel_creditNotTypeName}"/>
-                        <h:outputText value="#{creditNoteTypeController.selected.creditNotTypeName}" title="#{msg.ViewCreditNoteTypeTitle_creditNotTypeName}"/>
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{creditNoteTypeController.selected.creditNotTypeName}" title="#{msg.name}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="CreditNoteTypeViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.Close}" onclick="creditNoteTypeViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>

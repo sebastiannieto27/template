@@ -1,23 +1,61 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
 
-    <h:form id="CreditNoteListForm">
+    <h:form id="creditNoteListForm">
 
-        <p:panel header="#{msg.ListCreditNoteTitle}">
-            <p:contextMenu id="CreditNoteDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('CreditNoteListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{msg.View}" onclick="document.getElementById('CreditNoteListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('CreditNoteListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('CreditNoteListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{msg.CreditNoteMenuItem_branchClientId}" icon="ui-icon-search"  actionListener="#{creditNoteController.prepareBranchClientId}" update=":BranchClientViewForm" oncomplete="BranchClientViewDialog.show()" disabled="#{empty creditNoteController.selected.branchClientId}"/>  
-                <p:menuitem value="#{msg.CreditNoteMenuItem_billHeadId}" icon="ui-icon-search"  actionListener="#{creditNoteController.prepareBillHeadId}" update=":BillHeadViewForm" oncomplete="BillHeadViewDialog.show()" disabled="#{empty creditNoteController.selected.billHeadId}"/>  
-                <p:menuitem value="#{msg.CreditNoteMenuItem_creditNoteTypeId}" icon="ui-icon-search"  actionListener="#{creditNoteController.prepareCreditNoteTypeId}" update=":CreditNoteTypeViewForm" oncomplete="CreditNoteTypeViewDialog.show()" disabled="#{empty creditNoteController.selected.creditNoteTypeId}"/>  
+        <p:panel header="#{msg.creditNote}">
+        
+        	<h:panelGroup id="searchForm">
+            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+            		
+           			<p:outputLabel value="#{msg.branchClient}" for="rtvBranchClientId" />
+                       <p:selectOneMenu id="rtvBranchClientId" value="#{creditNoteController.branchClientIdSearch}">
+                           <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                           <f:selectItems value="#{branchClientController.items}"
+                                          var="branchClientItem"
+                                          itemValue="#{branchClientItem.branchClientId}"
+                                          itemLabel="#{branchClientItem.branchClName.toString()}"
+                                          />
+                       </p:selectOneMenu>
+                       
+                                   		
+           			<p:outputLabel value="#{msg.billHead}" for="rtvBillHeadId" />
+                       <p:selectOneMenu id="rtvBillHeadId" value="#{creditNoteController.billHeadIdSearch}">
+                           <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                           <f:selectItems value="#{billHeadController.items}"
+                                          var="billHeadItem"
+                                          itemValue="#{billHeadItem.billHeadId}"
+                                          itemLabel="#{billHeadItem.billHeadNum.toString()}"
+                                          />
+                       </p:selectOneMenu>
+                                   		
+           			<p:outputLabel value="#{msg.creditNoteType}" for="rtvCreditNoteTypeId" />
+                       <p:selectOneMenu id="rtvCreditNoteTypeId" value="#{creditNoteController.creditNoteTypeIdSearch}">
+                           <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                           <f:selectItems value="#{creditNoteTypeController.items}"
+                                          var="creditNoteTypeItem"
+                                          itemValue="#{creditNoteTypeItem.creditNoteTypeId}"
+                                          itemLabel="#{creditNoteTypeItem.creditNotTypeName.toString()}"
+                                          />
+                       </p:selectOneMenu>
+                        
+           			<p:outputLabel for="rtvName" value="#{msg.creditNotNum}:" />
+					<p:inputText id="rtvName" value="#{creditNoteController.creditNotNum}" title="#{msg.creditNotNum}:"/>
+
+         			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{creditNoteTController.init()}" update=":creditNoteListForm" />
+       			</p:panelGrid>
+           	</h:panelGroup>
+        
+            <p:contextMenu id="creditNoteDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.view}" onclick="document.getElementById('creditNoteListForm:viewButton').click();" icon="ui-icon-search"/>
             </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{creditNoteController.items}"
@@ -29,38 +67,38 @@
                          selectionMode="single"
                          selection="#{creditNoteController.selected}">
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CreditNoteDataTableContextMenu" listener="#{creditNoteController.resetParents}"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CreditNoteDataTableContextMenu" listener="#{creditNoteController.resetParents}"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{creditNoteController.resetParents}"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CreditNoteListForm:viewButton').click();"/>
+                <p:ajax event="rowSelect"   update="@form:viewButton,@form:creditNoteDataTableContextMenu" />
+                <p:ajax event="rowUnselect" update="@form:viewButton,@form:creditNoteDataTableContextMenu" />
+                <p:ajax event="contextMenu" update="@form:viewButton" />
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('creditNoteListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.creditNoteId}" filterBy="#{item.creditNoteId}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListCreditNoteTitle_creditNoteId}"/>
+                        <h:outputText value="#{msg.id}"/>
                     </f:facet>
                     <h:outputText value="#{item.creditNoteId}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.creditNotValue}" filterBy="#{item.creditNotValue}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListCreditNoteTitle_creditNotValue}"/>
+                        <h:outputText value="#{msg.value}"/>
                     </f:facet>
                     <h:outputText value="#{item.creditNotValue}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.creditNotNum}" filterBy="#{item.creditNotNum}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListCreditNoteTitle_creditNotNum}"/>
+                        <h:outputText value="#{msg.creditNotNum}"/>
                     </f:facet>
                     <h:outputText value="#{item.creditNotNum}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.creditNotDate}" filterBy="#{item.creditNotDate}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListCreditNoteTitle_creditNotDate}"/>
+                        <h:outputText value="#{msg.ListcreditNoteTitle_creditNotDate}"/>
                     </f:facet>
                     <h:outputText value="#{item.creditNotDate}">
                         <f:convertDateTime pattern="MM/dd/yyyy" />
@@ -68,41 +106,27 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.branchClientId.branchClName}" filterBy="#{item.branchClientId.branchClName}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListCreditNoteTitle_branchClientId}"/>
+                        <h:outputText value="#{msg.branchClient}"/>
                     </f:facet>
                     <h:outputText value="#{item.branchClientId.branchClName}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.billHeadId.billHeadId}" filterBy="#{item.billHeadId.billHeadId}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListCreditNoteTitle_billHeadId}"/>
+                        <h:outputText value="#{msg.billHead}"/>
                     </f:facet>
                     <h:outputText value="#{item.billHeadId.billHeadId}"/>
                 </p:column>
 
-                <!--
-                                    <p:column sortBy="#{item.creditNoteTypeId.creditNotTypeName}" filterBy="#{item.creditNoteTypeId.creditNotTypeName}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{msg.ListCreditNoteTitle_creditNoteTypeId}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.creditNoteTypeId.creditNotTypeName}"/>
-                                    </p:column>
-                -->
-
             </p:dataTable>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{creditNoteController.prepareCreate}" update=":CreditNoteCreateForm" oncomplete="CreditNoteCreateDialog.show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":CreditNoteViewForm" oncomplete="CreditNoteViewDialog.show()" disabled="#{empty creditNoteController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":CreditNoteEditForm" oncomplete="CreditNoteEditDialog.show()" disabled="#{empty creditNoteController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{creditNoteController.delete}" update=":growl,datalist" disabled="#{empty creditNoteController.selected}">
-                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
-
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.View}" update=":creditNoteViewForm" oncomplete="creditNoteViewDialog.show()" disabled="#{empty creditNoteController.selected}"/>
         </p:panel>
-        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
-    </h:form>
-
-</ui:composition>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+   </h:form>
+     </ui:composition>
+    </body>
+</html>

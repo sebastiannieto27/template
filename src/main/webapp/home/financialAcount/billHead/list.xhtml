@@ -70,7 +70,9 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.billHeadTotalValue}"/>
                     </f:facet>
-                    <h:outputText value="#{item.billHeadTotalValue}"/>
+                    <h:outputText value="#{item.billHeadTotalValue}" >
+               				<f:convertNumber type="currency" />
+           			</h:outputText>
                 </p:column>
 
 
@@ -78,7 +80,9 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.billHeadTaxValue}"/>
                     </f:facet>
-                    <h:outputText value="#{item.billHeadTaxValue}"/>
+                    <h:outputText value="#{item.billHeadTaxValue}" >
+               				<f:convertNumber type="currency" />
+           			</h:outputText>
                 </p:column>
 
 
@@ -86,7 +90,9 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.billHeadDiscValue}"/>
                     </f:facet>
-                    <h:outputText value="#{item.billHeadDiscValue}"/>
+                    <h:outputText value="#{item.billHeadDiscValue}" >
+               				<f:convertNumber type="currency" />
+           			</h:outputText>
                 </p:column>
 
 

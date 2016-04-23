@@ -27,7 +27,7 @@
                         </p:selectOneMenu>
                         
 						<p:outputLabel for="rtvdutyPayNum" value="#{msg.dutyPayNum}:" />
-						<p:inputText id="rtvdutyPayNum" value="#{dutyPayController.searchdutyPayNum}" title="#{msg.dutyPayNum}:"/>
+						<p:inputText id="rtvdutyPayNum" value="#{dutyPayController.searchDutyPayNum}" title="#{msg.dutyPayNum}:"/>
                         
           				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{dutyPayController.init()}" update=":dutyPayListForm" />
            			</p:panelGrid>
@@ -64,7 +64,9 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.value}"/>
                     </f:facet>
-                    <h:outputText value="#{item.dutyPayValue}"/>
+                    <h:outputText value="#{item.dutyPayValue}" >
+               				<f:convertNumber type="currency" />
+           			</h:outputText>
                 </p:column>
 
 

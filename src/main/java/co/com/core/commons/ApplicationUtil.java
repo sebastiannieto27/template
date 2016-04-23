@@ -1,9 +1,11 @@
 package co.com.core.commons;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
 
@@ -42,5 +44,10 @@ public class ApplicationUtil {
 			logger.error("Throwed Exception [ApplicationUtil.getDateFromString]:" + e.getMessage());
 		}
 		return date;
+	}
+	
+	public static String formatNumber(long number) {
+		String strNumber = String.valueOf(number);
+		return NumberFormat.getNumberInstance(Locale.US).format(strNumber);
 	}
 }

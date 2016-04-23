@@ -137,4 +137,14 @@
 		<pattern value="/cartera/obligacion-pago" />
 		<view-id value="/home/financialAcount/dutyPay/index.xhtml" />
 	</url-mapping>	
+				
+	<url-mapping id="creditNoteType">
+		<pattern value="/cartera/tipo-nota-credito" />
+		<view-id value="/home/financialAcount/creditNoteType/index.xhtml" />
+	</url-mapping>
+					
+	<url-mapping id="creditNote">
+		<pattern value="/cartera/nota-credito" />
+		<view-id value="/home/financialAcount/creditNote/index.xhtml" />
+	</url-mapping>
 </pretty-config>

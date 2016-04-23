@@ -219,6 +219,14 @@
   	    <bean id="dutyPayDAO" class="co.com.core.dao.impl.financial.account.DutyPayDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
+	    	    
+  	    <bean id="creditNoteTypeDAO" class="co.com.core.dao.impl.financial.account.CreditNoteTypeDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    	    
+  	    <bean id="creditNoteDAO" class="co.com.core.dao.impl.financial.account.CreditNoteDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -348,6 +356,14 @@
 	    	    	    	    	    
    	    <bean id="dutyPayService" class="co.com.core.services.impl.financial.account.DutyPayServiceImpl">
 	    	<property name="dutyPayDAO" ref="dutyPayDAO" />
+	    </bean>
+	    	    	    	    	    	    
+   	    <bean id="creditNoteTypeService" class="co.com.core.services.impl.financial.account.CreditNoteTypeServiceImpl">
+	    	<property name="creditNoteTypeDAO" ref="creditNoteTypeDAO" />
+	    </bean>
+	    	    	    	    	    	    	    
+   	    <bean id="creditNoteService" class="co.com.core.services.impl.financial.account.CreditNoteServiceImpl">
+	    	<property name="creditNoteDAO" ref="creditNoteDAO" />
 	    </bean>
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -500,5 +516,13 @@
                 
     <bean id="dutyPayController" scope="session" class="co.com.core.controller.financial.account.DutyPayController" init-method="init">
     	<property name="dutyPayService" ref="dutyPayService" />
+    </bean>
+                    
+    <bean id="creditNoteTypeController" scope="session" class="co.com.core.controller.financial.account.CreditNoteTypeController" init-method="init">
+    	<property name="creditNoteTypeService" ref="creditNoteTypeService" />
+    </bean>
+                        
+    <bean id="creditNoteController" scope="session" class="co.com.core.controller.financial.account.CreditNoteController" init-method="init">
+    	<property name="creditNoteService" ref="creditNoteService" />
     </bean>
 </beans>

@@ -8,37 +8,37 @@
 
     <ui:composition>
 
-        <p:dialog id="CreditNoteViewDlg" widgetVar="CreditNoteViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewCreditNoteTitle}" closeOnEscape="true">
+        <p:dialog id="creditNoteViewDlg" widgetVar="creditNoteViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewcreditNoteTitle}" closeOnEscape="true">
 
-            <h:form id="CreditNoteViewForm">
+            <h:form id="creditNoteViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{creditNoteController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewCreditNoteLabel_creditNoteId}"/>
-                        <h:outputText value="#{creditNoteController.selected.creditNoteId}" title="#{msg.ViewCreditNoteTitle_creditNoteId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{creditNoteController.selected.creditNoteId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewCreditNoteLabel_creditNotValue}"/>
-                        <h:outputText value="#{creditNoteController.selected.creditNotValue}" title="#{msg.ViewCreditNoteTitle_creditNotValue}"/>
+                        <h:outputText value="#{msg.value}"/>
+                        <h:outputText value="#{creditNoteController.selected.creditNotValue}" title="#{msg.value}"/>
 
-                        <h:outputText value="#{msg.ViewCreditNoteLabel_creditNotNum}"/>
-                        <h:outputText value="#{creditNoteController.selected.creditNotNum}" title="#{msg.ViewCreditNoteTitle_creditNotNum}"/>
+                        <h:outputText value="#{msg.creditNotNum}"/>
+                        <h:outputText value="#{creditNoteController.selected.creditNotNum}" title="#{msg.creditNotNum}"/>
 
-                        <h:outputText value="#{msg.ViewCreditNoteLabel_creditNotDate}"/>
-                        <h:outputText value="#{creditNoteController.selected.creditNotDate}" title="#{msg.ViewCreditNoteTitle_creditNotDate}">
+                        <h:outputText value="#{msg.creditNotDate}"/>
+                        <h:outputText value="#{creditNoteController.selected.creditNotDate}" title="#{msg.creditNotDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
 
-                        <h:outputText value="#{msg.ViewCreditNoteLabel_branchClientId}"/>
+                        <h:outputText value="#{msg.branchClient}"/>
                         <h:outputText value="#{creditNoteController.selected.branchClientId.branchClName}"/>
 
-                        <h:outputText value="#{msg.ViewCreditNoteLabel_billHeadId}"/>
+                        <h:outputText value="#{msg.billHead}"/>
                         <h:outputText value="#{creditNoteController.selected.billHeadId.billHeadId}"/>
 
-                        <h:outputText value="#{msg.ViewCreditNoteLabel_creditNoteTypeId}"/>
+                        <h:outputText value="#{msg.creditNoteType}"/>
                         <h:outputText value="#{creditNoteController.selected.creditNoteTypeId.creditNotTypeName}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="CreditNoteViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="creditNoteViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>
