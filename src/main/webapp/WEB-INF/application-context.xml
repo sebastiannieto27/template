@@ -247,6 +247,11 @@
   	    <bean id="accountAgeTypeDAO" class="co.com.core.dao.impl.financial.account.AccountAgeTypeDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean> 
+	    	    	   	    	    	    
+  	    <bean id="accountAgeDetDAO" class="co.com.core.dao.impl.financial.account.AccountAgeDetDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean> 
+	    
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -405,6 +410,11 @@
    	    <bean id="accountAgeTypeService" class="co.com.core.services.impl.financial.account.AccountAgeTypeServiceImpl">
 	    	<property name="accountAgeTypeDAO" ref="accountAgeTypeDAO" />
 	    </bean>
+	    	    	    	    	    	    	    	    	    	    
+   	    <bean id="accountAgeDetService" class="co.com.core.services.impl.financial.account.AccountAgeDetServiceImpl">
+	    	<property name="accountAgeDetDAO" ref="accountAgeDetDAO" />
+	    </bean>
+	    
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -585,4 +595,9 @@
     <bean id="accountAgeTypeController" scope="session" class="co.com.core.controller.financial.account.AccountAgeTypeController" init-method="init">
     	<property name="accountAgeTypeService" ref="accountAgeTypeService" />
     </bean>
+                          
+    <bean id="accountAgeDetController" scope="session" class="co.com.core.controller.financial.account.AccountAgeDetController" init-method="init">
+    	<property name="accountAgeDetService" ref="accountAgeDetService" />
+    </bean>
+    
 </beans>

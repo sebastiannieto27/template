@@ -172,4 +172,9 @@
 		<pattern value="/cartera/tipo-edad-cartera" />
 		<view-id value="/home/financialAcount/accountAgeType/index.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="accountAgeDet">
+		<pattern value="/cartera/detalle-edad-cartera" />
+		<view-id value="/home/financialAcount/accountAgeDet/index.xhtml" />
+	</url-mapping>
 </pretty-config>

@@ -1,23 +1,46 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
 
-    <h:form id="AccountAgeDetListForm">
+    <h:form id="accountAgeDetListForm">
 
-        <p:panel header="#{msg.ListAccountAgeDetTitle}">
-            <p:contextMenu id="AccountAgeDetDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('AccountAgeDetListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{msg.View}" onclick="document.getElementById('AccountAgeDetListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('AccountAgeDetListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('AccountAgeDetListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{msg.AccountAgeDetMenuItem_accountAgeBillCollection}" icon="ui-icon-search"  action="#{accountAgeDetController.navigateAccountAgeBillCollection}" disabled="#{empty accountAgeDetController.selected.accountAgeBillCollection}" ajax="false"/>  
-                <p:menuitem value="#{msg.AccountAgeDetMenuItem_accountAgeId}" icon="ui-icon-search"  actionListener="#{accountAgeDetController.prepareAccountAgeId}" update=":AccountAgeViewForm" oncomplete="AccountAgeViewDialog.show()" disabled="#{empty accountAgeDetController.selected.accountAgeId}"/>  
-                <p:menuitem value="#{msg.AccountAgeDetMenuItem_accountAgeTypeId}" icon="ui-icon-search"  actionListener="#{accountAgeDetController.prepareAccountAgeTypeId}" update=":AccountAgeTypeViewForm" oncomplete="AccountAgeTypeViewDialog.show()" disabled="#{empty accountAgeDetController.selected.accountAgeTypeId}"/>  
+        <p:panel header="#{msg.accountAgeDet}">
+        	<h:panelGroup id="searchForm">
+            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+            		
+                        <p:outputLabel value="#{msg.accountAge}" for="accountAgeId" />
+                        <p:selectOneMenu id="accountAgeId" value="#{accountAgeDetController.accountAgeIdSearch}" >
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{accountAgeController.items}"
+                                           var="accountAgeItem"
+                                           itemValue="#{accountAgeItem.accountAgeId}"
+                                           itemLabel="#{accountAgeItem.accountAgeId}"
+                                           />
+                        </p:selectOneMenu>
+
+                       <p:outputLabel value="#{msg.accountAgeType}" for="accountAgeTypeId" />
+                        <p:selectOneMenu id="accountAgeTypeId" value="#{accountAgeDetController.accountAgeTypeIdSearch}" >
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{accountAgeTypeController.items}"
+                                           var="accountAgeTypeItem"
+                                           itemValue="#{accountAgeTypeItem.accountAgeTypeId}"
+                                           itemLabel="#{accountAgeTypeItem.accountAgeTypeName.toString()}"
+                                           />
+                        </p:selectOneMenu>
+                        
+         			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{accountAgeDetController.init()}" update=":accountAgeDetListForm" />
+       			</p:panelGrid>
+           	</h:panelGroup>
+        
+            <p:contextMenu id="accountAgeDetDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.view}" onclick="document.getElementById('accountAgeDetListForm:viewButton').click();" icon="ui-icon-search"/>
             </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{accountAgeDetController.items}"
@@ -29,46 +52,46 @@
                          selectionMode="single"
                          selection="#{accountAgeDetController.selected}">
 
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AccountAgeDetDataTableContextMenu" listener="#{accountAgeDetController.resetParents}"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:AccountAgeDetDataTableContextMenu" listener="#{accountAgeDetController.resetParents}"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{accountAgeDetController.resetParents}"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('AccountAgeDetListForm:viewButton').click();"/>
+                <p:ajax event="rowSelect"   update="@form:viewButton,@form:accountAgeDetDataTableContextMenu" />
+                <p:ajax event="rowUnselect" update="@form:viewButton,@form:accountAgeDetDataTableContextMenu" />
+                <p:ajax event="contextMenu" update="@form:viewButton" />
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('accountAgeDetListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.accountAgeDetId}" filterBy="#{item.accountAgeDetId}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListAccountAgeDetTitle_accountAgeDetId}"/>
+                        <h:outputText value="#{msg.id}"/>
                     </f:facet>
                     <h:outputText value="#{item.accountAgeDetId}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.accountAgeDetTotal}" filterBy="#{item.accountAgeDetTotal}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListAccountAgeDetTitle_accountAgeDetTotal}"/>
+                        <h:outputText value="#{msg.totalValue}"/>
                     </f:facet>
                     <h:outputText value="#{item.accountAgeDetTotal}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.accountAgeDetAmo}" filterBy="#{item.accountAgeDetAmo}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListAccountAgeDetTitle_accountAgeDetAmo}"/>
+                        <h:outputText value="#{msg.amount}"/>
                     </f:facet>
                     <h:outputText value="#{item.accountAgeDetAmo}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.accountAgeId.accountAgeId}" filterBy="#{item.accountAgeId.accountAgeId}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListAccountAgeDetTitle_accountAgeId}"/>
+                        <h:outputText value="#{msg.accountAge}"/>
                     </f:facet>
                     <h:outputText value="#{item.accountAgeId.accountAgeId}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.accountAgeTypeId.accountAgeTypeName}" filterBy="#{item.accountAgeTypeId.accountAgeTypeName}">
+                <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListAccountAgeDetTitle_accountAgeTypeId}"/>
+                        <h:outputText value="#{msg.accountAgeType}"/>
                     </f:facet>
                     <h:outputText value="#{item.accountAgeTypeId.accountAgeTypeName}"/>
                 </p:column>
@@ -76,15 +99,11 @@
 
             </p:dataTable>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{accountAgeDetController.prepareCreate}" update=":AccountAgeDetCreateForm" oncomplete="AccountAgeDetCreateDialog.show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":AccountAgeDetViewForm" oncomplete="AccountAgeDetViewDialog.show()" disabled="#{empty accountAgeDetController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":AccountAgeDetEditForm" oncomplete="AccountAgeDetEditDialog.show()" disabled="#{empty accountAgeDetController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{accountAgeDetController.delete}" update=":growl,datalist" disabled="#{empty accountAgeDetController.selected}">
-                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":accountAgeDetViewForm" oncomplete="PF('accountAgeDetViewDialog').show()" disabled="#{empty accountAgeDetController.selected}"/>
 
         </p:panel>
-        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
-    </h:form>
-
-</ui:composition>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+   </h:form>
+     </ui:composition>
+    </body>
+</html>

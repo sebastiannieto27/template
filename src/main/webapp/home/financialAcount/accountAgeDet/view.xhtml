@@ -8,29 +8,29 @@
 
     <ui:composition>
 
-        <p:dialog id="AccountAgeDetViewDlg" widgetVar="AccountAgeDetViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewAccountAgeDetTitle}" closeOnEscape="true">
+        <p:dialog id="accountAgeDetViewDlg" widgetVar="accountAgeDetViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.accountAgeDet}" closeOnEscape="true">
 
-            <h:form id="AccountAgeDetViewForm">
+            <h:form id="accountAgeDetViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{accountAgeDetController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewAccountAgeDetLabel_accountAgeDetId}"/>
-                        <h:outputText value="#{accountAgeDetController.selected.accountAgeDetId}" title="#{msg.ViewAccountAgeDetTitle_accountAgeDetId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{accountAgeDetController.selected.accountAgeDetId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewAccountAgeDetLabel_accountAgeDetTotal}"/>
-                        <h:outputText value="#{accountAgeDetController.selected.accountAgeDetTotal}" title="#{msg.ViewAccountAgeDetTitle_accountAgeDetTotal}"/>
+                        <h:outputText value="#{msg.totalValue}"/>
+                        <h:outputText value="#{accountAgeDetController.selected.accountAgeDetTotal}" title="#{msg.totalValue}"/>
 
-                        <h:outputText value="#{msg.ViewAccountAgeDetLabel_accountAgeDetAmo}"/>
-                        <h:outputText value="#{accountAgeDetController.selected.accountAgeDetAmo}" title="#{msg.ViewAccountAgeDetTitle_accountAgeDetAmo}"/>
+                        <h:outputText value="#{msg.amount}"/>
+                        <h:outputText value="#{accountAgeDetController.selected.accountAgeDetAmo}" title="#{msg.amount}"/>
 
-                        <h:outputText value="#{msg.ViewAccountAgeDetLabel_accountAgeId}"/>
+                        <h:outputText value="#{msg.accountAge}"/>
                         <h:outputText value="#{accountAgeDetController.selected.accountAgeId.accountAgeId}"/>
 
-                        <h:outputText value="#{msg.ViewAccountAgeDetLabel_accountAgeTypeId}"/>
+                        <h:outputText value="#{msg.accountAgeType}"/>
                         <h:outputText value="#{accountAgeDetController.selected.accountAgeTypeId.accountAgeTypeName}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="AccountAgeDetViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="accountAgeDetViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>
