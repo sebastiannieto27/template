@@ -8,45 +8,45 @@
 
     <ui:composition>
 
-        <p:dialog id="billHeadViewDlg" widgetVar="billHeadViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewbillHeadTitle}" closeOnEscape="true">
+        <p:dialog id="billHeadViewDlg" widgetVar="billHeadViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.billHead}" closeOnEscape="true">
 
             <h:form id="billHeadViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{billHeadController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewbillHeadLabel_billHeadId}"/>
-                        <h:outputText value="#{billHeadController.selected.billHeadId}" title="#{msg.ViewbillHeadTitle_billHeadId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewbillHeadLabel_billHeadTotalValue}"/>
-                        <h:outputText value="#{billHeadController.selected.billHeadTotalValue}" title="#{msg.ViewbillHeadTitle_billHeadTotalValue}"/>
+                        <h:outputText value="#{msg.totalValue}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadTotalValue}" title="#{msg.totalValue}"/>
 
-                        <h:outputText value="#{msg.ViewbillHeadLabel_billHeadTaxValue}"/>
-                        <h:outputText value="#{billHeadController.selected.billHeadTaxValue}" title="#{msg.ViewbillHeadTitle_billHeadTaxValue}"/>
+                        <h:outputText value="#{msg.taxValue}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadTaxValue}" title="#{msg.taxValue}"/>
 
-                        <h:outputText value="#{msg.ViewbillHeadLabel_billHeadDiscValue}"/>
-                        <h:outputText value="#{billHeadController.selected.billHeadDiscValue}" title="#{msg.ViewbillHeadTitle_billHeadDiscValue}"/>
+                        <h:outputText value="#{msg.discValue}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadDiscValue}" title="#{msg.discValue}"/>
 
-                        <h:outputText value="#{msg.ViewbillHeadLabel_billHeadNum}"/>
-                        <h:outputText value="#{billHeadController.selected.billHeadNum}" title="#{msg.ViewbillHeadTitle_billHeadNum}"/>
+                        <h:outputText value="#{msg.billHeadNum}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadNum}" title="#{msg.billHeadNum}"/>
 
-                        <h:outputText value="#{msg.ViewbillHeadLabel_billHeadDate}"/>
-                        <h:outputText value="#{billHeadController.selected.billHeadDate}" title="#{msg.ViewbillHeadTitle_billHeadDate}">
+                        <h:outputText value="#{msg.date}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadDate}" title="#{msg.date}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
 
-                        <h:outputText value="#{msg.ViewbillHeadLabel_billHeadDue}"/>
-                        <h:outputText value="#{billHeadController.selected.billHeadDue}" title="#{msg.ViewbillHeadTitle_billHeadDue}">
+                        <h:outputText value="#{msg.dueDate}"/>
+                        <h:outputText value="#{billHeadController.selected.billHeadDue}" title="#{msg.dueDate}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
 
-                        <h:outputText value="#{msg.ViewbillHeadLabel_branchClientId}"/>
+                        <h:outputText value="#{msg.branchClient}"/>
                         <h:outputText value="#{billHeadController.selected.branchClientId.branchClName}"/>
 
-                        <h:outputText value="#{msg.ViewbillHeadLabel_generalStatusId}"/>
+                        <h:outputText value="#{msg.status}"/>
                         <h:outputText value="#{billHeadController.selected.generalStatusId.generalStatusName}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="billHeadViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="billHeadViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>

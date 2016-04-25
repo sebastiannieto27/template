@@ -98,7 +98,7 @@
 
             </p:dataTable>
 
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.view}" update=":branchClientViewForm" oncomplete="branchClientViewDialog.show()" disabled="#{empty branchClientController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":branchClientViewForm" oncomplete="PF('branchClientViewDialog').show()" disabled="#{empty branchClientController.selected}"/>
 
         </p:panel>
        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>

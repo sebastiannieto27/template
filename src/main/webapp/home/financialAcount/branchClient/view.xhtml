@@ -8,32 +8,32 @@
 
     <ui:composition>
 
-        <p:dialog id="branchClientViewDlg" widgetVar="branchClientViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewbranchClientTitle}" closeOnEscape="true">
+        <p:dialog id="branchClientViewDlg" widgetVar="branchClientViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.branchClient}" closeOnEscape="true">
 
             <h:form id="branchClientViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{branchClientController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewbranchClientLabel_branchClientId}"/>
-                        <h:outputText value="#{branchClientController.selected.branchClientId}" title="#{msg.ViewbranchClientTitle_branchClientId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{branchClientController.selected.branchClientId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewbranchClientLabel_branchClName}"/>
-                        <h:outputText value="#{branchClientController.selected.branchClName}" title="#{msg.ViewbranchClientTitle_branchClName}"/>
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{branchClientController.selected.branchClName}" title="#{msg.name}"/>
 
-                        <h:outputText value="#{msg.ViewbranchClientLabel_branchClIntCode}"/>
-                        <h:outputText value="#{branchClientController.selected.branchClIntCode}" title="#{msg.ViewbranchClientTitle_branchClIntCode}"/>
+                        <h:outputText value="#{msg.internalCode}"/>
+                        <h:outputText value="#{branchClientController.selected.branchClIntCode}" title="#{msg.internalCode}"/>
 
-                        <h:outputText value="#{msg.ViewbranchClientLabel_branchClAddress}"/>
-                        <h:outputText value="#{branchClientController.selected.branchClAddress}" title="#{msg.ViewbranchClientTitle_branchClAddress}"/>
+                        <h:outputText value="#{msg.address}"/>
+                        <h:outputText value="#{branchClientController.selected.branchClAddress}" title="#{msg.address}"/>
 
-                        <h:outputText value="#{msg.ViewbranchClientLabel_branchClPhone}"/>
-                        <h:outputText value="#{branchClientController.selected.branchClPhone}" title="#{msg.ViewbranchClientTitle_branchClPhone}"/>
+                        <h:outputText value="#{msg.phone}"/>
+                        <h:outputText value="#{branchClientController.selected.branchClPhone}" title="#{msg.phone}"/>
 
-                        <h:outputText value="#{msg.ViewbranchClientLabel_clientId}"/>
+                        <h:outputText value="#{msg.client}"/>
                         <h:outputText value="#{branchClientController.selected.clientId.clientName}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="branchClientViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="branchClientViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>

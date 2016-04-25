@@ -20,14 +20,14 @@
            			<p:outputLabel for="rtvName" value="#{msg.name}:" />
 					<p:inputText id="rtvName" value="#{clientController.searchName}" title="#{msg.name}:"/>
 
-					<p:outputLabel for="rtvIntCode" value="#{msg.clientInternalCode}:" />
-					<p:inputText id="rtvIntCode" value="#{clientController.searchIntCode}" title="#{msg.clientInternalCode}:"/>
+					<p:outputLabel for="rtvIntCode" value="#{msg.internalCode}:" />
+					<p:inputText id="rtvIntCode" value="#{clientController.searchIntCode}" title="#{msg.internalCode}:"/>
 					
-					<p:outputLabel for="rtvClientNumId" value="#{msg.clientNumId}:" />
-					<p:inputText id="rtvClientNumId" value="#{clientController.searchClientNumId}" title="#{msg.clientNumId}:"/>
+					<p:outputLabel for="rtvClientNumId" value="#{msg.idNumber}:" />
+					<p:inputText id="rtvClientNumId" value="#{clientController.searchClientNumId}" title="#{msg.idNumber}:"/>
 										
-					<p:outputLabel for="rtvClientMail" value="#{msg.clientMail}:" />
-					<p:inputText id="rtvClientMail" value="#{clientController.searchClientMail}" title="#{msg.clientMail}:"/>
+					<p:outputLabel for="rtvClientMail" value="#{msg.email}:" />
+					<p:inputText id="rtvClientMail" value="#{clientController.searchClientMail}" title="#{msg.email}:"/>
 
          			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{clientController.init()}" update=":clientListForm" />
        			</p:panelGrid>
@@ -68,7 +68,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.clientInternalCode}"/>
+                        <h:outputText value="#{msg.internalCode}"/>
                     </f:facet>
                     <h:outputText value="#{item.clientIntCode}"/>
                 </p:column>
@@ -76,14 +76,14 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.clientNumId}"/>
+                        <h:outputText value="#{msg.idNumber}"/>
                     </f:facet>
                     <h:outputText value="#{item.clientNumId}"/>
                 </p:column>
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.clientAddress}"/>
+                        <h:outputText value="#{msg.address}"/>
                     </f:facet>
                     <h:outputText value="#{item.clientAddress}"/>
                 </p:column>
@@ -98,7 +98,7 @@
 
             </p:dataTable>
 
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":clientViewForm" oncomplete="clientViewDialog.show()" disabled="#{empty clientController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":clientViewForm" oncomplete="PF('clientViewDialog').show()" disabled="#{empty clientController.selected}"/>
 
         </p:panel>
        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>

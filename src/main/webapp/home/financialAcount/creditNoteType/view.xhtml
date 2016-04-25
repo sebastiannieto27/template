@@ -8,7 +8,7 @@
 
     <ui:composition>
 
-        <p:dialog id="creditNoteTypeViewDlg" widgetVar="creditNoteTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.VcreditNoteType}" closeOnEscape="true">
+        <p:dialog id="creditNoteTypeViewDlg" widgetVar="creditNoteTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.creditNoteType}" closeOnEscape="true">
 
             <h:form id="creditNoteTypeViewForm">
 
@@ -21,7 +21,7 @@
                         <h:outputText value="#{msg.name}"/>
                         <h:outputText value="#{creditNoteTypeController.selected.creditNotTypeName}" title="#{msg.name}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="creditNoteTypeViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="creditNoteTypeViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>

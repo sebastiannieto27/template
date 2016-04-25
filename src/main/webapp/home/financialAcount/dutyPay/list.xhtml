@@ -12,11 +12,11 @@
 
     <h:form id="dutyPayListForm">
 
-        <p:panel header="#{msg.ListdutyPayTitle}">
+        <p:panel header="#{msg.dutyPay}">
         	<h:panelGroup id="searchForm">
 	            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
 	            		
-						<p:outputLabel value="#{msg.status}" for="rtvBranchClientId" />
+						<p:outputLabel value="#{msg.branchClient}" for="rtvBranchClientId" />
                         <p:selectOneMenu id="rtvBranchClientId" value="#{dutyPayController.searchBranchClientId}">
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{branchClientController.items}"
@@ -80,7 +80,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.dutyPayDate}"/>
+                        <h:outputText value="#{msg.date}"/>
                     </f:facet>
                     <h:outputText value="#{item.dutyPayDate}">
                         <f:convertDateTime pattern="MM/dd/yyyy" />
@@ -98,7 +98,7 @@
 
             </p:dataTable>
 
-            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":dutyPayViewForm" oncomplete="dutyPayViewDialog.show()" disabled="#{empty dutyPayController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":dutyPayViewForm" oncomplete="PF('dutyPayViewDialog').show()" disabled="#{empty dutyPayController.selected}"/>
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
    </h:form>

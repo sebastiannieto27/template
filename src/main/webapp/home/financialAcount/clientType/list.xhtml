@@ -59,7 +59,7 @@
 
             </p:dataTable>
 
-            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":clientTypeViewForm" oncomplete="clientTypeViewDialog.show()" disabled="#{empty clientTypeController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":clientTypeViewForm" oncomplete="PF('clientTypeViewDialog').show()" disabled="#{empty clientTypeController.selected}"/>
 
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>

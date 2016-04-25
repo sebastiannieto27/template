@@ -8,38 +8,38 @@
 
     <ui:composition>
 
-        <p:dialog id="clientViewDlg" widgetVar="clientViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewclientTitle}" closeOnEscape="true">
+        <p:dialog id="clientViewDlg" widgetVar="clientViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.client}" closeOnEscape="true">
 
             <h:form id="clientViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{clientController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewclientLabel_clientId}"/>
-                        <h:outputText value="#{clientController.selected.clientId}" title="#{msg.ViewclientTitle_clientId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{clientController.selected.clientId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewclientLabel_clientIntCode}"/>
-                        <h:outputText value="#{clientController.selected.clientIntCode}" title="#{msg.ViewclientTitle_clientIntCode}"/>
+                        <h:outputText value="#{msg.internalCode}"/>
+                        <h:outputText value="#{clientController.selected.clientIntCode}" title="#{msg.internalCode}"/>
 
-                        <h:outputText value="#{msg.ViewclientLabel_clientNumId}"/>
-                        <h:outputText value="#{clientController.selected.clientNumId}" title="#{msg.ViewclientTitle_clientNumId}"/>
+                        <h:outputText value="#{msg.idNumber}"/>
+                        <h:outputText value="#{clientController.selected.clientNumId}" title="#{msg.idNumber}"/>
 
-                        <h:outputText value="#{msg.ViewclientLabel_clientName}"/>
-                        <h:outputText value="#{clientController.selected.clientName}" title="#{msg.ViewclientTitle_clientName}"/>
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{clientController.selected.clientName}" title="#{msg.name}"/>
 
-                        <h:outputText value="#{msg.ViewclientLabel_clientAddress}"/>
-                        <h:outputText value="#{clientController.selected.clientAddress}" title="#{msg.ViewclientTitle_clientAddress}"/>
+                        <h:outputText value="#{msg.address}"/>
+                        <h:outputText value="#{clientController.selected.clientAddress}" title="#{msg.address}"/>
 
-                        <h:outputText value="#{msg.ViewclientLabel_clientDv}"/>
-                        <h:outputText value="#{clientController.selected.clientDv}" title="#{msg.ViewclientTitle_clientDv}"/>
+                        <h:outputText value="#{msg.clientDv}"/>
+                        <h:outputText value="#{clientController.selected.clientDv}" title="#{msg.clientDv}"/>
 
-                        <h:outputText value="#{msg.ViewclientLabel_clientMail}"/>
-                        <h:outputText value="#{clientController.selected.clientMail}" title="#{msg.ViewclientTitle_clientMail}"/>
+                        <h:outputText value="#{msg.email}"/>
+                        <h:outputText value="#{clientController.selected.clientMail}" title="#{msg.email}"/>
 
-                        <h:outputText value="#{msg.ViewclientLabel_clientTypeId}"/>
+                        <h:outputText value="#{msg.clientType}"/>
                         <h:outputText value="#{clientController.selected.clientTypeId.clientTypeName}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="clientViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="clientViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>

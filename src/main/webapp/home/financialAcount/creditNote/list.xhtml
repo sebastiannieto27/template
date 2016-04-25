@@ -47,7 +47,7 @@
                                           />
                        </p:selectOneMenu>
                         
-           			<p:outputLabel for="rtvName" value="#{msg.creditNotNum}:" />
+           			<p:outputLabel for="rtvName" value="#{msg.creditNoteNum}:" />
 					<p:inputText id="rtvName" value="#{creditNoteController.creditNotNum}" title="#{msg.creditNotNum}:"/>
 
          			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{creditNoteController.init()}" update=":creditNoteListForm" />
@@ -92,7 +92,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.creditNotNum}"/>
+                        <h:outputText value="#{msg.creditNoteNum}"/>
                     </f:facet>
                     <h:outputText value="#{item.creditNotNum}"/>
                 </p:column>
@@ -100,7 +100,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListcreditNoteTitle_creditNotDate}"/>
+                        <h:outputText value="#{msg.date}"/>
                     </f:facet>
                     <h:outputText value="#{item.creditNotDate}">
                         <f:convertDateTime pattern="MM/dd/yyyy" />
@@ -125,7 +125,7 @@
 
             </p:dataTable>
 
-            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.View}" update=":creditNoteViewForm" oncomplete="creditNoteViewDialog.show()" disabled="#{empty creditNoteController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":creditNoteViewForm" oncomplete="PF('creditNoteViewDialog').show()"  disabled="#{empty creditNoteController.selected}"/>
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
    </h:form>

@@ -58,7 +58,7 @@
 
             </p:dataTable>
 
-            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":creditNoteTypeViewForm" oncomplete="creditNoteTypeViewDialog.show()" disabled="#{empty creditNoteTypeController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":creditNoteTypeViewForm" oncomplete="PF('creditNoteTypeViewDialog').show()" disabled="#{empty creditNoteTypeController.selected}"/>
 
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>

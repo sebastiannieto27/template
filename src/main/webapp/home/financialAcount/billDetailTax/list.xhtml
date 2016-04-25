@@ -29,10 +29,10 @@
                        <p:outputLabel value="#{msg.tax}" for="billDetailId" />
                         <p:selectOneMenu id="billDetailId" value="#{billDetailTaxController.billDetailIdSearch}" >
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
-                            <f:selectItems value="#{taxController.items}"
-                                           var="taxItem"
-                                           itemValue="#{taxItem.taxId}"
-                                           itemLabel="#{taxItem.taxName.toString()}"
+                            <f:selectItems value="#{billDetailController.items}"
+                                           var="billDetailItem"
+                                           itemValue="#{billDetailItem.billDetailId}"
+                                           itemLabel="#{billDetailItem.billDetailId}"
                                            />
                         </p:selectOneMenu>
                         
@@ -69,7 +69,9 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.value}"/>
                     </f:facet>
-                    <h:outputText value="#{item.billDetailTaxVal}"/>
+                    <h:outputText value="#{item.billDetailTaxVal}" >
+               				<f:convertNumber type="currency" />
+           			</h:outputText>
                 </p:column>
 
                 <p:column>
@@ -88,7 +90,7 @@
 
             </p:dataTable>
 
-            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":billDetailTaxViewForm" oncomplete="billDetailTaxViewDialog.show()" disabled="#{empty billDetailTaxController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":billDetailTaxViewForm" oncomplete="PF('billDetailTaxViewDialog').show()" disabled="#{empty billDetailTaxController.selected}"/>
 
 
         </p:panel>

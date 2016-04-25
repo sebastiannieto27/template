@@ -16,8 +16,8 @@
        		<h:panelGroup id="searchForm">
 	            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
 	            		
-						<p:outputLabel value="#{msg.status}" for="rtvBranchClientId" />
-                        <p:selectOneMenu id="rtvBranchClientId" value="#{billHeadController.generalStatusSearch}">
+						<p:outputLabel value="#{msg.branchClient}" for="rtvBranchClientId" />
+                        <p:selectOneMenu id="rtvBranchClientId" value="#{billHeadController.branchClientSearch}">
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{branchClientController.items}"
                                            var="branchClientItem"
@@ -68,7 +68,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.billHeadTotalValue}"/>
+                        <h:outputText value="#{msg.totalValue}"/>
                     </f:facet>
                     <h:outputText value="#{item.billHeadTotalValue}" >
                				<f:convertNumber type="currency" />
@@ -78,7 +78,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.billHeadTaxValue}"/>
+                        <h:outputText value="#{msg.taxValue}"/>
                     </f:facet>
                     <h:outputText value="#{item.billHeadTaxValue}" >
                				<f:convertNumber type="currency" />
@@ -88,7 +88,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.billHeadDiscValue}"/>
+                        <h:outputText value="#{msg.discValue}"/>
                     </f:facet>
                     <h:outputText value="#{item.billHeadDiscValue}" >
                				<f:convertNumber type="currency" />
@@ -106,7 +106,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.billHeadDate}"/>
+                        <h:outputText value="#{msg.date}"/>
                     </f:facet>
                     <h:outputText value="#{item.billHeadDate}">
                         <f:convertDateTime pattern="MM/dd/yyyy" />
@@ -115,7 +115,7 @@
 
             </p:dataTable>
 
-            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.View}" update=":billHeadViewForm" oncomplete="billHeadViewDialog.show()" disabled="#{empty billHeadController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":billHeadViewForm" oncomplete="PF('billHeadViewDialog').show()" disabled="#{empty billHeadController.selected}"/>
 
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>

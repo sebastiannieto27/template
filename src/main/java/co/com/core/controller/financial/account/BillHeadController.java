@@ -25,17 +25,19 @@ private static final Logger logger = Logger.getLogger(BillHeadController.class);
 	private BillHeadDTO selected;
 	
 	//filters
-	private BranchClient branchClientSearch;
-	private GeneralStatus generalStatusSearch;
+	private Integer branchClientSearch;
+	private Integer generalStatusSearch;
 	
 	public void init() {
 		Map<String, Object> filter = new HashMap<String, Object>();
-		if(branchClientSearch!=null) {
-			filter.put("branchClientId", branchClientSearch);
+		if(branchClientSearch!=null && branchClientSearch!=0) {
+			BranchClient branchClient= new BranchClient(branchClientSearch);
+			filter.put("branchClientId", branchClient);
 		}
 		
-		if(generalStatusSearch!=null) {
-			filter.put("generalStatusId", generalStatusSearch);
+		if(generalStatusSearch!=null && generalStatusSearch!=0) {
+			GeneralStatus status = new GeneralStatus(generalStatusSearch);
+			filter.put("generalStatusId", status);
 		}
 			
 		items = billHeadService.getAllFilter(filter);
@@ -113,19 +115,21 @@ private static final Logger logger = Logger.getLogger(BillHeadController.class);
 		this.selected = selected;
 	}
 
-	public BranchClient getBranchClientSearch() {
+	public Integer getBranchClientSearch() {
 		return branchClientSearch;
 	}
 
-	public void setBranchClientSearch(BranchClient branchClientSearch) {
+	public void setBranchClientSearch(Integer branchClientSearch) {
 		this.branchClientSearch = branchClientSearch;
 	}
 
-	public GeneralStatus getGeneralStatusSearch() {
+	public Integer getGeneralStatusSearch() {
 		return generalStatusSearch;
 	}
 
-	public void setGeneralStatusSearch(GeneralStatus generalStatusSearch) {
+	public void setGeneralStatusSearch(Integer generalStatusSearch) {
 		this.generalStatusSearch = generalStatusSearch;
 	}
+
+	
 }

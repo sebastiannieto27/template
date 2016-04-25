@@ -68,7 +68,9 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.unitValue}"/>
                     </f:facet>
-                    <h:outputText value="#{item.billDetailUnitVal}"/>
+                    <h:outputText value="#{item.billDetailUnitVal}" >
+               				<f:convertNumber type="currency" />
+           			</h:outputText>
                 </p:column>
 
 
@@ -84,7 +86,9 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.totalValue}"/>
                     </f:facet>
-                    <h:outputText value="#{item.billDetailTotValue}"/>
+                     <h:outputText value="#{item.billDetailTotValue}" >
+               				<f:convertNumber type="currency" />
+           			</h:outputText>
                 </p:column>
 
 
@@ -106,7 +110,7 @@
 
             </p:dataTable>
 
-            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":billDetailViewForm" oncomplete="billDetailViewDialog.show()" disabled="#{empty billDetailController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":billDetailViewForm" oncomplete="PF('billDetailViewDialog').show()" disabled="#{empty billDetailController.selected}"/>
 
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>

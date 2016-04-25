@@ -60,7 +60,7 @@
 
             </p:dataTable>
 
-            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":raiseMoneyTypeViewForm" oncomplete="raiseMoneyTypeViewDialog.show()" disabled="#{empty raiseMoneyTypeController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":raiseMoneyTypeViewForm" oncomplete="PF('raiseMoneyTypeViewDialog').show()" disabled="#{empty raiseMoneyTypeController.selected}"/>
 
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>

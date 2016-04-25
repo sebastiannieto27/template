@@ -67,7 +67,7 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.raiseMoneyAmount}"/>
+                        <h:outputText value="#{msg.amount}"/>
                     </f:facet>
                     <h:outputText value="#{item.raiseMoneyAmount}"/>
                 </p:column>
@@ -81,13 +81,12 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.raiseMoneyDate}"/>
+                        <h:outputText value="#{msg.date}"/>
                     </f:facet>
                     <h:outputText value="#{item.raiseMoneyDate}">
                         <f:convertDateTime pattern="MM/dd/yyyy" />
                     </h:outputText>
                 </p:column>
-
 
                 <p:column>
                     <f:facet name="header">
@@ -96,10 +95,9 @@
                     <h:outputText value="#{item.branchClientId.branchClName}"/>
                 </p:column>
 
-
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.raiseMoneyTypeId}"/>
+                        <h:outputText value="#{msg.raiseMoneyType}"/>
                     </f:facet>
                     <h:outputText value="#{item.raiseMoneyTypeId.raiseMonTypeName}"/>
                 </p:column>
@@ -107,7 +105,7 @@
 
             </p:dataTable>
 
-            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":raiseMoneyViewForm" oncomplete="raiseMoneyViewDialog.show()" disabled="#{empty raiseMoneyController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":raiseMoneyViewForm" oncomplete="PF('raiseMoneyViewDialog').show()" disabled="#{empty raiseMoneyController.selected}"/>
 
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>

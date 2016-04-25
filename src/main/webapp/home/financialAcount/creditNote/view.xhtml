@@ -8,7 +8,7 @@
 
     <ui:composition>
 
-        <p:dialog id="creditNoteViewDlg" widgetVar="creditNoteViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewcreditNoteTitle}" closeOnEscape="true">
+        <p:dialog id="creditNoteViewDlg" widgetVar="creditNoteViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.creditNote}" closeOnEscape="true">
 
             <h:form id="creditNoteViewForm">
 
@@ -21,11 +21,11 @@
                         <h:outputText value="#{msg.value}"/>
                         <h:outputText value="#{creditNoteController.selected.creditNotValue}" title="#{msg.value}"/>
 
-                        <h:outputText value="#{msg.creditNotNum}"/>
-                        <h:outputText value="#{creditNoteController.selected.creditNotNum}" title="#{msg.creditNotNum}"/>
+                        <h:outputText value="#{msg.creditNoteNum}"/>
+                        <h:outputText value="#{creditNoteController.selected.creditNotNum}" title="#{msg.creditNoteNum}"/>
 
-                        <h:outputText value="#{msg.creditNotDate}"/>
-                        <h:outputText value="#{creditNoteController.selected.creditNotDate}" title="#{msg.creditNotDate}">
+                        <h:outputText value="#{msg.date}"/>
+                        <h:outputText value="#{creditNoteController.selected.creditNotDate}" title="#{msg.date}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
 

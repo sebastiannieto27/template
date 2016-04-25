@@ -78,7 +78,7 @@
 
             </p:dataTable>
 
-            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":productViewForm" oncomplete="productViewDialog.show()" disabled="#{empty productController.selected}"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":productViewForm" oncomplete="PF('productViewDialog').show()" disabled="#{empty productController.selected}"/>
 
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>

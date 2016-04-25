@@ -8,29 +8,29 @@
 
     <ui:composition>
 
-        <p:dialog id="taxViewDlg" widgetVar="taxViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewtaxTitle}" closeOnEscape="true">
+        <p:dialog id="taxViewDlg" widgetVar="taxViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.tax}" closeOnEscape="true">
 
             <h:form id="taxViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{taxController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewtaxLabel_taxId}"/>
-                        <h:outputText value="#{taxController.selected.taxId}" title="#{msg.ViewtaxTitle_taxId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{taxController.selected.taxId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewtaxLabel_taxName}"/>
-                        <h:outputText value="#{taxController.selected.taxName}" title="#{msg.ViewtaxTitle_taxName}"/>
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{taxController.selected.taxName}" title="#{msg.name}"/>
 
-                        <h:outputText value="#{msg.ViewtaxLabel_taxPercentage}"/>
-                        <h:outputText value="#{taxController.selected.taxPercentage}" title="#{msg.ViewtaxTitle_taxPercentage}"/>
+                        <h:outputText value="#{msg.percentage}"/>
+                        <h:outputText value="#{taxController.selected.taxPercentage}" title="#{msg.percentage}"/>
 
-                        <h:outputText value="#{msg.ViewtaxLabel_taxValue}"/>
-                        <h:outputText value="#{taxController.selected.taxValue}" title="#{msg.ViewtaxTitle_taxValue}"/>
+                        <h:outputText value="#{msg.value}"/>
+                        <h:outputText value="#{taxController.selected.taxValue}" title="#{msg.value}"/>
 
-                        <h:outputText value="#{msg.ViewtaxLabel_taxIntCode}"/>
-                        <h:outputText value="#{taxController.selected.taxIntCode}" title="#{msg.ViewtaxTitle_taxIntCode}"/>
+                        <h:outputText value="#{msg.internalCode}"/>
+                        <h:outputText value="#{taxController.selected.taxIntCode}" title="#{msg.internalCode}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="taxViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="taxViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>
