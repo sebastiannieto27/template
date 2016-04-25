@@ -8,20 +8,20 @@
 
     <ui:composition>
 
-        <p:dialog id="ClientTypeViewDlg" widgetVar="ClientTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewClientTypeTitle}" closeOnEscape="true">
+        <p:dialog id="clientTypeViewDlg" widgetVar="clientTypeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewclientTypeTitle}" closeOnEscape="true">
 
-            <h:form id="ClientTypeViewForm">
+            <h:form id="clientTypeViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{clientTypeController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewClientTypeLabel_clientTypeId}"/>
-                        <h:outputText value="#{clientTypeController.selected.clientTypeId}" title="#{msg.ViewClientTypeTitle_clientTypeId}"/>
+                        <h:outputText value="#{msg.ViewclientTypeLabel_clientTypeId}"/>
+                        <h:outputText value="#{clientTypeController.selected.clientTypeId}" title="#{msg.ViewclientTypeTitle_clientTypeId}"/>
 
-                        <h:outputText value="#{msg.ViewClientTypeLabel_clientTypeName}"/>
-                        <h:outputText value="#{clientTypeController.selected.clientTypeName}" title="#{msg.ViewClientTypeTitle_clientTypeName}"/>
+                        <h:outputText value="#{msg.ViewclientTypeLabel_clientTypeName}"/>
+                        <h:outputText value="#{clientTypeController.selected.clientTypeName}" title="#{msg.ViewclientTypeTitle_clientTypeName}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="ClientTypeViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.Close}" onclick="clientTypeViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>

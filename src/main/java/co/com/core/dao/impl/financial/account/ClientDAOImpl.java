@@ -52,7 +52,7 @@ public class ClientDAOImpl implements ClientDAO {
 		        String clientIntCode = null;
 		        String clientNumId = null;
 		        String clientMail = null;
-		        ClientType clientType = null;//TODO
+		        ClientType clientType = null;
 		        boolean where = false;
 		        boolean and = false;
 				if(filters.size() > 0) {

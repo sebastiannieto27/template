@@ -50,7 +50,7 @@
            			<p:outputLabel for="rtvName" value="#{msg.creditNotNum}:" />
 					<p:inputText id="rtvName" value="#{creditNoteController.creditNotNum}" title="#{msg.creditNotNum}:"/>
 
-         			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{creditNoteTController.init()}" update=":creditNoteListForm" />
+         			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{creditNoteController.init()}" update=":creditNoteListForm" />
        			</p:panelGrid>
            	</h:panelGroup>
         
@@ -84,7 +84,9 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.value}"/>
                     </f:facet>
-                    <h:outputText value="#{item.creditNotValue}"/>
+                    <h:outputText value="#{item.creditNotValue}" >
+               				<f:convertNumber type="currency" />
+           			</h:outputText>
                 </p:column>
 
 

@@ -122,6 +122,11 @@
 		<pattern value="/cartera/cliente" />
 		<view-id value="/home/financialAcount/client/index.xhtml" />
 	</url-mapping>	
+		
+	<url-mapping id="clientType">
+		<pattern value="/cartera/tipo-cliente" />
+		<view-id value="/home/financialAcount/clientType/index.xhtml" />
+	</url-mapping>
 	
 	<url-mapping id="branchClient">
 		<pattern value="/cartera/sedes-cliente" />
@@ -146,5 +151,20 @@
 	<url-mapping id="creditNote">
 		<pattern value="/cartera/nota-credito" />
 		<view-id value="/home/financialAcount/creditNote/index.xhtml" />
+	</url-mapping>
+								
+	<url-mapping id="product">
+		<pattern value="/cartera/producto" />
+		<view-id value="/home/financialAcount/product/index.xhtml" />
+	</url-mapping>			
+	
+	<url-mapping id="billDetailTax">
+		<pattern value="/cartera/detalle-impuesto-factura" />
+		<view-id value="/home/financialAcount/billDetailTax/index.xhtml" />
+	</url-mapping>
+		
+	<url-mapping id="billDetail">
+		<pattern value="/cartera/detalle-factura" />
+		<view-id value="/home/financialAcount/billDetail/index.xhtml" />
 	</url-mapping>
 </pretty-config>

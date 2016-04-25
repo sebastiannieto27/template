@@ -8,26 +8,26 @@
 
     <ui:composition>
 
-        <p:dialog id="BillDetailTaxViewDlg" widgetVar="BillDetailTaxViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewBillDetailTaxTitle}" closeOnEscape="true">
+        <p:dialog id="billDetailTaxViewDlg" widgetVar="billDetailTaxViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewbillDetailTaxTitle}" closeOnEscape="true">
 
-            <h:form id="BillDetailTaxViewForm">
+            <h:form id="billDetailTaxViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{billDetailTaxController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewBillDetailTaxLabel_billDetailTaxId}"/>
-                        <h:outputText value="#{billDetailTaxController.selected.billDetailTaxId}" title="#{msg.ViewBillDetailTaxTitle_billDetailTaxId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{billDetailTaxController.selected.billDetailTaxId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewBillDetailTaxLabel_billDetailTaxVal}"/>
-                        <h:outputText value="#{billDetailTaxController.selected.billDetailTaxVal}" title="#{msg.ViewBillDetailTaxTitle_billDetailTaxVal}"/>
+                        <h:outputText value="#{msg.value}"/>
+                        <h:outputText value="#{billDetailTaxController.selected.billDetailTaxVal}" title="#{msg.value}"/>
 
-                        <h:outputText value="#{msg.ViewBillDetailTaxLabel_billDetailId}"/>
+                        <h:outputText value="#{msg.billDetail}"/>
                         <h:outputText value="#{billDetailTaxController.selected.billDetailId.billDetailId}"/>
 
-                        <h:outputText value="#{msg.ViewBillDetailTaxLabel_taxId}"/>
+                        <h:outputText value="#{msg.tax}"/>
                         <h:outputText value="#{billDetailTaxController.selected.taxId.taxName}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="BillDetailTaxViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="billDetailTaxViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>

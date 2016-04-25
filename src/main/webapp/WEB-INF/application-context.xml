@@ -207,7 +207,11 @@
   	    <bean id="clientDAO" class="co.com.core.dao.impl.financial.account.ClientDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
-	    	    	    	    
+	    	   
+  	    <bean id="clientTypeDAO" class="co.com.core.dao.impl.financial.account.ClientTypeDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	     	    	    
   	    <bean id="branchClientDAO" class="co.com.core.dao.impl.financial.account.BranchClientDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
@@ -227,6 +231,18 @@
   	    <bean id="creditNoteDAO" class="co.com.core.dao.impl.financial.account.CreditNoteDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
+	    
+  	    <bean id="productDAO" class="co.com.core.dao.impl.financial.account.ProductDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    	    	    
+  	    <bean id="billDetailTaxDAO" class="co.com.core.dao.impl.financial.account.BillDetailTaxDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	   	    	    	    
+  	    <bean id="billDetailDAO" class="co.com.core.dao.impl.financial.account.BillDetailDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean> 
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -345,7 +361,11 @@
    	    <bean id="clientService" class="co.com.core.services.impl.financial.account.ClientServiceImpl">
 	    	<property name="clientDAO" ref="clientDAO" />
 	    </bean>
-	    	    	    
+	    	    
+   	    <bean id="clientTypeService" class="co.com.core.services.impl.financial.account.ClientTypeServiceImpl">
+	    	<property name="clientTypeDAO" ref="clientTypeDAO" />
+	    </bean>
+	    	    	    	    
    	    <bean id="branchClientService" class="co.com.core.services.impl.financial.account.BranchClientServiceImpl">
 	    	<property name="branchClientDAO" ref="branchClientDAO" />
 	    </bean>
@@ -364,6 +384,18 @@
 	    	    	    	    	    	    	    
    	    <bean id="creditNoteService" class="co.com.core.services.impl.financial.account.CreditNoteServiceImpl">
 	    	<property name="creditNoteDAO" ref="creditNoteDAO" />
+	    </bean>
+	    	    	    	    	    	    	    	    	    
+   	    <bean id="productService" class="co.com.core.services.impl.financial.account.ProductServiceImpl">
+	    	<property name="productDAO" ref="productDAO" />
+	    </bean>
+	    	    	    	    	    	    	    
+   	    <bean id="billDetailTaxService" class="co.com.core.services.impl.financial.account.BillDetailTaxServiceImpl">
+	    	<property name="billDetailTaxDAO" ref="billDetailTaxDAO" />
+	    </bean>
+	    	    	    	    	    	    	    	    
+   	    <bean id="billDetailService" class="co.com.core.services.impl.financial.account.BillDetailServiceImpl">
+	    	<property name="billDetailDAO" ref="billDetailDAO" />
 	    </bean>
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -506,6 +538,10 @@
     	<property name="clientService" ref="clientService" />
     </bean>    
         
+    <bean id="clientTypeController" scope="session" class="co.com.core.controller.financial.account.ClientTypeController" init-method="init">
+    	<property name="clientTypeService" ref="clientTypeService" />
+    </bean>  
+        
     <bean id="branchClientController" scope="session" class="co.com.core.controller.financial.account.BranchClientController" init-method="init">
     	<property name="branchClientService" ref="branchClientService" />
     </bean> 
@@ -524,5 +560,17 @@
                         
     <bean id="creditNoteController" scope="session" class="co.com.core.controller.financial.account.CreditNoteController" init-method="init">
     	<property name="creditNoteService" ref="creditNoteService" />
+    </bean>
+                                          
+    <bean id="productController" scope="session" class="co.com.core.controller.financial.account.ProductController" init-method="init">
+    	<property name="productService" ref="productService" />
+    </bean>
+              
+    <bean id="billDetailTaxController" scope="session" class="co.com.core.controller.financial.account.BillDetailTaxController" init-method="init">
+    	<property name="billDetailTaxService" ref="billDetailTaxService" />
+    </bean>
+                  
+    <bean id="billDetailController" scope="session" class="co.com.core.controller.financial.account.BillDetailController" init-method="init">
+    	<property name="billDetailService" ref="billDetailService" />
     </bean>
 </beans>

@@ -8,32 +8,32 @@
 
     <ui:composition>
 
-        <p:dialog id="BillDetailViewDlg" widgetVar="BillDetailViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewBillDetailTitle}" closeOnEscape="true">
+        <p:dialog id="billDetailViewDlg" widgetVar="billDetailViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewbillDetailTitle}" closeOnEscape="true">
 
-            <h:form id="BillDetailViewForm">
+            <h:form id="billDetailViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{billDetailController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewBillDetailLabel_billDetailId}"/>
-                        <h:outputText value="#{billDetailController.selected.billDetailId}" title="#{msg.ViewBillDetailTitle_billDetailId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{billDetailController.selected.billDetailId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewBillDetailLabel_billDetailUnitVal}"/>
-                        <h:outputText value="#{billDetailController.selected.billDetailUnitVal}" title="#{msg.ViewBillDetailTitle_billDetailUnitVal}"/>
+                        <h:outputText value="#{msg.unitValue}"/>
+                        <h:outputText value="#{billDetailController.selected.billDetailUnitVal}" title="#{msg.unitValue}"/>
 
-                        <h:outputText value="#{msg.ViewBillDetailLabel_billDetailAmount}"/>
-                        <h:outputText value="#{billDetailController.selected.billDetailAmount}" title="#{msg.ViewBillDetailTitle_billDetailAmount}"/>
+                        <h:outputText value="#{msg.amount}"/>
+                        <h:outputText value="#{billDetailController.selected.billDetailAmount}" title="#{msg.amount}"/>
 
-                        <h:outputText value="#{msg.ViewBillDetailLabel_billDetailTotValue}"/>
-                        <h:outputText value="#{billDetailController.selected.billDetailTotValue}" title="#{msg.ViewBillDetailTitle_billDetailTotValue}"/>
+                        <h:outputText value="#{msg.totalValue}"/>
+                        <h:outputText value="#{billDetailController.selected.billDetailTotValue}" title="#{msg.totalValue}"/>
 
-                        <h:outputText value="#{msg.ViewBillDetailLabel_billHeadId}"/>
+                        <h:outputText value="#{msg.billHead}"/>
                         <h:outputText value="#{billDetailController.selected.billHeadId.billHeadId}"/>
 
-                        <h:outputText value="#{msg.ViewBillDetailLabel_productId}"/>
+                        <h:outputText value="#{msg.product}"/>
                         <h:outputText value="#{billDetailController.selected.productId.productName}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="BillDetailViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="billDetailViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>

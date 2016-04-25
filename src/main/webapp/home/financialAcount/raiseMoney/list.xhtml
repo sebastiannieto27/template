@@ -22,7 +22,7 @@
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{branchClientController.items}"
                                            var="branchClientIdItem"
-                                           itemValue="#{branchClientIdItem}"
+                                           itemValue="#{branchClientIdItem.branchClientId}"
                                            itemLabel="#{branchClientIdItem.branchClName.toString()}"
                                            />
                         </p:selectOneMenu>
