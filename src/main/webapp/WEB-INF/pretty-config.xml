@@ -109,7 +109,7 @@
 	</url-mapping>	
 	
 	<url-mapping id="raiseMoneyType">
-		<pattern value="/cartera/tasa-cambio" />
+		<pattern value="/cartera/tipo-pago" />
 		<view-id value="/home/financialAcount/raiseMoneyType/index.xhtml" />
 	</url-mapping>	
 	
@@ -134,12 +134,12 @@
 	</url-mapping>	
 		
 	<url-mapping id="billHead">
-		<pattern value="/cartera/cuenta-principal" />
+		<pattern value="/cartera/encabezado-factura" />
 		<view-id value="/home/financialAcount/billHead/index.xhtml" />
 	</url-mapping>	
 			
 	<url-mapping id="dutyPay">
-		<pattern value="/cartera/obligacion-pago" />
+		<pattern value="/cartera/retomas" />
 		<view-id value="/home/financialAcount/dutyPay/index.xhtml" />
 	</url-mapping>	
 				
@@ -154,12 +154,12 @@
 	</url-mapping>
 								
 	<url-mapping id="product">
-		<pattern value="/cartera/producto" />
+		<pattern value="/cartera/producto-servicio" />
 		<view-id value="/home/financialAcount/product/index.xhtml" />
 	</url-mapping>			
 	
 	<url-mapping id="billDetailTax">
-		<pattern value="/cartera/detalle-impuesto-factura" />
+		<pattern value="/cartera/impuesto-factura" />
 		<view-id value="/home/financialAcount/billDetailTax/index.xhtml" />
 	</url-mapping>
 		

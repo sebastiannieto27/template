@@ -26,7 +26,7 @@
                                            />
                         </p:selectOneMenu>
 
-                       <p:outputLabel value="#{msg.tax}" for="billDetailId" />
+                       <p:outputLabel value="#{msg.billHead}" for="billDetailId" />
                         <p:selectOneMenu id="billDetailId" value="#{billDetailTaxController.billDetailIdSearch}" >
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{billDetailController.items}"
@@ -76,9 +76,9 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{msg.billDetail}"/>
+                        <h:outputText value="#{msg.billHeadNum}"/>
                     </f:facet>
-                    <h:outputText value="#{item.billDetailId.billDetailId}"/>
+                    <h:outputText value="#{item.billDetailId.billHeadId.billHeadNum}"/>
                 </p:column>
 
                 <p:column>
