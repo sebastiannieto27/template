@@ -27,4 +27,14 @@ public class AccountAgeServiceImpl implements IAccountAgeService {
 		}
 		return ageList;
 	}
+
+	public AccountAgeDAO getAccountAgeDAO() {
+		return accountAgeDAO;
+	}
+
+	public void setAccountAgeDAO(AccountAgeDAO accountAgeDAO) {
+		this.accountAgeDAO = accountAgeDAO;
+	}
+	
+	
 }

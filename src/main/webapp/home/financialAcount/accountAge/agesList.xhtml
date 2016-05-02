@@ -11,29 +11,23 @@
 
     <h:form id="accountAgeListForm">
 
-        <p:panel header="#{msg.accountAge}">
+        <p:panel header="#{msg.accountage}">
             
             <h:panelGroup id="searchForm">
 	            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
-	            	
-						<p:outputLabel value="#{msg.branchClient}" for="rtvBranchClientId" />
-                        <p:selectOneMenu id="rtvBranchClientId" value="#{accountAgeController.branchClientSearch}">
-                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
-                            <f:selectItems value="#{branchClientController.items}"
-                                           var="branchClientItem"
-                                           itemValue="#{branchClientItem.branchClientId}"
-                                           itemLabel="#{branchClientItem.branchClName.toString()}"
-                                           />
-                        </p:selectOneMenu>
-                        
-            			<p:commandButton id="viewAgeTypeFilter" icon="ui-icon-search" value="#{msg.accountAgeType}" update=":ageTipeFilterViewForm" oncomplete="PF('ageTipeFilterViewDialog').show()"/>
+	            		
+            			<p:outputLabel for="rtvName" value="#{msg.name}:" />
+						<p:inputText id="rtvName" value="----" title="#{msg.name}:"/>
+
+           				<p:outputLabel for="rtvClient" value="#{msg.brandAddress}:" />
+						<p:inputText id="rtvClient" value="---" title="#{msg.brandAddress}:"/>
 
            				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{accountAgeController.init()}" update=":accountAgeListForm" />
            			</p:panelGrid>
                </h:panelGroup>
                
             <p:dataTable id="datalist"
-                         value="#{accountAgeController.items2}"
+                         value="#{accountAgeController.items}"
                          var="item"
                          rowKey="#{item.accountAgeId}"
                          paginator="true"
@@ -43,19 +37,26 @@
                          selection="#{accountAgeController.selected}">
 
                 <p:ajax event="rowSelect"   update="@form:viewButton" />
-                <p:ajax event="rowUnselect" update="@form:viewButton" />
+                <p:ajax event="rowUnse1lect" update="@form:viewButton" />
                 <p:ajax event="contextMenu" update="@form:viewButton" />
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('accountAgeListForm:viewButton').click();"/>
 
-					<p:columns value="#{accountAgeController.columns}" var="column" columnIndexVar="colIndex">  
-				        <f:facet name="header">  
-				            <h:outputText value="#{column.header}"/>  
-				        </f:facet>  
-				  
-				        <h:outputText value="#{item[column.property]}"/>  
-				         
-				    </p:columns> 
-  					
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.branchclient}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.branchClientId.branchClName}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.clientId.clientName}" filterBy="#{item.clientId.clientName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.clientid}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.clientId.clientName}"/>
+                </p:column>
+
+
             </p:dataTable>
 
             <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":accountAgeViewForm" oncomplete="accountAgeViewDialog.show()" disabled="#{empty accountAgeController.selected}"/>
@@ -63,23 +64,20 @@
         </p:panel>
              <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
 		</h:form>
-		
-		<p:dialog id="ageTipeFilterViewDlg" widgetVar="ageTipeFilterViewDialog" modal="false" resizable="false"  appendTo="@(body)" header="#{msg.accountAgeType}" closeOnEscape="true">
-           	<h:form id="ageTipeFilterViewForm">
+				
+				
+	     <p:dialog id="ageTipeViewDlg" widgetVar="ageTipeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.accountAgeType}" closeOnEscape="true">
+           	<h:form id="ageTipeViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columnClasses="column">
-                        <p:selectManyCheckbox id="ageTipeGrid" value="#{accountAgeController.selectedAgeType}" 
-                        	layout="grid" columns="3" >
-                        	
-					        <f:selectItems value="#{accountAgeController.ageTypesList}" var="ageTypeItem" 
-					        	itemLabel="#{ageTypeItem.accountAgeTypeName}" itemValue="#{ageTypeItem.accountAgeTypeId}" />
-				        	<p:ajax update="ageTipeFilterViewForm" listener="#{accountAgeController.showSelectedItems}"/>
+                        <p:selectManyCheckbox id="ageTipeGrid" value="#{accountAgeController.selectedAgeType}" layout="responsive" columns="2">
+					        <f:selectItems value="#{accountAgeController.ageTypesList}" var="ageTypeItem" itemLabel="#{ageTypeItem.accountAgeTypeName}" itemValue="#{ageTypeItem.accountAgeTypeName.accountAgeTypeId}" />
 					    </p:selectManyCheckbox>
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-        
+				
 	    </ui:composition>
     </body>
 </html>

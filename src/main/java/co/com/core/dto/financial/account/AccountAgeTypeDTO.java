@@ -8,6 +8,22 @@ public class AccountAgeTypeDTO {
     private int accountAgeTypeBegin;
     private int accountAgeTypeEnd;
     
+    
+    
+	public AccountAgeTypeDTO() {
+		super();
+	}
+
+	public AccountAgeTypeDTO(Integer accountAgeTypeId,
+			String accountAgeTypeName, int accountAgeTypeBegin,
+			int accountAgeTypeEnd) {
+		super();
+		this.accountAgeTypeId = accountAgeTypeId;
+		this.accountAgeTypeName = accountAgeTypeName;
+		this.accountAgeTypeBegin = accountAgeTypeBegin;
+		this.accountAgeTypeEnd = accountAgeTypeEnd;
+	}
+	
 	public Integer getAccountAgeTypeId() {
 		return accountAgeTypeId;
 	}

@@ -2,12 +2,15 @@ package co.com.core.controller.financial.account;
 
 import static co.com.core.commons.LoadBundle.geProperty;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.behavior.Behavior;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import org.apache.log4j.Logger;
 import org.springframework.util.StringUtils;
@@ -27,6 +30,7 @@ private static final Logger logger = Logger.getLogger(AccountAgeTypeController.c
 	private String searchName;
 	
 	public void init() {
+		
 		Map<String, Object> filter = new HashMap<String, Object>();
 		if(StringUtils.hasText(searchName)) {
 			filter.put("accountAgeTypeName", searchName);
@@ -114,5 +118,7 @@ private static final Logger logger = Logger.getLogger(AccountAgeTypeController.c
 	public void setSearchName(String searchName) {
 		this.searchName = searchName;
 	}
+
+	
 
 }

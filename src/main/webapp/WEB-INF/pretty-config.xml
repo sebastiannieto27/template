@@ -167,7 +167,12 @@
 		<pattern value="/cartera/detalle-factura" />
 		<view-id value="/home/financialAcount/billDetail/index.xhtml" />
 	</url-mapping>
-			
+					
+	<url-mapping id="accountAge">
+		<pattern value="/cartera/edad-cartera" />
+		<view-id value="/home/financialAcount/accountAge/index.xhtml" />
+	</url-mapping>
+		
 	<url-mapping id="accountAgeType">
 		<pattern value="/cartera/tipo-edad-cartera" />
 		<view-id value="/home/financialAcount/accountAgeType/index.xhtml" />

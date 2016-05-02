@@ -243,7 +243,11 @@
   	    <bean id="billDetailDAO" class="co.com.core.dao.impl.financial.account.BillDetailDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean> 
-	    	   	    	    	    
+	    	   	    	   	    	    	    
+  	    <bean id="accountAgeDAO" class="co.com.core.dao.impl.financial.account.AccountAgeDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean> 
+	    	    	    	    
   	    <bean id="accountAgeTypeDAO" class="co.com.core.dao.impl.financial.account.AccountAgeTypeDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean> 
@@ -405,6 +409,10 @@
 	    	    	    	    	    	    	    	    
    	    <bean id="billDetailService" class="co.com.core.services.impl.financial.account.BillDetailServiceImpl">
 	    	<property name="billDetailDAO" ref="billDetailDAO" />
+	    </bean>
+	    	    	    	    	    	    	    	    	    	    
+   	    <bean id="accountAgeService" class="co.com.core.services.impl.financial.account.AccountAgeServiceImpl">
+	    	<property name="accountAgeDAO" ref="accountAgeDAO" />
 	    </bean>
 	    	    	    	    	    	    	    	    	    
    	    <bean id="accountAgeTypeService" class="co.com.core.services.impl.financial.account.AccountAgeTypeServiceImpl">
@@ -591,7 +599,11 @@
     <bean id="billDetailController" scope="session" class="co.com.core.controller.financial.account.BillDetailController" init-method="init">
     	<property name="billDetailService" ref="billDetailService" />
     </bean>
-                      
+                           
+    <bean id="accountAgeController" scope="session" class="co.com.core.controller.financial.account.AccountAgeController" init-method="init">
+    	<property name="accountAgeService" ref="accountAgeService" />
+    </bean>
+                     
     <bean id="accountAgeTypeController" scope="session" class="co.com.core.controller.financial.account.AccountAgeTypeController" init-method="init">
     	<property name="accountAgeTypeService" ref="accountAgeTypeService" />
     </bean>

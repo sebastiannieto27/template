@@ -27,10 +27,10 @@ public class AccountAgeDAOImpl implements AccountAgeDAO {
 		List<AccountAge> entityList = null;
 		try {
 			session = this.sessionFactory.openSession();
-	        Query query = session.getNamedQuery("PagePermission.findAll");
+	        Query query = session.getNamedQuery("AccountAge.findAll");
 	        entityList = query.list();
 		} catch(Exception ex) {
-			logger.error("Throwed Exception [PagePermissionDAOImpl.getAll]: " +ex.getMessage());
+			logger.error("Throwed Exception [AccountAgeDAOImpl.getAll]: " +ex.getMessage());
 		} finally {
 			session.close();
 		}

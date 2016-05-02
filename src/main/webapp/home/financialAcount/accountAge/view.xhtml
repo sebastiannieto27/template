@@ -8,23 +8,23 @@
 
     <ui:composition>
 
-        <p:dialog id="AccountAgeViewDlg" widgetVar="AccountAgeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewAccountAgeTitle}" closeOnEscape="true">
+        <p:dialog id="accountAgeViewDlg" widgetVar="accountAgeViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewaccountAgeTitle}" closeOnEscape="true">
 
-            <h:form id="AccountAgeViewForm">
+            <h:form id="accountAgeViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{accountAgeController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewAccountAgeLabel_accountAgeId}"/>
-                        <h:outputText value="#{accountAgeController.selected.accountAgeId}" title="#{msg.ViewAccountAgeTitle_accountAgeId}"/>
+                        <h:outputText value="#{msg.ViewaccountAgeLabel_accountAgeId}"/>
+                        <h:outputText value="#{accountAgeController.selected.accountAgeId}" title="#{msg.ViewaccountAgeTitle_accountAgeId}"/>
 
-                        <h:outputText value="#{msg.ViewAccountAgeLabel_branchClientId}"/>
+                        <h:outputText value="#{msg.ViewaccountAgeLabel_branchClientId}"/>
                         <h:outputText value="#{accountAgeController.selected.branchClientId.branchClName}"/>
 
-                        <h:outputText value="#{msg.ViewAccountAgeLabel_clientId}"/>
+                        <h:outputText value="#{msg.ViewaccountAgeLabel_clientId}"/>
                         <h:outputText value="#{accountAgeController.selected.clientId.clientName}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="AccountAgeViewDialog.hide()"/>
+                    <p:commandButton value="#{msg.Close}" onclick="accountAgeViewDialog.hide()"/>
                 </h:panelGroup>
 
             </h:form>

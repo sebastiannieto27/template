@@ -19,6 +19,7 @@
            			<p:outputLabel for="rtvName" value="#{msg.name}:" />
 					<p:inputText id="rtvName" value="#{accountAgeTypeController.searchName}" title="#{msg.name}:"/>
 
+					<p:commandButton id="viewAgeTypeFilter" icon="ui-icon-search" value="#{msg.accountAgeType}" update=":ageTipeFilterViewForm" oncomplete="PF('ageTipeFilterViewDialog').show()"/>
          			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{accountAgeTypeController.init()}" update=":accountAgeTypeListForm" />
        			</p:panelGrid>
            	</h:panelGroup>
@@ -80,6 +81,23 @@
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
    </h:form>
+   
+   		<p:dialog id="ageTipeFilterViewDlg" widgetVar="ageTipeFilterViewDialog" modal="false" resizable="false"  appendTo="@(body)" header="#{msg.accountAgeType}" closeOnEscape="true">
+           	<h:form id="ageTipeFilterViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columnClasses="column">
+                        <p:selectManyCheckbox id="ageTipeGrid" value="#{accountAgeTypeController.selectedAgeType}" 
+                        	layout="grid" columns="3" >
+                        	
+					        <f:selectItems value="#{accountAgeTypeController.ageTypesList}" var="ageTypeItem" 
+					        	itemLabel="#{ageTypeItem.accountAgeTypeName}" itemValue="#{ageTypeItem.accountAgeTypeId}" />
+				        	<p:ajax update="ageTipeFilterViewForm" listener="#{accountAgeTypeController.showSelectedItems}"/>
+					    </p:selectManyCheckbox>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+   
      </ui:composition>
     </body>
 </html>
