@@ -29,6 +29,11 @@
             			<p:commandButton id="viewAgeTypeFilter" icon="ui-icon-search" value="#{msg.accountAgeType}" update=":ageTipeFilterViewForm" oncomplete="PF('ageTipeFilterViewDialog').show()"/>
 
            				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{accountAgeController.init()}" update=":accountAgeListForm" />
+           			
+           				<p:commandButton id="types" icon="ui-icon-search" value="types" actionListener="#{accountAgeController.fillTypes()}" update=":ageTipeFilterViewForm" />
+           			
+      					<p:commandButton id="columns" icon="ui-icon-search" value="columns" actionListener="#{accountAgeController.createDynamicColumns()}" update=":ageTipeFilterViewForm" />
+           			
            			</p:panelGrid>
                </h:panelGroup>
                
@@ -49,11 +54,22 @@
 
 					<p:columns value="#{accountAgeController.columns}" var="column" columnIndexVar="colIndex">  
 				        <f:facet name="header">  
-				            <h:outputText value="#{column.header}"/>  
+				            <h:outputText value="#{accountAgeController.getColumnHeader(column.header)}"/>  
 				        </f:facet>  
 				  
-				        <h:outputText value="#{item[column.property]}"/>  
+				        <h:outputText value="#{item[column.property]}" style="#{accountAgeController.setAlignment(column.property)}" 
+				        	rendered="#{accountAgeController.isTextField(column.property)}"/>  
 				         
+				         
+				         <p:commandLink id="viewDescLink" value="#{item[column.property]}" update=":billHeadDetailForm" 
+				         	rendered="#{accountAgeController.isDetailLink(column.property)}"
+                    		oncomplete="PF('billHeadDetailDialog').show()" actionListener="#{accountAgeController.showBillDetail(item)}"/>
+                    	
+	                    <h:outputText value="#{accountAgeController.getAccountAgetypeValue(column.property)}" rendered="#{accountAgeController.isNumber(column.property)}"
+	                    		style="#{accountAgeController.setAlignment(column.property)}" >
+	               				<f:convertNumber type="currency" />
+	           			</h:outputText>
+                    		
 				    </p:columns> 
   					
             </p:dataTable>

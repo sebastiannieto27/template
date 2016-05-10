@@ -182,4 +182,14 @@
 		<pattern value="/cartera/detalle-edad-cartera" />
 		<view-id value="/home/financialAcount/accountAgeDet/index.xhtml" />
 	</url-mapping>
+		
+	<url-mapping id="accountStatus">
+		<pattern value="/cartera/estado-cuenta" />
+		<view-id value="/home/financialAcount/accountStatus/index.xhtml" />
+	</url-mapping>
+			
+	<url-mapping id="billing">
+		<pattern value="/cartera/facturacion" />
+		<view-id value="/home/financialAcount/billing/index.xhtml" />
+	</url-mapping>
 </pretty-config>

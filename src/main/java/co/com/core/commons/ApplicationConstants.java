@@ -17,4 +17,10 @@ public interface ApplicationConstants {
 	public static final long INVALID_LOGIN_ATTEMPS_ALLOWED = 3;
 	
 	public static final int ZERO_CONSTANT_VALUE = 0;
+	
+	public static final String OUTPUT_TEXT_RIGHT_ALIGN = "float:right";
+	
+	public static final String OUTPUT_TEXT_LEFT_ALIGN = "float:left";
+	
+	public static final String OUTPUT_TEXT_CENTER_ALIGN = "center";
 }

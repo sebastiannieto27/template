@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+    <h:form id="billingListForm">
+
+        	<p:panel header="#{msg.billing}">
+            
+            	<h:panelGroup id="searchForm">
+	            	<p:panelGrid columns="4" columnClasses="column" styleClass="panelGridCenter">
+	            	
+	            		<p:outputLabel for="startDate" value="#{msg.startDate}:" />
+						<p:calendar id="startDate" value="#{billingController.startDate}" pattern="MM/dd/yyyy HH:mm:ss" effect="fold"/>
+									
+						<p:outputLabel for="endDate" value="#{msg.endDate}:" />
+						<p:calendar id="endDate" value="#{billingController.endDate}" pattern="MM/dd/yyyy HH:mm:ss" effect="fold"/>
+						
+						<p:outputLabel value="#{msg.branchClient}" for="rtvBranchClientId" />
+                        <p:selectOneMenu id="rtvBranchClientId" value="#{billingController.branchClientSearch}">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{branchClientController.items}"
+                                           var="branchClientItem"
+                                           itemValue="#{branchClientItem.branchClientId}"
+                                           itemLabel="#{branchClientItem.branchClName.toString()}"
+                                           />
+                        </p:selectOneMenu>
+                        
+	           			<p:outputLabel for="rtvIdNumber" value="#{msg.idNumber}:" />
+						<p:inputText id="rtvIdNumber" value="#{billingController.searchClientIdNumber}" title="#{msg.idNumber}:"/>
+						                        
+	           			<p:outputLabel for="rtvInternalCode" value="#{msg.internalCode}:" />
+						<p:inputText id="rtvInternalCode" value="#{billingController.searchClientInternalCode}" title="#{msg.internalCode}:"/>
+						
+           				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{billingController.init()}" update=":billingListForm" />
+           			
+           			</p:panelGrid>
+               	</h:panelGroup>
+               
+		            <p:dataTable id="datalist"
+		                         value="#{billingController.items}"
+		                         var="item"
+		                         rowKey="#{item.billNumber}"
+		                         paginator="true"
+		                         rows="10"
+		                         rowsPerPageTemplate="10,20,30,40,50"
+		                         selectionMode="single"
+		                         selection="#{billingController.selected}">
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.billHeadNum}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{item.billNumber}"/>
+		                </p:column>
+		                
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.billDate}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{item.billDate}"/>
+		                </p:column>
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.rawValue}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{item.rawValue}" >
+		               				<f:convertNumber type="currency" />
+		           			</h:outputText>
+		                </p:column>
+		
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.iva}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{item.ivaTax}" >
+		               				<f:convertNumber type="currency" />
+		           			</h:outputText>
+		                </p:column>
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.netValue}"/>
+		                    </f:facet>
+		                     <h:outputText value="#{item.netValue}" >
+		               				<f:convertNumber type="currency" />
+		           			</h:outputText>
+		                </p:column>
+
+		            </p:dataTable>			
+
+        		</p:panel>
+             <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+		</h:form>
+		
+	    </ui:composition>
+    </body>
+</html>

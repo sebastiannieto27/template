@@ -10,6 +10,7 @@ public class AccountAgeQueryDTO implements IBaseDTO {
     private long pendantValue;
     private long totalValue;
     private long ageTypeValue;
+    private String billDetailText;
     
 	public AccountAgeQueryDTO() {
 		super();
@@ -18,7 +19,7 @@ public class AccountAgeQueryDTO implements IBaseDTO {
 	
 	public AccountAgeQueryDTO(Integer accountAgeId, String internalCode,
 			String clientName, long pendantValue, long totalValue,
-			long ageTypeValue) {
+			long ageTypeValue, String billDetailText) {
 		super();
 		this.accountAgeId = accountAgeId;
 		this.internalCode = internalCode;
@@ -26,8 +27,9 @@ public class AccountAgeQueryDTO implements IBaseDTO {
 		this.pendantValue = pendantValue;
 		this.totalValue = totalValue;
 		this.ageTypeValue = ageTypeValue;
+		this.billDetailText = billDetailText;
 	}
-	
+
 	public String getInternalCode() {
 		return internalCode;
 	}
@@ -67,12 +69,21 @@ public class AccountAgeQueryDTO implements IBaseDTO {
 		this.accountAgeId = accountAgeId;
 	}
 
+	public String getBillDetailText() {
+		return billDetailText;
+	}
+
+	public void setBillDetailText(String billDetailText) {
+		this.billDetailText = billDetailText;
+	}
+
 	@Override
 	public String toString() {
 		return "AccountAgeQueryDTO [accountAgeId=" + accountAgeId
 				+ ", internalCode=" + internalCode + ", clientName="
 				+ clientName + ", pendantValue=" + pendantValue
-				+ ", totalValue=" + totalValue + ", ageTypeValue=" + ageTypeValue + "]";
+				+ ", totalValue=" + totalValue + ", ageTypeValue="
+				+ ageTypeValue + ", billDetailText=" + billDetailText + "]";
 	}
     
 

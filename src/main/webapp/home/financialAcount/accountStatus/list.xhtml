@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+    <h:form id="accountStatusListForm">
+
+        	<p:panel header="#{msg.accountStatus}">
+            
+            	<h:panelGroup id="searchForm">
+	            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+	            	
+						<p:outputLabel value="#{msg.branchClient}" for="rtvBranchClientId" />
+                        <p:selectOneMenu id="rtvBranchClientId" value="#{accountStatusController.branchClientSearch}">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{branchClientController.items}"
+                                           var="branchClientItem"
+                                           itemValue="#{branchClientItem.branchClientId}"
+                                           itemLabel="#{branchClientItem.branchClName.toString()}"
+                                           />
+                        </p:selectOneMenu>
+                        
+	           			<p:outputLabel for="rtvIdNumber" value="#{msg.idNumber}:" />
+						<p:inputText id="rtvIdNumber" value="#{accountStatusController.searchClientIdNumber}" title="#{msg.idNumber}:"/>
+						                        
+	           			<p:outputLabel for="rtvInternalCode" value="#{msg.internalCode}:" />
+						<p:inputText id="rtvInternalCode" value="#{accountStatusController.searchClientInternalCode}" title="#{msg.internalCode}:"/>
+						
+           				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{accountStatusController.init()}" update=":accountStatusListForm" />
+           			
+           			</p:panelGrid>
+               	</h:panelGroup>
+               
+		            <p:dataTable id="datalist"
+		                         value="#{accountStatusController.items}"
+		                         var="item"
+		                         rowKey="#{item.accountStatusId}"
+		                         paginator="true"
+		                         rows="10"
+		                         rowsPerPageTemplate="10,20,30,40,50"
+		                         selectionMode="single"
+		                         selection="#{accountStatusController.selected}">
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.billDate}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{item.billDate}"/>
+		                </p:column>
+		                
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.billHeadNum}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{item.billNumber}"/>
+		                </p:column>
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.dueDate}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{item.dueDate}"/>
+		                </p:column>
+		
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.expirationDays}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{item.expirationDays}"/>
+		                </p:column>
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.pendingValue}"/>
+		                    </f:facet>
+		                     <h:outputText value="#{item.pendantValue}" >
+		               				<f:convertNumber type="currency" />
+		           			</h:outputText>
+		                </p:column>
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.branchClient}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{item.branchClient.branchClName.toString()}"/>
+		                </p:column>
+		
+		            </p:dataTable>			
+
+					<p:dataTable id="dutyPayDatalist"
+		                         value="#{accountStatusController.dutyItems}"
+		                         var="dutyItem"
+		                         rowKey="#{dutyItem.dutyApyId}"
+		                         paginator="true"
+		                         rows="10"
+		                         rowsPerPageTemplate="10,20,30,40,50"
+		                         selectionMode="single"
+		                         selection="#{accountStatusController.dutySelected}">
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.dutyPayDate}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{dutyItem.dutyPayDate}"/>
+		                </p:column>
+		                
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.dutyPayNum}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{dutyItem.dutyPayNum}"/>
+		                </p:column>
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.totalValue}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{dutyItem.dutyPayValue}" >
+		               				<f:convertNumber type="currency" />
+		           			</h:outputText>
+		                </p:column>
+		                
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.status}"/>
+		                    </f:facet>
+		                    <h:outputText value="CONFORMADO"/>
+		                </p:column>
+		                
+		            </p:dataTable>
+
+        		</p:panel>
+             <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+		</h:form>
+		
+	    </ui:composition>
+    </body>
+</html>
