@@ -192,4 +192,9 @@
 		<pattern value="/cartera/facturacion" />
 		<view-id value="/home/financialAcount/billing/index.xhtml" />
 	</url-mapping>
+				
+	<url-mapping id="albaran">
+		<pattern value="/cartera/albaranes" />
+		<view-id value="/home/financialAcount/albaran/index.xhtml" />
+	</url-mapping>
 </pretty-config>

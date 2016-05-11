@@ -433,6 +433,10 @@
    	    <bean id="billingService" class="co.com.core.services.impl.financial.account.BillingServiceImpl">
 	    	
 	    </bean>	
+	    	    	    	    	    	    	    	    	    	    	    	    
+   	    <bean id="albaranService" class="co.com.core.services.impl.financial.account.AlbaranServiceImpl">
+	    	
+	    </bean>	
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -630,5 +634,9 @@
                                   
     <bean id="billingController" scope="session" class="co.com.core.controller.financial.account.BillingController" init-method="init">
     	<property name="billingService" ref="billingService" />
+    </bean>
+                                      
+    <bean id="albaranController" scope="session" class="co.com.core.controller.financial.account.AlbaranController" init-method="init">
+    	<property name="albaranService" ref="albaranService" />
     </bean>
 </beans>

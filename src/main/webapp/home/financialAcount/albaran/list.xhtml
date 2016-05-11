@@ -9,21 +9,21 @@
     <body>
 	    <ui:composition>
 
-    <h:form id="billingListForm">
+    <h:form id="albaranListForm">
 
-        	<p:panel header="#{msg.billing}">
+        	<p:panel header="#{msg.albaran}">
             
             	<h:panelGroup id="searchForm">
 	            	<p:panelGrid columns="4" columnClasses="column" styleClass="panelGridCenter">
 	            	
 	            		<p:outputLabel for="startDate" value="#{msg.startDate}:" />
-						<p:calendar id="startDate" value="#{billingController.startDate}" pattern="MM/dd/yyyy HH:mm:ss" effect="fold"/>
+						<p:calendar id="startDate" value="#{albaranController.startDate}" pattern="MM/dd/yyyy HH:mm:ss" effect="fold"/>
 									
 						<p:outputLabel for="endDate" value="#{msg.endDate}:" />
-						<p:calendar id="endDate" value="#{billingController.endDate}" pattern="MM/dd/yyyy HH:mm:ss" effect="fold"/>
+						<p:calendar id="endDate" value="#{albaranController.endDate}" pattern="MM/dd/yyyy HH:mm:ss" effect="fold"/>
 						
 						<p:outputLabel value="#{msg.branchClient}" for="rtvBranchClientId" />
-                        <p:selectOneMenu id="rtvBranchClientId" value="#{billingController.branchClientSearch}">
+                        <p:selectOneMenu id="rtvBranchClientId" value="#{albaranController.branchClientSearch}">
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{branchClientController.items}"
                                            var="branchClientItem"
@@ -33,47 +33,47 @@
                         </p:selectOneMenu>
                         
 	           			<p:outputLabel for="rtvIdNumber" value="#{msg.idNumber}:" />
-						<p:inputText id="rtvIdNumber" value="#{billingController.searchClientIdNumber}" title="#{msg.idNumber}:"/>
+						<p:inputText id="rtvIdNumber" value="#{albaranController.searchClientIdNumber}" title="#{msg.idNumber}:"/>
 						                        
 	           			<p:outputLabel for="rtvInternalCode" value="#{msg.internalCode}:" />
-						<p:inputText id="rtvInternalCode" value="#{billingController.searchClientInternalCode}" title="#{msg.internalCode}:"/>
+						<p:inputText id="rtvInternalCode" value="#{albaranController.searchClientInternalCode}" title="#{msg.internalCode}:"/>
 						
-           				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{billingController.init()}" update=":billingListForm" />
+           				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{albaranController.init()}" update=":albaranListForm" />
            			
            			</p:panelGrid>
                	</h:panelGroup>
                
 		            <p:dataTable id="datalist"
-		                         value="#{billingController.items}"
+		                         value="#{albaranController.items}"
 		                         var="item"
-		                         rowKey="#{item.billNumber}"
+		                         rowKey="#{item.albaranNumber}"
 		                         paginator="true"
 		                         rows="10"
 		                         rowsPerPageTemplate="10,20,30,40,50"
 		                         selectionMode="single"
-		                         selection="#{billingController.selected}">
+		                         selection="#{albaranController.selected}">
 		
 		                <p:column>
 		                    <f:facet name="header">
-		                        <h:outputText value="#{msg.billHeadNum}"/>
+		                        <h:outputText value="#{msg.albaranNumber}"/>
 		                    </f:facet>
-		                    <h:outputText value="#{item.billNumber}"/>
+		                    <h:outputText value="#{item.albaranNumber}"/>
 		                </p:column>
 		                
 		                <p:column>
 		                    <f:facet name="header">
-		                        <h:outputText value="#{msg.billDate}"/>
+		                        <h:outputText value="#{msg.albaranDate}"/>
 		                    </f:facet>
-		                    <h:outputText value="#{item.billDate}">
+		                    <h:outputText value="#{item.albaranDate}">
 		                    	<f:convertDateTime pattern="MM-dd-yyyy" />
 		                    </h:outputText>
 		                </p:column>
 		
 		                <p:column>
 		                    <f:facet name="header">
-		                        <h:outputText value="#{msg.rawValue}"/>
+		                        <h:outputText value="#{msg.value}"/>
 		                    </f:facet>
-		                    <h:outputText value="#{item.rawValue}" style="float:right">
+		                    <h:outputText value="#{item.value}" style="float:right">
 		               				<f:convertNumber type="currency" />
 		           			</h:outputText>
 		                </p:column>
@@ -81,20 +81,9 @@
 		
 		                <p:column>
 		                    <f:facet name="header">
-		                        <h:outputText value="#{msg.iva}"/>
+		                        <h:outputText value="#{msg.type}"/>
 		                    </f:facet>
-		                    <h:outputText value="#{item.ivaTax}" style="float:right">
-		               				<f:convertNumber type="currency" />
-		           			</h:outputText>
-		                </p:column>
-		
-		                <p:column>
-		                    <f:facet name="header">
-		                        <h:outputText value="#{msg.netValue}"/>
-		                    </f:facet>
-		                     <h:outputText value="#{item.netValue}" style="float:right">
-		               				<f:convertNumber type="currency" />
-		           			</h:outputText>
+		                     <h:outputText value="#{item.albaranType}"/>
 		                </p:column>
 
 		            </p:dataTable>			
