@@ -42,6 +42,18 @@ public class AccountAgeController {
 	
 	private List<AccountAgeTypeDTO> ageTypeItems;
 	
+	public void init() {
+		fillTypes();
+		generateItemsForList();
+		ageTypeItems = accountAgeTypeService.getAll();
+	}
+	
+	public void search() {
+		items = accountAgeService.getAll();
+		Map<String, Object> filter = new HashMap<String, Object>();
+		
+		accountAgeService.proofConcept();
+	}
 	
 	public String setAlignment(String property) {
 		if(property.equals("pendantValue") || property.equals("ageTypeValue") || property.equals("totalValue")) {
@@ -102,15 +114,8 @@ public class AccountAgeController {
 	
 	public void fillTypes() {
 		ageTypesList = new ArrayList<>();
+		ageTypesList = accountAgeTypeService.getAll();
 		ageTypeMap = new HashMap<Integer, AccountAgeTypeDTO>();
-		AccountAgeTypeDTO ageType = new AccountAgeTypeDTO(1, "1-30", 1, 30);
-		AccountAgeTypeDTO ageType2 = new AccountAgeTypeDTO(2, "31-60", 31, 60);
-		AccountAgeTypeDTO ageType3 = new AccountAgeTypeDTO(3, "61-90", 61, 90);
-		AccountAgeTypeDTO ageType4 = new AccountAgeTypeDTO(4, "91-120", 91, 120);
-		ageTypesList.add(0, ageType);
-		ageTypesList.add(1, ageType2);
-		ageTypesList.add(2, ageType3);
-		ageTypesList.add(3, ageType4);
 		
 		for(AccountAgeTypeDTO item : ageTypesList) {
 			ageTypeMap.put(item.getAccountAgeTypeId(), item);
@@ -120,20 +125,13 @@ public class AccountAgeController {
 		columns = new ArrayList<ColumnModel>();
 	}
 	
-	
-	public void init() {
-		generateItemsForList();
-		ageTypeItems = accountAgeTypeService.getAll();
-		items = accountAgeService.getAll();
-		Map<String, Object> filter = new HashMap<String, Object>();
-	}
-
 	public void showSelectedItems() {
 		generateItemsForList();
 		createDynamicColumns();
 	}
 	
 	public void createDynamicColumns() {
+		columns = new ArrayList<ColumnModel>();
 		
 		if(selectedAgeType!=null && selectedAgeType.length > 0) {
 			columns.add(new ColumnModel(geProperty("code"), "internalCode"));

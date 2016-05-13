@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+    <h:form id="paymentListForm">
+
+        	<p:panel header="#{msg.payments}">
+            
+            	<h:panelGroup id="searchForm">
+	            	<p:panelGrid columns="4" columnClasses="column" styleClass="panelGridCenter">
+	            	
+	            		<p:outputLabel for="startDate" value="#{msg.startDate}:" />
+						<p:calendar id="startDate" value="#{paymentController.startDate}" pattern="MM/dd/yyyy HH:mm:ss" effect="fold"/>
+									
+						<p:outputLabel for="endDate" value="#{msg.endDate}:" />
+						<p:calendar id="endDate" value="#{paymentController.endDate}" pattern="MM/dd/yyyy HH:mm:ss" effect="fold"/>
+						
+						<p:outputLabel value="#{msg.branchClient}" for="rtvBranchClientId" />
+                        <p:selectOneMenu id="rtvBranchClientId" value="#{paymentController.branchClientSearch}">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{branchClientController.items}"
+                                           var="branchClientItem"
+                                           itemValue="#{branchClientItem.branchClientId}"
+                                           itemLabel="#{branchClientItem.branchClName.toString()}"
+                                           />
+                        </p:selectOneMenu>
+                        
+   						<p:outputLabel value="#{msg.type}" for="rtvPaymentTypeId" />
+                        <p:selectOneMenu id="rtvPaymentTypeId" value="#{paymentController.paymentTypeSearch}">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItem itemValue="1" itemLabel="Recibo de Caja"/>
+                            <f:selectItem itemValue="2" itemLabel="Nota Crédito"/>
+                            <f:selectItem itemValue="3" itemLabel="Cruce"/>
+                        </p:selectOneMenu>
+                        
+	           			<p:outputLabel for="rtvIdNumber" value="#{msg.idNumber}:" />
+						<p:inputText id="rtvIdNumber" value="#{paymentController.searchClientIdNumber}" title="#{msg.idNumber}:"/>
+						                        
+	           			<p:outputLabel for="rtvInternalCode" value="#{msg.internalCode}:" />
+						<p:inputText id="rtvInternalCode" value="#{paymentController.searchClientInternalCode}" title="#{msg.internalCode}:"/>
+						
+           				<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{paymentController.init()}" update=":paymentListForm" />
+           			
+           			</p:panelGrid>
+               	</h:panelGroup>
+               
+		            <p:dataTable id="datalist"
+		                         value="#{paymentController.items}"
+		                         var="item"
+		                         rowKey="#{item.paymentNumber}"
+		                         paginator="true"
+		                         rows="10"
+		                         rowsPerPageTemplate="10,20,30,40,50"
+		                         selectionMode="single"
+		                         selection="#{paymentController.selected}">
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.paymentNumber}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{item.paymentNumber}"/>
+		                </p:column>
+		                
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.paymentDate}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{item.paymentDate}">
+		                    	<f:convertDateTime pattern="MM-dd-yyyy" />
+		                    </h:outputText>
+		                </p:column>
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.value}"/>
+		                    </f:facet>
+		                    <h:outputText value="#{item.paymentValue}" style="float:right">
+		               				<f:convertNumber type="currency" />
+		           			</h:outputText>
+		                </p:column>
+		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.type}"/>
+		                    </f:facet>
+		                     <h:outputText value="#{item.paymentType}"/>
+		                </p:column>
+		                		
+		                <p:column>
+		                    <f:facet name="header">
+		                        <h:outputText value="#{msg.observation}"/>
+		                    </f:facet>
+		                     <h:outputText value="#{item.description}"/>
+		                </p:column>
+
+		            </p:dataTable>			
+
+        		</p:panel>
+             <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+		</h:form>
+		
+	    </ui:composition>
+    </body>
+</html>

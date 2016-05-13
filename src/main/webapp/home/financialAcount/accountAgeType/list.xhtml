@@ -19,7 +19,6 @@
            			<p:outputLabel for="rtvName" value="#{msg.name}:" />
 					<p:inputText id="rtvName" value="#{accountAgeTypeController.searchName}" title="#{msg.name}:"/>
 
-					<p:commandButton id="viewAgeTypeFilter" icon="ui-icon-search" value="#{msg.accountAgeType}" update=":ageTipeFilterViewForm" oncomplete="PF('ageTipeFilterViewDialog').show()"/>
          			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{accountAgeTypeController.init()}" update=":accountAgeTypeListForm" />
        			</p:panelGrid>
            	</h:panelGroup>
@@ -37,9 +36,9 @@
                          selectionMode="single"
                          selection="#{accountAgeTypeController.selected}">
 
-                <p:ajax event="rowSelect"   update="@form:viewButton,@form:accountAgeTypeDataTableContextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:viewButton,@form:accountAgeTypeDataTableContextMenu"/>
-                <p:ajax event="contextMenu" update="@form:viewButton"/>
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:accountAgeTypeDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:accountAgeTypeDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('accountAgeTypeListForm:viewButton').click();"/>
 
                 <p:column>
@@ -76,27 +75,16 @@
 
             </p:dataTable>
 
+			<p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{accountAgeTypeController.prepareCreate}" update=":accountAgeTypeCreateForm" oncomplete="PF('accountAgeTypeCreateDialog').show()"/>
             <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":accountAgeTypeViewForm" oncomplete="PF('accountAgeTypeViewDialog').show()"  disabled="#{empty accountAgeTypeController.selected}"/>
-
+            <p:commandButton id="editButton" icon="ui-icon-pencil" value="#{msg.edit}" actionListener="#{accountAgeTypeController.prepareEdit}" update=":accountAgeTypeEditForm" oncomplete="PF('accountAgeTypeEditDialog').show()" disabled="#{empty accountAgeTypeController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{accountAgeTypeController.delete}" update=":growl,datalist" disabled="#{empty accountAgeTypeController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
+            </p:commandButton>
+            
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
    </h:form>
-   
-   		<p:dialog id="ageTipeFilterViewDlg" widgetVar="ageTipeFilterViewDialog" modal="false" resizable="false"  appendTo="@(body)" header="#{msg.accountAgeType}" closeOnEscape="true">
-           	<h:form id="ageTipeFilterViewForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columnClasses="column">
-                        <p:selectManyCheckbox id="ageTipeGrid" value="#{accountAgeTypeController.selectedAgeType}" 
-                        	layout="grid" columns="3" >
-                        	
-					        <f:selectItems value="#{accountAgeTypeController.ageTypesList}" var="ageTypeItem" 
-					        	itemLabel="#{ageTypeItem.accountAgeTypeName}" itemValue="#{ageTypeItem.accountAgeTypeId}" />
-				        	<p:ajax update="ageTipeFilterViewForm" listener="#{accountAgeTypeController.showSelectedItems}"/>
-					    </p:selectManyCheckbox>
-                    </p:panelGrid>
-                </h:panelGroup>
-            </h:form>
-        </p:dialog>
    
      </ui:composition>
     </body>

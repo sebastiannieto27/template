@@ -197,4 +197,9 @@
 		<pattern value="/cartera/albaranes" />
 		<view-id value="/home/financialAcount/albaran/index.xhtml" />
 	</url-mapping>
+					
+	<url-mapping id="payment">
+		<pattern value="/cartera/abonos-aplicaciones" />
+		<view-id value="/home/financialAcount/payment/index.xhtml" />
+	</url-mapping>
 </pretty-config>

@@ -8,4 +8,6 @@ public interface IAccountAgeService {
 	
 	public List<AccountAgeDTO> getAll(); 
 	
+	public void proofConcept();
+	
 }

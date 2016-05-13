@@ -86,7 +86,10 @@ private static final Logger logger = Logger.getLogger(AccountAgeTypeController.c
 	public void prepareCreate() {
 		selected = new AccountAgeTypeDTO();
 	}
-
+	
+	public void prepareEdit() {
+	}
+	
 	public IAccountAgeTypeService getAccountAgeTypeService() {
 		return accountAgeTypeService;
 	}
