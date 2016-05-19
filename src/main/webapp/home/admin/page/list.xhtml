@@ -30,7 +30,7 @@
                 <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('pageListForm:viewButton').click();"/>
 
-                 <p:column sortBy="#{item.pageId}" filterBy="#{item.pageId}">
+                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.id}"/>
                     </f:facet>
@@ -38,18 +38,26 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.pageName}" filterBy="#{item.pageName}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.name}"/>
                     </f:facet>
                     <h:outputText value="#{item.pageName}"/>
                 </p:column>
 
-                <p:column sortBy="#{item.url}" filterBy="#{item.url}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.url}"/>
                     </f:facet>
                     <h:outputText value="#{item.url}"/>
+                </p:column>
+                
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.realUrl}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.realUrl}"/>
                 </p:column>
                 
             </p:dataTable>

@@ -10,6 +10,7 @@ public class PageUtil {
 		PageDto.setPageId(entity.getPageId());
 		PageDto.setPageName(entity.getPageName());
 		PageDto.setUrl(entity.getUrl());
+		PageDto.setRealUrl(entity.getRealUrl());
 		return PageDto;
 	}
 	
@@ -18,6 +19,7 @@ public class PageUtil {
 		Page.setPageId(dto.getPageId());
 		Page.setPageName(dto.getPageName());
 		Page.setUrl(dto.getUrl());
+		dto.setRealUrl(Page.getRealUrl());
 		return Page;
 	}
 }

@@ -24,6 +24,9 @@
                         <h:outputText value="#{msg.url}"/>
                         <h:outputText value="#{pageController.selected.url}" title="#{msg.url}"/>
                         
+                        <h:outputText value="#{msg.realUrl}"/>
+                        <h:outputText value="#{pageController.selected.realUrl}" title="#{msg.realUrl}"/>
+                        
                     </p:panelGrid>
                     <p:commandButton value="#{msg.close}" onclick="PF('pageViewDialog').hide()"/>
                 </h:panelGroup>

@@ -131,7 +131,7 @@ public class BranchDAOImpl implements BranchDAO {
 			try {
 				session = this.sessionFactory.openSession();
 				Transaction tx = session.beginTransaction();
-		        session.merge(entity);
+		        session.update(entity);
 		        tx.commit();
 			} catch(Exception ex) {
 				logger.error("Throwed Exception [BranchDAOImpl.update]: " +ex.getMessage());

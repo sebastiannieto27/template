@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Page.findAll", query = "SELECT p FROM Page p"),
     @NamedQuery(name = "Page.findByPageId", query = "SELECT p FROM Page p WHERE p.pageId = :pageId"),
     @NamedQuery(name = "Page.findByPageName", query = "SELECT p FROM Page p WHERE p.pageName = :pageName"),
+    @NamedQuery(name = "Page.findByRealUrl", query = "SELECT p FROM Page p WHERE p.realUrl = :realUrl"),
     @NamedQuery(name = "Page.findByUrl", query = "SELECT p FROM Page p WHERE p.url = :url")})
 public class Page implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -52,6 +53,11 @@ public class Page implements Serializable {
     @Size(min = 1, max = 200)
     @Column(name = "url")
     private String url;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 200)
+    @Column(name = "real_url")
+    private String realUrl;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pageId")
     private Collection<PagePermission> pagePermissionCollection;
     @OneToMany(mappedBy = "pageId")
@@ -64,10 +70,11 @@ public class Page implements Serializable {
         this.pageId = pageId;
     }
 
-    public Page(Integer pageId, String pageName, String url) {
+    public Page(Integer pageId, String pageName, String url, String realUrl) {
         this.pageId = pageId;
         this.pageName = pageName;
         this.url = url;
+        this.realUrl = realUrl;
     }
 
     public Integer getPageId() {
@@ -85,13 +92,21 @@ public class Page implements Serializable {
     public void setPageName(String pageName) {
         this.pageName = pageName;
     }
-
+    
     public String getUrl() {
-        return url;
+    	return url;
+    }
+    
+    public void setUrl(String url) {
+    	this.url = url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public String getRealUrl() {
+        return realUrl;
+    }
+
+    public void setRealUrl(String realUrl) {
+        this.realUrl = realUrl;
     }
 
     @XmlTransient

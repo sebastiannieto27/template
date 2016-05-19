@@ -5,6 +5,7 @@ public class PageDTO implements IBaseDTO {
 
     private Integer pageId;
     private String pageName;
+    private String realUrl;
     private String url;
     
 	public Integer getPageId() {
@@ -25,6 +26,10 @@ public class PageDTO implements IBaseDTO {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-    
-    
+	public String getRealUrl() {
+		return realUrl;
+	}
+	public void setRealUrl(String realUrl) {
+		this.realUrl = realUrl;
+	}
 }

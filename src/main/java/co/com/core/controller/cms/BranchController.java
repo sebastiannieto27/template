@@ -144,7 +144,6 @@ public class BranchController {
 				}
 				
 				Branch brandEntity = BranchUtil.getEntityFromDto(selected);
-				branchService.update(selected);
 				
 				/*
 				 * start creation of the thumbnail file entry
@@ -165,7 +164,7 @@ public class BranchController {
 				/*
 				 * end creation of the mage file entry
 				 */
-				
+				branchService.update(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulEdition"), null));
 			} catch (Exception ex) {
 				logger.error("Throwed Exception [BranchController.save]: " +ex.getMessage());

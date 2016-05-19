@@ -20,6 +20,9 @@
                         <p:outputLabel value="#{msg.url}" for="url" />
                         <p:inputText id="url" value="#{pageController.selected.url}" title="#{msg.url}" required="true" requiredMessage="#{msg.url}" size="200" maxlength="200"/>
                         
+                        <p:outputLabel value="#{msg.realUrl}" for="realUrl" />
+                        <p:inputText id="realUrl" value="#{pageController.selected.realUrl}" title="#{msg.realUrl}" required="true" requiredMessage="#{msg.realUrlRequiredMessage}" size="100" maxlength="100"/>
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{pageController.save}" value="#{msg.save}" update="display,:pageListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('pageEditDialog'));">
                         <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>
