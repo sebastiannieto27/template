@@ -6,20 +6,20 @@ import co.com.core.dto.PageDTO;
 public class PageUtil {
 
 	public static PageDTO getDtoFromEntity(Page entity) {
-		PageDTO PageDto = new PageDTO();
-		PageDto.setPageId(entity.getPageId());
-		PageDto.setPageName(entity.getPageName());
-		PageDto.setUrl(entity.getUrl());
-		PageDto.setRealUrl(entity.getRealUrl());
-		return PageDto;
+		PageDTO pageDto = new PageDTO();
+		pageDto.setPageId(entity.getPageId());
+		pageDto.setPageName(entity.getPageName());
+		pageDto.setUrl(entity.getUrl());
+		pageDto.setRealUrl(entity.getRealUrl());
+		return pageDto;
 	}
 	
 	public static Page getEntityFromDto(PageDTO dto) {
-		Page Page = new Page();
-		Page.setPageId(dto.getPageId());
-		Page.setPageName(dto.getPageName());
-		Page.setUrl(dto.getUrl());
-		dto.setRealUrl(Page.getRealUrl());
-		return Page;
+		Page page = new Page();
+		page.setPageId(dto.getPageId());
+		page.setPageName(dto.getPageName());
+		page.setUrl(dto.getUrl());
+		page.setRealUrl(dto.getRealUrl());
+		return page;
 	}
 }

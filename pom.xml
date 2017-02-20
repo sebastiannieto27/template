@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>co.com.core</groupId>
-	<artifactId>friogan</artifactId>
+	<artifactId>proyectandofuturo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Friogan Web</name>
-	<description>Friogan web solutions</description>
+	<name>Proyectando Futuro</name>
+	<description>Proyectando Futuro</description>
 	<properties>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
@@ -217,7 +217,7 @@
 		        <artifactId>tomcat7-maven-plugin</artifactId>
 		        <version>2.0</version>
 		        <configuration>
-		          <path>/friogan</path>
+		          <path>/proyectandofuturo</path>
 		        </configuration>
 		      </plugin>
 		</plugins>

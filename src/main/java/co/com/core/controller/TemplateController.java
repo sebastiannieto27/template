@@ -42,11 +42,11 @@ public class TemplateController {
 				UserDTO userDto = (UserDTO) context.getExternalContext().getSessionMap().get("user");
 				
 				if(userDto==null) {
-					context.getExternalContext().redirect("/friogan/inicio");
+					context.getExternalContext().redirect("/proyectandofuturo/inicio");
 				} else {
 					boolean validPage = validateAllowedPage(userDto, viewId);
 					if(!validPage) {
-						context.getExternalContext().redirect("/friogan/home/profile.xhtml");
+						context.getExternalContext().redirect("/proyectandofuturo/bienvenido");
 						logger.info("Invalid page access: " + userDto.getFirstName() + "Page: " + viewId);
 					}
 					logger.info("Valid session: " + userDto.getFirstName() + "Page: " + viewId);
