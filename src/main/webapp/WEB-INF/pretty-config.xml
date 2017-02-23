@@ -59,6 +59,14 @@
 		<view-id value="/home/admin/uploadedFile/index.xhtml" />
 	</url-mapping>	
 	
+	<!-- saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro -->
+	<url-mapping id="competencia">
+		<pattern value="/psaber/competencia" />
+		<view-id value="/home/psaber/competencia/index.xhtml" />
+	</url-mapping>	
+	<!-- saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro -->
+	
+	
 	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
 	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
 	<url-mapping id="branch">

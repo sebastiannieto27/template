@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ComponenteViewDlg" widgetVar="ComponenteViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewComponenteTitle}" closeOnEscape="true">
+
+            <h:form id="ComponenteViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{componenteController.selected != null}">
+
+                        <h:outputText value="#{msg.ViewComponenteLabel_componenteId}"/>
+                        <h:outputText value="#{componenteController.selected.componenteId}" title="#{msg.ViewComponenteTitle_componenteId}"/>
+
+                        <h:outputText value="#{msg.ViewComponenteLabel_nombre}"/>
+                        <h:outputText value="#{componenteController.selected.nombre}" title="#{msg.ViewComponenteTitle_nombre}"/>
+
+                        <h:outputText value="#{msg.ViewComponenteLabel_descripcion}"/>
+                        <h:outputText value="#{componenteController.selected.descripcion}" title="#{msg.ViewComponenteTitle_descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.Close}" onclick="PF('ComponenteViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

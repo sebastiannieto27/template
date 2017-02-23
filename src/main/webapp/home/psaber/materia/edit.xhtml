@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="MateriaEditDlg" widgetVar="MateriaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditMateriaTitle}" closeOnEscape="true">
+
+            <h:form id="MateriaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{materiaController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditMateriaLabel_materiaId}" for="materiaId" />
+                        <h:outputText id="materiaId" value="#{materiaController.selected.materiaId}" />
+
+                        <p:outputLabel value="#{msg.EditMateriaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{materiaController.selected.nombre}" title="#{msg.EditMateriaTitle_nombre}" required="true" requiredMessage="#{msg.EditMateriaRequiredMessage_nombre}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{msg.EditMateriaLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{materiaController.selected.descripcion}" title="#{msg.EditMateriaTitle_descripcion}" />
+
+                        <p:outputLabel value="#{msg.EditMateriaLabel_componenteId}" for="componenteId" />
+                        <p:selectOneMenu id="componenteId" value="#{materiaController.selected.componenteId}" required="true" requiredMessage="#{msg.EditMateriaRequiredMessage_componenteId}" converter="componenteConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{componenteController.items}"
+                                           var="componenteIdItem"
+                                           itemValue="#{componenteIdItem}"
+                                           itemLabel="#{componenteIdItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{materiaController.save}" value="#{msg.Save}" update="display,:MateriaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MateriaEditDialog'));">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" oncomplete="PF('MateriaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

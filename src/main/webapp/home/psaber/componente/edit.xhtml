@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ComponenteEditDlg" widgetVar="ComponenteEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditComponenteTitle}" closeOnEscape="true">
+
+            <h:form id="ComponenteEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{componenteController.selected != null}">
+
+
+                        <h:outputLabel value="#{msg.EditComponenteLabel_componenteId}" for="componenteId" />
+                        <h:outputText id="componenteId" value="#{componenteController.selected.componenteId}" />
+
+                        <p:outputLabel value="#{msg.EditComponenteLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{componenteController.selected.nombre}" title="#{msg.EditComponenteTitle_nombre}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{msg.EditComponenteLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{componenteController.selected.descripcion}" title="#{msg.EditComponenteTitle_descripcion}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{componenteController.save}" value="#{msg.Save}" update="display,:ComponenteListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ComponenteEditDialog'));">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.Cancel}" oncomplete="PF('ComponenteEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

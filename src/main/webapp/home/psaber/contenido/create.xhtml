@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContenidoCreateDlg" widgetVar="ContenidoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.CreateContenidoTitle}" closeOnEscape="true">
+
+            <h:form id="ContenidoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{contenidoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.CreateContenidoLabel_contenidoId}" for="contenidoId" />
+                        <p:inputText id="contenidoId" value="#{contenidoController.selected.contenidoId}" title="#{msg.CreateContenidoTitle_contenidoId}" required="true" requiredMessage="#{msg.CreateContenidoRequiredMessage_contenidoId}"/>
+
+                        <p:outputLabel value="#{msg.CreateContenidoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{contenidoController.selected.nombre}" title="#{msg.CreateContenidoTitle_nombre}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{msg.CreateContenidoLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{contenidoController.selected.descripcion}" title="#{msg.CreateContenidoTitle_descripcion}" />
+
+                        <p:outputLabel value="#{msg.CreateContenidoLabel_materiaId}" for="materiaId" />
+                        <p:selectOneMenu id="materiaId" value="#{contenidoController.selected.materiaId}" required="true" requiredMessage="#{msg.CreateContenidoRequiredMessage_materiaId}" converter="materiaConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{materiaController.items}"
+                                           var="materiaIdItem"
+                                           itemValue="#{materiaIdItem}"
+                                           itemLabel="#{materiaIdItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{contenidoController.saveNew}" value="#{msg.Save}" update="display,:ContenidoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ContenidoCreateDialog'));">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.Cancel}" oncomplete="PF('ContenidoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="MateriaListForm">
+
+        <p:panel header="#{msg.ListMateriaTitle}">
+            <p:contextMenu id="MateriaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('MateriaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg.View}" onclick="document.getElementById('MateriaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('MateriaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('MateriaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg.MateriaMenuItem_contenidoCollection}" icon="ui-icon-search"  action="#{materiaController.navigateContenidoCollection}" disabled="#{empty materiaController.selected.contenidoCollection}" ajax="false"/>  
+                <p:menuitem value="#{msg.MateriaMenuItem_componenteId}" icon="ui-icon-search"  actionListener="#{materiaController.prepareComponenteId}" update=":ComponenteViewForm" oncomplete="PF('ComponenteViewDialog').show()" disabled="#{empty materiaController.selected.componenteId}"/>  
+                <p:menuitem value="#{msg.MateriaMenuItem_preguntaCollection}" icon="ui-icon-search"  action="#{materiaController.navigatePreguntaCollection}" disabled="#{empty materiaController.selected.preguntaCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{materiaController.items}"
+                         lazy="false"
+                         rowKey="#{item.materiaId}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{materiaController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{materiaController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.materiaId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:MateriaDataTableContextMenu" listener="#{materiaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:MateriaDataTableContextMenu" listener="#{materiaController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{materiaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('MateriaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.materiaId}" filterBy="#{item.materiaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListMateriaTitle_materiaId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.materiaId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListMateriaTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListMateriaTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.componenteId.descripcion}" filterBy="#{item.componenteId.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListMateriaTitle_componenteId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.componenteId.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{materiaController.prepareCreate}" update=":MateriaCreateForm" oncomplete="PF('MateriaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":MateriaViewForm" oncomplete="PF('MateriaViewDialog').show()" disabled="#{empty materiaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":MateriaEditForm" oncomplete="PF('MateriaEditDialog').show()" disabled="#{empty materiaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{materiaController.delete}" update=":growl,datalist" disabled="#{empty materiaController.selected}">
+                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

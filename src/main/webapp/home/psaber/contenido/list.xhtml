@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ContenidoListForm">
+
+        <p:panel header="#{msg.ListContenidoTitle}">
+            <p:contextMenu id="ContenidoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('ContenidoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{msg.View}" onclick="document.getElementById('ContenidoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('ContenidoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('ContenidoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{msg.ContenidoMenuItem_materiaId}" icon="ui-icon-search"  actionListener="#{contenidoController.prepareMateriaId}" update=":MateriaViewForm" oncomplete="PF('MateriaViewDialog').show()" disabled="#{empty contenidoController.selected.materiaId}"/>  
+                <p:menuitem value="#{msg.ContenidoMenuItem_competenciaCollection}" icon="ui-icon-search"  action="#{contenidoController.navigateCompetenciaCollection}" disabled="#{empty contenidoController.selected.competenciaCollection}" ajax="false"/>  
+                <p:menuitem value="#{msg.ContenidoMenuItem_preguntaCollection}" icon="ui-icon-search"  action="#{contenidoController.navigatePreguntaCollection}" disabled="#{empty contenidoController.selected.preguntaCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{contenidoController.items}"
+                         lazy="false"
+                         rowKey="#{item.contenidoId}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{contenidoController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{contenidoController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.contenidoId}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ContenidoDataTableContextMenu" listener="#{contenidoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ContenidoDataTableContextMenu" listener="#{contenidoController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{contenidoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ContenidoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.contenidoId}" filterBy="#{item.contenidoId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListContenidoTitle_contenidoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.contenidoId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListContenidoTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListContenidoTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.materiaId.descripcion}" filterBy="#{item.materiaId.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ListContenidoTitle_materiaId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.materiaId.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{contenidoController.prepareCreate}" update=":ContenidoCreateForm" oncomplete="PF('ContenidoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":ContenidoViewForm" oncomplete="PF('ContenidoViewDialog').show()" disabled="#{empty contenidoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":ContenidoEditForm" oncomplete="PF('ContenidoEditDialog').show()" disabled="#{empty contenidoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{contenidoController.delete}" update=":growl,datalist" disabled="#{empty contenidoController.selected}">
+                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

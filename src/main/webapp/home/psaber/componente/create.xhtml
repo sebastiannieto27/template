@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ComponenteCreateDlg" widgetVar="ComponenteCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.CreateComponenteTitle}" closeOnEscape="true">
+
+            <h:form id="ComponenteCreateForm">
+
+                <h:panelGroup id="display" rendered="#{componenteController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.CreateComponenteLabel_componenteId}" for="componenteId" />
+                        <p:inputText id="componenteId" value="#{componenteController.selected.componenteId}" title="#{msg.CreateComponenteTitle_componenteId}" required="true" requiredMessage="#{msg.CreateComponenteRequiredMessage_componenteId}"/>
+
+                        <p:outputLabel value="#{msg.CreateComponenteLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{componenteController.selected.nombre}" title="#{msg.CreateComponenteTitle_nombre}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{msg.CreateComponenteLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{componenteController.selected.descripcion}" title="#{msg.CreateComponenteTitle_descripcion}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{componenteController.saveNew}" value="#{msg.Save}" update="display,:ComponenteListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ComponenteCreateDialog'));">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.Cancel}" oncomplete="PF('ComponenteCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

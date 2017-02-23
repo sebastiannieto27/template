@@ -49,6 +49,13 @@
                 <value>co.com.core.domain.LoginAttempt</value>
                 <value>co.com.core.domain.UploadedFile</value>
                 
+                <!-- Pruebas Saber -->
+                <value>co.com.core.domain.psaber.Competencia</value>
+                <value>co.com.core.domain.psaber.Componente</value>
+                <value>co.com.core.domain.psaber.Contenido</value>
+                <value>co.com.core.domain.psaber.Materia</value>
+                <value>co.com.core.domain.psaber.Pregunta</value>
+                
                 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
 				<value>co.com.core.domain.cms.Branch</value>
                 <value>co.com.core.domain.cms.BranchService</value>
@@ -156,6 +163,14 @@
     <bean id="uploadedFileDAO" class="co.com.core.dao.impl.UploadedFileDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
+
+<!--Prueba Saber Prueba Saber Prueba Saber Prueba Saber Prueba Saber Prueba Saber -->
+
+	    <bean id="competenciaDAO" class="co.com.core.dao.psaber.impl.CompetenciaDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+
+
     
 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
     
@@ -331,6 +346,12 @@
     <bean id="uploadedFileService" class="co.com.core.services.impl.UploadedFileServiceImpl">
     	<property name="uploadedFileDAO" ref="uploadedFileDAO" />
     </bean>
+
+<!--Prueba Saber Prueba Saber Prueba Saber Prueba Saber Prueba Saber Prueba Saber -->
+		<bean id="competenciaService" class="co.com.core.services.psaber.impl.CompetenciaServiceImpl">
+	    	<property name="competenciaDAO" ref="competenciaDAO" />
+	    </bean>
+
     
 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
 		<bean id="branchService" class="co.com.core.services.cms.impl.BranchServiceImpl">
@@ -532,6 +553,12 @@
     <bean id="uploadedFileController" scope="session" class="co.com.core.controller.UploadedFileController" init-method="init">
     	<property name="uploadedFileService" ref="uploadedFileService" />
     </bean>    
+
+<!--Prueba Saber Prueba Saber Prueba Saber Prueba Saber Prueba Saber Prueba Saber -->
+
+    <bean id="competenciaController" scope="session" class="co.com.core.controller.psaber.CompetenciaController" init-method="init">
+    	<property name="competenciaService" ref="competenciaService" />
+    </bean>
     
 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS --> 
     	        
