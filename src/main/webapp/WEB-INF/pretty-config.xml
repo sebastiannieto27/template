@@ -60,10 +60,24 @@
 	</url-mapping>	
 	
 	<!-- saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro -->
+	<!-- saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro -->
+	<!-- saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro -->
+
 	<url-mapping id="competencia">
 		<pattern value="/psaber/competencia" />
 		<view-id value="/home/psaber/competencia/index.xhtml" />
 	</url-mapping>	
+	
+	<url-mapping id="materia">
+		<pattern value="/psaber/materia" />
+		<view-id value="/home/psaber/materia/index.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="pregunta">
+		<pattern value="/psaber/pregunta" />
+		<view-id value="/home/psaber/pregunta/index.xhtml" />
+	</url-mapping>
+		
 	<!-- saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro -->
 	
 	
@@ -111,103 +125,5 @@
 
 <!-- Account Financial Module  Account Financial Module  Account Financial Module -->  
 <!-- Account Financial Module  Account Financial Module  Account Financial Module -->  
-	<url-mapping id="tax">
-		<pattern value="/cartera/impuesto" />
-		<view-id value="/home/financialAcount/tax/index.xhtml" />
-	</url-mapping>	
 	
-	<url-mapping id="raiseMoneyType">
-		<pattern value="/cartera/tipo-pago" />
-		<view-id value="/home/financialAcount/raiseMoneyType/index.xhtml" />
-	</url-mapping>	
-	
-	<url-mapping id="raiseMoney">
-		<pattern value="/cartera/recaudo" />
-		<view-id value="/home/financialAcount/raiseMoney/index.xhtml" />
-	</url-mapping>
-	
-	<url-mapping id="client">
-		<pattern value="/cartera/cliente" />
-		<view-id value="/home/financialAcount/client/index.xhtml" />
-	</url-mapping>	
-		
-	<url-mapping id="clientType">
-		<pattern value="/cartera/tipo-cliente" />
-		<view-id value="/home/financialAcount/clientType/index.xhtml" />
-	</url-mapping>
-	
-	<url-mapping id="branchClient">
-		<pattern value="/cartera/sedes-cliente" />
-		<view-id value="/home/financialAcount/branchClient/index.xhtml" />
-	</url-mapping>	
-		
-	<url-mapping id="billHead">
-		<pattern value="/cartera/encabezado-factura" />
-		<view-id value="/home/financialAcount/billHead/index.xhtml" />
-	</url-mapping>	
-			
-	<url-mapping id="dutyPay">
-		<pattern value="/cartera/retomas" />
-		<view-id value="/home/financialAcount/dutyPay/index.xhtml" />
-	</url-mapping>	
-				
-	<url-mapping id="creditNoteType">
-		<pattern value="/cartera/tipo-nota-credito" />
-		<view-id value="/home/financialAcount/creditNoteType/index.xhtml" />
-	</url-mapping>
-					
-	<url-mapping id="creditNote">
-		<pattern value="/cartera/nota-credito" />
-		<view-id value="/home/financialAcount/creditNote/index.xhtml" />
-	</url-mapping>
-								
-	<url-mapping id="product">
-		<pattern value="/cartera/producto-servicio" />
-		<view-id value="/home/financialAcount/product/index.xhtml" />
-	</url-mapping>			
-	
-	<url-mapping id="billDetailTax">
-		<pattern value="/cartera/impuesto-factura" />
-		<view-id value="/home/financialAcount/billDetailTax/index.xhtml" />
-	</url-mapping>
-		
-	<url-mapping id="billDetail">
-		<pattern value="/cartera/detalle-factura" />
-		<view-id value="/home/financialAcount/billDetail/index.xhtml" />
-	</url-mapping>
-					
-	<url-mapping id="accountAge">
-		<pattern value="/cartera/edad-cartera" />
-		<view-id value="/home/financialAcount/accountAge/index.xhtml" />
-	</url-mapping>
-		
-	<url-mapping id="accountAgeType">
-		<pattern value="/cartera/tipo-edad-cartera" />
-		<view-id value="/home/financialAcount/accountAgeType/index.xhtml" />
-	</url-mapping>
-	
-	<url-mapping id="accountAgeDet">
-		<pattern value="/cartera/detalle-edad-cartera" />
-		<view-id value="/home/financialAcount/accountAgeDet/index.xhtml" />
-	</url-mapping>
-		
-	<url-mapping id="accountStatus">
-		<pattern value="/cartera/estado-cuenta" />
-		<view-id value="/home/financialAcount/accountStatus/index.xhtml" />
-	</url-mapping>
-			
-	<url-mapping id="billing">
-		<pattern value="/cartera/facturacion" />
-		<view-id value="/home/financialAcount/billing/index.xhtml" />
-	</url-mapping>
-				
-	<url-mapping id="albaran">
-		<pattern value="/cartera/albaranes" />
-		<view-id value="/home/financialAcount/albaran/index.xhtml" />
-	</url-mapping>
-					
-	<url-mapping id="payment">
-		<pattern value="/cartera/abonos-aplicaciones" />
-		<view-id value="/home/financialAcount/payment/index.xhtml" />
-	</url-mapping>
 </pretty-config>

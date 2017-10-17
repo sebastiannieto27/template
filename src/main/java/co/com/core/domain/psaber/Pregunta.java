@@ -6,21 +6,23 @@
 package co.com.core.domain.psaber;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,8 +34,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Pregunta.findAll", query = "SELECT p FROM Pregunta p")
     , @NamedQuery(name = "Pregunta.findByPreguntaId", query = "SELECT p FROM Pregunta p WHERE p.preguntaId = :preguntaId")
-    , @NamedQuery(name = "Pregunta.findByValor", query = "SELECT p FROM Pregunta p WHERE p.valor = :valor")})
+    , @NamedQuery(name = "Pregunta.findByTitulo", query = "SELECT p FROM Pregunta p WHERE p.titulo = :titulo")})
 public class Pregunta implements Serializable {
+
+
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,16 +51,18 @@ public class Pregunta implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "descripcion")
     private String descripcion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "valor")
-    private double valor;
-    @JoinColumn(name = "contenido_id", referencedColumnName = "contenido_id")
-    @ManyToOne(optional = false)
-    private Contenido contenidoId;
-    @JoinColumn(name = "materia_id", referencedColumnName = "materia_id")
-    @ManyToOne(optional = false)
-    private Materia materiaId;
+    @Size(max = 45)
+    @Column(name = "codigo")
+    private String codigo;
+    @Size(max = 45)
+    @Column(name = "titulo")
+    private String titulo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
+    private Collection<Tema> temaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
+    private Collection<Respuesta> respuestaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
+    private Collection<Competencia> competenciaCollection;
 
     public Pregunta() {
     }
@@ -65,10 +71,9 @@ public class Pregunta implements Serializable {
         this.preguntaId = preguntaId;
     }
 
-    public Pregunta(Integer preguntaId, String descripcion, double valor) {
+    public Pregunta(Integer preguntaId, String descripcion) {
         this.preguntaId = preguntaId;
         this.descripcion = descripcion;
-        this.valor = valor;
     }
 
     public Integer getPreguntaId() {
@@ -87,28 +92,47 @@ public class Pregunta implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public double getValor() {
-        return valor;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public Contenido getContenidoId() {
-        return contenidoId;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setContenidoId(Contenido contenidoId) {
-        this.contenidoId = contenidoId;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public Materia getMateriaId() {
-        return materiaId;
+    @XmlTransient
+    public Collection<Tema> getTemaCollection() {
+        return temaCollection;
     }
 
-    public void setMateriaId(Materia materiaId) {
-        this.materiaId = materiaId;
+    public void setTemaCollection(Collection<Tema> temaCollection) {
+        this.temaCollection = temaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Respuesta> getRespuestaCollection() {
+        return respuestaCollection;
+    }
+
+    public void setRespuestaCollection(Collection<Respuesta> respuestaCollection) {
+        this.respuestaCollection = respuestaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Competencia> getCompetenciaCollection() {
+        return competenciaCollection;
+    }
+
+    public void setCompetenciaCollection(Collection<Competencia> competenciaCollection) {
+        this.competenciaCollection = competenciaCollection;
     }
 
     @Override
@@ -133,7 +157,7 @@ public class Pregunta implements Serializable {
 
     @Override
     public String toString() {
-        return "com.co.domain.Pregunta[ preguntaId=" + preguntaId + " ]";
+        return "co.com.core.domain.psaber.Pregunta[ preguntaId=" + preguntaId + " ]";
     }
     
 }

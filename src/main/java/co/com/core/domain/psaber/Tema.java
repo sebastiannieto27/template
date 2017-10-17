@@ -18,52 +18,63 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author dienieto
+ * @author diego.nieto
  */
 @Entity
-@Table(name = "competencia")
+@Table(name = "tema")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Competencia.findAll", query = "SELECT c FROM Competencia c")
-    , @NamedQuery(name = "Competencia.findByCompetenciaId", query = "SELECT c FROM Competencia c WHERE c.competenciaId = :competenciaId")
-    , @NamedQuery(name = "Competencia.findByNombre", query = "SELECT c FROM Competencia c WHERE c.nombre = :nombre")})
-public class Competencia implements Serializable {
+    @NamedQuery(name = "Tema.findAll", query = "SELECT t FROM Tema t")
+    , @NamedQuery(name = "Tema.findByTemaId", query = "SELECT t FROM Tema t WHERE t.temaId = :temaId")
+    , @NamedQuery(name = "Tema.findByNombre", query = "SELECT t FROM Tema t WHERE t.nombre = :nombre")})
+public class Tema implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "competencia_id")
-    private Integer competenciaId;
-    @Size(max = 50)
+    @Column(name = "tema_id")
+    private Integer temaId;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "nombre")
     private String nombre;
+    @Basic(optional = false)
+    @NotNull
     @Lob
-    @Size(max = 65535)
+    @Size(min = 1, max = 65535)
     @Column(name = "descripcion")
     private String descripcion;
     @JoinColumn(name = "pregunta_id", referencedColumnName = "pregunta_id")
     @ManyToOne(optional = false)
     private Pregunta preguntaId;
 
-    public Competencia() {
+    public Tema() {
     }
 
-    public Competencia(Integer competenciaId) {
-        this.competenciaId = competenciaId;
+    public Tema(Integer temaId) {
+        this.temaId = temaId;
     }
 
-    public Integer getCompetenciaId() {
-        return competenciaId;
+    public Tema(Integer temaId, String nombre, String descripcion) {
+        this.temaId = temaId;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
-    public void setCompetenciaId(Integer competenciaId) {
-        this.competenciaId = competenciaId;
+    public Integer getTemaId() {
+        return temaId;
+    }
+
+    public void setTemaId(Integer temaId) {
+        this.temaId = temaId;
     }
 
     public String getNombre() {
@@ -93,18 +104,18 @@ public class Competencia implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (competenciaId != null ? competenciaId.hashCode() : 0);
+        hash += (temaId != null ? temaId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Competencia)) {
+        if (!(object instanceof Tema)) {
             return false;
         }
-        Competencia other = (Competencia) object;
-        if ((this.competenciaId == null && other.competenciaId != null) || (this.competenciaId != null && !this.competenciaId.equals(other.competenciaId))) {
+        Tema other = (Tema) object;
+        if ((this.temaId == null && other.temaId != null) || (this.temaId != null && !this.temaId.equals(other.temaId))) {
             return false;
         }
         return true;
@@ -112,7 +123,7 @@ public class Competencia implements Serializable {
 
     @Override
     public String toString() {
-        return "co.com.core.domain.psaber.Competencia[ competenciaId=" + competenciaId + " ]";
+        return "co.com.core.domain.psaber.Tema[ temaId=" + temaId + " ]";
     }
     
 }

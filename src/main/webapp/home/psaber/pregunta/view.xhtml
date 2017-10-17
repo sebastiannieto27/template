@@ -8,29 +8,27 @@
 
     <ui:composition>
 
-        <p:dialog id="PreguntaViewDlg" widgetVar="PreguntaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewPreguntaTitle}" closeOnEscape="true">
+        <p:dialog id="preguntaViewDlg" widgetVar="preguntaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.pregunta}" closeOnEscape="true">
 
-            <h:form id="PreguntaViewForm">
+            <h:form id="preguntaViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{preguntaController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewPreguntaLabel_preguntaId}"/>
-                        <h:outputText value="#{preguntaController.selected.preguntaId}" title="#{msg.ViewPreguntaTitle_preguntaId}"/>
+                        <h:outputText value="#{msg.Id}"/>
+                        <h:outputText value="#{preguntaController.selected.preguntaId}" title="#{msg.Id}"/>
 
-                        <h:outputText value="#{msg.ViewPreguntaLabel_descripcion}"/>
-                        <h:outputText value="#{preguntaController.selected.descripcion}" title="#{msg.ViewPreguntaTitle_descripcion}"/>
+                        <h:outputText value="#{msg.description}"/>
+                        <h:outputText value="#{preguntaController.selected.descripcion}" title="#{msg.description}"/>
 
-                        <h:outputText value="#{msg.ViewPreguntaLabel_valor}"/>
-                        <h:outputText value="#{preguntaController.selected.valor}" title="#{msg.ViewPreguntaTitle_valor}"/>
+                        <h:outputText value="#{msg.titulo}"/>
+                        <h:outputText value="#{preguntaController.selected.titulo}" title="#{msg.titulo}"/>
 
-                        <h:outputText value="#{msg.ViewPreguntaLabel_contenidoId}"/>
-                        <h:outputText value="#{preguntaController.selected.contenidoId.descripcion}"/>
+                        <h:outputText value="#{msg.codigo}"/>
+                        <h:outputText value="#{preguntaController.selected.codigo}"/>
 
-                        <h:outputText value="#{msg.ViewPreguntaLabel_materiaId}"/>
-                        <h:outputText value="#{preguntaController.selected.materiaId.descripcion}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="PF('PreguntaViewDialog').hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="PF('preguntaViewDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>

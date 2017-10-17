@@ -55,8 +55,10 @@
                 <value>co.com.core.domain.psaber.Contenido</value>
                 <value>co.com.core.domain.psaber.Materia</value>
                 <value>co.com.core.domain.psaber.Pregunta</value>
+                <value>co.com.core.domain.psaber.Respuesta</value>
+                <value>co.com.core.domain.psaber.Tema</value>
                 
-                <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
+                <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS 
 				<value>co.com.core.domain.cms.Branch</value>
                 <value>co.com.core.domain.cms.BranchService</value>
                 <value>co.com.core.domain.cms.BranchType</value>
@@ -64,27 +66,7 @@
                 <value>co.com.core.domain.cms.News</value>
                 <value>co.com.core.domain.cms.NewsType</value>
                 <value>co.com.core.domain.cms.Service</value>
-                <value>co.com.core.domain.cms.GeneralStatus</value>
-                
-                <!-- Account Financial Module  Account Financial Module  Account Financial Module -->
-                <value>co.com.core.domain.financial.account.AccountAge</value>
-                <value>co.com.core.domain.financial.account.AccountAgeBill</value>
-                <value>co.com.core.domain.financial.account.AccountAgeDet</value>
-                <value>co.com.core.domain.financial.account.AccountAgeType</value>
-                <value>co.com.core.domain.financial.account.BillDetail</value>
-                <value>co.com.core.domain.financial.account.BillDetailTax</value>
-                <value>co.com.core.domain.financial.account.BillHead</value>
-                <value>co.com.core.domain.financial.account.BranchClient</value>
-                <value>co.com.core.domain.financial.account.Client</value>
-                <value>co.com.core.domain.financial.account.ClientType</value>
-                <value>co.com.core.domain.financial.account.CreditNote</value>
-                <value>co.com.core.domain.financial.account.CreditNoteType</value>
-                <value>co.com.core.domain.financial.account.DutyPay</value>
-                <value>co.com.core.domain.financial.account.Product</value>
-                <value>co.com.core.domain.financial.account.RaiseMoney</value>
-                <value>co.com.core.domain.financial.account.RaiseMoneyType</value>
-                <value>co.com.core.domain.financial.account.Tax</value>
-                <value>co.com.core.domain.financial.account.views.AccountAgeOne</value>
+                <value>co.com.core.domain.cms.GeneralStatus</value>-->
                 
             </list>
         </property>
@@ -169,7 +151,14 @@
 	    <bean id="competenciaDAO" class="co.com.core.dao.psaber.impl.CompetenciaDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
-
+	    
+	    <bean id="materiaDAO" class="co.com.core.dao.psaber.impl.MateriaDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
+	    
+	    <bean id="preguntaDAO" class="co.com.core.dao.psaber.impl.PreguntaDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
 
     
 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
@@ -208,77 +197,7 @@
     
 <!-- Account Financial Module  Account Financial Module  Account Financial Module -->
 	    
-  	    <bean id="taxDAO" class="co.com.core.dao.impl.financial.account.TaxDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    	    
-  	    <bean id="raiseMoneyTypeDAO" class="co.com.core.dao.impl.financial.account.RaiseMoneyTypeDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    	    	
-  	    <bean id="raiseMoneyDAO" class="co.com.core.dao.impl.financial.account.RaiseMoneyDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>    
-
-  	    <bean id="clientDAO" class="co.com.core.dao.impl.financial.account.ClientDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    	   
-  	    <bean id="clientTypeDAO" class="co.com.core.dao.impl.financial.account.ClientTypeDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	     	    	    
-  	    <bean id="branchClientDAO" class="co.com.core.dao.impl.financial.account.BranchClientDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    	    	    	    	    
-  	    <bean id="billHeadDAO" class="co.com.core.dao.impl.financial.account.BillHeadDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    
-  	    <bean id="dutyPayDAO" class="co.com.core.dao.impl.financial.account.DutyPayDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    	    
-  	    <bean id="creditNoteTypeDAO" class="co.com.core.dao.impl.financial.account.CreditNoteTypeDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    	    
-  	    <bean id="creditNoteDAO" class="co.com.core.dao.impl.financial.account.CreditNoteDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    
-  	    <bean id="productDAO" class="co.com.core.dao.impl.financial.account.ProductDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    	    	    
-  	    <bean id="billDetailTaxDAO" class="co.com.core.dao.impl.financial.account.BillDetailTaxDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	   	    	    	    
-  	    <bean id="billDetailDAO" class="co.com.core.dao.impl.financial.account.BillDetailDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean> 
-	    	   	    	   	    	    	    
-  	    <bean id="accountAgeDAO" class="co.com.core.dao.impl.financial.account.AccountAgeDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean> 
-	    	    		    	   	    	   	    	    	    
-  	    <bean id="accountAgeOneDAO" class="co.com.core.dao.impl.financial.account.AccountAgeOneDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean> 
-	    	    	    	    
-  	    <bean id="accountAgeTypeDAO" class="co.com.core.dao.impl.financial.account.AccountAgeTypeDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean> 
-	    	    	   	    	    	    
-  	    <bean id="accountAgeDetDAO" class="co.com.core.dao.impl.financial.account.AccountAgeDetDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean> 
-	    	    	    	   	    	    	    
-  	    <bean id="accountStatusDAO" class="co.com.core.dao.impl.financial.account.AccountStatusDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean> 
+  	    
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -352,7 +271,14 @@
 	    	<property name="competenciaDAO" ref="competenciaDAO" />
 	    </bean>
 
-    
+  		<bean id="materiaService" class="co.com.core.services.psaber.impl.MateriaServiceImpl">
+	    	<property name="materiaDAO" ref="materiaDAO" />
+	    </bean>
+   		
+   		<bean id="preguntaService" class="co.com.core.services.psaber.impl.PreguntaServiceImpl">
+	    	<property name="preguntaDAO" ref="preguntaDAO" />
+	    </bean>
+	      
 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
 		<bean id="branchService" class="co.com.core.services.cms.impl.BranchServiceImpl">
 	    	<property name="branchDAO" ref="branchDAO" />
@@ -388,86 +314,7 @@
 	
 	    	    	    	    	    	    	    	    
 <!-- Account Financial Module  Account Financial Module  Account Financial Module -->
-   	    <bean id="taxService" class="co.com.core.services.impl.financial.account.TaxServiceImpl">
-	    	<property name="taxDAO" ref="taxDAO" />
-	    </bean>
-	    
-   	    <bean id="raiseMoneyTypeService" class="co.com.core.services.impl.financial.account.RaiseMoneyTypeServiceImpl">
-	    	<property name="raiseMoneyTypeDAO" ref="raiseMoneyTypeDAO" />
-	    </bean>
-	    	    
-   	    <bean id="raiseMoneyService" class="co.com.core.services.impl.financial.account.RaiseMoneyServiceImpl">
-	    	<property name="raiseMoneyDAO" ref="raiseMoneyDAO" />
-	    </bean>
-	    	    
-   	    <bean id="clientService" class="co.com.core.services.impl.financial.account.ClientServiceImpl">
-	    	<property name="clientDAO" ref="clientDAO" />
-	    </bean>
-	    	    
-   	    <bean id="clientTypeService" class="co.com.core.services.impl.financial.account.ClientTypeServiceImpl">
-	    	<property name="clientTypeDAO" ref="clientTypeDAO" />
-	    </bean>
-	    	    	    	    
-   	    <bean id="branchClientService" class="co.com.core.services.impl.financial.account.BranchClientServiceImpl">
-	    	<property name="branchClientDAO" ref="branchClientDAO" />
-	    </bean>
-	    	    	    	    
-   	    <bean id="billHeadService" class="co.com.core.services.impl.financial.account.BillHeadServiceImpl">
-	    	<property name="billHeadDAO" ref="billHeadDAO" />
-	    </bean>
-	    	    	    	    	    
-   	    <bean id="dutyPayService" class="co.com.core.services.impl.financial.account.DutyPayServiceImpl">
-	    	<property name="dutyPayDAO" ref="dutyPayDAO" />
-	    </bean>
-	    	    	    	    	    	    
-   	    <bean id="creditNoteTypeService" class="co.com.core.services.impl.financial.account.CreditNoteTypeServiceImpl">
-	    	<property name="creditNoteTypeDAO" ref="creditNoteTypeDAO" />
-	    </bean>
-	    	    	    	    	    	    	    
-   	    <bean id="creditNoteService" class="co.com.core.services.impl.financial.account.CreditNoteServiceImpl">
-	    	<property name="creditNoteDAO" ref="creditNoteDAO" />
-	    </bean>
-	    	    	    	    	    	    	    	    	    
-   	    <bean id="productService" class="co.com.core.services.impl.financial.account.ProductServiceImpl">
-	    	<property name="productDAO" ref="productDAO" />
-	    </bean>
-	    	    	    	    	    	    	    
-   	    <bean id="billDetailTaxService" class="co.com.core.services.impl.financial.account.BillDetailTaxServiceImpl">
-	    	<property name="billDetailTaxDAO" ref="billDetailTaxDAO" />
-	    </bean>
-	    	    	    	    	    	    	    	    
-   	    <bean id="billDetailService" class="co.com.core.services.impl.financial.account.BillDetailServiceImpl">
-	    	<property name="billDetailDAO" ref="billDetailDAO" />
-	    </bean>
-	    	    	    	    	    	    	    	    	    	    
-   	    <bean id="accountAgeService" class="co.com.core.services.impl.financial.account.AccountAgeServiceImpl">
-	    	<property name="accountAgeDAO" ref="accountAgeDAO" />
-	    	<property name="accountAgeOneDAO" ref="accountAgeOneDAO" />
-	    </bean>
-	    	    	    	    	    	    	    	    	    
-   	    <bean id="accountAgeTypeService" class="co.com.core.services.impl.financial.account.AccountAgeTypeServiceImpl">
-	    	<property name="accountAgeTypeDAO" ref="accountAgeTypeDAO" />
-	    </bean>
-	    	    	    	    	    	    	    	    	    	    
-   	    <bean id="accountAgeDetService" class="co.com.core.services.impl.financial.account.AccountAgeDetServiceImpl">
-	    	<property name="accountAgeDetDAO" ref="accountAgeDetDAO" />
-	    </bean>
-	    	    	    	    	    	    	    	    	    	    
-   	    <bean id="accountStatusService" class="co.com.core.services.impl.financial.account.AccountStatusServiceImpl">
-	    	<property name="accountStatusDAO" ref="accountStatusDAO" />
-	    </bean>	    
-	    	    	    	    	    	    	    	    	    	    	    
-   	    <bean id="billingService" class="co.com.core.services.impl.financial.account.BillingServiceImpl">
-	    	
-	    </bean>	
-	    	    	    	    	    	    	    	    	    	    	    	    
-   	    <bean id="albaranService" class="co.com.core.services.impl.financial.account.AlbaranServiceImpl">
-	    	
-	    </bean>	
-	    	    	    	    	    	    	    	    	    	    	    	    	    
-   	    <bean id="paymentService" class="co.com.core.services.impl.financial.account.PaymentServiceImpl">
-	    	
-	    </bean>	
+   	   
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -560,6 +407,13 @@
     	<property name="competenciaService" ref="competenciaService" />
     </bean>
     
+    <bean id="materiaController" scope="session" class="co.com.core.controller.psaber.MateriaController" init-method="init">
+    	<property name="materiaService" ref="materiaService" />
+    </bean>
+        
+    <bean id="preguntaController" scope="session" class="co.com.core.controller.psaber.PreguntaController" init-method="init">
+    	<property name="preguntaService" ref="preguntaService" />
+    </bean>
 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS --> 
     	        
     <bean id="branchController" scope="session" class="co.com.core.controller.cms.BranchController" init-method="init">
@@ -599,85 +453,5 @@
     </bean>
     
 <!-- Account Financial Module  Account Financial Module  Account Financial Module -->    
-    <bean id="taxController" scope="session" class="co.com.core.controller.financial.account.TaxController" init-method="init">
-    	<property name="taxService" ref="taxService" />
-    </bean>
     
-    <bean id="raiseMoneyTypeController" scope="session" class="co.com.core.controller.financial.account.RaiseMoneyTypeController" init-method="init">
-    	<property name="raiseMoneyTypeService" ref="raiseMoneyTypeService" />
-    </bean>
-        
-    <bean id="raiseMoneyController" scope="session" class="co.com.core.controller.financial.account.RaiseMoneyController" init-method="init">
-    	<property name="raiseMoneyService" ref="raiseMoneyService" />
-    </bean>
-    
-    <bean id="clientController" scope="session" class="co.com.core.controller.financial.account.ClientController" init-method="init">
-    	<property name="clientService" ref="clientService" />
-    </bean>    
-        
-    <bean id="clientTypeController" scope="session" class="co.com.core.controller.financial.account.ClientTypeController" init-method="init">
-    	<property name="clientTypeService" ref="clientTypeService" />
-    </bean>  
-        
-    <bean id="branchClientController" scope="session" class="co.com.core.controller.financial.account.BranchClientController" init-method="init">
-    	<property name="branchClientService" ref="branchClientService" />
-    </bean> 
-            
-    <bean id="billHeadController" scope="session" class="co.com.core.controller.financial.account.BillHeadController" init-method="init">
-    	<property name="billHeadService" ref="billHeadService" />
-    </bean> 
-                
-    <bean id="dutyPayController" scope="session" class="co.com.core.controller.financial.account.DutyPayController" init-method="init">
-    	<property name="dutyPayService" ref="dutyPayService" />
-    </bean>
-                    
-    <bean id="creditNoteTypeController" scope="session" class="co.com.core.controller.financial.account.CreditNoteTypeController" init-method="init">
-    	<property name="creditNoteTypeService" ref="creditNoteTypeService" />
-    </bean>
-                        
-    <bean id="creditNoteController" scope="session" class="co.com.core.controller.financial.account.CreditNoteController" init-method="init">
-    	<property name="creditNoteService" ref="creditNoteService" />
-    </bean>
-                                          
-    <bean id="productController" scope="session" class="co.com.core.controller.financial.account.ProductController" init-method="init">
-    	<property name="productService" ref="productService" />
-    </bean>
-              
-    <bean id="billDetailTaxController" scope="session" class="co.com.core.controller.financial.account.BillDetailTaxController" init-method="init">
-    	<property name="billDetailTaxService" ref="billDetailTaxService" />
-    </bean>
-                  
-    <bean id="billDetailController" scope="session" class="co.com.core.controller.financial.account.BillDetailController" init-method="init">
-    	<property name="billDetailService" ref="billDetailService" />
-    </bean>
-                           
-    <bean id="accountAgeController" scope="session" class="co.com.core.controller.financial.account.AccountAgeController" init-method="init">
-    	<property name="accountAgeService" ref="accountAgeService" />
-    	<property name="accountAgeTypeService" ref="accountAgeTypeService" />
-    </bean>
-                     
-    <bean id="accountAgeTypeController" scope="session" class="co.com.core.controller.financial.account.AccountAgeTypeController" init-method="init">
-    	<property name="accountAgeTypeService" ref="accountAgeTypeService" />
-    </bean>
-                          
-    <bean id="accountAgeDetController" scope="session" class="co.com.core.controller.financial.account.AccountAgeDetController" init-method="init">
-    	<property name="accountAgeDetService" ref="accountAgeDetService" />
-    </bean>
-                              
-    <bean id="accountStatusController" scope="session" class="co.com.core.controller.financial.account.AccountStatusController" init-method="init">
-    	<property name="accountStatusService" ref="accountStatusService" />
-    	<property name="dutyPayService" ref="dutyPayService" />
-    </bean>
-                                  
-    <bean id="billingController" scope="session" class="co.com.core.controller.financial.account.BillingController" init-method="init">
-    	<property name="billingService" ref="billingService" />
-    </bean>
-                                      
-    <bean id="albaranController" scope="session" class="co.com.core.controller.financial.account.AlbaranController" init-method="init">
-    	<property name="albaranService" ref="albaranService" />
-    </bean>
-                                          
-    <bean id="paymentController" scope="session" class="co.com.core.controller.financial.account.PaymentController" init-method="init">
-    	<property name="paymentService" ref="paymentService" />
-    </bean>
 </beans>

@@ -1,99 +1,82 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
 
-    <h:form id="PreguntaListForm">
-
-        <p:panel header="#{msg.ListPreguntaTitle}">
-            <p:contextMenu id="PreguntaDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{msg.Create}" onclick="document.getElementById('PreguntaListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{msg.View}" onclick="document.getElementById('PreguntaListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{msg.Edit}" onclick="document.getElementById('PreguntaListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{msg.Delete}" onclick="document.getElementById('PreguntaListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{msg.PreguntaMenuItem_contenidoId}" icon="ui-icon-search"  actionListener="#{preguntaController.prepareContenidoId}" update=":ContenidoViewForm" oncomplete="PF('ContenidoViewDialog').show()" disabled="#{empty preguntaController.selected.contenidoId}"/>  
-                <p:menuitem value="#{msg.PreguntaMenuItem_materiaId}" icon="ui-icon-search"  actionListener="#{preguntaController.prepareMateriaId}" update=":MateriaViewForm" oncomplete="PF('MateriaViewDialog').show()" disabled="#{empty preguntaController.selected.materiaId}"/>  
-            </p:contextMenu>
+    <h:form id="preguntaListForm">
+   			<h:panelGroup id="searchForm">
+            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+            	<p:outputLabel for="rtvName" value="#{msg.name}:" />
+					<p:inputText id="rtvName" value="#{preguntaController.searchName}" title="#{msg.name}:"/>
+					<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{preguntaController.init()}" update=":preguntaListForm" />
+          			</p:panelGrid>
+              </h:panelGroup>
+              
+        <p:panel header="#{msg.pregunta}">
             <p:dataTable id="datalist"
-                         value="#{preguntaController.items}"
-                         lazy="false"
-                         rowKey="#{item.preguntaId}"
+                         value="#{preguntaController.lazyModel}"
                          var="item"
+                         rowKey="#{item.preguntaId}"
                          paginator="true"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
-                         selection="#{preguntaController.selected}">
-                <!--
-                         To enable Lazy Loading, please copy/replace the following lines above,
-                         and be sure to replace the word HASH with the # symbol:
-                
-                         value="HASH{preguntaController.lazyItems}"
-                         lazy="true"
-                         rowKey="HASH{item.preguntaId}"  <<< Remove this line
-                -->
+                         selection="#{preguntaController.selected}"
+                         lazy="true">
 
-
-                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PreguntaDataTableContextMenu" listener="#{preguntaController.resetParents}"/>
-                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PreguntaDataTableContextMenu" listener="#{preguntaController.resetParents}"/>
-                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{preguntaController.resetParents}"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('PreguntaListForm:viewButton').click();"/>
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton" />
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" />
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('preguntaListForm:viewButton').click();"/>
 
                 <p:column sortBy="#{item.preguntaId}" filterBy="#{item.preguntaId}">
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListPreguntaTitle_preguntaId}"/>
+                        <h:outputText value="#{msg.id}"/>
                     </f:facet>
                     <h:outputText value="#{item.preguntaId}"/>
                 </p:column>
 
-
+                <p:column sortBy="#{item.codigo}" filterBy="#{item.codigo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.codigo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codigo}"/>
+                </p:column>
+                
+                <p:column sortBy="#{item.titulo}" filterBy="#{item.titulo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.titulo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.titulo}"/>
+                </p:column>
+                
                 <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
                     <f:facet name="header">
-                        <h:outputText value="#{msg.ListPreguntaTitle_descripcion}"/>
+                        <h:outputText value="#{msg.description}"/>
                     </f:facet>
                     <h:outputText value="#{item.descripcion}"/>
                 </p:column>
 
-
-                <p:column sortBy="#{item.valor}" filterBy="#{item.valor}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.ListPreguntaTitle_valor}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.valor}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.contenidoId.descripcion}" filterBy="#{item.contenidoId.descripcion}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.ListPreguntaTitle_contenidoId}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.contenidoId.descripcion}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.materiaId.descripcion}" filterBy="#{item.materiaId.descripcion}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.ListPreguntaTitle_materiaId}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.materiaId.descripcion}"/>
-                </p:column>
-
-
             </p:dataTable>
 
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{msg.Create}" actionListener="#{preguntaController.prepareCreate}" update=":PreguntaCreateForm" oncomplete="PF('PreguntaCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{msg.View}" update=":PreguntaViewForm" oncomplete="PF('PreguntaViewDialog').show()" disabled="#{empty preguntaController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{msg.Edit}" update=":PreguntaEditForm" oncomplete="PF('PreguntaEditDialog').show()" disabled="#{empty preguntaController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{msg.Delete}" actionListener="#{preguntaController.delete}" update=":growl,datalist" disabled="#{empty preguntaController.selected}">
-                <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            <p:commandButton id="createButton"  icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{preguntaController.prepareCreate}" update=":preguntaCreateForm" oncomplete="PF('preguntaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{msg.view}" update=":preguntaViewForm" oncomplete="PF('preguntaViewDialog').show()" disabled="#{empty preguntaController.selected}"/>
+            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{msg.edit}" update=":preguntaEditForm" oncomplete="PF('preguntaEditDialog').show()" disabled="#{empty preguntaController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{preguntaController.delete}" update=":growl,datalist" disabled="#{empty preguntaController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
             </p:commandButton>
 
         </p:panel>
-        <ui:include src="/confirmation.xhtml"/>
+       <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
     </h:form>
 
-</ui:composition>
+	    </ui:composition>
+    </body>
+</html>

@@ -54,10 +54,10 @@ public class Contenido implements Serializable {
     @JoinColumn(name = "materia_id", referencedColumnName = "materia_id")
     @ManyToOne(optional = false)
     private Materia materiaId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contenidoId")
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "contenidoId")
     private Collection<Competencia> competenciaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contenidoId")
-    private Collection<Pregunta> preguntaCollection;
+    private Collection<Pregunta> preguntaCollection;*/
 
     public Contenido() {
     }
@@ -98,7 +98,7 @@ public class Contenido implements Serializable {
         this.materiaId = materiaId;
     }
 
-    @XmlTransient
+   /* @XmlTransient
     public Collection<Competencia> getCompetenciaCollection() {
         return competenciaCollection;
     }
@@ -114,7 +114,7 @@ public class Contenido implements Serializable {
 
     public void setPreguntaCollection(Collection<Pregunta> preguntaCollection) {
         this.preguntaCollection = preguntaCollection;
-    }
+    }*/
 
     @Override
     public int hashCode() {

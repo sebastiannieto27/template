@@ -8,7 +8,7 @@ public class CompetenciaUtil {
 	public static CompetenciaDTO getDtoFromEntity(Competencia entity) {
 		CompetenciaDTO dto = new CompetenciaDTO();
 		dto.setCompetenciaId(entity.getCompetenciaId());
-		dto.setContenidoId(entity.getContenidoId());
+		dto.setPreguntaId(entity.getPreguntaId());
 		dto.setDescripcion(entity.getDescripcion());
 		dto.setNombre(entity.getNombre());
 		return dto;
@@ -17,7 +17,7 @@ public class CompetenciaUtil {
 	public static Competencia getEntityFromDto(CompetenciaDTO dto) {
 		Competencia entity = new Competencia();
 		entity.setCompetenciaId(dto.getCompetenciaId());
-		entity.setContenidoId(dto.getContenidoId());
+		entity.setPreguntaId(dto.getPreguntaId());
 		entity.setDescripcion(dto.getDescripcion());
 		entity.setNombre(dto.getNombre());
 		return entity;

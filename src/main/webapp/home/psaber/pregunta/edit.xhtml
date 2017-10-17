@@ -7,49 +7,27 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-        <p:dialog id="PreguntaEditDlg" widgetVar="PreguntaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditPreguntaTitle}" closeOnEscape="true">
+        <p:dialog id="preguntaEditDlg" widgetVar="preguntaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.edit}" closeOnEscape="true">
 
-            <h:form id="PreguntaEditForm">
+            <h:form id="preguntaEditForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{preguntaController.selected != null}">
 
+                        <p:outputLabel value="#{msg.description}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{preguntaController.selected.descripcion}" title="#{msg.description}" required="true" requiredMessage="#{msg.descriptionRequiredMessage}"/>
 
-                        <h:outputLabel value="#{msg.EditPreguntaLabel_preguntaId}" for="preguntaId" />
-                        <h:outputText id="preguntaId" value="#{preguntaController.selected.preguntaId}" />
+                        <p:outputLabel value="#{msg.codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{preguntaController.selected.codigo}" title="#{msg.codigo}" required="true" />
+                        
+                        <p:outputLabel value="#{msg.titulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{preguntaController.selected.titulo}" title="#{msg.titulo}"/>
 
-                        <p:outputLabel value="#{msg.EditPreguntaLabel_descripcion}" for="descripcion" />
-                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{preguntaController.selected.descripcion}" title="#{msg.EditPreguntaTitle_descripcion}" required="true" requiredMessage="#{msg.EditPreguntaRequiredMessage_descripcion}"/>
-
-                        <p:outputLabel value="#{msg.EditPreguntaLabel_valor}" for="valor" />
-                        <p:inputText id="valor" value="#{preguntaController.selected.valor}" title="#{msg.EditPreguntaTitle_valor}" required="true" requiredMessage="#{msg.EditPreguntaRequiredMessage_valor}"/>
-
-                        <p:outputLabel value="#{msg.EditPreguntaLabel_contenidoId}" for="contenidoId" />
-                        <p:selectOneMenu id="contenidoId" value="#{preguntaController.selected.contenidoId}" required="true" requiredMessage="#{msg.EditPreguntaRequiredMessage_contenidoId}" converter="contenidoConverter">
-                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
-                            <f:selectItems value="#{contenidoController.items}"
-                                           var="contenidoIdItem"
-                                           itemValue="#{contenidoIdItem}"
-                                           itemLabel="#{contenidoIdItem.descripcion.toString()}"
-                                           />
-
-                        </p:selectOneMenu>
-
-                        <p:outputLabel value="#{msg.EditPreguntaLabel_materiaId}" for="materiaId" />
-                        <p:selectOneMenu id="materiaId" value="#{preguntaController.selected.materiaId}" required="true" requiredMessage="#{msg.EditPreguntaRequiredMessage_materiaId}" converter="materiaConverter">
-                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
-                            <f:selectItems value="#{materiaController.items}"
-                                           var="materiaIdItem"
-                                           itemValue="#{materiaIdItem}"
-                                           itemLabel="#{materiaIdItem.descripcion.toString()}"
-                                           />
-
-                        </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{preguntaController.save}" value="#{msg.Save}" update="display,:PreguntaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PreguntaEditDialog'));">
-                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    <p:commandButton actionListener="#{preguntaController.save}" value="#{msg.save}" update="display,:preguntaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('preguntaEditDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
-                    <p:commandButton value="#{msg.Cancel}" oncomplete="PF('PreguntaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                    <p:commandButton value="#{msg.cancel}" oncomplete="PF('preguntaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                 </h:panelGroup>
 
             </h:form>

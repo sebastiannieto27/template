@@ -23,26 +23,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author dienieto
+ * @author diego.nieto
  */
 @Entity
-@Table(name = "competencia")
+@Table(name = "respuesta")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Competencia.findAll", query = "SELECT c FROM Competencia c")
-    , @NamedQuery(name = "Competencia.findByCompetenciaId", query = "SELECT c FROM Competencia c WHERE c.competenciaId = :competenciaId")
-    , @NamedQuery(name = "Competencia.findByNombre", query = "SELECT c FROM Competencia c WHERE c.nombre = :nombre")})
-public class Competencia implements Serializable {
+    @NamedQuery(name = "Respuesta.findAll", query = "SELECT r FROM Respuesta r")
+    , @NamedQuery(name = "Respuesta.findByRespuestaId", query = "SELECT r FROM Respuesta r WHERE r.respuestaId = :respuestaId")
+    , @NamedQuery(name = "Respuesta.findByTitulo", query = "SELECT r FROM Respuesta r WHERE r.titulo = :titulo")
+    , @NamedQuery(name = "Respuesta.findByCodigo", query = "SELECT r FROM Respuesta r WHERE r.codigo = :codigo")})
+public class Respuesta implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "competencia_id")
-    private Integer competenciaId;
-    @Size(max = 50)
-    @Column(name = "nombre")
-    private String nombre;
+    @Column(name = "respuesta_id")
+    private Integer respuestaId;
+    @Size(max = 45)
+    @Column(name = "titulo")
+    private String titulo;
+    @Size(max = 45)
+    @Column(name = "codigo")
+    private String codigo;
     @Lob
     @Size(max = 65535)
     @Column(name = "descripcion")
@@ -51,27 +55,35 @@ public class Competencia implements Serializable {
     @ManyToOne(optional = false)
     private Pregunta preguntaId;
 
-    public Competencia() {
+    public Respuesta() {
     }
 
-    public Competencia(Integer competenciaId) {
-        this.competenciaId = competenciaId;
+    public Respuesta(Integer respuestaId) {
+        this.respuestaId = respuestaId;
     }
 
-    public Integer getCompetenciaId() {
-        return competenciaId;
+    public Integer getRespuestaId() {
+        return respuestaId;
     }
 
-    public void setCompetenciaId(Integer competenciaId) {
-        this.competenciaId = competenciaId;
+    public void setRespuestaId(Integer respuestaId) {
+        this.respuestaId = respuestaId;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getDescripcion() {
@@ -93,18 +105,18 @@ public class Competencia implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (competenciaId != null ? competenciaId.hashCode() : 0);
+        hash += (respuestaId != null ? respuestaId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Competencia)) {
+        if (!(object instanceof Respuesta)) {
             return false;
         }
-        Competencia other = (Competencia) object;
-        if ((this.competenciaId == null && other.competenciaId != null) || (this.competenciaId != null && !this.competenciaId.equals(other.competenciaId))) {
+        Respuesta other = (Respuesta) object;
+        if ((this.respuestaId == null && other.respuestaId != null) || (this.respuestaId != null && !this.respuestaId.equals(other.respuestaId))) {
             return false;
         }
         return true;
@@ -112,7 +124,7 @@ public class Competencia implements Serializable {
 
     @Override
     public String toString() {
-        return "co.com.core.domain.psaber.Competencia[ competenciaId=" + competenciaId + " ]";
+        return "co.com.core.domain.psaber.Respuesta[ respuestaId=" + respuestaId + " ]";
     }
     
 }

@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import co.com.core.commons.converter.psaber.CompetenciaUtil;
 import co.com.core.domain.psaber.Competencia;
 import co.com.core.domain.psaber.Contenido;
+import co.com.core.domain.psaber.Pregunta;
 import co.com.core.dto.psaber.CompetenciaDTO;
 import co.com.core.services.psaber.ICompetenciaService;
 
@@ -27,7 +28,7 @@ public class CompetenciaController {
 	private List<CompetenciaDTO> items;
 	private CompetenciaDTO selected;
 	
-	private Integer selectedContenidoId;
+	private Integer selectedPreguntaId;
 	
 	private String searchName;
 	
@@ -44,15 +45,15 @@ public class CompetenciaController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			
-			if(selectedContenidoId==null && selectedContenidoId==0) {
+			if(selectedPreguntaId==null && selectedPreguntaId==0) {
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
 						geProperty("contenidoRequiredMessage"), geProperty("pleaseVerifySummary")));
 				return false;
 			}
 					
-			//set the contenido
-			Contenido contenidoId = new Contenido(selectedContenidoId);
-			selected.setContenidoId(contenidoId);
+			//set the pregunta
+			Pregunta preguntaId = new Pregunta(selectedPreguntaId);
+			selected.setPreguntaId(preguntaId);
 			
 			competenciaService.create(selected);
 			
@@ -70,14 +71,14 @@ public class CompetenciaController {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
-				if(selectedContenidoId==null && selectedContenidoId==0) {
+				if(selectedPreguntaId==null && selectedPreguntaId==0) {
 					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
 							geProperty("contenidoRequiredMessage"), geProperty("pleaseVerifySummary")));
 					return false;
 				}
-				//set the contenido
-				Contenido contenidoId = new Contenido(selectedContenidoId);
-				selected.setContenidoId(contenidoId);
+				//set the pregunta
+				Pregunta preguntaId = new Pregunta(selectedPreguntaId);
+				selected.setPreguntaId(preguntaId);
 				
 				Competencia entity = CompetenciaUtil.getEntityFromDto(selected);
 				
@@ -109,7 +110,7 @@ public class CompetenciaController {
 	}
 
 	public void prepareEdit() {
-		this.selectedContenidoId = selected.getContenidoId().getContenidoId();
+		this.selectedPreguntaId = selected.getPreguntaId().getPreguntaId();
 	}
 	
 	public void prepareCreate() {
@@ -149,10 +150,10 @@ public class CompetenciaController {
 	}
 
 	public Integer getSelectedContenidoId() {
-		return selectedContenidoId;
+		return selectedPreguntaId;
 	}
 
 	public void setSelectedContenidoId(Integer selectedContenidoId) {
-		this.selectedContenidoId = selectedContenidoId;
+		this.selectedPreguntaId = selectedContenidoId;
 	}
 }
