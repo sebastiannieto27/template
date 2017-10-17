@@ -54,11 +54,12 @@ public class PreguntaController {
 			preguntaService.create(selected);
 			
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));
+			init();
 		} catch (Exception ex) {
 			logger.error("Throwed Exception [PreguntaController.saveNew]: " +ex.getMessage());
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("creationError"), null));
 		} finally {
-			items = preguntaService.getAll();
+			//items = preguntaService.getAll();
 		}
 		return true;
 	}
