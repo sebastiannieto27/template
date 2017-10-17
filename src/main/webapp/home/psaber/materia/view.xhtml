@@ -8,26 +8,26 @@
 
     <ui:composition>
 
-        <p:dialog id="MateriaViewDlg" widgetVar="MateriaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.ViewMateriaTitle}" closeOnEscape="true">
+        <p:dialog id="materiaViewDlg" widgetVar="materiaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.materia}" closeOnEscape="true">
 
-            <h:form id="MateriaViewForm">
+            <h:form id="materiaViewForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{materiaController.selected != null}">
 
-                        <h:outputText value="#{msg.ViewMateriaLabel_materiaId}"/>
-                        <h:outputText value="#{materiaController.selected.materiaId}" title="#{msg.ViewMateriaTitle_materiaId}"/>
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{materiaController.selected.materiaId}" title="#{msg.id}"/>
 
-                        <h:outputText value="#{msg.ViewMateriaLabel_nombre}"/>
-                        <h:outputText value="#{materiaController.selected.nombre}" title="#{msg.ViewMateriaTitle_nombre}"/>
+                        <h:outputText value="#{msg.name}"/>
+                        <h:outputText value="#{materiaController.selected.nombre}" title="#{msg.name}"/>
 
-                        <h:outputText value="#{msg.ViewMateriaLabel_descripcion}"/>
-                        <h:outputText value="#{materiaController.selected.descripcion}" title="#{msg.ViewMateriaTitle_descripcion}"/>
+                        <h:outputText value="#{msg.description}"/>
+                        <h:outputText value="#{materiaController.selected.descripcion}" title="#{msg.description}"/>
 
-                        <h:outputText value="#{msg.ViewMateriaLabel_componenteId}"/>
+                        <h:outputText value="#{msg.componente}"/>
                         <h:outputText value="#{materiaController.selected.componenteId.descripcion}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{msg.Close}" onclick="PF('MateriaViewDialog').hide()"/>
+                    <p:commandButton value="#{msg.close}" onclick="PF('materiaViewDialog').hide()"/>
                 </h:panelGroup>
 
             </h:form>

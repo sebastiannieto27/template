@@ -1,51 +1,47 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
 
-    <ui:composition>
+        <p:dialog id="materiaCreateDlg" widgetVar="materiaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.materia}" closeOnEscape="true">
 
-        <p:dialog id="MateriaCreateDlg" widgetVar="MateriaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.CreateMateriaTitle}" closeOnEscape="true">
-
-            <h:form id="MateriaCreateForm">
+            <h:form id="materiaCreateForm">
 
                 <h:panelGroup id="display" rendered="#{materiaController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="#{msg.CreateMateriaLabel_materiaId}" for="materiaId" />
-                        <p:inputText id="materiaId" value="#{materiaController.selected.materiaId}" title="#{msg.CreateMateriaTitle_materiaId}" required="true" requiredMessage="#{msg.CreateMateriaRequiredMessage_materiaId}"/>
+                        <p:outputLabel value="#{msg.name}" for="nombre" />
+                        <p:inputText id="nombre" value="#{materiaController.selected.nombre}" title="#{msg.name}" required="true" requiredMessage="#{msg.nameRequiredMessage_nombre}" size="50" maxlength="50"/>
 
-                        <p:outputLabel value="#{msg.CreateMateriaLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{materiaController.selected.nombre}" title="#{msg.CreateMateriaTitle_nombre}" required="true" requiredMessage="#{msg.CreateMateriaRequiredMessage_nombre}" size="50" maxlength="50"/>
+                        <p:outputLabel value="#{msg.description}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{materiaController.selected.descripcion}" title="#{msg.description}" />
 
-                        <p:outputLabel value="#{msg.CreateMateriaLabel_descripcion}" for="descripcion" />
-                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{materiaController.selected.descripcion}" title="#{msg.CreateMateriaTitle_descripcion}" />
-
-                        <p:outputLabel value="#{msg.CreateMateriaLabel_componenteId}" for="componenteId" />
-                        <p:selectOneMenu id="componenteId" value="#{materiaController.selected.componenteId}" required="true" requiredMessage="#{msg.CreateMateriaRequiredMessage_componenteId}" converter="componenteConverter">
+                        <p:outputLabel value="#{msg.componente}" for="componenteId" />
+                        <p:selectOneMenu id="componenteId" value="#{materiaController.selected.componenteId}" required="true" requiredMessage="#{msg.componenteRequiredMessage}" >
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{componenteController.items}"
                                            var="componenteIdItem"
-                                           itemValue="#{componenteIdItem}"
-                                           itemLabel="#{componenteIdItem.descripcion.toString()}"
+                                           itemValue="#{componenteIdItem.componenteId}"
+                                           itemLabel="#{componenteIdItem.nombre.toString()}"
                                            />
-
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{materiaController.saveNew}" value="#{msg.Save}" update="display,:MateriaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MateriaCreateDialog'));">
-                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    <p:commandButton actionListener="#{materiaController.saveNew}" value="#{msg.save}" update="display,:materiaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('materiaCreateDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
 
-                    <p:commandButton value="#{msg.Cancel}" oncomplete="PF('MateriaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                    <p:commandButton value="#{msg.cancel}" oncomplete="PF('materiaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                 </h:panelGroup>
 
             </h:form>
 
         </p:dialog>
-
     </ui:composition>
-
+    </body>
 </html>

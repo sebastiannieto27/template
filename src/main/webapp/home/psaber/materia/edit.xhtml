@@ -7,38 +7,33 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-        <p:dialog id="MateriaEditDlg" widgetVar="MateriaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.EditMateriaTitle}" closeOnEscape="true">
+        <p:dialog id="materiaEditDlg" widgetVar="materiaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.materia}" closeOnEscape="true">
 
-            <h:form id="MateriaEditForm">
+            <h:form id="materiaEditForm">
 
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{materiaController.selected != null}">
 
+                        <p:outputLabel value="#{msg.name}" for="nombre" />
+                        <p:inputText id="nombre" value="#{materiaController.selected.nombre}" title="#{msg.name}" required="true" requiredMessage="#{msg.nameRequiredMessage}" size="50" maxlength="50"/>
 
-                        <h:outputLabel value="#{msg.EditMateriaLabel_materiaId}" for="materiaId" />
-                        <h:outputText id="materiaId" value="#{materiaController.selected.materiaId}" />
+                        <p:outputLabel value="#{msg.EditmateriaLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{materiaController.selected.descripcion}" title="#{msg.description}" />
 
-                        <p:outputLabel value="#{msg.EditMateriaLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{materiaController.selected.nombre}" title="#{msg.EditMateriaTitle_nombre}" required="true" requiredMessage="#{msg.EditMateriaRequiredMessage_nombre}" size="50" maxlength="50"/>
-
-                        <p:outputLabel value="#{msg.EditMateriaLabel_descripcion}" for="descripcion" />
-                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{materiaController.selected.descripcion}" title="#{msg.EditMateriaTitle_descripcion}" />
-
-                        <p:outputLabel value="#{msg.EditMateriaLabel_componenteId}" for="componenteId" />
-                        <p:selectOneMenu id="componenteId" value="#{materiaController.selected.componenteId}" required="true" requiredMessage="#{msg.EditMateriaRequiredMessage_componenteId}" converter="componenteConverter">
+                        <p:outputLabel value="#{msg.componente}" for="componenteId" />
+                        <p:selectOneMenu id="componenteId" value="#{materiaController.selected.componenteId}" required="true" requiredMessage="#{msg.componenteRequiredMessage}" >
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{componenteController.items}"
                                            var="componenteIdItem"
-                                           itemValue="#{componenteIdItem}"
-                                           itemLabel="#{componenteIdItem.descripcion.toString()}"
+                                           itemValue="#{componenteIdItem.componenteId}"
+                                           itemLabel="#{componenteIdItem.nombre.toString()}"
                                            />
-
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{materiaController.save}" value="#{msg.Save}" update="display,:MateriaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MateriaEditDialog'));">
-                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    <p:commandButton actionListener="#{materiaController.save}" value="#{msg.save}" update="display,:materiaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('materiaEditDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>
                     </p:commandButton>
-                    <p:commandButton value="#{msg.Cancel}" oncomplete="PF('MateriaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                    <p:commandButton value="#{msg.cancel}" oncomplete="PF('materiaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                 </h:panelGroup>
 
             </h:form>
