@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="preguntaViewTemaDlg" widgetVar="preguntaViewTemaDlg" modal="true" resizable="true" width="50%" appendTo="@(body)" header="#{msg.tema}" closeOnEscape="true">
+
+            <h:form id="preguntaViewTemaForm">
+            <p:dataTable id="datalist"
+                         value="#{temaController.lazyModel}"
+                         var="item"
+                         rowKey="#{item.temaId}"
+                         paginator="true"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{temaController.selected}"
+                         lazy="true">
+
+                <p:ajax event="rowSelect" />
+
+               <p:column sortBy="#{item.temaId}" filterBy="#{item.temaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.temaId}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.description}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+                
+                <p:column sortBy="#{item.submenu}" filterBy="#{item.submenu}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.submenu}"/>
+                    </f:facet>
+                    
+               		 <h:selectBooleanCheckbox id="chk-#{item.menuId}"
+                                value="#{temaController.checkValue}">
+                                <f:ajax execute="@this" listener="#{temaController.addRemoveTemaList(item)}"/>
+                       </h:selectBooleanCheckbox>
+               
+                </p:column>
+            </p:dataTable>
+            <p:commandButton id="addTemaButton" value="#{msg.add}" actionListener="#{temaController.addTemaToPregunta}" update="preguntaViewTemaForm listPreguntaTemaForm" />
+            </h:form>
+            <h:form id="listPreguntaTemaForm">
+	            <p:dataTable id="datalistTemaPregunta"
+	                         value="#{temaController.temaItems}"
+	                         var="temaItem"
+	                         rowKey="#{temaItem.temaId}"
+	                         paginator="true"
+	                         rows="5"
+	                         rowsPerPageTemplate="10,20,30,40,50"
+	                         selectionMode="single"
+	                         selection="#{temaController.selectedTema}">
+
+                <p:column sortBy="#{temaItem.temaId}" filterBy="#{temaItem.temaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{temaItem.temaId}"/>
+                </p:column>
+
+                <p:column sortBy="#{temaItem.nombre}" filterBy="#{temaItem.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{temaItem.nombre}"/>
+                </p:column>
+                
+                <p:column sortBy="#{temaItem.descripcion}" filterBy="#{temaItem.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.description}"/>
+                    </f:facet>
+                    <h:outputText value="#{temaItem.descripcion}"/>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.submenu}"/>
+                    </f:facet>
+                    
+               		 <h:selectBooleanCheckbox id="chk-#{temaItem.temaId}"
+                                value="#{temaController.preguntaTemaCheckValue}">
+                                <f:ajax execute="@this" listener="#{temaController.addRemovePreguntaTema(temaItem)}"/>
+                       </h:selectBooleanCheckbox>
+               
+                </p:column>
+                
+            </p:dataTable>
+            <p:commandButton id="removeTemaButton" value="#{msg.remove}" actionListener="#{temaController.removeTemaFromPregunta}" update="listPreguntaTemaForm preguntaViewTemaForm" />
+		</h:form>
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

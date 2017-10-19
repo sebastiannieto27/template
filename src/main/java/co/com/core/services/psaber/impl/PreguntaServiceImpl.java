@@ -7,15 +7,20 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import co.com.core.commons.converter.psaber.PreguntaUtil;
+import co.com.core.commons.converter.psaber.TemaUtil;
 import co.com.core.dao.psaber.PreguntaDAO;
+import co.com.core.dao.psaber.TemaDAO;
 import co.com.core.domain.psaber.Pregunta;
+import co.com.core.domain.psaber.Tema;
 import co.com.core.dto.psaber.PreguntaDTO;
+import co.com.core.dto.psaber.TemaDTO;
 import co.com.core.services.psaber.IPreguntaService;
 
 public class PreguntaServiceImpl implements IPreguntaService {
 
 	private static final Logger logger = Logger.getLogger(PreguntaServiceImpl.class);
 	PreguntaDAO PreguntaDAO;
+	TemaDAO temaDAO;
 	
 	@Override
 	public List<PreguntaDTO> getAll() {
@@ -63,4 +68,5 @@ public class PreguntaServiceImpl implements IPreguntaService {
 	public void setPreguntaDAO(PreguntaDAO PreguntaDAO) {
 		this.PreguntaDAO = PreguntaDAO;
 	}
+	
 }

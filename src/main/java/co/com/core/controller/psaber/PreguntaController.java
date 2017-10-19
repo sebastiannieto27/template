@@ -30,6 +30,9 @@ public class PreguntaController {
 	
 	private LazyDataModel<PreguntaDTO> lazyModel;
 	
+
+	
+	
 	public void init() {
 		lazyModel = new PreguntaLazyLoader(preguntaService);
 	}
@@ -98,6 +101,8 @@ public class PreguntaController {
 		}
 	}
 
+	
+	
 	public void prepareCreate() {
 		selected = new PreguntaDTO();
 	}
@@ -141,5 +146,4 @@ public class PreguntaController {
 	public void setLazyModel(LazyDataModel<PreguntaDTO> lazyModel) {
 		this.lazyModel = lazyModel;
 	}
-	
 }

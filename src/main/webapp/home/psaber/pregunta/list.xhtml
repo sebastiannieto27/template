@@ -63,6 +63,14 @@
                     </f:facet>
                     <h:outputText value="#{item.descripcion}"/>
                 </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.tema}"/>
+                    </f:facet>
+                    <p:commandLink id="viewMenuLink" value="#{msg.tema}" update=":preguntaViewTemaForm,:listPreguntaTemaForm" 
+                    		oncomplete="PF('preguntaViewTemaDialog').show()" actionListener="#{temaController.findTemaByPregunta(item)}"/>
+                </p:column>
 
             </p:dataTable>
 

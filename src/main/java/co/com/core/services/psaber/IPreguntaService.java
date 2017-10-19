@@ -5,6 +5,7 @@ import java.util.Map;
 
 import co.com.core.domain.psaber.Pregunta;
 import co.com.core.dto.psaber.PreguntaDTO;
+import co.com.core.dto.psaber.TemaDTO;
 
 
 public interface IPreguntaService {
@@ -18,4 +19,5 @@ public interface IPreguntaService {
 	public void delete(PreguntaDTO dto);
 	
 	public void update(PreguntaDTO dto);
+
 }

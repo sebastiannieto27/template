@@ -47,7 +47,7 @@ public class CompetenciaController {
 			
 			if(selectedPreguntaId==null && selectedPreguntaId==0) {
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-						geProperty("contenidoRequiredMessage"), geProperty("pleaseVerifySummary")));
+						geProperty("preguntaRequiredMessage"), geProperty("pleaseVerifySummary")));
 				return false;
 			}
 					

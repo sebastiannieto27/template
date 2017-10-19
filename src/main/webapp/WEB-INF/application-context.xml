@@ -159,45 +159,11 @@
 	    <bean id="preguntaDAO" class="co.com.core.dao.psaber.impl.PreguntaDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
-
-    
-<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
-    
-	    <bean id="branchDAO" class="co.com.core.dao.cms.impl.BranchDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-    
-	    <bean id="branchTypeDAO" class="co.com.core.dao.cms.impl.BranchTypeDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	        
-   	    <bean id="branchServiceDAO" class="co.com.core.dao.cms.impl.BranchServiceDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
 	    
-	    <bean id="newsTypeDAO" class="co.com.core.dao.cms.impl.NewsTypeDAOImpl">
+	    <bean id="temaDAO" class="co.com.core.dao.psaber.impl.TemaDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    	    
-	    <bean id="newsDAO" class="co.com.core.dao.cms.impl.NewsDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    	    	    
-	    <bean id="generalStatusDAO" class="co.com.core.dao.cms.impl.GeneralStatusDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    	    	    	    
-	    <bean id="companyEventDAO" class="co.com.core.dao.cms.impl.CompanyEventDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-	    	    	    	    	    
-	    <bean id="serviceDAO" class="co.com.core.dao.cms.impl.ServiceDAOImpl">
-	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>
-    
-<!-- Account Financial Module  Account Financial Module  Account Financial Module -->
-	    
-  	    
+	    </bean>  
+	      
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -278,43 +244,11 @@
    		<bean id="preguntaService" class="co.com.core.services.psaber.impl.PreguntaServiceImpl">
 	    	<property name="preguntaDAO" ref="preguntaDAO" />
 	    </bean>
-	      
-<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
-		<bean id="branchService" class="co.com.core.services.cms.impl.BranchServiceImpl">
-	    	<property name="branchDAO" ref="branchDAO" />
-	    </bean>
-	    
-   	    <bean id="branchTypeService" class="co.com.core.services.cms.impl.BranchTypeServiceImpl">
-	    	<property name="branchTypeDAO" ref="branchTypeDAO" />
-	    </bean>
-  
-   	    <bean id="branchServiceService" class="co.com.core.services.cms.impl.BranchServiceServiceImpl">
-	    	<property name="branchServiceDAO" ref="branchServiceDAO" />
-	    </bean>
-	    	    	    
-   	    <bean id="newsTypeService" class="co.com.core.services.cms.impl.NewsTypeServiceImpl">
-	    	<property name="newsTypeDAO" ref="newsTypeDAO" />
-	    </bean>
-	    	    	    	    
-   	    <bean id="newsService" class="co.com.core.services.cms.impl.NewsServiceImpl">
-	    	<property name="newsDAO" ref="newsDAO" />
-	    </bean>
-	    	    	    	    	    
-   	    <bean id="generalStatusService" class="co.com.core.services.cms.impl.GeneralStatusServiceImpl">
-	    	<property name="generalStatusDAO" ref="generalStatusDAO" />
-	    </bean>
-	    	    	    	    	    	    
-   	    <bean id="companyEventService" class="co.com.core.services.cms.impl.CompanyEventServiceImpl">
-	    	<property name="companyEventDAO" ref="companyEventDAO" />
-	    </bean>
-	    	    	    	    	    	    	    
-   	    <bean id="serviceService" class="co.com.core.services.cms.impl.ServiceServiceImpl">
-	    	<property name="serviceDAO" ref="serviceDAO" />
-	    </bean>
-	
-	    	    	    	    	    	    	    	    
-<!-- Account Financial Module  Account Financial Module  Account Financial Module -->
-   	   
+   		
+   		<bean id="temaService" class="co.com.core.services.psaber.impl.TemaServiceImpl">
+	    	<property name="temaDAO" ref="temaDAO" />
+	    </bean>	      
+ 
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -414,44 +348,9 @@
     <bean id="preguntaController" scope="session" class="co.com.core.controller.psaber.PreguntaController" init-method="init">
     	<property name="preguntaService" ref="preguntaService" />
     </bean>
-<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS --> 
-    	        
-    <bean id="branchController" scope="session" class="co.com.core.controller.cms.BranchController" init-method="init">
-    	<property name="branchService" ref="branchService" />
-    	<property name="uploadedFileController" ref="uploadedFileController" />
-    </bean> 
-        
-    <bean id="branchTypeController" scope="session" class="co.com.core.controller.cms.BranchTypeController" init-method="init">
-    	<property name="branchTypeService" ref="branchTypeService" />
-    </bean>
-    
-    <bean id="branchServiceController" scope="session" class="co.com.core.controller.cms.BranchServiceController" init-method="init">
-    	<property name="branchServiceService" ref="branchServiceService" />
-    </bean> 
-        
-    <bean id="newsTypeController" scope="session" class="co.com.core.controller.cms.NewsTypeController" init-method="init">
-    	<property name="newsTypeService" ref="newsTypeService" />
-    </bean>
             
-    <bean id="newsController" scope="session" class="co.com.core.controller.cms.NewsController" init-method="init">
-    	<property name="newsService" ref="newsService" />
-    	<property name="uploadedFileController" ref="uploadedFileController" />
+    <bean id="temaController" scope="session" class="co.com.core.controller.psaber.TemaController" init-method="init">
+    	<property name="temaService" ref="temaService" />
     </bean>
-                
-    <bean id="generalStatusController" scope="session" class="co.com.core.controller.cms.GeneralStatusController" init-method="init">
-    	<property name="generalStatusService" ref="generalStatusService" />
-    </bean>
-                    
-    <bean id="companyEventController" scope="session" class="co.com.core.controller.cms.CompanyEventController" init-method="init">
-    	<property name="companyEventService" ref="companyEventService" />
-   		<property name="uploadedFileController" ref="uploadedFileController" />
-    </bean>
-                        
-    <bean id="serviceController" scope="session" class="co.com.core.controller.cms.ServiceController" init-method="init">
-    	<property name="serviceService" ref="serviceService" />
-   		<property name="uploadedFileController" ref="uploadedFileController" />
-    </bean>
-    
-<!-- Account Financial Module  Account Financial Module  Account Financial Module -->    
     
 </beans>
