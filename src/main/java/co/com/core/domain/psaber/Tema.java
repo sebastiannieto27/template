@@ -6,21 +6,23 @@
 package co.com.core.domain.psaber;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -52,9 +54,8 @@ public class Tema implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "descripcion")
     private String descripcion;
-    @JoinColumn(name = "pregunta_id", referencedColumnName = "pregunta_id")
-    @ManyToOne(optional = false)
-    private Pregunta preguntaId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "temaId")
+    private Collection<PreguntaTema> preguntaTemaCollection;
 
     public Tema() {
     }
@@ -93,12 +94,13 @@ public class Tema implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Pregunta getPreguntaId() {
-        return preguntaId;
+    @XmlTransient
+    public Collection<PreguntaTema> getPreguntaTemaCollection() {
+        return preguntaTemaCollection;
     }
 
-    public void setPreguntaId(Pregunta preguntaId) {
-        this.preguntaId = preguntaId;
+    public void setPreguntaTemaCollection(Collection<PreguntaTema> preguntaTemaCollection) {
+        this.preguntaTemaCollection = preguntaTemaCollection;
     }
 
     @Override

@@ -57,6 +57,7 @@
                 <value>co.com.core.domain.psaber.Pregunta</value>
                 <value>co.com.core.domain.psaber.Respuesta</value>
                 <value>co.com.core.domain.psaber.Tema</value>
+                <value>co.com.core.domain.psaber.PreguntaTema</value>
                 
                 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS 
 				<value>co.com.core.domain.cms.Branch</value>

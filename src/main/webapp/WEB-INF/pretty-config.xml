@@ -78,6 +78,11 @@
 		<view-id value="/home/psaber/pregunta/index.xhtml" />
 	</url-mapping>
 		
+	<url-mapping id="tema">
+		<pattern value="/psaber/tema" />
+		<view-id value="/home/psaber/tema/index.xhtml" />
+	</url-mapping>	
+	
 	<!-- saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro -->
 	
 	

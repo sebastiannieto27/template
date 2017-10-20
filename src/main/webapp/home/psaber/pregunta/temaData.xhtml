@@ -8,20 +8,18 @@
 
     <ui:composition>
 
-        <p:dialog id="preguntaViewTemaDlg" widgetVar="preguntaViewTemaDlg" modal="true" resizable="true" width="50%" appendTo="@(body)" header="#{msg.tema}" closeOnEscape="true">
+        <p:dialog id="preguntaViewTemaDlg" widgetVar="preguntaViewTemaDialog" modal="true" resizable="true" width="50%" appendTo="@(body)" header="#{msg.tema}" closeOnEscape="true">
 
             <h:form id="preguntaViewTemaForm">
             <p:dataTable id="datalist"
-                         value="#{temaController.lazyModel}"
+                         value="#{temaController.temaList}"
                          var="item"
                          rowKey="#{item.temaId}"
                          paginator="true"
-                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         rows="10"
+                         rows="5"
                          rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
-                         selection="#{temaController.selected}"
-                         lazy="true">
+                         selection="#{temaController.selected}">
 
                 <p:ajax event="rowSelect" />
 
@@ -60,36 +58,37 @@
             </p:dataTable>
             <p:commandButton id="addTemaButton" value="#{msg.add}" actionListener="#{temaController.addTemaToPregunta}" update="preguntaViewTemaForm listPreguntaTemaForm" />
             </h:form>
+            
             <h:form id="listPreguntaTemaForm">
 	            <p:dataTable id="datalistTemaPregunta"
 	                         value="#{temaController.temaItems}"
-	                         var="temaItem"
-	                         rowKey="#{temaItem.temaId}"
+	                         var="preguntaTemaItem"
+	                         rowKey="#{preguntaTemaItem.preguntaTemaId}"
 	                         paginator="true"
 	                         rows="5"
 	                         rowsPerPageTemplate="10,20,30,40,50"
 	                         selectionMode="single"
-	                         selection="#{temaController.selectedTema}">
+	                         selection="#{temaController.selectedPreguntaTema}">
 
-                <p:column sortBy="#{temaItem.temaId}" filterBy="#{temaItem.temaId}">
+                <p:column sortBy="#{preguntaTemaItem.preguntaTemaId}" filterBy="#{preguntaTemaItem.preguntaTemaId}">
                     <f:facet name="header">
                         <h:outputText value="#{msg.id}"/>
                     </f:facet>
-                    <h:outputText value="#{temaItem.temaId}"/>
+                    <h:outputText value="#{preguntaTemaItem.preguntaTemaId}"/>
                 </p:column>
 
-                <p:column sortBy="#{temaItem.nombre}" filterBy="#{temaItem.nombre}">
+                <p:column sortBy="#{preguntaTemaItem.temaId.nombre}" filterBy="#{preguntaTemaItem.temaId.nombre}">
                     <f:facet name="header">
                         <h:outputText value="#{msg.name}"/>
                     </f:facet>
-                    <h:outputText value="#{temaItem.nombre}"/>
+                    <h:outputText value="#{preguntaTemaItem.temaId.nombre}"/>
                 </p:column>
                 
-                <p:column sortBy="#{temaItem.descripcion}" filterBy="#{temaItem.descripcion}">
+                <p:column sortBy="#{preguntaTemaItem.temaId.descripcion}" filterBy="#{preguntaTemaItem.temaId.descripcion}">
                     <f:facet name="header">
                         <h:outputText value="#{msg.description}"/>
                     </f:facet>
-                    <h:outputText value="#{temaItem.descripcion}"/>
+                    <h:outputText value="#{preguntaTemaItem.temaId.descripcion}"/>
                 </p:column>
                 
                 <p:column>
@@ -99,7 +98,7 @@
                     
                		 <h:selectBooleanCheckbox id="chk-#{temaItem.temaId}"
                                 value="#{temaController.preguntaTemaCheckValue}">
-                                <f:ajax execute="@this" listener="#{temaController.addRemovePreguntaTema(temaItem)}"/>
+                                <f:ajax execute="@this" listener="#{temaController.addRemovePreguntaTema(preguntaTemaItem)}"/>
                        </h:selectBooleanCheckbox>
                
                 </p:column>

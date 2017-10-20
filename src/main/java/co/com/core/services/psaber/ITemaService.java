@@ -5,6 +5,7 @@ import java.util.Map;
 
 import co.com.core.domain.psaber.Tema;
 import co.com.core.dto.psaber.PreguntaDTO;
+import co.com.core.dto.psaber.PreguntaTemaDTO;
 import co.com.core.dto.psaber.TemaDTO;
 
 
@@ -22,5 +23,9 @@ public interface ITemaService {
 	
 	public List<TemaDTO> getNotAssignedTema(String ids); 
 	
-	public List<TemaDTO> findTemaByPregunta(PreguntaDTO dto);
+	public List<PreguntaTemaDTO> findTemaByPregunta(PreguntaDTO dto);
+	
+	public void createPreguntaTema(PreguntaTemaDTO dto);
+	
+	public void deletePreguntaTema(PreguntaTemaDTO dto);
 }

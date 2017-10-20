@@ -14,9 +14,9 @@ import org.primefaces.model.LazyDataModel;
 
 import co.com.core.commons.converter.psaber.PreguntaUtil;
 import co.com.core.commons.converter.psaber.TemaUtil;
-import co.com.core.domain.psaber.Pregunta;
 import co.com.core.domain.psaber.Tema;
 import co.com.core.dto.psaber.PreguntaDTO;
+import co.com.core.dto.psaber.PreguntaTemaDTO;
 import co.com.core.dto.psaber.TemaDTO;
 import co.com.core.lazy.loader.psaber.TemaLazyLoader;
 import co.com.core.services.psaber.ITemaService;
@@ -37,11 +37,11 @@ public class TemaController {
 	private LazyDataModel<TemaDTO> lazyModel;
 	
 	private PreguntaDTO selectedPregunta;
-	private TemaDTO selectedTema;
-	List<TemaDTO> temaItems;
+	private PreguntaTemaDTO selectedPreguntaTema;
+	private List<PreguntaTemaDTO> temaItems;
 	
 	private List<TemaDTO> temaList;
-	private List<TemaDTO> deleteTemaItems;
+	private List<PreguntaTemaDTO> deleteTemaItems;
 	
 	private boolean checkValue;
 	private boolean preguntaTemaCheckValue;
@@ -68,17 +68,7 @@ public class TemaController {
 	public boolean saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			
-			if(selectedPreguntaId==null && selectedPreguntaId==0) {
-				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-						geProperty("preguntaRequiredMessage"), geProperty("pleaseVerifySummary")));
-				return false;
-			}
 					
-			//set the pregunta
-			Pregunta preguntaId = new Pregunta(selectedPreguntaId);
-			selected.setPreguntaId(preguntaId);
-			
 			temaService.create(selected);
 			
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));
@@ -87,7 +77,7 @@ public class TemaController {
 			logger.error("Throwed Exception [TemaController.saveNew]: " +ex.getMessage());
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("creationError"), null));
 		} finally {
-			//items = TemaService.getAll();
+			init();
 		}
 		return true;
 	}
@@ -97,18 +87,6 @@ public class TemaController {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
 				
-				if(selectedPreguntaId==null && selectedPreguntaId==0) {
-					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-							geProperty("preguntaRequiredMessage"), geProperty("pleaseVerifySummary")));
-					return false;
-				}
-						
-				//set the pregunta
-				Pregunta preguntaId = new Pregunta(selectedPreguntaId);
-				selected.setPreguntaId(preguntaId);
-				
-				Tema entity = TemaUtil.getEntityFromDto(selected);
-				
 				temaService.update(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulEdition"), null));
 				init();
@@ -116,7 +94,7 @@ public class TemaController {
 				logger.error("Throwed Exception [TemaController.save]: " +ex.getMessage());
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("editionError"), null));
 			} finally {
-				//items = TemaService.getAll();
+				init();
 			}
 		}
 		return true;
@@ -132,7 +110,7 @@ public class TemaController {
 				logger.error("Throwed Exception [TemaController.delete]: " +ex.getMessage());
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("deletionError"), null));
 			} finally {
-				items = temaService.getAll();
+				init();
 			}
 		}
 	}
@@ -152,7 +130,7 @@ public class TemaController {
 		try {
 			temaItems = temaService.findTemaByPregunta(dto);
 			String temaIds = getTemaIds();
-			//temaItems = temaService.getAll();
+			temaList = temaService.getNotAssignedTema(temaIds);
 		} catch(Exception ex) {
 			logger.error("Error finding temas by Pregunta: " + ex.getMessage());
 		}
@@ -166,8 +144,10 @@ public class TemaController {
 		try {
 			if(temaList!=null && temaList.size() > 0) {
 				for(TemaDTO item : temaList) {
-					item.setPreguntaId(PreguntaUtil.getEntityFromDto(selectedPregunta));
-					temaService.update(item);
+					PreguntaTemaDTO dto = new PreguntaTemaDTO();
+					dto.setPreguntaId(PreguntaUtil.getEntityFromDto(this.selectedPregunta));
+					dto.setTemaId(TemaUtil.getEntityFromDto(item));
+					temaService.createPreguntaTema(dto);
 				}
 			}
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("addItemSuccess"), null));
@@ -175,24 +155,24 @@ public class TemaController {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("addItemError"), null));
 			logger.error("Throwed Exception [PreguntaController.addTemaToPregunta]: " +ex.getMessage());
 		} finally {
-			temaList = new ArrayList<TemaDTO>();
+			temaList = new ArrayList<>();
 			findTemaByPregunta(selectedPregunta);
 		}
 	}
 	
 	/**
-	 * create a string with the menu ids
+	 * create a string with the tema ids
 	 * @return
 	 */
 	private String getTemaIds() {
 		int counter = 0;
 		StringBuilder ids = new StringBuilder();
 		if(temaItems!=null && temaItems.size() > 0) {
-			for(TemaDTO dto:  temaItems) {
+			for(PreguntaTemaDTO dto:  temaItems) {
 				if(counter > 0) {
 					ids.append(",");
 				}
-				ids.append(dto.getTemaId());
+				ids.append(dto.getTemaId().getTemaId());
 				counter++;
 			}
 		}
@@ -223,7 +203,7 @@ public class TemaController {
 	 * add the item to the deletion list
 	 * @param PreguntaMenu
 	 */
-	public void addRemovePreguntaTema(TemaDTO dto) {
+	public void addRemovePreguntaTema(PreguntaTemaDTO dto) {
 
 		try {
 			if(preguntaTemaCheckValue) {
@@ -244,8 +224,8 @@ public class TemaController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 			if(deleteTemaItems!=null && deleteTemaItems.size() > 0) {
-				for(TemaDTO dto : deleteTemaItems) {
-					temaService.update(dto);
+				for(PreguntaTemaDTO dto : deleteTemaItems) {
+					temaService.deletePreguntaTema(dto);
 				}
 			}
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("removeItemSucces"), null));
@@ -253,7 +233,7 @@ public class TemaController {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("removeItemError"), null));
 			logger.error("Throwed Exception [PreguntaController.removeMenuFromRol]: " +ex.getMessage());
 		}  finally {
-			deleteTemaItems = new ArrayList<TemaDTO>();
+			deleteTemaItems = new ArrayList<>();
 			findTemaByPregunta(this.selectedPregunta);
 		}
 	}
@@ -299,19 +279,27 @@ public class TemaController {
 		this.lazyModel = lazyModel;
 	}
 	
-	public TemaDTO getSelectedTema() {
-		return selectedTema;
+	public PreguntaDTO getSelectedPregunta() {
+		return selectedPregunta;
 	}
 
-	public void setSelectedTema(TemaDTO selectedTema) {
-		this.selectedTema = selectedTema;
+	public void setSelectedPregunta(PreguntaDTO selectedPregunta) {
+		this.selectedPregunta = selectedPregunta;
 	}
 
-	public List<TemaDTO> getTemaItems() {
+	public PreguntaTemaDTO getSelectedPreguntaTema() {
+		return selectedPreguntaTema;
+	}
+
+	public void setSelectedPreguntaTema(PreguntaTemaDTO selectedPreguntaTema) {
+		this.selectedPreguntaTema = selectedPreguntaTema;
+	}
+
+	public List<PreguntaTemaDTO> getTemaItems() {
 		return temaItems;
 	}
 
-	public void setTemaItems(List<TemaDTO> temaItems) {
+	public void setTemaItems(List<PreguntaTemaDTO> temaItems) {
 		this.temaItems = temaItems;
 	}
 

@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author dienieto
+ * @author diego.nieto
  */
 @Entity
 @Table(name = "pregunta")
@@ -34,10 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Pregunta.findAll", query = "SELECT p FROM Pregunta p")
     , @NamedQuery(name = "Pregunta.findByPreguntaId", query = "SELECT p FROM Pregunta p WHERE p.preguntaId = :preguntaId")
+    , @NamedQuery(name = "Pregunta.findByCodigo", query = "SELECT p FROM Pregunta p WHERE p.codigo = :codigo")
     , @NamedQuery(name = "Pregunta.findByTitulo", query = "SELECT p FROM Pregunta p WHERE p.titulo = :titulo")})
 public class Pregunta implements Serializable {
-
-
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,11 +57,7 @@ public class Pregunta implements Serializable {
     @Column(name = "titulo")
     private String titulo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
-    private Collection<Tema> temaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
-    private Collection<Respuesta> respuestaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
-    private Collection<Competencia> competenciaCollection;
+    private Collection<PreguntaTema> preguntaTemaCollection;
 
     public Pregunta() {
     }
@@ -109,30 +104,12 @@ public class Pregunta implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Tema> getTemaCollection() {
-        return temaCollection;
+    public Collection<PreguntaTema> getPreguntaTemaCollection() {
+        return preguntaTemaCollection;
     }
 
-    public void setTemaCollection(Collection<Tema> temaCollection) {
-        this.temaCollection = temaCollection;
-    }
-
-    @XmlTransient
-    public Collection<Respuesta> getRespuestaCollection() {
-        return respuestaCollection;
-    }
-
-    public void setRespuestaCollection(Collection<Respuesta> respuestaCollection) {
-        this.respuestaCollection = respuestaCollection;
-    }
-
-    @XmlTransient
-    public Collection<Competencia> getCompetenciaCollection() {
-        return competenciaCollection;
-    }
-
-    public void setCompetenciaCollection(Collection<Competencia> competenciaCollection) {
-        this.competenciaCollection = competenciaCollection;
+    public void setPreguntaTemaCollection(Collection<PreguntaTema> preguntaTemaCollection) {
+        this.preguntaTemaCollection = preguntaTemaCollection;
     }
 
     @Override

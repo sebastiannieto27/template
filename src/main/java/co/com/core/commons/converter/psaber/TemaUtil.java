@@ -10,7 +10,6 @@ public class TemaUtil {
 		dto.setTemaId(entity.getTemaId());
 		dto.setDescripcion(entity.getDescripcion());
 		dto.setNombre(entity.getNombre());
-		dto.setPreguntaId(entity.getPreguntaId());
 		return dto;
 	}
 	
@@ -19,7 +18,6 @@ public class TemaUtil {
 		entity.setTemaId(dto.getTemaId());
 		entity.setDescripcion(dto.getDescripcion());
 		entity.setNombre(dto.getNombre());
-		entity.setPreguntaId(dto.getPreguntaId());
 		return entity;
 	}
 }
