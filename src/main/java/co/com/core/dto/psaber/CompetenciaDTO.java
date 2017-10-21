@@ -1,14 +1,14 @@
 package co.com.core.dto.psaber;
 
-import co.com.core.domain.psaber.Contenido;
-import co.com.core.domain.psaber.Pregunta;
+import co.com.core.domain.psaber.Area;
 
 public class CompetenciaDTO {
 
 	private Integer competenciaId;
 	private String nombre;
 	private String descripcion;
-	private Pregunta preguntaId;
+	private String codigo;
+	private Area areaId;
 	
 	public Integer getCompetenciaId() {
 		return competenciaId;
@@ -34,19 +34,25 @@ public class CompetenciaDTO {
 		this.descripcion = descripcion;
 	}
 
-	public Pregunta getPreguntaId() {
-		return preguntaId;
+	public String getCodigo() {
+		return codigo;
 	}
 
-	public void setPreguntaId(Pregunta preguntaId) {
-		this.preguntaId = preguntaId;
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public Area getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(Area areaId) {
+		this.areaId = areaId;
 	}
 
 	@Override
 	public String toString() {
 		return "CompetenciaDTO [competenciaId=" + competenciaId + ", nombre=" + nombre + ", descripcion=" + descripcion
-				+ ", preguntaId=" + preguntaId + "]";
+				+ ", codigo=" + codigo + ", areaId=" + areaId + "]";
 	}
-	
-
 }

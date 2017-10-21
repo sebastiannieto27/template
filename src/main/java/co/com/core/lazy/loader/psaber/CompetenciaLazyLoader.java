@@ -9,23 +9,23 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import co.com.core.dto.psaber.PreguntaDTO;
-import co.com.core.lazy.sorter.psaber.PreguntaLazySorter;
-import co.com.core.services.psaber.IPreguntaService;
+import co.com.core.dto.psaber.CompetenciaDTO;
+import co.com.core.lazy.sorter.psaber.CompetenciaLazySorter;
+import co.com.core.services.psaber.ICompetenciaService;
 
-public class PreguntaLazyLoader extends LazyDataModel<PreguntaDTO> {
-	private List<PreguntaDTO> datasource;
+public class CompetenciaLazyLoader extends LazyDataModel<CompetenciaDTO> {
+	private List<CompetenciaDTO> datasource;
     
-    public PreguntaLazyLoader(IPreguntaService serviceImpl) {
+    public CompetenciaLazyLoader(ICompetenciaService serviceImpl) {
         this.datasource = serviceImpl.getAll();
     }
     
     @Override
-    public PreguntaDTO getRowData(String rowKey) {
-        for(PreguntaDTO dto : datasource) {
+    public CompetenciaDTO getRowData(String rowKey) {
+        for(CompetenciaDTO dto : datasource) {
         	try {
             	Integer rowKeyInt = Integer.parseInt(rowKey);
-        		if(dto.getPreguntaId() == rowKeyInt)
+        		if(dto.getCompetenciaId() == rowKeyInt)
                 return dto;
         	} catch(Exception ex) {
         		return null;
@@ -35,15 +35,15 @@ public class PreguntaLazyLoader extends LazyDataModel<PreguntaDTO> {
     }
  
     @Override
-    public Object getRowKey(PreguntaDTO dto) {
-        return dto.getPreguntaId();
+    public Object getRowKey(CompetenciaDTO dto) {
+        return dto.getCompetenciaId();
     }
     
 	@Override
-    public List<PreguntaDTO> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {
-		List<PreguntaDTO> data = new ArrayList<PreguntaDTO>();
+    public List<CompetenciaDTO> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {
+		List<CompetenciaDTO> data = new ArrayList<CompetenciaDTO>();
 		  //filter
-        for(PreguntaDTO dto : datasource) {
+        for(CompetenciaDTO dto : datasource) {
         	boolean match = true;
         	if (filters != null) {
         		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
@@ -69,7 +69,7 @@ public class PreguntaLazyLoader extends LazyDataModel<PreguntaDTO> {
         
         //sort
         if(sortField != null) {
-            Collections.sort(data, new PreguntaLazySorter(sortField, sortOrder));
+            Collections.sort(data, new CompetenciaLazySorter(sortField, sortOrder));
         }
 		
         //rowCount

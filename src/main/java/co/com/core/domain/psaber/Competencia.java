@@ -6,7 +6,9 @@
 package co.com.core.domain.psaber;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,13 +19,15 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author dienieto
+ * @author diego.nieto
  */
 @Entity
 @Table(name = "competencia")
@@ -31,10 +35,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Competencia.findAll", query = "SELECT c FROM Competencia c")
     , @NamedQuery(name = "Competencia.findByCompetenciaId", query = "SELECT c FROM Competencia c WHERE c.competenciaId = :competenciaId")
-    , @NamedQuery(name = "Competencia.findByNombre", query = "SELECT c FROM Competencia c WHERE c.nombre = :nombre")})
+    , @NamedQuery(name = "Competencia.findByNombre", query = "SELECT c FROM Competencia c WHERE c.nombre = :nombre")
+    , @NamedQuery(name = "Competencia.findByCodigo", query = "SELECT c FROM Competencia c WHERE c.codigo = :codigo")})
 public class Competencia implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    @JoinColumn(name = "area_id", referencedColumnName = "area_id")
+    @ManyToOne(optional = false)
+    private Area areaId;
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -47,9 +56,11 @@ public class Competencia implements Serializable {
     @Size(max = 65535)
     @Column(name = "descripcion")
     private String descripcion;
-    @JoinColumn(name = "pregunta_id", referencedColumnName = "pregunta_id")
-    @ManyToOne(optional = false)
-    private Pregunta preguntaId;
+    @Size(max = 45)
+    @Column(name = "codigo")
+    private String codigo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "competenciaId")
+    private Collection<PreguntaCompetencia> preguntaCompetenciaCollection;
 
     public Competencia() {
     }
@@ -82,12 +93,21 @@ public class Competencia implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Pregunta getPreguntaId() {
-        return preguntaId;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setPreguntaId(Pregunta preguntaId) {
-        this.preguntaId = preguntaId;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    @XmlTransient
+    public Collection<PreguntaCompetencia> getPreguntaCompetenciaCollection() {
+        return preguntaCompetenciaCollection;
+    }
+
+    public void setPreguntaCompetenciaCollection(Collection<PreguntaCompetencia> preguntaCompetenciaCollection) {
+        this.preguntaCompetenciaCollection = preguntaCompetenciaCollection;
     }
 
     @Override
@@ -113,6 +133,14 @@ public class Competencia implements Serializable {
     @Override
     public String toString() {
         return "co.com.core.domain.psaber.Competencia[ competenciaId=" + competenciaId + " ]";
+    }
+
+    public Area getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Area areaId) {
+        this.areaId = areaId;
     }
     
 }

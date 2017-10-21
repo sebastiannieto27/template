@@ -9,23 +9,23 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import co.com.core.dto.psaber.PreguntaDTO;
-import co.com.core.lazy.sorter.psaber.PreguntaLazySorter;
-import co.com.core.services.psaber.IPreguntaService;
+import co.com.core.dto.psaber.AreaDTO;
+import co.com.core.lazy.sorter.psaber.AreaLazySorter;
+import co.com.core.services.psaber.IAreaService;
 
-public class PreguntaLazyLoader extends LazyDataModel<PreguntaDTO> {
-	private List<PreguntaDTO> datasource;
+public class AreaLazyLoader extends LazyDataModel<AreaDTO> {
+	private List<AreaDTO> datasource;
     
-    public PreguntaLazyLoader(IPreguntaService serviceImpl) {
+    public AreaLazyLoader(IAreaService serviceImpl) {
         this.datasource = serviceImpl.getAll();
     }
     
     @Override
-    public PreguntaDTO getRowData(String rowKey) {
-        for(PreguntaDTO dto : datasource) {
+    public AreaDTO getRowData(String rowKey) {
+        for(AreaDTO dto : datasource) {
         	try {
             	Integer rowKeyInt = Integer.parseInt(rowKey);
-        		if(dto.getPreguntaId() == rowKeyInt)
+        		if(dto.getAreaId() == rowKeyInt)
                 return dto;
         	} catch(Exception ex) {
         		return null;
@@ -35,15 +35,15 @@ public class PreguntaLazyLoader extends LazyDataModel<PreguntaDTO> {
     }
  
     @Override
-    public Object getRowKey(PreguntaDTO dto) {
-        return dto.getPreguntaId();
+    public Object getRowKey(AreaDTO dto) {
+        return dto.getAreaId();
     }
     
 	@Override
-    public List<PreguntaDTO> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {
-		List<PreguntaDTO> data = new ArrayList<PreguntaDTO>();
+    public List<AreaDTO> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {
+		List<AreaDTO> data = new ArrayList<AreaDTO>();
 		  //filter
-        for(PreguntaDTO dto : datasource) {
+        for(AreaDTO dto : datasource) {
         	boolean match = true;
         	if (filters != null) {
         		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
@@ -69,7 +69,7 @@ public class PreguntaLazyLoader extends LazyDataModel<PreguntaDTO> {
         
         //sort
         if(sortField != null) {
-            Collections.sort(data, new PreguntaLazySorter(sortField, sortOrder));
+            Collections.sort(data, new AreaLazySorter(sortField, sortOrder));
         }
 		
         //rowCount

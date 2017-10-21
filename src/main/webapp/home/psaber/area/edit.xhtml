@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="areaEditDlg" widgetVar="areaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.area}" closeOnEscape="true">
+
+            <h:form id="areaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{areaController.selected != null}">
+
+                        <p:outputLabel value="#{msg.name}" for="nombre" />
+                        <p:inputText id="nombre" value="#{areaController.selected.nombre}" title="#{msg.name}" required="true" requiredMessage="#{msg.nameRequiredMessage}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{msg.code}" for="codigo" />
+                        <p:inputText id="codigo" value="#{areaController.selected.codigo}" title="#{msg.code}" required="true" requiredMessage="#{msg.codeRequiredMessage}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{msg.description}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{areaController.selected.descripcion}" title="#{msg.description}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{areaController.save}" value="#{msg.save}" update="display,:areaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('areaEditDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.cancel}" oncomplete="PF('areaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

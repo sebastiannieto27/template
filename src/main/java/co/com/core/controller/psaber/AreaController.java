@@ -10,27 +10,27 @@ import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 
-import co.com.core.commons.converter.psaber.CompetenciaUtil;
-import co.com.core.domain.psaber.Competencia;
-import co.com.core.dto.psaber.CompetenciaDTO;
-import co.com.core.lazy.loader.psaber.CompetenciaLazyLoader;
-import co.com.core.services.psaber.ICompetenciaService;
+import co.com.core.commons.converter.psaber.AreaUtil;
+import co.com.core.domain.psaber.Area;
+import co.com.core.dto.psaber.AreaDTO;
+import co.com.core.lazy.loader.psaber.AreaLazyLoader;
+import co.com.core.services.psaber.IAreaService;
 
 
-public class CompetenciaController {
+public class AreaController {
 
-	private static final Logger logger = Logger.getLogger(CompetenciaController.class);
+	private static final Logger logger = Logger.getLogger(AreaController.class);
 	
-	private ICompetenciaService competenciaService;
-	private List<CompetenciaDTO> items;
-	private CompetenciaDTO selected;
+	private IAreaService areaService;
+	private List<AreaDTO> items;
+	private AreaDTO selected;
 	
 	private String searchName;
 	
-	private LazyDataModel<CompetenciaDTO> lazyModel;
+	private LazyDataModel<AreaDTO> lazyModel;
 	
 	public void init() {
-		lazyModel = new CompetenciaLazyLoader(competenciaService);
+		lazyModel = new AreaLazyLoader(areaService);
 	}
 	
 	/*public void init() {
@@ -39,18 +39,18 @@ public class CompetenciaController {
 			filter.put("nombre", searchName);
 		}
 		
-		items = competenciaService.getAllFilter(filter);
+		items = AreaService.getAllFilter(filter);
 	}*/
 
 	public boolean saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
 
-			competenciaService.create(selected);
+			areaService.create(selected);
 			
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));
 		} catch (Exception ex) {
-			logger.error("Throwed Exception [CompetenciaController.saveNew]: " +ex.getMessage());
+			logger.error("Throwed Exception [AreaController.saveNew]: " +ex.getMessage());
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("creationError"), null));
 		} finally {
 			init();
@@ -63,12 +63,12 @@ public class CompetenciaController {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
 				
-				Competencia entity = CompetenciaUtil.getEntityFromDto(selected);
+				Area entity = AreaUtil.getEntityFromDto(selected);
 				
-				competenciaService.update(selected);
+				areaService.update(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulEdition"), null));
 			} catch (Exception ex) {
-				logger.error("Throwed Exception [CompetenciaController.save]: " +ex.getMessage());
+				logger.error("Throwed Exception [AreaController.save]: " +ex.getMessage());
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("editionError"), null));
 			} finally {
 				init();
@@ -81,10 +81,10 @@ public class CompetenciaController {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
-				competenciaService.delete(selected);
+				areaService.delete(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulDeletion"), null));
 			} catch (Exception ex) {
-				logger.error("Throwed Exception [CompetenciaController.delete]: " +ex.getMessage());
+				logger.error("Throwed Exception [AreaController.delete]: " +ex.getMessage());
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("deletionError"), null));
 			} finally {
 				init();
@@ -93,30 +93,30 @@ public class CompetenciaController {
 	}
 
 	public void prepareCreate() {
-		selected = new CompetenciaDTO();
+		selected = new AreaDTO();
 	}
 
-	public ICompetenciaService getCompetenciaService() {
-		return competenciaService;
+	public IAreaService getAreaService() {
+		return areaService;
 	}
 
-	public void setCompetenciaService(ICompetenciaService CompetenciaService) {
-		this.competenciaService = CompetenciaService;
+	public void setAreaService(IAreaService AreaService) {
+		this.areaService = AreaService;
 	}
 
-	public List<CompetenciaDTO> getItems() {
+	public List<AreaDTO> getItems() {
 		return items;
 	}
 
-	public void setItems(List<CompetenciaDTO> items) {
+	public void setItems(List<AreaDTO> items) {
 		this.items = items;
 	}
 
-	public CompetenciaDTO getSelected() {
+	public AreaDTO getSelected() {
 		return selected;
 	}
 
-	public void setSelected(CompetenciaDTO selected) {
+	public void setSelected(AreaDTO selected) {
 		this.selected = selected;
 	}
 
@@ -128,11 +128,11 @@ public class CompetenciaController {
 		this.searchName = searchName;
 	}
 
-	public LazyDataModel<CompetenciaDTO> getLazyModel() {
+	public LazyDataModel<AreaDTO> getLazyModel() {
 		return lazyModel;
 	}
 
-	public void setLazyModel(LazyDataModel<CompetenciaDTO> lazyModel) {
+	public void setLazyModel(LazyDataModel<AreaDTO> lazyModel) {
 		this.lazyModel = lazyModel;
 	}
 	

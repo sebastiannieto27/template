@@ -30,9 +30,6 @@ public class PreguntaController {
 	
 	private LazyDataModel<PreguntaDTO> lazyModel;
 	
-
-	
-	
 	public void init() {
 		lazyModel = new PreguntaLazyLoader(preguntaService);
 	}

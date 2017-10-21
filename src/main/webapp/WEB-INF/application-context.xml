@@ -58,6 +58,8 @@
                 <value>co.com.core.domain.psaber.Respuesta</value>
                 <value>co.com.core.domain.psaber.Tema</value>
                 <value>co.com.core.domain.psaber.PreguntaTema</value>
+                <value>co.com.core.domain.psaber.PreguntaCompetencia</value>
+                <value>co.com.core.domain.psaber.Area</value>
                 
                 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS 
 				<value>co.com.core.domain.cms.Branch</value>
@@ -164,7 +166,10 @@
 	    <bean id="temaDAO" class="co.com.core.dao.psaber.impl.TemaDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>  
-	      
+	    
+	    <bean id="areaDAO" class="co.com.core.dao.psaber.impl.AreaDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>	      
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -249,7 +254,10 @@
    		<bean id="temaService" class="co.com.core.services.psaber.impl.TemaServiceImpl">
 	    	<property name="temaDAO" ref="temaDAO" />
 	    </bean>	      
- 
+    		
+   		<bean id="areaService" class="co.com.core.services.psaber.impl.AreaServiceImpl">
+	    	<property name="areaDAO" ref="areaDAO" />
+	    </bean>	
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -353,5 +361,8 @@
     <bean id="temaController" scope="session" class="co.com.core.controller.psaber.TemaController" init-method="init">
     	<property name="temaService" ref="temaService" />
     </bean>
-    
+            
+    <bean id="areaController" scope="session" class="co.com.core.controller.psaber.AreaController" init-method="init">
+    	<property name="areaService" ref="areaService" />
+    </bean>    
 </beans>
