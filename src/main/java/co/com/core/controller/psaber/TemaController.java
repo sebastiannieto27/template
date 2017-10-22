@@ -14,6 +14,7 @@ import org.primefaces.model.LazyDataModel;
 
 import co.com.core.commons.converter.psaber.PreguntaUtil;
 import co.com.core.commons.converter.psaber.TemaUtil;
+import co.com.core.domain.psaber.Area;
 import co.com.core.domain.psaber.Tema;
 import co.com.core.dto.psaber.PreguntaDTO;
 import co.com.core.dto.psaber.PreguntaTemaDTO;
@@ -31,6 +32,7 @@ public class TemaController {
 	private TemaDTO selected;
 	
 	private Integer selectedPreguntaId;
+	private Integer areaId;
 	
 	private String searchName;
 	
@@ -68,7 +70,15 @@ public class TemaController {
 	public boolean saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-					
+
+			if(areaId==null || areaId==0) {
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+						geProperty("areaRequiredMessage"), geProperty("pleaseVerifySummary")));
+				return false;
+			}
+			Area area = new Area(areaId);
+			selected.setAreaId(area);
+			
 			temaService.create(selected);
 			
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));
@@ -86,6 +96,14 @@ public class TemaController {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
+				
+				if(areaId==null || areaId==0) {
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+							geProperty("areaRequiredMessage"), geProperty("pleaseVerifySummary")));
+					return false;
+				}
+				Area area = new Area(areaId);
+				selected.setAreaId(area);
 				
 				temaService.update(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulEdition"), null));
@@ -115,6 +133,10 @@ public class TemaController {
 		}
 	}
 
+	public void prepareEdit() {
+		this.areaId = selected.getAreaId().getAreaId();
+	}
+	
 	public void prepareCreate() {
 		selected = new TemaDTO();
 	}
@@ -325,5 +347,13 @@ public class TemaController {
 
 	public void setTemaList(List<TemaDTO> temaList) {
 		this.temaList = temaList;
+	}
+
+	public Integer getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(Integer areaId) {
+		this.areaId = areaId;
 	}
 }

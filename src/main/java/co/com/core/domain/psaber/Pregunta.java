@@ -38,6 +38,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Pregunta.findByTitulo", query = "SELECT p FROM Pregunta p WHERE p.titulo = :titulo")})
 public class Pregunta implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
+    private Collection<Respuesta> respuestaCollection;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId")
+    private Collection<PreguntaCompetencia> preguntaCompetenciaCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -135,6 +141,24 @@ public class Pregunta implements Serializable {
     @Override
     public String toString() {
         return "co.com.core.domain.psaber.Pregunta[ preguntaId=" + preguntaId + " ]";
+    }
+
+    @XmlTransient
+    public Collection<PreguntaCompetencia> getPreguntaCompetenciaCollection() {
+        return preguntaCompetenciaCollection;
+    }
+
+    public void setPreguntaCompetenciaCollection(Collection<PreguntaCompetencia> preguntaCompetenciaCollection) {
+        this.preguntaCompetenciaCollection = preguntaCompetenciaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Respuesta> getRespuestaCollection() {
+        return respuestaCollection;
+    }
+
+    public void setRespuestaCollection(Collection<Respuesta> respuestaCollection) {
+        this.respuestaCollection = respuestaCollection;
     }
     
 }

@@ -87,6 +87,11 @@
 		<pattern value="/psaber/area" />
 		<view-id value="/home/psaber/area/index.xhtml" />
 	</url-mapping>	
+	
+	<url-mapping id="respuesta">
+		<pattern value="/psaber/respuesta" />
+		<view-id value="/home/psaber/respuesta/index.xhtml" />
+	</url-mapping>
 	<!-- saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro -->
 	
 	

@@ -20,6 +20,16 @@
 						<p:outputLabel value="#{msg.code}" for="codigo" />
                         <p:inputText id="codigo" value="#{competenciaController.selected.codigo}" title="#{msg.code}" size="50" maxlength="50"/>
 	
+                       	<p:outputLabel value="#{msg.area}" for="areaId" />
+                        <p:selectOneMenu id="areaId" value="#{competenciaController.areaId}" >
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{areaController.lazyModel.datasource}"
+                                           var="areaIdItem"
+                                           itemValue="#{areaIdItem.areaId}"
+                                           itemLabel="#{areaIdItem.nombre.toString()}"
+                                           />
+                        </p:selectOneMenu>
+                        
                         <p:outputLabel value="#{msg.description}" for="descripcion" />
                         <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{competenciaController.selected.descripcion}" title="#{msg.description}" />
 

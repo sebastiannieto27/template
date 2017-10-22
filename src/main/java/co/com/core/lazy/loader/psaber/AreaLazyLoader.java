@@ -89,4 +89,14 @@ public class AreaLazyLoader extends LazyDataModel<AreaDTO> {
             return data;
         }
 	}
+
+	public List<AreaDTO> getDatasource() {
+		return datasource;
+	}
+
+	public void setDatasource(List<AreaDTO> datasource) {
+		this.datasource = datasource;
+	}
+	
+	
 }

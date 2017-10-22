@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="respuestaViewDlg" widgetVar="respuestaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.respuesta}" closeOnEscape="true">
+
+            <h:form id="respuestaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{respuestaController.selected != null}">
+
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{respuestaController.selected.respuesta}" title="#{msg.id}"/>
+
+                        <h:outputText value="#{msg.code}"/>
+                        <h:outputText value="#{respuestaController.selected.codigo}" title="#{msg.code}"/>
+
+                        <h:outputText value="#{msg.verdadera}"/>
+                        <h:selectBooleanCheckbox id="verdadera" value="#{respuestaController.selected.verdadera}" title="#{msg.verdadera}"  disabled="true"/>
+
+                        <h:outputText value="#{msg.description}"/>
+                        <h:outputText value="#{respuestaController.selected.descripcion}" title="#{msg.description}"/>
+
+                        <h:outputText value="#{msg.pregunta}"/>
+                        <h:outputText value="#{respuestaController.selected.preguntaId.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.close}" onclick="PF('respuestaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

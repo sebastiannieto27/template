@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
+import org.jfree.util.Log;
 import org.primefaces.model.LazyDataModel;
 
 import co.com.core.commons.converter.psaber.AreaUtil;
@@ -31,6 +32,7 @@ public class AreaController {
 	
 	public void init() {
 		lazyModel = new AreaLazyLoader(areaService);
+		Log.error(lazyModel);
 	}
 	
 	/*public void init() {

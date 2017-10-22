@@ -9,23 +9,23 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import co.com.core.dto.psaber.PreguntaDTO;
-import co.com.core.lazy.sorter.psaber.PreguntaLazySorter;
-import co.com.core.services.psaber.IPreguntaService;
+import co.com.core.dto.psaber.RespuestaDTO;
+import co.com.core.lazy.sorter.psaber.RespuestaLazySorter;
+import co.com.core.services.psaber.IRespuestaService;
 
-public class PreguntaLazyLoader extends LazyDataModel<PreguntaDTO> {
-	private List<PreguntaDTO> datasource;
+public class RespuestaLazyLoader extends LazyDataModel<RespuestaDTO> {
+	private List<RespuestaDTO> datasource;
     
-    public PreguntaLazyLoader(IPreguntaService serviceImpl) {
+    public RespuestaLazyLoader(IRespuestaService serviceImpl) {
         this.datasource = serviceImpl.getAll();
     }
     
     @Override
-    public PreguntaDTO getRowData(String rowKey) {
-        for(PreguntaDTO dto : datasource) {
+    public RespuestaDTO getRowData(String rowKey) {
+        for(RespuestaDTO dto : datasource) {
         	try {
             	Integer rowKeyInt = Integer.parseInt(rowKey);
-        		if(dto.getPreguntaId() == rowKeyInt)
+        		if(dto.getRespuesta() == rowKeyInt)
                 return dto;
         	} catch(Exception ex) {
         		return null;
@@ -35,15 +35,15 @@ public class PreguntaLazyLoader extends LazyDataModel<PreguntaDTO> {
     }
  
     @Override
-    public Object getRowKey(PreguntaDTO dto) {
-        return dto.getPreguntaId();
+    public Object getRowKey(RespuestaDTO dto) {
+        return dto.getRespuesta();
     }
     
 	@Override
-    public List<PreguntaDTO> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {
-		List<PreguntaDTO> data = new ArrayList<PreguntaDTO>();
+    public List<RespuestaDTO> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {
+		List<RespuestaDTO> data = new ArrayList<RespuestaDTO>();
 		  //filter
-        for(PreguntaDTO dto : datasource) {
+        for(RespuestaDTO dto : datasource) {
         	boolean match = true;
         	if (filters != null) {
         		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
@@ -69,7 +69,7 @@ public class PreguntaLazyLoader extends LazyDataModel<PreguntaDTO> {
         
         //sort
         if(sortField != null) {
-            Collections.sort(data, new PreguntaLazySorter(sortField, sortOrder));
+            Collections.sort(data, new RespuestaLazySorter(sortField, sortOrder));
         }
 		
         //rowCount
@@ -90,12 +90,13 @@ public class PreguntaLazyLoader extends LazyDataModel<PreguntaDTO> {
         }
 	}
 
-	public List<PreguntaDTO> getDatasource() {
+	public List<RespuestaDTO> getDatasource() {
 		return datasource;
 	}
 
-	public void setDatasource(List<PreguntaDTO> datasource) {
+	public void setDatasource(List<RespuestaDTO> datasource) {
 		this.datasource = datasource;
 	}
+	
 	
 }

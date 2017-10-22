@@ -58,6 +58,13 @@
                     <h:outputText value="#{item.nombre}"/>
                 </p:column>
 
+                <p:column sortBy="#{item.areaId.nombre}" filterBy="#{item.areaId.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.area}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.areaId.nombre}"/>
+                </p:column>
+                
                 <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
                     <f:facet name="header">
                         <h:outputText value="#{msg.description}"/>
@@ -69,7 +76,7 @@
 
             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{competenciaController.prepareCreate}" update=":competenciaCreateForm" oncomplete="PF('competenciaCreateDialog').show()"/>
             <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":competenciaViewForm" oncomplete="PF('competenciaViewDialog').show()" disabled="#{empty competenciaController.selected}"/>
-            <p:commandButton id="editButton" icon="ui-icon-pencil" value="#{msg.edit}" update=":competenciaEditForm" oncomplete="PF('competenciaEditDialog').show()" disabled="#{empty competenciaController.selected}"/>
+            <p:commandButton id="editButton" icon="ui-icon-pencil" value="#{msg.edit}" update=":competenciaEditForm" actionListener="#{competenciaController.prepareEdit}" oncomplete="PF('competenciaEditDialog').show()" disabled="#{empty competenciaController.selected}"/>
             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{competenciaController.delete}" update=":growl,datalist" disabled="#{empty competenciaController.selected}">
                 <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
             </p:commandButton>

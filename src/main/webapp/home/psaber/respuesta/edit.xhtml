@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="respuestaEditDlg" widgetVar="respuestaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.respuesta}" closeOnEscape="true">
+
+            <h:form id="respuestaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{respuestaController.selected != null}">
+
+                        <p:outputLabel value="#{msg.code}" for="codigo" />
+                        <p:inputText id="codigo" value="#{respuestaController.selected.codigo}" title="#{msg.code}" required="true" requiredMessage="#{msg.codeRequiredMessage}" size="45" maxlength="45"/>
+                        
+                        <p:outputLabel value="#{msg.verdadera}" for="verdadera" />
+                        <p:selectBooleanCheckbox id="verdadera" value="#{respuestaController.selected.verdadera}" />
+                        
+                        <p:outputLabel value="#{msg.description}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{respuestaController.selected.descripcion}" title="#{msg.description}" required="true" requiredMessage="#{msg.descriptionRequiredMessage}"/>
+
+                       	<p:outputLabel value="#{msg.respuesta}" for="preguntaId" />
+                        <p:selectOneMenu id="preguntaId" value="#{respuestaController.preguntaId}" >
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{preguntaController.lazyModel.datasource}"
+                                           var="preguntaIdItem"
+                                           itemValue="#{preguntaIdItem.preguntaId}"
+                                           itemLabel="#{preguntaIdItem.titulo.toString()}"
+                                           />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{respuestaController.save}" value="#{msg.save}" update="display,:respuestaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('respuestaEditDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.cancel}" oncomplete="PF('respuestaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

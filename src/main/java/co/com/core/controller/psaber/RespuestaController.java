@@ -8,30 +8,30 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
+import org.jfree.util.Log;
 import org.primefaces.model.LazyDataModel;
 
-import co.com.core.commons.converter.psaber.CompetenciaUtil;
-import co.com.core.domain.psaber.Area;
-import co.com.core.domain.psaber.Competencia;
-import co.com.core.dto.psaber.CompetenciaDTO;
-import co.com.core.lazy.loader.psaber.CompetenciaLazyLoader;
-import co.com.core.services.psaber.ICompetenciaService;
+import co.com.core.domain.psaber.Pregunta;
+import co.com.core.dto.psaber.RespuestaDTO;
+import co.com.core.lazy.loader.psaber.RespuestaLazyLoader;
+import co.com.core.services.psaber.IRespuestaService;
 
 
-public class CompetenciaController {
+public class RespuestaController {
 
-	private static final Logger logger = Logger.getLogger(CompetenciaController.class);
+	private static final Logger logger = Logger.getLogger(RespuestaController.class);
 	
-	private ICompetenciaService competenciaService;
-	private List<CompetenciaDTO> items;
-	private CompetenciaDTO selected;
-	private Integer areaId;
+	private IRespuestaService respuestaService;
+	private List<RespuestaDTO> items;
+	private RespuestaDTO selected;
+	private Integer preguntaId;
 	private String searchName;
 	
-	private LazyDataModel<CompetenciaDTO> lazyModel;
+	private LazyDataModel<RespuestaDTO> lazyModel;
 	
 	public void init() {
-		lazyModel = new CompetenciaLazyLoader(competenciaService);
+		lazyModel = new RespuestaLazyLoader(respuestaService);
+		Log.error(lazyModel);
 	}
 	
 	/*public void init() {
@@ -40,25 +40,24 @@ public class CompetenciaController {
 			filter.put("nombre", searchName);
 		}
 		
-		items = competenciaService.getAllFilter(filter);
+		items = RespuestaService.getAllFilter(filter);
 	}*/
 
 	public boolean saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-
-			if(areaId==null || areaId==0) {
+			if(preguntaId==null || preguntaId==0) {
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-						geProperty("areaRequiredMessage"), geProperty("pleaseVerifySummary")));
+						geProperty("preguntaRequiredMessage"), geProperty("pleaseVerifySummary")));
 				return false;
 			}
-			Area area = new Area(areaId);
-			selected.setAreaId(area);
-			competenciaService.create(selected);
+			Pregunta pregunta = new Pregunta(preguntaId);
+			selected.setPreguntaId(pregunta);
+			respuestaService.create(selected);
 			
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulCreation"), null));
 		} catch (Exception ex) {
-			logger.error("Throwed Exception [CompetenciaController.saveNew]: " +ex.getMessage());
+			logger.error("Throwed Exception [RespuestaController.saveNew]: " +ex.getMessage());
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("creationError"), null));
 		} finally {
 			init();
@@ -70,19 +69,18 @@ public class CompetenciaController {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
-				
-				if(areaId==null || areaId==0) {
+				if(preguntaId==null || preguntaId==0) {
 					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-							geProperty("areaRequiredMessage"), geProperty("pleaseVerifySummary")));
+							geProperty("preguntaRequiredMessage"), geProperty("pleaseVerifySummary")));
 					return false;
 				}
-				Area area = new Area(areaId);
-				selected.setAreaId(area);
+				Pregunta pregunta = new Pregunta(preguntaId);
+				selected.setPreguntaId(pregunta);
 				
-				competenciaService.update(selected);
+				respuestaService.update(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulEdition"), null));
 			} catch (Exception ex) {
-				logger.error("Throwed Exception [CompetenciaController.save]: " +ex.getMessage());
+				logger.error("Throwed Exception [RespuestaController.save]: " +ex.getMessage());
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("editionError"), null));
 			} finally {
 				init();
@@ -95,10 +93,10 @@ public class CompetenciaController {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			try {
-				competenciaService.delete(selected);
+				respuestaService.delete(selected);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("successfulDeletion"), null));
 			} catch (Exception ex) {
-				logger.error("Throwed Exception [CompetenciaController.delete]: " +ex.getMessage());
+				logger.error("Throwed Exception [RespuestaController.delete]: " +ex.getMessage());
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("deletionError"), null));
 			} finally {
 				init();
@@ -107,34 +105,34 @@ public class CompetenciaController {
 	}
 
 	public void prepareEdit() {
-		this.areaId = selected.getAreaId().getAreaId();
+		this.preguntaId = selected.getPreguntaId().getPreguntaId();
 	}
 	
 	public void prepareCreate() {
-		selected = new CompetenciaDTO();
+		selected = new RespuestaDTO();
 	}
 
-	public ICompetenciaService getCompetenciaService() {
-		return competenciaService;
+	public IRespuestaService getRespuestaService() {
+		return respuestaService;
 	}
 
-	public void setCompetenciaService(ICompetenciaService CompetenciaService) {
-		this.competenciaService = CompetenciaService;
+	public void setRespuestaService(IRespuestaService RespuestaService) {
+		this.respuestaService = RespuestaService;
 	}
 
-	public List<CompetenciaDTO> getItems() {
+	public List<RespuestaDTO> getItems() {
 		return items;
 	}
 
-	public void setItems(List<CompetenciaDTO> items) {
+	public void setItems(List<RespuestaDTO> items) {
 		this.items = items;
 	}
 
-	public CompetenciaDTO getSelected() {
+	public RespuestaDTO getSelected() {
 		return selected;
 	}
 
-	public void setSelected(CompetenciaDTO selected) {
+	public void setSelected(RespuestaDTO selected) {
 		this.selected = selected;
 	}
 
@@ -146,19 +144,19 @@ public class CompetenciaController {
 		this.searchName = searchName;
 	}
 
-	public LazyDataModel<CompetenciaDTO> getLazyModel() {
+	public LazyDataModel<RespuestaDTO> getLazyModel() {
 		return lazyModel;
 	}
 
-	public void setLazyModel(LazyDataModel<CompetenciaDTO> lazyModel) {
+	public void setLazyModel(LazyDataModel<RespuestaDTO> lazyModel) {
 		this.lazyModel = lazyModel;
 	}
 
-	public Integer getAreaId() {
-		return areaId;
+	public Integer getPreguntaId() {
+		return preguntaId;
 	}
 
-	public void setAreaId(Integer areaId) {
-		this.areaId = areaId;
+	public void setPreguntaId(Integer preguntaId) {
+		this.preguntaId = preguntaId;
 	}
 }

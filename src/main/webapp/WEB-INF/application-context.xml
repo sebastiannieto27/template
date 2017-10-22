@@ -169,7 +169,11 @@
 	    
 	    <bean id="areaDAO" class="co.com.core.dao.psaber.impl.AreaDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	    </bean>	      
+	    </bean>	  
+	    	    
+	    <bean id="respuestaDAO" class="co.com.core.dao.psaber.impl.RespuestaDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>    
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -258,6 +262,10 @@
    		<bean id="areaService" class="co.com.core.services.psaber.impl.AreaServiceImpl">
 	    	<property name="areaDAO" ref="areaDAO" />
 	    </bean>	
+    		
+   		<bean id="respuestaService" class="co.com.core.services.psaber.impl.RespuestaServiceImpl">
+	    	<property name="respuestaDAO" ref="respuestaDAO" />
+	    </bean>		    
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -365,4 +373,8 @@
     <bean id="areaController" scope="session" class="co.com.core.controller.psaber.AreaController" init-method="init">
     	<property name="areaService" ref="areaService" />
     </bean>    
+                
+    <bean id="respuestaController" scope="session" class="co.com.core.controller.psaber.RespuestaController" init-method="init">
+    	<property name="respuestaService" ref="respuestaService" />
+    </bean>
 </beans>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+    <h:form id="respuestaListForm">
+   			<h:panelGroup id="searchForm">
+            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+            	<p:outputLabel for="rtvName" value="#{msg.name}:" />
+					<p:inputText id="rtvName" value="#{respuestaController.searchName}" title="#{msg.name}:"/>
+					<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{respuestaController.init()}" update=":respuestaListForm" />
+          			</p:panelGrid>
+              </h:panelGroup>
+
+        <p:panel header="#{msg.respuesta}">
+            <p:dataTable id="datalist"
+                         value="#{respuestaController.lazyModel}"
+                         var="item"
+                         rowKey="#{item.respuesta}"
+                         paginator="true"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{respuestaController.selected}"
+                         lazy="true">
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('respuestaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.respuesta}" filterBy="#{item.respuesta}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.respuesta}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.codigo}" filterBy="#{item.codigo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.code}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codigo}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.verdadera}" filterBy="#{item.verdadera}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.verdadera}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="verdadera" value="#{item.verdadera}" title="#{msg.verdadera}"  disabled="true"/>
+                </p:column>
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.description}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.preguntaId.titulo}" filterBy="#{item.preguntaId.titulo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.pregunta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.preguntaId.titulo}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{respuestaController.prepareCreate}" update=":respuestaCreateForm" oncomplete="PF('respuestaCreateDialog').show()"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":respuestaViewForm" oncomplete="PF('respuestaViewDialog').show()" disabled="#{empty respuestaController.selected}"/>
+            <p:commandButton id="editButton" icon="ui-icon-pencil" value="#{msg.edit}" update=":respuestaEditForm" oncomplete="PF('respuestaEditDialog').show()" actionListener="#{respuestaController.prepareEdit}" disabled="#{empty respuestaController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{respuestaController.delete}" update=":growl,datalist" disabled="#{empty respuestaController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+    </h:form>
+				
+	    </ui:composition>
+    </body>
+</html>

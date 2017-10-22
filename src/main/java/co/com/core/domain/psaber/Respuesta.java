@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,27 +31,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Respuesta.findAll", query = "SELECT r FROM Respuesta r")
-    , @NamedQuery(name = "Respuesta.findByRespuestaId", query = "SELECT r FROM Respuesta r WHERE r.respuestaId = :respuestaId")
-    , @NamedQuery(name = "Respuesta.findByTitulo", query = "SELECT r FROM Respuesta r WHERE r.titulo = :titulo")
-    , @NamedQuery(name = "Respuesta.findByCodigo", query = "SELECT r FROM Respuesta r WHERE r.codigo = :codigo")})
+    , @NamedQuery(name = "Respuesta.findByRespuesta", query = "SELECT r FROM Respuesta r WHERE r.respuesta = :respuesta")
+    , @NamedQuery(name = "Respuesta.findByCodigo", query = "SELECT r FROM Respuesta r WHERE r.codigo = :codigo")
+    , @NamedQuery(name = "Respuesta.findByVerdadera", query = "SELECT r FROM Respuesta r WHERE r.verdadera = :verdadera")})
 public class Respuesta implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "respuesta_id")
-    private Integer respuestaId;
-    @Size(max = 45)
-    @Column(name = "titulo")
-    private String titulo;
-    @Size(max = 45)
+    @Column(name = "respuesta")
+    private Integer respuesta;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "codigo")
     private String codigo;
+    @Basic(optional = false)
+    @NotNull
     @Lob
-    @Size(max = 65535)
+    @Size(min = 1, max = 65535)
     @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "verdadera")
+    private Boolean verdadera;
     @JoinColumn(name = "pregunta_id", referencedColumnName = "pregunta_id")
     @ManyToOne(optional = false)
     private Pregunta preguntaId;
@@ -58,24 +62,22 @@ public class Respuesta implements Serializable {
     public Respuesta() {
     }
 
-    public Respuesta(Integer respuestaId) {
-        this.respuestaId = respuestaId;
+    public Respuesta(Integer respuesta) {
+        this.respuesta = respuesta;
     }
 
-    public Integer getRespuestaId() {
-        return respuestaId;
+    public Respuesta(Integer respuesta, String codigo, String descripcion) {
+        this.respuesta = respuesta;
+        this.codigo = codigo;
+        this.descripcion = descripcion;
     }
 
-    public void setRespuestaId(Integer respuestaId) {
-        this.respuestaId = respuestaId;
+    public Integer getRespuesta() {
+        return respuesta;
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setRespuesta(Integer respuesta) {
+        this.respuesta = respuesta;
     }
 
     public String getCodigo() {
@@ -94,6 +96,14 @@ public class Respuesta implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public Boolean getVerdadera() {
+        return verdadera;
+    }
+
+    public void setVerdadera(Boolean verdadera) {
+        this.verdadera = verdadera;
+    }
+
     public Pregunta getPreguntaId() {
         return preguntaId;
     }
@@ -105,7 +115,7 @@ public class Respuesta implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (respuestaId != null ? respuestaId.hashCode() : 0);
+        hash += (respuesta != null ? respuesta.hashCode() : 0);
         return hash;
     }
 
@@ -116,7 +126,7 @@ public class Respuesta implements Serializable {
             return false;
         }
         Respuesta other = (Respuesta) object;
-        if ((this.respuestaId == null && other.respuestaId != null) || (this.respuestaId != null && !this.respuestaId.equals(other.respuestaId))) {
+        if ((this.respuesta == null && other.respuesta != null) || (this.respuesta != null && !this.respuesta.equals(other.respuesta))) {
             return false;
         }
         return true;
@@ -124,7 +134,7 @@ public class Respuesta implements Serializable {
 
     @Override
     public String toString() {
-        return "co.com.core.domain.psaber.Respuesta[ respuestaId=" + respuestaId + " ]";
+        return "co.com.core.domain.psaber.Respuesta[ respuesta=" + respuesta + " ]";
     }
     
 }
