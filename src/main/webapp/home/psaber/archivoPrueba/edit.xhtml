@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="archivoPruebaEditDlg" widgetVar="archivoPruebaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.archivoPrueba}" closeOnEscape="true">
+
+            <h:form id="archivoPruebaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{archivoPruebaController.selected != null}">
+
+                        <p:outputLabel value="#{msg.name}" for="nombre" />
+                        <p:inputText id="nombre" value="#{archivoPruebaController.selected.nombre}" title="#{msg.name}" required="true" requiredMessage="#{msg.namePruebaRequiredMessage}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{msg.nroColumnas}" for="nroColumnas" />
+                        <p:inputText id="nroColumnas" value="#{archivoPruebaController.selected.nroColumnas}" title="#{msg.nroColumnas}" required="true" requiredMessage="#{msg.nroColumnasRequiredMessage}"/>
+
+                        <p:outputLabel value="#{msg.nroPreguntas}" for="nroPreguntas" />
+                        <p:inputText id="nroPreguntas" value="#{archivoPruebaController.selected.nroPreguntas}" title="#{msg.nroPreguntas}" required="true" requiredMessage="#{msg.nroPreguntasRequiredMessage}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{archivoPruebaController.save}" value="#{msg.save}" update="display,:archivoPruebaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('archivoPruebaEditDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_edit_message}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{msg.cancel}" oncomplete="PF('archivoPruebaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
+

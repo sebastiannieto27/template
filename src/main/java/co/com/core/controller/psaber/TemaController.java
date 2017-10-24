@@ -31,7 +31,6 @@ public class TemaController {
 	private List<TemaDTO> items;
 	private TemaDTO selected;
 	
-	private Integer selectedPreguntaId;
 	private Integer areaId;
 	
 	private String searchName;

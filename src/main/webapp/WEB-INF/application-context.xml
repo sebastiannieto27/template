@@ -60,6 +60,8 @@
                 <value>co.com.core.domain.psaber.PreguntaTema</value>
                 <value>co.com.core.domain.psaber.PreguntaCompetencia</value>
                 <value>co.com.core.domain.psaber.Area</value>
+                <value>co.com.core.domain.psaber.ArchivoPrueba</value>
+                <value>co.com.core.domain.psaber.AreaArchivoPrueba</value>
                 
                 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS 
 				<value>co.com.core.domain.cms.Branch</value>
@@ -174,6 +176,10 @@
 	    <bean id="respuestaDAO" class="co.com.core.dao.psaber.impl.RespuestaDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>    
+	    
+	    <bean id="archivoPruebaDAO" class="co.com.core.dao.psaber.impl.ArchivoPruebaDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean> 
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -265,7 +271,11 @@
     		
    		<bean id="respuestaService" class="co.com.core.services.psaber.impl.RespuestaServiceImpl">
 	    	<property name="respuestaDAO" ref="respuestaDAO" />
-	    </bean>		    
+	    </bean>	
+	        		
+   		<bean id="archivoPruebaService" class="co.com.core.services.psaber.impl.ArchivoPruebaServiceImpl">
+	    	<property name="archivoPruebaDAO" ref="archivoPruebaDAO" />
+	    </bean>	    
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -376,5 +386,9 @@
                 
     <bean id="respuestaController" scope="session" class="co.com.core.controller.psaber.RespuestaController" init-method="init">
     	<property name="respuestaService" ref="respuestaService" />
+    </bean>
+                    
+    <bean id="archivoPruebaController" scope="session" class="co.com.core.controller.psaber.ArchivoPruebaController" init-method="init">
+    	<property name="archivoPruebaService" ref="archivoPruebaService" />
     </bean>
 </beans>

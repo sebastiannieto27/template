@@ -61,7 +61,7 @@ public class Area implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaId")
     private Collection<Tema> temaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaId")
-    private Collection<Competencia> competenciaCollection;
+    private Collection<AreaArchivoPrueba> areaArchivoPruebaCollection;
 
     public Area() {
     }
@@ -118,12 +118,12 @@ public class Area implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Competencia> getCompetenciaCollection() {
-        return competenciaCollection;
+    public Collection<AreaArchivoPrueba> getAreaArchivoPruebaCollection() {
+        return areaArchivoPruebaCollection;
     }
 
-    public void setCompetenciaCollection(Collection<Competencia> competenciaCollection) {
-        this.competenciaCollection = competenciaCollection;
+    public void setAreaArchivoPruebaCollection(Collection<AreaArchivoPrueba> areaArchivoPruebaCollection) {
+        this.areaArchivoPruebaCollection = areaArchivoPruebaCollection;
     }
 
     @Override

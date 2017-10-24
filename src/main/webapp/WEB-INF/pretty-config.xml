@@ -92,11 +92,16 @@
 		<pattern value="/psaber/respuesta" />
 		<view-id value="/home/psaber/respuesta/index.xhtml" />
 	</url-mapping>
+		
+	<url-mapping id="archivoPrueba">
+		<pattern value="/psaber/archivo-prueba" />
+		<view-id value="/home/psaber/archivoPrueba/index.xhtml" />
+	</url-mapping>
 	<!-- saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro -->
 	
 	
 	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
-	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
+	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS 
 	<url-mapping id="branch">
 		<pattern value="/cms/sede" />
 		<view-id value="/home/cms/branch/index.xhtml" />
@@ -136,8 +141,6 @@
 		<pattern value="/cms/servicio-sede" />
 		<view-id value="/home/cms/branchService/index.xhtml" />
 	</url-mapping>		
-
-<!-- Account Financial Module  Account Financial Module  Account Financial Module -->  
-<!-- Account Financial Module  Account Financial Module  Account Financial Module -->  
+ -->  
 	
 </pretty-config>

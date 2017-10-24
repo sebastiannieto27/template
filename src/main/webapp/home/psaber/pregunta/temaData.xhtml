@@ -44,12 +44,12 @@
                     <h:outputText value="#{item.descripcion}"/>
                 </p:column>
                 
-                <p:column sortBy="#{item.submenu}" filterBy="#{item.submenu}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.submenu}"/>
                     </f:facet>
                     
-               		 <h:selectBooleanCheckbox id="chk-#{item.menuId}"
+               		 <h:selectBooleanCheckbox id="chk-#{item.temaId}"
                                 value="#{temaController.checkValue}">
                                 <f:ajax execute="@this" listener="#{temaController.addRemoveTemaList(item)}"/>
                        </h:selectBooleanCheckbox>

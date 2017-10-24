@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+    <h:form id="archivoPruebaListForm">
+   			<h:panelGroup id="searchForm">
+            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+            	<p:outputLabel for="rtvName" value="#{msg.name}:" />
+					<p:inputText id="rtvName" value="#{archivoPruebaController.searchName}" title="#{msg.name}:"/>
+					<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{archivoPruebaController.init()}" update=":archivoPruebaListForm" />
+          			</p:panelGrid>
+              </h:panelGroup>
+              
+        <p:panel header="#{msg.archivoPrueba}">
+            <p:dataTable id="datalist"
+                         value="#{archivoPruebaController.lazyModel}"
+                         var="item"
+                         rowKey="#{item.archivoPruebaId}"
+                         paginator="true"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{archivoPruebaController.selected}"
+                         lazy="true">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('archivoPruebaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.archivoPruebaId}" filterBy="#{item.archivoPruebaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.archivoPruebaId}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nroColumnas}" filterBy="#{item.nroColumnas}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.nroColumnas}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nroColumnas}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nroPreguntas}" filterBy="#{item.nroPreguntas}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.nroPreguntas}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nroPreguntas}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.area}"/>
+                    </f:facet>
+                    <p:commandLink id="viewMenuLink" value="#{msg.area}" update=":archivoPruebaViewAreaForm,:listAreaArchivoPruebaForm" 
+                    		oncomplete="PF('archivoPruebaViewAreaDialog').show()" actionListener="#{areaController.findAreaByArchivoPrueba(item)}"/>
+                </p:column>
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{archivoPruebaController.prepareCreate}" update=":archivoPruebaCreateForm" oncomplete="PF('archivoPruebaCreateDialog').show()"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":archivoPruebaViewForm" oncomplete="PF('archivoPruebaViewDialog').show()" disabled="#{empty archivoPruebaController.selected}"/>
+            <p:commandButton id="editButton" icon="ui-icon-pencil" value="#{msg.edit}" update=":archivoPruebaEditForm" oncomplete="PF('archivoPruebaEditDialog').show()" disabled="#{empty archivoPruebaController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{archivoPruebaController.delete}" update=":growl,datalist" disabled="#{empty archivoPruebaController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+    </h:form>
+				
+	    </ui:composition>
+    </body>
+</html>

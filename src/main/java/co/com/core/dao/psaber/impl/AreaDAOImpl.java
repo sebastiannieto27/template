@@ -11,8 +11,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.psaber.AreaDAO;
+import co.com.core.domain.psaber.ArchivoPrueba;
 import co.com.core.domain.psaber.Area;
-import co.com.core.domain.psaber.Contenido;
+import co.com.core.domain.psaber.AreaArchivoPrueba;
 
 public class AreaDAOImpl implements AreaDAO {
 
@@ -118,6 +119,78 @@ public class AreaDAOImpl implements AreaDAO {
 				tx.commit();
 			} catch(Exception ex) {
 				logger.error("Throwed Exception [AreaDAOImpl.delete]: " +ex.getMessage());
+				session.getTransaction().rollback();
+			} finally {
+				session.close();
+			}
+		}
+		
+		@Override
+		public List<AreaArchivoPrueba> findAreaByArchivoPrueba(ArchivoPrueba entity) {
+			List<AreaArchivoPrueba> entityList = null;
+			try {
+				session = this.sessionFactory.openSession();
+		        Query query = session.getNamedQuery("AreaArchivoPrueba.findByArchivoPruebaId");
+		        query.setParameter("archivoPruebaId", entity);
+		        entityList = query.list();
+		        
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [AreaDAOImpl.findAreaByArchivoPrueba]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return entityList;
+		}
+		
+		@Override
+		public List<Area> getNotAssignedArea(String ids) {
+			List<Area> entityList = null;
+			
+			if(ids== null || ids.isEmpty()) {
+				ids = "0";
+			}
+			
+			try {
+				session = this.sessionFactory.openSession();
+				StringBuilder hql = new StringBuilder();
+				hql.append("SELECT m FROM Area m WHERE m.areaId NOT IN(").append(ids).append(")");
+				Query query = session.createQuery(hql.toString());
+				entityList = query.list();
+				
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [AreaDAOImpl.getNotAssignedArea]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return entityList;
+		}
+
+		@Override
+		public AreaArchivoPrueba createAreaArchivoPrueba(AreaArchivoPrueba entity) {
+			AreaArchivoPrueba newEntity = null;
+			try {
+				session = this.sessionFactory.openSession();
+				Transaction tx = session.beginTransaction();
+				newEntity = (AreaArchivoPrueba) session.merge(entity);
+				tx.commit();
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [AreaDAOImpl.createAreaArchivoPrueba]: " +ex.getMessage());
+				session.getTransaction().rollback();
+			} finally {
+				session.close();
+			}
+			return newEntity;
+		}
+		
+		@Override
+		public void deleteAreaArchivoPrueba(AreaArchivoPrueba entity) {
+			try {
+				session = this.sessionFactory.openSession();
+				Transaction tx = session.beginTransaction();
+				session.delete(entity);
+				tx.commit();
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [AreaDAOImpl.deleteAreaArchivoPrueba]: " +ex.getMessage());
 				session.getTransaction().rollback();
 			} finally {
 				session.close();
