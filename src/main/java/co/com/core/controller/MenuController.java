@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +14,22 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuModel;
+
+import co.com.core.commons.ApplicationConstants;
+import co.com.core.commons.ApplicationUtil;
+import co.com.core.commons.converter.UserUtil;
+import co.com.core.commons.reports.jasper.BaseJasperPDFReport;
+import co.com.core.domain.Menu;
+import co.com.core.domain.Page;
+import co.com.core.domain.User;
+import co.com.core.dto.MenuDTO;
+import co.com.core.dto.UserDTO;
+import co.com.core.services.IMenuService;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.column.Columns;
@@ -28,33 +43,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
-
-import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.CellRangeAddress;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Row;
-import org.primefaces.model.menu.DefaultMenuItem;
-import org.primefaces.model.menu.DefaultMenuModel;
-import org.primefaces.model.menu.DefaultSubMenu;
-import org.primefaces.model.menu.MenuModel;
-
-import co.com.core.commons.ApplicationConstants;
-import co.com.core.commons.ApplicationUtil;
-import co.com.core.commons.converter.UserUtil;
-import co.com.core.commons.reports.ExcelReportUtil;
-import co.com.core.commons.reports.jasper.BaseJasperPDFReport;
-import co.com.core.domain.Menu;
-import co.com.core.domain.Page;
-import co.com.core.domain.User;
-import co.com.core.dto.MenuDTO;
-import co.com.core.dto.UserDTO;
-import co.com.core.services.IMenuService;
 
 public class MenuController {
 
@@ -169,7 +157,7 @@ public class MenuController {
 		try {
 			if(items!=null && items.size() > 0) {
 				
-				String excelFile = "/Users/dienieto/Documents/DocumentsDiego/projects/friogan/reports/excel/test.xls";
+				/*String excelFile = "/Users/dienieto/Documents/DocumentsDiego/projects/friogan/reports/excel/test.xls";
 				
 				HSSFWorkbook workbook = new HSSFWorkbook();
 		        HSSFSheet sheet = workbook.createSheet("FirstSheet");  
@@ -220,7 +208,7 @@ public class MenuController {
 		        FileOutputStream fileOut = new FileOutputStream(excelFile);
 	            workbook.write(fileOut);
 	            fileOut.close();
-	            System.out.println("Your excel file has been generated!");
+	            System.out.println("Your excel file has been generated!");*/
 			}
 		} catch(Exception ex) {
 			logger.error("Error: " + ex.getMessage());

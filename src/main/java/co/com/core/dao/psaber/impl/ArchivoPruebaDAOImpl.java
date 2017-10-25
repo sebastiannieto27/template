@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.psaber.ArchivoPruebaDAO;
+import co.com.core.domain.User;
 import co.com.core.domain.psaber.ArchivoPrueba;
 
 public class ArchivoPruebaDAOImpl implements ArchivoPruebaDAO {
@@ -29,6 +30,7 @@ public class ArchivoPruebaDAOImpl implements ArchivoPruebaDAO {
 			try {
 				session = this.sessionFactory.openSession();
 		        Query query = session.getNamedQuery("ArchivoPrueba.findAll");
+
 		        entityList = query.list();
 			} catch(Exception ex) {
 				logger.error("Throwed Exception [ArchivoPruebaDAOImpl.getAll]: " +ex.getMessage());
@@ -119,5 +121,19 @@ public class ArchivoPruebaDAOImpl implements ArchivoPruebaDAO {
 			} finally {
 				session.close();
 			}
+		}
+		
+		@Override
+		public ArchivoPrueba getByArchivoPruebaId(Integer id) {
+			ArchivoPrueba entity = null;
+			try {
+				session = this.sessionFactory.openSession();
+				entity = (ArchivoPrueba) session.get(ArchivoPrueba.class, id);
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [ArchivoPruebaDAOImpl.getAllByArchivoPruebaId]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return entity;
 		}
 }

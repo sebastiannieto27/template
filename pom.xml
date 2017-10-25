@@ -10,16 +10,18 @@
 	<properties>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
-		
+
 		<!-- Spring -->
-        <spring-framework.version>4.0.3.RELEASE</spring-framework.version>
+		<spring-framework.version>4.0.3.RELEASE</spring-framework.version>
 		<!-- Hibernate / JPA -->
-        <hibernate.version>4.3.5.Final</hibernate.version>
-        <!-- <hibernate.version>3.6.9.Final</hibernate.version> -->
- 
-        <!-- Logging -->
-        <logback.version>1.0.13</logback.version>
-        <slf4j.version>1.7.5</slf4j.version>
+		<hibernate.version>4.3.5.Final</hibernate.version>
+		<!-- <hibernate.version>3.6.9.Final</hibernate.version> -->
+
+		<!-- Logging -->
+		<logback.version>1.0.13</logback.version>
+		<slf4j.version>1.7.5</slf4j.version>
+		
+	  	<poi.version>3.13</poi.version>
 	</properties>
 
 	<dependencies>
@@ -42,55 +44,55 @@
 		</dependency>
 
 		<dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring-framework.version}</version>
-        </dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
 		<!-- Spring Transactions -->
-       	<dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring-framework.version}</version>
-        </dependency>
- 		
- 		<!-- Spring ORM support -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring-framework.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+
+		<!-- Spring ORM support -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
 		<!-- Hibernate -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <!-- check if is necessary -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<!-- check if is necessary -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.2.1.Final</version>
 		</dependency>
-		
-        <!-- Logging with SLF4J & LogBack -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        
+
+		<!-- Logging with SLF4J & LogBack -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -98,35 +100,35 @@
 		</dependency>
 
 		<dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>2.2.2</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-impl</artifactId>
-            <version>2.2.2</version>
-        </dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.2.2</version>
+		</dependency>
 
 		<dependency>
-		    <groupId>org.primefaces</groupId>
-		    <artifactId>primefaces</artifactId>
-		    <version>5.3</version>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>2.2.2</version>
 		</dependency>
-		
+
 		<dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.31</version>
-        </dependency>
-        <!-- Apache Commons DBCP dependency to create a BasicDataSource -->
-        <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
-        </dependency>
-        <!-- encryption -->
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>5.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.31</version>
+		</dependency>
+		<!-- Apache Commons DBCP dependency to create a BasicDataSource -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<!-- encryption -->
 		<dependency>
 			<groupId>commons-net</groupId>
 			<artifactId>commons-net</artifactId>
@@ -140,25 +142,25 @@
 		</dependency>
 		<!-- pretty faces for JSF 2.x -->
 		<dependency>
-		    <groupId>org.ocpsoft.rewrite</groupId>
-		    <artifactId>rewrite-servlet</artifactId>
-		    <version>2.0.12.Final</version>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-servlet</artifactId>
+			<version>2.0.12.Final</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.ocpsoft.rewrite</groupId>
-		    <artifactId>rewrite-config-prettyfaces</artifactId>
-		    <version>2.0.12.Final</version>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-config-prettyfaces</artifactId>
+			<version>2.0.12.Final</version>
 		</dependency>
 		<!-- Allow microsoft format documents -->
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.13</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.apache.poi</groupId> -->
+<!-- 			<artifactId>poi</artifactId> -->
+<!-- 			<version>3.13</version> -->
+<!-- 		</dependency> -->
 		<!-- PDF format documents -->
 		<dependency>
 			<groupId>net.sourceforge.dynamicreports</groupId>
-			<artifactId>dynamicreports-core</artifactId>			
+			<artifactId>dynamicreports-core</artifactId>
 			<version>3.1.3</version>
 		</dependency>
 		<!-- Quartz scheduler framework -->
@@ -167,60 +169,85 @@
 			<artifactId>quartz</artifactId>
 			<version>2.1.5</version>
 		</dependency>
-		
+
 		<!-- Quartz need transaction -->
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
 			<version>1.1</version>
 		</dependency>
-		
+
 		<!-- File upload libraries -->
 		<dependency>
-		    <groupId>commons-io</groupId>
-		    <artifactId>commons-io</artifactId>
-		    <version>1.3.2</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
 		</dependency>
 		<dependency>
-		    <groupId>commons-fileupload</groupId>
-		    <artifactId>commons-fileupload</artifactId>
-		    <version>1.2.1</version>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
 		</dependency>
-		
+
 		<!-- Java Mail -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.6</version>
 		</dependency>
-		
+
 		<dependency>
-		  <groupId>org.primefaces.extensions</groupId>
-		  <artifactId>all-themes</artifactId>
-		  <version>1.0.8</version>
-		  <scope>compile</scope>
+			<groupId>org.primefaces.extensions</groupId>
+			<artifactId>all-themes</artifactId>
+			<version>1.0.8</version>
+			<scope>compile</scope>
 		</dependency>
 
 		<!-- bootsFaces -->
 		<dependency>
-		    <groupId>net.bootsfaces</groupId>
-		    <artifactId>bootsfaces</artifactId>
-		    <version>0.8.0</version>
-		    <scope>compile</scope>
+			<groupId>net.bootsfaces</groupId>
+			<artifactId>bootsfaces</artifactId>
+			<version>0.8.0</version>
+			<scope>compile</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.15</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.15</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans -->
+<dependency>
+    <groupId>org.apache.xmlbeans</groupId>
+    <artifactId>xmlbeans</artifactId>
+    <version>2.5.0</version>
+</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.1</version>
+		</dependency>
+
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
-	        	<groupId>org.apache.tomcat.maven</groupId>
-		        <artifactId>tomcat7-maven-plugin</artifactId>
-		        <version>2.0</version>
-		        <configuration>
-		          <path>/proyectandofuturo</path>
-		        </configuration>
-		      </plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<path>/proyectandofuturo</path>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>

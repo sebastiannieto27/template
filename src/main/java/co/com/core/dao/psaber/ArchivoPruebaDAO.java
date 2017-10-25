@@ -17,4 +17,6 @@ public interface ArchivoPruebaDAO {
 	
 	public void update(ArchivoPrueba entity);
 	
+	public ArchivoPrueba getByArchivoPruebaId(Integer id);
+	
 }

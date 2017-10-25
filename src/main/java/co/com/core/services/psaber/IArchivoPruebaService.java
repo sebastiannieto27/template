@@ -18,4 +18,6 @@ public interface IArchivoPruebaService {
 	public void delete(ArchivoPruebaDTO dto);
 	
 	public void update(ArchivoPruebaDTO dto);
+	
+	public ArchivoPruebaDTO getByArchivoPruebaId(Integer id);
 }
