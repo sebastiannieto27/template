@@ -44,6 +44,14 @@
                     <h:outputText value="#{item.nombre}"/>
                 </p:column>
 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.nroColumna}"/>
+                    </f:facet>
+                        <p:inputText id="txt-#{item.areaId}" value="#{archivoPruebaController.selected.nombre}" title="#{msg.name}" required="true" requiredMessage="#{msg.namePruebaRequiredMessage}" size="45" maxlength="45"/>
+                </p:column>
+
+
                 <p:column sortBy="#{item.submenu}" filterBy="#{item.submenu}">
                     <f:facet name="header">
                         <h:outputText value="#{msg.submenu}"/>

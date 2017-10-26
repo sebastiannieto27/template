@@ -4,16 +4,25 @@ import static co.com.core.commons.LoadBundle.geProperty;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -35,6 +44,9 @@ public class UploadedFileController {
 	private String downloadPath;
 	
 	private static final Logger logger = Logger.getLogger(UploadedFileController.class);
+	
+	public static final String PREFIX = "tempPlainFile";
+    public static final String SUFFIX = ".xlsx";
 	
 	public void init() {
 		downloadPath = LoadBundle.getApplicationProperty("fileUploadPath");
@@ -89,18 +101,21 @@ public class UploadedFileController {
 
 	}
 	
-    public UploadedFileDTO upload(FileUploadEvent event, boolean alternativePath) {  
+    //public UploadedFileDTO upload(FileUploadEvent event, boolean alternativePath) {  
+	public UploadedFileDTO upload(FileUploadEvent event) {  
     	UploadedFileDTO resultDto = null;
     	try {
     		FacesContext context = FacesContext.getCurrentInstance();
         	UploadedFile file = event.getFile();
         	//common upload path
         	String path  = null;
-        	if(alternativePath) {
+        	/*if(alternativePath) {
         		path = LoadBundle.getApplicationProperty("serverUploadPath");
         	} else {
         		path = LoadBundle.getApplicationProperty("fileUploadPath");
-        	}
+        	}*/
+        	
+        	path = LoadBundle.getApplicationProperty("fileUploadPath");
         	
         	//creates the file
         	boolean success = FileUploader.uploadFile(event, path);
@@ -133,6 +148,48 @@ public class UploadedFileController {
     	return resultDto;
     } 
 	
+	public UploadedFileDTO uploadUseFile(FileUploadEvent event) {  
+    	UploadedFileDTO resultDto = null;
+    	try {
+    		FacesContext context = FacesContext.getCurrentInstance();
+        	UploadedFile uploadedFile = event.getFile();
+
+        	InputStream inputStream = uploadedFile.getInputstream();
+        	File tempFile = getTemporaryFile(inputStream);
+        	Workbook workbook = new XSSFWorkbook(tempFile);
+        	
+        	Sheet datatypeSheet = workbook.getSheetAt(0);
+	        Iterator<Row> iterator = datatypeSheet.iterator();
+	        
+	        while (iterator.hasNext()) {
+	        	Row currentRow = iterator.next();
+	            Iterator<Cell> cellIterator = currentRow.iterator();
+	            while (cellIterator.hasNext()) {
+	            	Cell currentCell = cellIterator.next();
+                    //getCellTypeEnum shown as deprecated for version 3.15
+                    //getCellTypeEnum ill be renamed to getCellType starting from version 4.0
+                    if (currentCell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    	logger.info(currentCell.getStringCellValue() + "--");
+                    } else if (currentCell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                    	logger.info(currentCell.getNumericCellValue() + "--");
+                    }
+	            }
+	        }
+        	
+    	} catch(Exception ex) {
+    		logger.error("Throwed Exception [UploadedFileController.upload]: " +ex.getMessage());
+    	}
+    	return resultDto;
+    } 
+	
+    public static File getTemporaryFile (InputStream in) throws IOException {
+        final File tempFile = File.createTempFile(PREFIX, SUFFIX);
+        tempFile.deleteOnExit();
+        try (FileOutputStream out = new FileOutputStream(tempFile)) {
+            IOUtils.copy(in, out);
+        }
+        return tempFile;
+    }
 	
 	public String getDownloadPath() {
 		return downloadPath;
