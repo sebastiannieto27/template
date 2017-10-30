@@ -62,7 +62,9 @@ public class Area implements Serializable {
     private Collection<Tema> temaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaId")
     private Collection<AreaArchivoPrueba> areaArchivoPruebaCollection;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaId")
+    private Collection<ResultadoExamenUsuario> resultadoExamenUsuarioCollection;
+    
     public Area() {
     }
 
@@ -126,6 +128,15 @@ public class Area implements Serializable {
         this.areaArchivoPruebaCollection = areaArchivoPruebaCollection;
     }
 
+    @XmlTransient
+    public Collection<ResultadoExamenUsuario> getResultadoExamenUsuarioCollection() {
+        return resultadoExamenUsuarioCollection;
+    }
+
+    public void setResultadoExamenUsuarioCollection(Collection<ResultadoExamenUsuario> resultadoExamenUsuarioCollection) {
+        this.resultadoExamenUsuarioCollection = resultadoExamenUsuarioCollection;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

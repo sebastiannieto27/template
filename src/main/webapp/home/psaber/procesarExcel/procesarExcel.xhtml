@@ -32,7 +32,7 @@
 			
 									<p:commandButton id="procesarButton" icon="ui-icon-search"
 										value="#{msg.procesarArchivo}"
-										actionListener="#{archivoPruebaController.procesarArchivoExcel}"
+										actionListener="#{archivoPruebaController.uploadAndUseFile}"
 										update=":procesarExcelListForm" />
 								</p:panelGrid>
 						</h:panelGroup>
@@ -69,7 +69,7 @@
 			
 			<p:messages id="uploadMessage" autoUpdate="true" />
 			<h:form id="formUpload" enctype="multipart/form-data">
-            	<p:fileUpload fileUploadListener="#{uploadedFileController.uploadUseFile}" auto="true" update="uploadMessage" label="#{msg.selectFile}" sizeLimit="2097152"/>
+            	<p:fileUpload fileUploadListener="#{archivoPruebaController.uploadAndUseFile}" auto="true" update="uploadMessage" label="#{msg.selectFile}" sizeLimit="2097152"/>
            	</h:form>
 </p:panelGrid>
 

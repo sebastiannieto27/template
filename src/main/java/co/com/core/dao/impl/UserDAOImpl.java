@@ -10,7 +10,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.UserDAO;
-import co.com.core.domain.Page;
 import co.com.core.domain.User;
 
 
@@ -161,5 +160,29 @@ public class UserDAOImpl implements UserDAO {
 		}
 		
 		return entityList;
+	}
+	
+	@Override
+	public User getUserByDocNum(String idNumber) {
+		User user = null;
+		try {
+			session = this.sessionFactory.openSession();
+			StringBuilder hql = new StringBuilder();
+			hql.append("SELECT u FROM User u WHERE u.idNumber = :idNumber");
+	        Query query = session.createQuery(hql.toString());
+	        query.setParameter("idNumber", idNumber);
+	        List users = query.list();
+	        
+	        for(Iterator iterator = users.iterator(); iterator.hasNext();) {
+				user = (User) iterator.next();
+			}
+	        
+		} catch(Exception ex) {
+			logger.error("Throwed Exception [UserDAOImpl.getUserByDocNum]: " +ex.getMessage());
+		} finally {
+			session.close();
+		}
+		
+		return user;
 	}
 }

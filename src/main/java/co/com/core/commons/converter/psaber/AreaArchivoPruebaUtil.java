@@ -11,6 +11,7 @@ public class AreaArchivoPruebaUtil {
 		dto.setArchivoPruebaId(entity.getArchivoPruebaId());
 		dto.setAreaArchivoPruebaId(entity.getAreaArchivoPruebaId());
 		dto.setAreaId(entity.getAreaId());
+		dto.setNroColumna(entity.getNroColumna());
 		return dto;
 	}
 	
@@ -19,6 +20,7 @@ public class AreaArchivoPruebaUtil {
 		entity.setArchivoPruebaId(dto.getArchivoPruebaId());
 		entity.setAreaArchivoPruebaId(dto.getAreaArchivoPruebaId());
 		entity.setAreaId(dto.getAreaId());
+		entity.setNroColumna(dto.getNroColumna());
 		return entity;
 	}
 }

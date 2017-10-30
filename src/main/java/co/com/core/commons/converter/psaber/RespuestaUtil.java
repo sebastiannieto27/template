@@ -12,6 +12,7 @@ public class RespuestaUtil {
 		dto.setCodigo(entity.getCodigo());
 		dto.setVerdadera(entity.getVerdadera());
 		dto.setPreguntaId(entity.getPreguntaId());
+		dto.setLetra(entity.getLetra());
 		return dto;
 	}
 	
@@ -22,6 +23,7 @@ public class RespuestaUtil {
 		entity.setCodigo(dto.getCodigo());
 		entity.setVerdadera(dto.getVerdadera());
 		entity.setPreguntaId(dto.getPreguntaId());
+		entity.setLetra(dto.getLetra());
 		return entity;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import co.com.core.domain.psaber.Pregunta;
+import co.com.core.domain.psaber.Respuesta;
 
 public interface PreguntaDAO {
 	
@@ -17,4 +18,7 @@ public interface PreguntaDAO {
 	
 	public void update(Pregunta entity);
 	
+	public Pregunta getPreguntaByCode(String code);
+	
+	public Respuesta getRespuestaByPregunta(Pregunta pregunta);
 }

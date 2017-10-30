@@ -10,29 +10,33 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import co.com.core.dao.psaber.PreguntaDAO;
-import co.com.core.domain.psaber.Pregunta;
-import co.com.core.domain.psaber.Respuesta;
+import co.com.core.dao.psaber.RespuestaExamenDAO;
+import co.com.core.domain.User;
+import co.com.core.domain.psaber.ArchivoPruebaProcesado;
+import co.com.core.domain.psaber.PreguntaTema;
+import co.com.core.domain.psaber.RespuestaExamen;
+import co.com.core.dto.psaber.ArchivoPruebaProcesadoDTO;
 
-public class PreguntaDAOImpl implements PreguntaDAO {
+public class RespuestaExamenDAOImpl implements RespuestaExamenDAO {
 
 	 	private SessionFactory sessionFactory;
 	    private Session session;
-	    private static final Logger logger = Logger.getLogger(PreguntaDAOImpl.class);
+	    private static final Logger logger = Logger.getLogger(RespuestaExamenDAOImpl.class);
 	    
 	    public void setSessionFactory(SessionFactory sessionFactory) {
 	        this.sessionFactory = sessionFactory;
 	    }
 		
 		@Override
-		public List<Pregunta> getAll() {
-			List<Pregunta> entityList = null;
+		public List<RespuestaExamen> getAll() {
+			List<RespuestaExamen> entityList = null;
 			try {
 				session = this.sessionFactory.openSession();
-		        Query query = session.getNamedQuery("Pregunta.findAll");
+		        Query query = session.getNamedQuery("RespuestaExamen.findAll");
+
 		        entityList = query.list();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [PreguntaDAOImpl.getAll]: " +ex.getMessage());
+				logger.error("Throwed Exception [RespuestaExamenDAOImpl.getAll]: " +ex.getMessage());
 			} finally {
 				session.close();
 			}
@@ -40,23 +44,21 @@ public class PreguntaDAOImpl implements PreguntaDAO {
 		}
 
 		@Override
-		public List<Pregunta> getAllFilter(Map<String, Object> filters) {
-			List<Pregunta> entityList = null;
+		public List<RespuestaExamen> getAllFilter(Map<String, Object> filters) {
+			List<RespuestaExamen> entityList = null;
 			try {
 				session = this.sessionFactory.openSession();
 		        StringBuilder hql = new StringBuilder();
-		        hql.append("SELECT b FROM Pregunta b ");
+		        hql.append("SELECT b FROM RespuestaExamen b ");
 
 		        String name = null;
-		        boolean where = false;
 				if(filters.size() > 0) {
 					 
-					name = (String) filters.get("titulo");
+					name = (String) filters.get("nombre");
 					
 					if(name!=null && !name.isEmpty()) {
-						where = true;
 						hql.append("WHERE ");
-						hql.append(" lower(b.titulo) LIKE :titulo ");
+						hql.append(" lower(b.nombre) LIKE :nombre ");
 					}
 				}
 				
@@ -70,7 +72,7 @@ public class PreguntaDAOImpl implements PreguntaDAO {
                     
 		        entityList = query.list();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [PreguntaDAOImpl.getAllFilter]: " +ex.getMessage());
+				logger.error("Throwed Exception [RespuestaExamenDAOImpl.getAllFilter]: " +ex.getMessage());
 			} finally {
 				session.close();
 			}
@@ -78,15 +80,15 @@ public class PreguntaDAOImpl implements PreguntaDAO {
 		}
 		
 		@Override
-		public Pregunta create(Pregunta entity) {
-			Pregunta newEntity = null;
+		public RespuestaExamen create(RespuestaExamen entity) {
+			RespuestaExamen newEntity = null;
 			try {
 				session = this.sessionFactory.openSession();
 				Transaction tx = session.beginTransaction();
-				newEntity = (Pregunta) session.merge(entity);
+				newEntity = (RespuestaExamen) session.merge(entity);
 				tx.commit();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [PreguntaDAOImpl.createPregunta]: " +ex.getMessage());
+				logger.error("Throwed Exception [RespuestaExamenDAOImpl.createRespuestaExamen]: " +ex.getMessage());
 				session.getTransaction().rollback();
 			} finally {
 				session.close();
@@ -95,14 +97,14 @@ public class PreguntaDAOImpl implements PreguntaDAO {
 		}
 
 		@Override
-		public void update(Pregunta entity) {
+		public void update(RespuestaExamen entity) {
 			try {
 				session = this.sessionFactory.openSession();
 				Transaction tx = session.beginTransaction();
 		        session.update(entity);
 		        tx.commit();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [PreguntaDAOImpl.update]: " +ex.getMessage());
+				logger.error("Throwed Exception [RespuestaExamenDAOImpl.update]: " +ex.getMessage());
 				session.getTransaction().rollback();
 			} finally {
 				session.close();
@@ -110,59 +112,48 @@ public class PreguntaDAOImpl implements PreguntaDAO {
 		}
 		
 		@Override
-		public void delete(Pregunta entity) {
+		public void delete(RespuestaExamen entity) {
 			try {
 				session = this.sessionFactory.openSession();
 				Transaction tx = session.beginTransaction();
 				session.delete(entity);
 				tx.commit();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [PreguntaDAOImpl.delete]: " +ex.getMessage());
+				logger.error("Throwed Exception [RespuestaExamenDAOImpl.delete]: " +ex.getMessage());
 				session.getTransaction().rollback();
 			} finally {
 				session.close();
 			}
 		}
-
+		
 		@Override
-		public Pregunta getPreguntaByCode(String code) {
-			Pregunta entity = null;
+		public RespuestaExamen getByRespuestaExamenId(Integer id) {
+			RespuestaExamen entity = null;
 			try {
 				session = this.sessionFactory.openSession();
-		        Query query = session.getNamedQuery("Pregunta.findByCodigo");
-		        query.setParameter("codigo", code);
-		        List<Pregunta> entityList = query.list();
-		        
-				for(Iterator iterator = entityList.iterator(); iterator.hasNext();) {
-					entity = (Pregunta) iterator.next();
-				}
-		        
+				entity = (RespuestaExamen) session.get(RespuestaExamen.class, id);
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [PreguntaDAOImpl.getPreguntaByCode]: " +ex.getMessage());
+				logger.error("Throwed Exception [RespuestaExamenDAOImpl.getAllByRespuestaExamenId]: " +ex.getMessage());
 			} finally {
 				session.close();
 			}
-			
 			return entity;
 		}
 
 		@Override
-		public Respuesta getRespuestaByPregunta(Pregunta pregunta) {
-			Respuesta entity = null;
+		public List<RespuestaExamen> getByArchivoPruebaProcesado(ArchivoPruebaProcesado id) {
+			List<RespuestaExamen> entityList = null;
 			try {
 				session = this.sessionFactory.openSession();
-		        Query query = session.getNamedQuery("Respuesta.findByPregunta");
-		        query.setParameter("preguntaId", pregunta);
-	        	List<Pregunta> entityList = query.list();
-		        
-				for(Iterator iterator = entityList.iterator(); iterator.hasNext();) {
-					entity = (Respuesta) iterator.next();
-				}
+		        Query query = session.getNamedQuery("RespuestaExamen.findByArchivoPruebaProcesado");
+		        query.setParameter("archivoPruebaProcesadoId", id);
+		        entityList = query.list();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [PreguntaDAOImpl.getRespuestasByPregunta]: " +ex.getMessage());
+				logger.error("Throwed Exception [RespuestaExamenDAOImpl.getByArchivoPruebaProcesado]: " +ex.getMessage());
 			} finally {
 				session.close();
 			}
-			return entity;
+			
+			return entityList;
 		}
 }

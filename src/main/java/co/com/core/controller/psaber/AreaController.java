@@ -2,11 +2,13 @@ package co.com.core.controller.psaber;
 
 import static co.com.core.commons.LoadBundle.geProperty;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
@@ -43,6 +45,7 @@ public class AreaController {
 	
 	private boolean checkValue;
 	private boolean areaArchivoPruebaCheckValue;
+	private Integer nroColumna;
 	
 	public void init() {
 		areaList = new ArrayList<>();
@@ -137,22 +140,25 @@ public class AreaController {
 	/**
 	 * add the selected area to the list
 	 */
-	public void addAreaToArchivoPrueba() {
+	public void addAreaToArchivoPrueba(AreaDTO areaDto) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			if(areaListSelected!=null && areaListSelected.size() > 0) {
-				for(AreaDTO item : areaListSelected) {
-					AreaArchivoPruebaDTO dto = new AreaArchivoPruebaDTO();
-					dto.setArchivoPruebaId(ArchivoPruebaUtil.getEntityFromDto(this.selectedArchivoPrueba));
-					dto.setAreaId(AreaUtil.getEntityFromDto(item));
-					areaService.createAreaArchivoPrueba(dto);
-				}
+			if(nroColumna != null && nroColumna != 0) {
+				AreaArchivoPruebaDTO dto = new AreaArchivoPruebaDTO();
+				dto.setArchivoPruebaId(ArchivoPruebaUtil.getEntityFromDto(this.selectedArchivoPrueba));
+				dto.setAreaId(AreaUtil.getEntityFromDto(areaDto));
+				dto.setNroColumna(nroColumna);
+				areaService.createAreaArchivoPrueba(dto);
+						
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("addItemSuccess"), null));
+			} else {
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("nroColumnaRequiredMessage"), null));
 			}
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("addItemSuccess"), null));
 		} catch(Exception ex) {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("addItemError"), null));
 			logger.error("Throwed Exception [ArchivoPruebaController.addareaToArchivoPrueba]: " +ex.getMessage());
 		} finally {
+			nroColumna = 0;
 			areaListSelected = new ArrayList<>();
 			findAreaByArchivoPrueba(selectedArchivoPrueba);
 		}
@@ -233,6 +239,16 @@ public class AreaController {
 		}  finally {
 			deleteAreaItems = new ArrayList<>();
 			findAreaByArchivoPrueba(this.selectedArchivoPrueba);
+		}
+	}
+	
+	public void ordenColumna(ValueChangeEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			Integer value = Integer.parseInt(event.getNewValue().toString());
+			logger.info("Value: " + value);
+		} catch(NumberFormatException e) {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, geProperty("fieldMustBeNumber"), null));
 		}
 	}
 	
@@ -327,4 +343,14 @@ public class AreaController {
 	public void setAreaArchivoPruebaCheckValue(boolean areaArchivoPruebaCheckValue) {
 		this.areaArchivoPruebaCheckValue = areaArchivoPruebaCheckValue;
 	}
+
+	public Integer getNroColumna() {
+		return nroColumna;
+	}
+
+	public void setNroColumna(Integer nroColumna) {
+		this.nroColumna = nroColumna;
+	}
+	
+	
 }

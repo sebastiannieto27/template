@@ -30,10 +30,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "respuesta")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Respuesta.findAll", query = "SELECT r FROM Respuesta r")
-    , @NamedQuery(name = "Respuesta.findByRespuesta", query = "SELECT r FROM Respuesta r WHERE r.respuesta = :respuesta")
-    , @NamedQuery(name = "Respuesta.findByCodigo", query = "SELECT r FROM Respuesta r WHERE r.codigo = :codigo")
-    , @NamedQuery(name = "Respuesta.findByVerdadera", query = "SELECT r FROM Respuesta r WHERE r.verdadera = :verdadera")})
+    @NamedQuery(name = "Respuesta.findAll", query = "SELECT r FROM Respuesta r"), 
+    @NamedQuery(name = "Respuesta.findByRespuesta", query = "SELECT r FROM Respuesta r WHERE r.respuesta = :respuesta"), 
+    @NamedQuery(name = "Respuesta.findByPregunta", query = "SELECT r FROM Respuesta r WHERE r.preguntaId = :preguntaId AND verdadera = TRUE"),
+    @NamedQuery(name = "Respuesta.findByCodigo", query = "SELECT r FROM Respuesta r WHERE r.codigo = :codigo"), 
+    @NamedQuery(name = "Respuesta.findByVerdadera", query = "SELECT r FROM Respuesta r WHERE r.verdadera = :verdadera")})
 public class Respuesta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,7 +59,12 @@ public class Respuesta implements Serializable {
     @JoinColumn(name = "pregunta_id", referencedColumnName = "pregunta_id")
     @ManyToOne(optional = false)
     private Pregunta preguntaId;
-
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "letra")
+    private String letra;
+    
     public Respuesta() {
     }
 
@@ -112,7 +118,15 @@ public class Respuesta implements Serializable {
         this.preguntaId = preguntaId;
     }
 
-    @Override
+    public String getLetra() {
+		return letra;
+	}
+
+	public void setLetra(String letra) {
+		this.letra = letra;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (respuesta != null ? respuesta.hashCode() : 0);

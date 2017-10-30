@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -32,12 +33,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "AreaArchivoPrueba.findByAreaArchivoPruebaId", query = "SELECT a FROM AreaArchivoPrueba a WHERE a.areaArchivoPruebaId = :areaArchivoPruebaId")})
 public class AreaArchivoPrueba implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "area_archivo_prueba_id")
     private Integer areaArchivoPruebaId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "nro_columna")
+    private int nroColumna;
     @JoinColumn(name = "archivo_prueba_id", referencedColumnName = "archivo_prueba_id")
     @ManyToOne(optional = false)
     private ArchivoPrueba archivoPruebaId;
@@ -52,12 +57,25 @@ public class AreaArchivoPrueba implements Serializable {
         this.areaArchivoPruebaId = areaArchivoPruebaId;
     }
 
+    public AreaArchivoPrueba(Integer areaArchivoPruebaId, int nroColumna) {
+        this.areaArchivoPruebaId = areaArchivoPruebaId;
+        this.nroColumna = nroColumna;
+    }
+
     public Integer getAreaArchivoPruebaId() {
         return areaArchivoPruebaId;
     }
 
     public void setAreaArchivoPruebaId(Integer areaArchivoPruebaId) {
         this.areaArchivoPruebaId = areaArchivoPruebaId;
+    }
+
+    public int getNroColumna() {
+        return nroColumna;
+    }
+
+    public void setNroColumna(int nroColumna) {
+        this.nroColumna = nroColumna;
     }
 
     public ArchivoPrueba getArchivoPruebaId() {

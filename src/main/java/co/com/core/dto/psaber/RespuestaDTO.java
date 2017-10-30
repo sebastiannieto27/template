@@ -8,6 +8,7 @@ public class RespuestaDTO {
     private String descripcion;
     private Boolean verdadera;
     private Pregunta preguntaId;
+    private String letra;
     
 	public Integer getRespuesta() {
 		return respuesta;
@@ -38,6 +39,13 @@ public class RespuestaDTO {
 	}
 	public void setPreguntaId(Pregunta preguntaId) {
 		this.preguntaId = preguntaId;
+	}
+	
+	public String getLetra() {
+		return letra;
+	}
+	public void setLetra(String letra) {
+		this.letra = letra;
 	}
 	@Override
 	public String toString() {

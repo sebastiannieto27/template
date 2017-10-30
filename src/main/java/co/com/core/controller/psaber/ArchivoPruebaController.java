@@ -3,35 +3,68 @@ package co.com.core.controller.psaber;
 import static co.com.core.commons.LoadBundle.geProperty;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jfree.util.Log;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.UploadedFile;
 
+import com.google.gson.Gson;
+
+import co.com.core.commons.EsquemaRespuesta;
+import co.com.core.commons.ItemRespuesta;
+import co.com.core.commons.RespuestaExamenProcesado;
+import co.com.core.commons.converter.UserUtil;
+import co.com.core.commons.converter.psaber.ArchivoPruebaProcesadoUtil;
+import co.com.core.commons.converter.psaber.ArchivoPruebaUtil;
+import co.com.core.commons.converter.psaber.RespuestaExamenUtil;
+import co.com.core.domain.psaber.ArchivoPruebaProcesado;
+import co.com.core.domain.psaber.RespuestaExamen;
+import co.com.core.dto.UploadedFileDTO;
+import co.com.core.dto.UserDTO;
 import co.com.core.dto.psaber.ArchivoPruebaDTO;
+import co.com.core.dto.psaber.AreaArchivoPruebaDTO;
+import co.com.core.dto.psaber.RespuestaExamenDTO;
 import co.com.core.lazy.loader.psaber.ArchivoPruebaLazyLoader;
+import co.com.core.services.IUserService;
+import co.com.core.services.psaber.IArchivoPruebaProcesadoService;
 import co.com.core.services.psaber.IArchivoPruebaService;
+import co.com.core.services.psaber.IAreaService;
+import co.com.core.services.psaber.IRespuestaExamenService;
 
 
 public class ArchivoPruebaController {
 
 	private static final Logger logger = Logger.getLogger(ArchivoPruebaController.class);
-	
+	public static final String PREFIX = "tempPlainFile";
+    public static final String SUFFIX = ".xlsx";
+    
 	private IArchivoPruebaService archivoPruebaService;
+	private IAreaService areaService;
+	private IRespuestaExamenService respuestaExamenService; 
+	private IArchivoPruebaProcesadoService archivoPruebaProcesadoService;
+	private IUserService userService;
+	
 	private List<ArchivoPruebaDTO> items;
 	private ArchivoPruebaDTO selected;
 	
@@ -42,49 +75,182 @@ public class ArchivoPruebaController {
 	
 	private LazyDataModel<ArchivoPruebaDTO> lazyModel;
 	
+	RespuestaExamenDTO respuestaExamenDto;
+	
 	public void init() {
 		lazyModel = new ArchivoPruebaLazyLoader(archivoPruebaService);
 		Log.error(lazyModel);
 	}
-	
-	/*public void init() {
-		Map<String, Object> filter = new HashMap<String, Object>();
-		if(StringUtils.hasText(searchName)) {
-			filter.put("nombre", searchName);
-		}
-		
-		items = ArchivoPruebaService.getAllFilter(filter);
-	}*/
 
-	public void procesarArchivoExcel() {
+	public void procesarArchivoExcel(File excelFile) {
 		
 		try {
-			FileInputStream excelFile = new FileInputStream(new File("C:\\Users\\diego.nieto\\Documents\\DiegoNieto\\template\\Respuesta_Prueba.xlsx"));
+			
+			String fileName = excelFile.getName();
+			/*FileInputStream excelFile = new FileInputStream(new File("C:\\Users\\diego.nieto\\Documents\\DiegoNieto\\template\\Respuesta_Prueba.xlsx"));*/
 	        Workbook workbook = new XSSFWorkbook(excelFile);
 	        Sheet datatypeSheet = workbook.getSheetAt(0);
-	        Iterator<Row> iterator = datatypeSheet.iterator();
+	        Gson gson = new Gson();
 	        
-	        while (iterator.hasNext()) {
-	        	Row currentRow = iterator.next();
-	            Iterator<Cell> cellIterator = currentRow.iterator();
-	            while (cellIterator.hasNext()) {
-	            	Cell currentCell = cellIterator.next();
-                    //getCellTypeEnum shown as deprecated for version 3.15
-                    //getCellTypeEnum ill be renamed to getCellType starting from version 4.0
-                    if (currentCell.getCellType() == Cell.CELL_TYPE_STRING) {
-                    	logger.info(currentCell.getStringCellValue() + "--");
-                    } else if (currentCell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                    	logger.info(currentCell.getNumericCellValue() + "--");
-                    }
-	            }
+	        //get the archvioPrueba dto
+	        archivoPruebaExcel = archivoPruebaService.getByArchivoPruebaId(archivoPruebaExcelId);
+	        
+	        //find all the areas configured to the archivo prueba
+	        List<AreaArchivoPruebaDTO> areaArchivoList = areaService.findAreaByArchivoPrueba(archivoPruebaExcel);
+	        
+	        //Creates an ArchivoPruebaProcesado entry
+	        ArchivoPruebaProcesado archivoPruebaProcesadoEntity = new ArchivoPruebaProcesado();
+	        archivoPruebaProcesadoEntity.setArchivoPruebaId(ArchivoPruebaUtil.getEntityFromDto(archivoPruebaExcel));
+	        archivoPruebaProcesadoEntity.setFecCre(new Date());
+	        archivoPruebaProcesadoEntity.setNombreArchivo(fileName);
+	        ArchivoPruebaProcesado newArchivoPruebaProcesado = archivoPruebaProcesadoService.create(ArchivoPruebaProcesadoUtil.getDtoFromEntity(archivoPruebaProcesadoEntity));
+	        
+	        
+	        if(areaArchivoList!=null && areaArchivoList.size() > 0) {
+	        	
+	        	//order the rows by user
+	        	List<List<Row>> rowsByUser = divideExcelFileByRows(datatypeSheet);
+	        	
+	        	for(List<Row> rowList : rowsByUser) {
+	        		
+	        		//objeto padre del json respuesta por usuario
+	        		RespuestaExamenProcesado respuestaExamenProcesado = new RespuestaExamenProcesado();
+	        		
+	        		RespuestaExamen respuestaExamen = new RespuestaExamen();
+	        		respuestaExamen.setArchivoPruebaProcesadoId(newArchivoPruebaProcesado);
+	        		
+	        		List<EsquemaRespuesta> respuestaUsuarioList = new ArrayList<>();
+	        		
+		        	int rowNumber = 0;
+		    		for(AreaArchivoPruebaDTO dto : areaArchivoList ) {
+		    			EsquemaRespuesta respuestaObj = new EsquemaRespuesta();
+		    			
+		    			respuestaObj.setAreaId(dto.getAreaId().getAreaId());
+		    			
+		    			List<ItemRespuesta> itemList = new ArrayList<>();
+		    			
+		    			double nroDocumento = 0;
+		    			rowNumber = 0;
+		    			for(Row userRow : rowList) {
+
+		    					if(userRow.getCell(1) != null && !userRow.getCell(1).toString().isEmpty()) {
+		    	        			nroDocumento = userRow.getCell(1).getNumericCellValue();
+		    	        			int intNroDoc = (int) nroDocumento;
+		    	        			UserDTO userDto = userService.getUserByDocNum(String.valueOf(intNroDoc));
+		    	        			respuestaExamen.setUserId(UserUtil.getEntityFromDto(userDto));
+		    	        		}
+		    	        		
+		    	        		double nroPregunta = userRow.getCell(2).getNumericCellValue();
+		    	        		String respuesta = userRow.getCell(dto.getNroColumna()).getStringCellValue();
+		    	        		
+		    	        		ItemRespuesta itemRespuesta = new ItemRespuesta();
+		    	        		
+		    	        		itemRespuesta.setPregunta((int) nroPregunta);
+		    	        		itemRespuesta.setRespuesta(respuesta);
+		    	        		
+		    	        		itemList.add(itemRespuesta);
+		    	        	}
+	    					rowNumber++;
+		    			
+		    			respuestaObj.setItem(itemList);
+		    			
+		    			respuestaUsuarioList.add(respuestaObj);
+		    			respuestaExamenProcesado.setRespuestaExamen(respuestaUsuarioList);
+		    			logger.info("OBJ: " + respuestaObj);
+		    		}
+		    		
+		    		String objRespuestaExamen = gson.toJson(respuestaExamenProcesado);
+		    		//Blob b = new javax.sql.rowset.serial.SerialBlob(objRespuestaExamen.getBytes());
+		    		//Creates an ArchivoPruebaProcesado entry
+		    		respuestaExamen.setRespuesta(objRespuestaExamen);
+		    		respuestaExamenService.create(RespuestaExamenUtil.getDtoFromEntity(respuestaExamen));
+		    		logger.info("JSON: " + objRespuestaExamen);
+		        }
 	        }
-		} catch(FileNotFoundException fne) {
-			logger.error("Error trying to get the excel file: " + fne.getMessage());
+	        
 		} catch (IOException e) {
 			logger.error("Error in the excel processing: " + e.getMessage());
 		} catch(Exception e) {
 			logger.error("Exception processing excel file: " + e.getMessage());
 		} 
+	}
+	
+	
+	private List<List<Row>> divideExcelFileByRows(Sheet datatypeSheet) {
+		List<List<Row>> excelRows = new ArrayList<List<Row>>();
+		
+		Iterator<Row> rowiTterator = datatypeSheet.iterator();
+		
+		int nroDocRwoNumber = 0;
+		double nroDocumento = 0;
+		List<Row> rowList = new ArrayList<>();
+		while (rowiTterator.hasNext()) {
+			Row currentRow = rowiTterator.next();
+			if(nroDocRwoNumber !=0) {
+        		if(currentRow.getCell(1) != null && !currentRow.getCell(1).toString().isEmpty()) {
+        			if(currentRow.getCell(1).getNumericCellValue() != nroDocumento && nroDocRwoNumber!=1) {
+            			excelRows.add(rowList);
+            			rowList = new ArrayList<>();
+        			}
+        			nroDocumento = currentRow.getCell(1).getNumericCellValue();
+        		}
+        		
+        		rowList.add(currentRow);
+        		
+        		if(currentRow.getRowNum()==datatypeSheet.getLastRowNum()) {
+        			excelRows.add(rowList);
+        			return excelRows;
+        		}
+        	}
+        	nroDocRwoNumber++;
+		}
+		logger.info("---" + excelRows);
+		return excelRows;
+	} 
+	
+	public UploadedFileDTO uploadAndUseFile(FileUploadEvent event) {  
+    	UploadedFileDTO resultDto = null;
+    	try {
+    		FacesContext context = FacesContext.getCurrentInstance();
+        	UploadedFile uploadedFile = event.getFile();
+
+        	InputStream inputStream = uploadedFile.getInputstream();
+        	File tempFile = getTemporaryFile(inputStream);
+        	
+        	procesarArchivoExcel(tempFile);
+        	
+    	} catch(Exception ex) {
+    		logger.error("Throwed Exception [ArchivoPruebaController.uploadAndUseFile]: " +ex.getMessage());
+    	}
+    	return resultDto;
+    } 
+	
+    public static File getTemporaryFile (InputStream in) throws IOException {
+        final File tempFile = File.createTempFile(PREFIX, SUFFIX);
+        tempFile.deleteOnExit();
+        try (FileOutputStream out = new FileOutputStream(tempFile)) {
+            IOUtils.copy(in, out);
+        }
+        return tempFile;
+    }
+	
+	
+	private Map<Integer, EsquemaRespuesta> createEsquemaMap(List<AreaArchivoPruebaDTO> areaArchivoList) {
+		Map<Integer, EsquemaRespuesta> respuestaMap = new HashMap<>();
+		
+		if(areaArchivoList != null && areaArchivoList.size() > 0) {
+			for(AreaArchivoPruebaDTO dto : areaArchivoList) {
+				EsquemaRespuesta respuesta = new EsquemaRespuesta();
+				respuesta.setAreaId(dto.getAreaId().getAreaId());
+				respuesta.setNombreArea(dto.getAreaId().getNombre());
+				respuesta.setNroColumna(dto.getNroColumna());
+				
+				respuestaMap.put(dto.getNroColumna(), respuesta);
+				
+			}
+		}
+		
+		return respuestaMap;
 	}
 	
 	public void mostrarInformacionArchivo(ValueChangeEvent event) {
@@ -202,6 +368,38 @@ public class ArchivoPruebaController {
 
 	public void setArchivoPruebaExcel(ArchivoPruebaDTO archivoPruebaExcel) {
 		this.archivoPruebaExcel = archivoPruebaExcel;
+	}
+
+	public IAreaService getAreaService() {
+		return areaService;
+	}
+
+	public void setAreaService(IAreaService areaService) {
+		this.areaService = areaService;
+	}
+
+	public IRespuestaExamenService getRespuestaExamenService() {
+		return respuestaExamenService;
+	}
+
+	public void setRespuestaExamenService(IRespuestaExamenService respuestaExamenService) {
+		this.respuestaExamenService = respuestaExamenService;
+	}
+
+	public IArchivoPruebaProcesadoService getArchivoPruebaProcesadoService() {
+		return archivoPruebaProcesadoService;
+	}
+
+	public void setArchivoPruebaProcesadoService(IArchivoPruebaProcesadoService archivoPruebaProcesadoService) {
+		this.archivoPruebaProcesadoService = archivoPruebaProcesadoService;
+	}
+
+	public IUserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(IUserService userService) {
+		this.userService = userService;
 	}
 	
 	

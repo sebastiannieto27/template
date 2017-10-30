@@ -6,6 +6,7 @@
 package co.com.core.domain;
 import java.io.Serializable;
 import java.util.Collection;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +24,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import co.com.core.domain.psaber.RespuestaExamen;
+import co.com.core.domain.psaber.ResultadoExamenUsuario;
 
 /**
  *
@@ -97,6 +101,10 @@ public class User implements Serializable {
     private Short accountLocked;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<UploadedFile> uploadedFileCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<RespuestaExamen> respuestaExamenCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<ResultadoExamenUsuario> resultadoExamenUsuarioCollection;
     
     public User() {
     }
@@ -229,6 +237,23 @@ public class User implements Serializable {
         this.accountLocked = accountLocked;
     }
 
+    @XmlTransient
+    public Collection<RespuestaExamen> getRespuestaExamenCollection() {
+        return respuestaExamenCollection;
+    }
+
+    public void setRespuestaExamenCollection(Collection<RespuestaExamen> respuestaExamenCollection) {
+        this.respuestaExamenCollection = respuestaExamenCollection;
+    }
+
+    @XmlTransient
+    public Collection<ResultadoExamenUsuario> getResultadoExamenUsuarioCollection() {
+        return resultadoExamenUsuarioCollection;
+    }
+
+    public void setResultadoExamenUsuarioCollection(Collection<ResultadoExamenUsuario> resultadoExamenUsuarioCollection) {
+        this.resultadoExamenUsuarioCollection = resultadoExamenUsuarioCollection;
+    }
     @Override
     public int hashCode() {
         int hash = 0;

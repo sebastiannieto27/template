@@ -21,4 +21,6 @@ public interface UserDAO {
 	public User getByMail(String userEmail);
 	
 	public List<User> getUserByName(String name);
+	
+	public User getUserByDocNum(String idNumber);
 }

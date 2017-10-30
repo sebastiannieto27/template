@@ -10,29 +10,29 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import co.com.core.dao.psaber.ArchivoPruebaDAO;
-import co.com.core.domain.User;
-import co.com.core.domain.psaber.ArchivoPrueba;
+import co.com.core.dao.psaber.ResultadoExamenUsuarioDAO;
+import co.com.core.domain.psaber.ResultadoExamenUsuario;
 
-public class ArchivoPruebaDAOImpl implements ArchivoPruebaDAO {
+public class ResultadoExamenUsuarioDAOImpl implements ResultadoExamenUsuarioDAO {
 
 	 	private SessionFactory sessionFactory;
 	    private Session session;
-	    private static final Logger logger = Logger.getLogger(ArchivoPruebaDAOImpl.class);
+	    private static final Logger logger = Logger.getLogger(ResultadoExamenUsuarioDAOImpl.class);
 	    
 	    public void setSessionFactory(SessionFactory sessionFactory) {
 	        this.sessionFactory = sessionFactory;
 	    }
 		
 		@Override
-		public List<ArchivoPrueba> getAll() {
-			List<ArchivoPrueba> entityList = null;
+		public List<ResultadoExamenUsuario> getAll() {
+			List<ResultadoExamenUsuario> entityList = null;
 			try {
 				session = this.sessionFactory.openSession();
-		        Query query = session.getNamedQuery("ArchivoPrueba.findAll");
+		        Query query = session.getNamedQuery("ResultadoExamenUsuario.findAll");
+
 		        entityList = query.list();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [ArchivoPruebaDAOImpl.getAll]: " +ex.getMessage());
+				logger.error("Throwed Exception [ResultadoExamenUsuarioDAOImpl.getAll]: " +ex.getMessage());
 			} finally {
 				session.close();
 			}
@@ -40,24 +40,13 @@ public class ArchivoPruebaDAOImpl implements ArchivoPruebaDAO {
 		}
 
 		@Override
-		public List<ArchivoPrueba> getAllFilter(Map<String, Object> filters) {
-			List<ArchivoPrueba> entityList = null;
+		public List<ResultadoExamenUsuario> getAllFilter(Map<String, Object> filters) {
+			List<ResultadoExamenUsuario> entityList = null;
 			try {
 				session = this.sessionFactory.openSession();
 		        StringBuilder hql = new StringBuilder();
-		        hql.append("SELECT b FROM ArchivoPrueba b ");
+		        hql.append("SELECT b FROM ResultadoExamenUsuario b ");
 
-		        String name = null;
-				if(filters.size() > 0) {
-					 
-					name = (String) filters.get("nombre");
-					
-					if(name!=null && !name.isEmpty()) {
-						hql.append("WHERE ");
-						hql.append(" lower(b.nombre) LIKE :nombre ");
-					}
-				}
-				
 				Query query = session.createQuery(hql.toString());
 				 
 				for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
@@ -68,7 +57,7 @@ public class ArchivoPruebaDAOImpl implements ArchivoPruebaDAO {
                     
 		        entityList = query.list();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [ArchivoPruebaDAOImpl.getAllFilter]: " +ex.getMessage());
+				logger.error("Throwed Exception [ResultadoExamenUsuarioDAOImpl.getAllFilter]: " +ex.getMessage());
 			} finally {
 				session.close();
 			}
@@ -76,15 +65,15 @@ public class ArchivoPruebaDAOImpl implements ArchivoPruebaDAO {
 		}
 		
 		@Override
-		public ArchivoPrueba create(ArchivoPrueba entity) {
-			ArchivoPrueba newEntity = null;
+		public ResultadoExamenUsuario create(ResultadoExamenUsuario entity) {
+			ResultadoExamenUsuario newEntity = null;
 			try {
 				session = this.sessionFactory.openSession();
 				Transaction tx = session.beginTransaction();
-				newEntity = (ArchivoPrueba) session.merge(entity);
+				newEntity = (ResultadoExamenUsuario) session.merge(entity);
 				tx.commit();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [ArchivoPruebaDAOImpl.createArchivoPrueba]: " +ex.getMessage());
+				logger.error("Throwed Exception [ResultadoExamenUsuarioDAOImpl.createResultadoExamenUsuario]: " +ex.getMessage());
 				session.getTransaction().rollback();
 			} finally {
 				session.close();
@@ -93,14 +82,14 @@ public class ArchivoPruebaDAOImpl implements ArchivoPruebaDAO {
 		}
 
 		@Override
-		public void update(ArchivoPrueba entity) {
+		public void update(ResultadoExamenUsuario entity) {
 			try {
 				session = this.sessionFactory.openSession();
 				Transaction tx = session.beginTransaction();
 		        session.update(entity);
 		        tx.commit();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [ArchivoPruebaDAOImpl.update]: " +ex.getMessage());
+				logger.error("Throwed Exception [ResultadoExamenUsuarioDAOImpl.update]: " +ex.getMessage());
 				session.getTransaction().rollback();
 			} finally {
 				session.close();
@@ -108,31 +97,17 @@ public class ArchivoPruebaDAOImpl implements ArchivoPruebaDAO {
 		}
 		
 		@Override
-		public void delete(ArchivoPrueba entity) {
+		public void delete(ResultadoExamenUsuario entity) {
 			try {
 				session = this.sessionFactory.openSession();
 				Transaction tx = session.beginTransaction();
 				session.delete(entity);
 				tx.commit();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [ArchivoPruebaDAOImpl.delete]: " +ex.getMessage());
+				logger.error("Throwed Exception [ResultadoExamenUsuarioDAOImpl.delete]: " +ex.getMessage());
 				session.getTransaction().rollback();
 			} finally {
 				session.close();
 			}
-		}
-		
-		@Override
-		public ArchivoPrueba getByArchivoPruebaId(Integer id) {
-			ArchivoPrueba entity = null;
-			try {
-				session = this.sessionFactory.openSession();
-				entity = (ArchivoPrueba) session.get(ArchivoPrueba.class, id);
-			} catch(Exception ex) {
-				logger.error("Throwed Exception [ArchivoPruebaDAOImpl.getAllByArchivoPruebaId]: " +ex.getMessage());
-			} finally {
-				session.close();
-			}
-			return entity;
 		}
 }

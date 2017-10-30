@@ -65,6 +65,15 @@ public class UserServiceImpl implements IUserService {
 		return userDtoList;
 	}
 	
+	@Override
+	public UserDTO getUserByDocNum(String idNumber) {
+		UserDTO userDto = null;
+		User user = userDAO.getUserByDocNum(idNumber);
+		if (user!=null) {
+			userDto = UserUtil.getDtoFromEntity(user);
+		}
+		return userDto;
+	}
 	
 	@Override
 	public void createUser(UserDTO UserDto) {
