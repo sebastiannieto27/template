@@ -2,29 +2,21 @@ package co.com.core.controller.psaber;
 
 import static co.com.core.commons.LoadBundle.geProperty;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jfree.util.Log;
 import org.primefaces.model.LazyDataModel;
 
 import co.com.core.dto.psaber.RespuestaExamenDTO;
+import co.com.core.dto.psaber.ResultadoExamenUsuarioDTO;
 import co.com.core.lazy.loader.psaber.RespuestaExamenLazyLoader;
+import co.com.core.lazy.loader.psaber.ResultadoExamenUsuarioLazyLoader;
 import co.com.core.services.psaber.IRespuestaExamenService;
+import co.com.core.services.psaber.IResultadoExamenUsuarioService;
 
 
 public class RespuestaExamenController {
@@ -32,12 +24,16 @@ public class RespuestaExamenController {
 	private static final Logger logger = Logger.getLogger(RespuestaExamenController.class);
 	
 	private IRespuestaExamenService respuestaExamenService;
+	private IResultadoExamenUsuarioService resultadoExamenUsuarioService;
+	
 	private List<RespuestaExamenDTO> items;
 	private RespuestaExamenDTO selected;
 	
 	private String searchName;
 	
 	private LazyDataModel<RespuestaExamenDTO> lazyModel;
+	
+	private LazyDataModel<ResultadoExamenUsuarioDTO> lazyModelResultado;
 	
 	public void init() {
 		lazyModel = new RespuestaExamenLazyLoader(respuestaExamenService);
@@ -95,6 +91,21 @@ public class RespuestaExamenController {
 		selected = new RespuestaExamenDTO();
 	}
 
+	/**
+	 * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
+	 * * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
+	 * * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
+	 */
+	public void getByUserNRespuestaExamenResultado(RespuestaExamenDTO respuestaExamenDTO) {
+		
+		lazyModelResultado = new ResultadoExamenUsuarioLazyLoader(resultadoExamenUsuarioService, respuestaExamenDTO);
+		
+	}
+	/**
+	 * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
+	 * * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
+	 * * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
+	 */
 	public IRespuestaExamenService getRespuestaExamenService() {
 		return respuestaExamenService;
 	}

@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.psaber.ResultadoExamenUsuarioDAO;
+import co.com.core.domain.psaber.RespuestaExamen;
 import co.com.core.domain.psaber.ResultadoExamenUsuario;
 
 public class ResultadoExamenUsuarioDAOImpl implements ResultadoExamenUsuarioDAO {
@@ -109,5 +110,22 @@ public class ResultadoExamenUsuarioDAOImpl implements ResultadoExamenUsuarioDAO 
 			} finally {
 				session.close();
 			}
+		}
+
+		@Override
+		public List<ResultadoExamenUsuario> getByUserNRespuestaExamenResultado(RespuestaExamen entity) {
+			List<ResultadoExamenUsuario> entityList = null;
+			try {
+				session = this.sessionFactory.openSession();
+		        Query query = session.getNamedQuery("ResultadoExamenUsuario.findByRespuestaExamenId");
+		        query.setParameter("respuestaExamenId", entity);
+		        entityList = query.list();
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [RespuestaExamenDAOImpl.getByArchivoPruebaProcesado]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			
+			return entityList;
 		}
 }

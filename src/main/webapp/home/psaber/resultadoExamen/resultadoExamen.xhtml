@@ -9,72 +9,111 @@
 <body>
 	<ui:composition>
 
-<p:panelGrid columns="3">
+<h:form id="archivoPruebaListForm">
+   			<h:panelGroup id="searchForm">
+            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+            		
+                	<p:outputLabel value="#{msg.user}:"  />
+                    <h:panelGrid columns="2" style="width:100%">
+	                   <p:inputText id="txtInputSearch" value="#{userController.userNameSearch}" onblur="inputTextBlur( this, '#{userController.userNameSearch}' );" onfocus="inputTextFocus( this, '#{userController.userNameSearch}' );" />
+	                   <p:commandLink id="cmdLink" actionListener="#{userController.advancedSearch}"  
+	                   		oncomplete="PF('advanceSearchViewDialog').show()">
+	                       <span><h:graphicImage url="resources/images/magnifier_16.png" width="17" height="17" /></span>
+	                   </p:commandLink>
+		            
+			            <p:dialog id="advanceSearchViewDlg" widgetVar="advanceSearchViewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+				                <p:dataScroller id="dataScroller" value="#{userController.searchResultItems}" var="result" chunkSize="5" >
+							        <f:facet name="loader">
+							            <p:commandButton type="button" value="#{msg.more}" icon="ui-icon-circle-triangle-s" rendered="#{userController.showSearchData}"/>
+							        	<h:outputText value="#{msg.emptySearch}" rendered="#{!userController.showSearchData}" style="font-weight: bold"/>
+							        </f:facet>
+							        <h:panelGrid columns="2" style="width:100%">
+							            <p:outputPanel>
+							                <h:panelGrid columns="3">
+							                	<f:ajax execute="@form" render="@all" onevent="PF('advanceSearchViewDialog').hide()">
+								                    <h:outputText value="#{result.completeName}" style="font-weight: bold"/>
+								                    <h:commandLink id="result-#{result.userId}" action="#{userController.selectResult(result)}">
+								                        <span><h:graphicImage url="resources/images/accept_16.png" width="12" height="12" /></span>
+								                    </h:commandLink>
+							                    </f:ajax>
+							                </h:panelGrid>
+							            </p:outputPanel>
+							        </h:panelGrid>
+							    </p:dataScroller>
+				        </p:dialog>
+                    </h:panelGrid>
+            		
+            		
+          			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" 
+          				actionListener="#{archivoPruebaController.init()}" update=":archivoPruebaListForm" />
+       			</p:panelGrid>
+           	</h:panelGroup>
+              
+        <p:panel header="#{msg.archivoPrueba}">
+            <p:dataTable id="datalist"
+                         value="#{respuestaExamenController.lazyModel}"
+                         var="item"
+                         rowKey="#{item.respuestaExamenId}"
+                         paginator="true"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{respuestaExamenController.selected}"
+                         lazy="true">
 
-			<h:form id="procesarExcelListForm">
-				<p:panelGrid columns="2">
-	    			<h:panelGroup id="searchForm">
-								<p:panelGrid columns="2" columnClasses="column"
-									styleClass="panelGridCenter">
-									<p:outputLabel value="#{msg.archivoPrueba}" for="archivoPruebaId" />
-									<p:selectOneMenu id="archivoPruebaId"
-										value="#{archivoPruebaController.archivoPruebaExcelId}"
-										valueChangeListener="#{archivoPruebaController.mostrarInformacionArchivo}">
-										<p:ajax update="@form" />
-										<f:selectItem itemLabel="#{msg.SelectOneMessage}" />
-										<f:selectItems
-											value="#{archivoPruebaController.lazyModel.datasource}"
-											var="archivoPruebaIdItem"
-											itemValue="#{archivoPruebaIdItem.archivoPruebaId}"
-											itemLabel="#{archivoPruebaIdItem.nombre.toString()}" />
-									</p:selectOneMenu>
-			
-			
-									<p:commandButton id="procesarButton" icon="ui-icon-search"
-										value="#{msg.procesarArchivo}"
-										actionListener="#{archivoPruebaController.uploadAndUseFile}"
-										update=":procesarExcelListForm" />
-								</p:panelGrid>
-						</h:panelGroup>
-						
-						<h:panelGroup id="detalleArchivoExcel"
-							rendered="#{archivoPruebaController.archivoPruebaExcel != null}">
-							<p:panelGrid columns="2" columnClasses="column">
-		
-								<h:outputText value="#{msg.id}" />
-								<h:outputText
-									value="#{archivoPruebaController.archivoPruebaExcel.archivoPruebaId}"
-									title="#{msg.id}" />
-		
-								<h:outputText value="#{msg.name}" />
-								<h:outputText
-									value="#{archivoPruebaController.archivoPruebaExcel.nombre}"
-									title="#{msg.name}" />
-		
-								<h:outputText value="#{msg.nroColumnas}" />
-								<h:outputText
-									value="#{archivoPruebaController.archivoPruebaExcel.nroColumnas}"
-									title="#{msg.nroColumnas}" />
-		
-								<h:outputText value="#{msg.nroPreguntas}" />
-								<h:outputText
-									value="#{archivoPruebaController.archivoPruebaExcel.nroPreguntas}"
-									title="#{msg.nroPreguntas}" />
-							</p:panelGrid>
-							<p:commandButton value="#{msg.close}" />
-						</h:panelGroup>
-				</p:panelGrid>
-				<ui:include src="/WEB-INF/templates/confirmation.xhtml" />
-			</h:form>
-			
-			<p:messages id="uploadMessage" autoUpdate="true" />
-			<h:form id="formUpload" enctype="multipart/form-data">
-            	<p:fileUpload fileUploadListener="#{archivoPruebaController.uploadAndUseFile}" auto="true" update="uploadMessage" label="#{msg.selectFile}" sizeLimit="2097152"/>
-           	</h:form>
-</p:panelGrid>
+                <p:ajax event="rowSelect"   />
 
-			
+                <p:column width="20px;">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.respuestaExamenId}"/>
+                </p:column>
 
+                <p:column width="150px;" sortBy="#{item.userId.idNumber}" filterBy="#{item.userId.idNumber}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.idNumber}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.userId.idNumber}"/>
+                </p:column>
+                
+                <p:column width="150px;" sortBy="#{item.userId.completeName}" filterBy="#{item.userId.completeName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.name}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.userId.completeName}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.archivoPruebaProcesadoId.nombreArchivo}" filterBy="#{item.archivoPruebaProcesadoId.nombreArchivo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.fileName}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.archivoPruebaProcesadoId.nombreArchivo}"/>
+                </p:column>
+                
+                <p:column width="150px;" sortBy="#{item.archivoPruebaProcesadoId.fecCre}" filterBy="#{item.archivoPruebaProcesadoId.fecCre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.date}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.archivoPruebaProcesadoId.fecCre}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.resultado}"/>
+                    </f:facet>
+                    <p:commandLink id="viewResultadoLink" value="#{msg.resultado}" update=":archivoPruebaViewAreaForm,:listAreaArchivoPruebaForm" 
+                    		oncomplete="PF('archivoPruebaViewAreaDialog').show()" actionListener="#{areaController.findAreaByArchivoPrueba(item)}"/>
+                </p:column>
+
+            </p:dataTable>
+
+			<p:commandButton id="testExcel" icon="ui-icon-plus"   value="excel" actionListener="#{archivoPruebaController.procesarArchivoExcel}" />
+            
+        </p:panel>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+    </h:form>
 
 	</ui:composition>
 </body>

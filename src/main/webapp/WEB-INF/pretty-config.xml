@@ -102,6 +102,11 @@
 		<pattern value="/psaber/procesar-excel" />
 		<view-id value="/home/psaber/procesarExcel/index.xhtml" />
 	</url-mapping>
+		
+	<url-mapping id="resultadosExamen">
+		<pattern value="/psaber/resultados-usuario" />
+		<view-id value="/home/psaber/resultadoExamen/index.xhtml" />
+	</url-mapping>
 	<!-- saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro -->
 	
 	

@@ -6,9 +6,13 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import co.com.core.commons.converter.psaber.ArchivoPruebaProcesadoUtil;
+import co.com.core.commons.converter.psaber.RespuestaExamenUtil;
 import co.com.core.commons.converter.psaber.ResultadoExamenUsuarioUtil;
 import co.com.core.dao.psaber.ResultadoExamenUsuarioDAO;
+import co.com.core.domain.psaber.RespuestaExamen;
 import co.com.core.domain.psaber.ResultadoExamenUsuario;
+import co.com.core.dto.psaber.RespuestaExamenDTO;
 import co.com.core.dto.psaber.ResultadoExamenUsuarioDTO;
 import co.com.core.services.psaber.IResultadoExamenUsuarioService;
 
@@ -41,6 +45,19 @@ public class ResultadoExamenUsuarioServiceImpl implements IResultadoExamenUsuari
 		return ResultadoExamenUsuarios;
 	}
 	
+
+	@Override
+	public List<ResultadoExamenUsuarioDTO> getByUserNRespuestaExamenResultado(RespuestaExamenDTO dto) {
+		List<ResultadoExamenUsuarioDTO> dtoList = new ArrayList<>();
+		List<ResultadoExamenUsuario> entityList = resultadoExamenUsuarioDAO.getByUserNRespuestaExamenResultado(RespuestaExamenUtil.getEntityFromDto(dto));
+		if(entityList!=null && entityList.size() > 0) {
+			for(ResultadoExamenUsuario entity : entityList) {
+				dtoList.add(ResultadoExamenUsuarioUtil.getDtoFromEntity(entity));
+			}
+		}
+		return dtoList;
+	}
+	
 	@Override
 	public ResultadoExamenUsuario create(ResultadoExamenUsuarioDTO dto) {
 		return resultadoExamenUsuarioDAO.create(ResultadoExamenUsuarioUtil.getEntityFromDto(dto));
@@ -63,4 +80,5 @@ public class ResultadoExamenUsuarioServiceImpl implements IResultadoExamenUsuari
 	public void setResultadoExamenUsuarioDAO(ResultadoExamenUsuarioDAO ResultadoExamenUsuarioDAO) {
 		this.resultadoExamenUsuarioDAO = ResultadoExamenUsuarioDAO;
 	}
+
 }
