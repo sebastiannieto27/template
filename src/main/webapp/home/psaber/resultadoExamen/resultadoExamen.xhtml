@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<body>
+	<ui:composition>
+
+<p:panelGrid columns="3">
+
+			<h:form id="procesarExcelListForm">
+				<p:panelGrid columns="2">
+	    			<h:panelGroup id="searchForm">
+								<p:panelGrid columns="2" columnClasses="column"
+									styleClass="panelGridCenter">
+									<p:outputLabel value="#{msg.archivoPrueba}" for="archivoPruebaId" />
+									<p:selectOneMenu id="archivoPruebaId"
+										value="#{archivoPruebaController.archivoPruebaExcelId}"
+										valueChangeListener="#{archivoPruebaController.mostrarInformacionArchivo}">
+										<p:ajax update="@form" />
+										<f:selectItem itemLabel="#{msg.SelectOneMessage}" />
+										<f:selectItems
+											value="#{archivoPruebaController.lazyModel.datasource}"
+											var="archivoPruebaIdItem"
+											itemValue="#{archivoPruebaIdItem.archivoPruebaId}"
+											itemLabel="#{archivoPruebaIdItem.nombre.toString()}" />
+									</p:selectOneMenu>
+			
+			
+									<p:commandButton id="procesarButton" icon="ui-icon-search"
+										value="#{msg.procesarArchivo}"
+										actionListener="#{archivoPruebaController.uploadAndUseFile}"
+										update=":procesarExcelListForm" />
+								</p:panelGrid>
+						</h:panelGroup>
+						
+						<h:panelGroup id="detalleArchivoExcel"
+							rendered="#{archivoPruebaController.archivoPruebaExcel != null}">
+							<p:panelGrid columns="2" columnClasses="column">
+		
+								<h:outputText value="#{msg.id}" />
+								<h:outputText
+									value="#{archivoPruebaController.archivoPruebaExcel.archivoPruebaId}"
+									title="#{msg.id}" />
+		
+								<h:outputText value="#{msg.name}" />
+								<h:outputText
+									value="#{archivoPruebaController.archivoPruebaExcel.nombre}"
+									title="#{msg.name}" />
+		
+								<h:outputText value="#{msg.nroColumnas}" />
+								<h:outputText
+									value="#{archivoPruebaController.archivoPruebaExcel.nroColumnas}"
+									title="#{msg.nroColumnas}" />
+		
+								<h:outputText value="#{msg.nroPreguntas}" />
+								<h:outputText
+									value="#{archivoPruebaController.archivoPruebaExcel.nroPreguntas}"
+									title="#{msg.nroPreguntas}" />
+							</p:panelGrid>
+							<p:commandButton value="#{msg.close}" />
+						</h:panelGroup>
+				</p:panelGrid>
+				<ui:include src="/WEB-INF/templates/confirmation.xhtml" />
+			</h:form>
+			
+			<p:messages id="uploadMessage" autoUpdate="true" />
+			<h:form id="formUpload" enctype="multipart/form-data">
+            	<p:fileUpload fileUploadListener="#{archivoPruebaController.uploadAndUseFile}" auto="true" update="uploadMessage" label="#{msg.selectFile}" sizeLimit="2097152"/>
+           	</h:form>
+</p:panelGrid>
+
+			
+
+
+	</ui:composition>
+</body>
+</html>

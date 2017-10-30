@@ -52,6 +52,13 @@
                     <h:outputText value="#{item.codigo}"/>
                 </p:column>
 
+                <p:column sortBy="#{item.letra}" filterBy="#{item.letra}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.letra}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.letra}"/>
+                </p:column>
+                
                 <p:column sortBy="#{item.verdadera}" filterBy="#{item.verdadera}">
                     <f:facet name="header">
                         <h:outputText value="#{msg.verdadera}"/>

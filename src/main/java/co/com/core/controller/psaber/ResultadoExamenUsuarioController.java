@@ -22,6 +22,7 @@ import co.com.core.domain.User;
 import co.com.core.domain.psaber.ArchivoPrueba;
 import co.com.core.domain.psaber.Area;
 import co.com.core.domain.psaber.RespuestaExamen;
+import co.com.core.domain.psaber.ResultadoExamenUsuario;
 import co.com.core.dto.psaber.ArchivoPruebaProcesadoDTO;
 import co.com.core.dto.psaber.RespuestaDTO;
 import co.com.core.dto.psaber.RespuestaExamenDTO;
@@ -107,8 +108,8 @@ public class ResultadoExamenUsuarioController {
  * Procesar respuestas usuario ** Procesar respuestas usuario ** Procesar respuestas usuario ** 
  * Procesar respuestas usuario ** Procesar respuestas usuario ** Procesar respuestas usuario ** 	
  */
-	public void procesarRespuestaArchivo(Date fecArchivo, String nomArchivo) {
-		ArchivoPruebaProcesadoDTO archivoPruebaProcesadoDTO = archivoPruebaProcesadoService.getByDateNName(fecArchivo, nomArchivo);
+	public void procesarRespuestaArchivo(ArchivoPruebaProcesadoDTO archivoPruebaProcesadoDTO) {
+		//ArchivoPruebaProcesadoDTO archivoPruebaProcesadoDTO = archivoPruebaProcesadoService.getByDateNName(fecArchivo, nomArchivo);
 		
 		List<RespuestaExamenDTO> respuestaExamenList = respuestaExamenService.getByArchivoPruebaProcesado(archivoPruebaProcesadoDTO);
 		
@@ -120,41 +121,63 @@ public class ResultadoExamenUsuarioController {
 	}
 	
 	private void procesarRespuestaUsuario(RespuestaExamenDTO respuestaExamenDTO) {
-		Gson gson = new Gson();
 		
-		RespuestaExamenProcesado respuestas = gson.fromJson(respuestaExamenDTO.getRespuesta(), RespuestaExamenProcesado.class);
-		
-		for(EsquemaRespuesta respuestaArea : respuestas.getRespuestaExamen()) {
-			Area area = new Area(respuestaArea.getAreaId());
-			RespuestaExamen respuestaExamen = RespuestaExamenUtil.getEntityFromDto(respuestaExamenDTO);
-			User user = respuestaExamenDTO.getUserId();
-			ArchivoPrueba archivoPrueba = respuestaExamenDTO.getArchivoPruebaProcesadoId().getArchivoPruebaId();
+		try {
+			Gson gson = new Gson();
 			
-			List<ItemRespuesta> itemList = respuestaArea.getItem();
+			RespuestaExamenProcesado respuestas = gson.fromJson(respuestaExamenDTO.getRespuesta(), RespuestaExamenProcesado.class);
 			
-			int contadorCorrectas = 0;
-			int contadorIncorrectas = 0;
-			int contadorVacias = 0;
-			if(itemList != null && itemList.size() > 0) {
-				for(ItemRespuesta item : itemList) {
-					if(item.getRespuesta() == null || item.getRespuesta().isEmpty()) {
-						contadorVacias ++;
-					} else {
-						if(validarRespuestaUsuario(item.getPregunta(), item.getRespuesta())) {
-							contadorCorrectas ++;
+			for(EsquemaRespuesta respuestaArea : respuestas.getRespuestaExamen()) {
+				
+				ResultadoExamenUsuarioDTO resultadoExamenUsuarioDTO = new ResultadoExamenUsuarioDTO();
+
+				Area area = new Area(respuestaArea.getAreaId());
+				resultadoExamenUsuarioDTO.setAreaId(area);
+				
+				RespuestaExamen respuestaExamen = RespuestaExamenUtil.getEntityFromDto(respuestaExamenDTO);
+				resultadoExamenUsuarioDTO.setRespuestaExamenId(respuestaExamen);
+				
+				User user = respuestaExamenDTO.getUserId();
+				resultadoExamenUsuarioDTO.setUserId(user);
+				
+				ArchivoPrueba archivoPrueba = respuestaExamenDTO.getArchivoPruebaProcesadoId().getArchivoPruebaId();
+				resultadoExamenUsuarioDTO.setArchivoPruebaId(archivoPrueba);
+				
+				List<ItemRespuesta> itemList = respuestaArea.getItem();
+				
+				int contadorCorrectas = 0;
+				int contadorIncorrectas = 0;
+				int contadorVacias = 0;
+				if(itemList != null && itemList.size() > 0) {
+					for(ItemRespuesta item : itemList) {
+						if(item.getRespuesta() == null || item.getRespuesta().isEmpty()) {
+							contadorVacias ++;
 						} else {
-							contadorIncorrectas++;
+							if(validarRespuestaUsuario(item.getPregunta(), item.getRespuesta())) {
+								contadorCorrectas ++;
+							} else {
+								contadorIncorrectas++;
+							}
 						}
 					}
 				}
+				
+				resultadoExamenUsuarioDTO.setRespuestasCorrectas(contadorCorrectas);
+				resultadoExamenUsuarioDTO.setRespuestasErradas(contadorIncorrectas);
+				resultadoExamenUsuarioDTO.setSinContestar(contadorVacias);
+				resultadoExamenUsuarioDTO.setNroPreguntasArea(itemList.size());
+				
+				resultadoExamenUsuarioService.create(resultadoExamenUsuarioDTO);
 			}
+		} catch(Exception e) {
+			logger.error("Exception at: ResultadoExamenUsuarioController.procesarRespuestaUsuario: " +e.getMessage());
 		}
 	}
 	
 	private boolean validarRespuestaUsuario(String codPregunta, String respuesta) {
 		RespuestaDTO respuestaDTO = preguntaService.getRespuestaByPreguntaCode(codPregunta);
 		
-		if(respuestaDTO.getLetra().equalsIgnoreCase(respuesta)) {
+		if(respuestaDTO != null && respuestaDTO.getLetra().equalsIgnoreCase(respuesta)) {
 			return true;
 		}
 		return false;
@@ -209,4 +232,34 @@ public class ResultadoExamenUsuarioController {
 	public void setLazyModel(LazyDataModel<ResultadoExamenUsuarioDTO> lazyModel) {
 		this.lazyModel = lazyModel;
 	}
+
+
+	public IArchivoPruebaProcesadoService getArchivoPruebaProcesadoService() {
+		return archivoPruebaProcesadoService;
+	}
+
+
+	public void setArchivoPruebaProcesadoService(IArchivoPruebaProcesadoService archivoPruebaProcesadoService) {
+		this.archivoPruebaProcesadoService = archivoPruebaProcesadoService;
+	}
+
+
+	public IRespuestaExamenService getRespuestaExamenService() {
+		return respuestaExamenService;
+	}
+
+
+	public void setRespuestaExamenService(IRespuestaExamenService respuestaExamenService) {
+		this.respuestaExamenService = respuestaExamenService;
+	}
+
+
+	public IPreguntaService getPreguntaService() {
+		return preguntaService;
+	}
+
+	public void setPreguntaService(IPreguntaService preguntaService) {
+		this.preguntaService = preguntaService;
+	}
+	
 }

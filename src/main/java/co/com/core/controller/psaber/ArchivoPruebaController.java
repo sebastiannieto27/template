@@ -64,6 +64,7 @@ public class ArchivoPruebaController {
 	private IRespuestaExamenService respuestaExamenService; 
 	private IArchivoPruebaProcesadoService archivoPruebaProcesadoService;
 	private IUserService userService;
+	private ResultadoExamenUsuarioController resultadoExamenUsuarioController;
 	
 	private List<ArchivoPruebaDTO> items;
 	private ArchivoPruebaDTO selected;
@@ -105,67 +106,71 @@ public class ArchivoPruebaController {
 	        archivoPruebaProcesadoEntity.setNombreArchivo(fileName);
 	        ArchivoPruebaProcesado newArchivoPruebaProcesado = archivoPruebaProcesadoService.create(ArchivoPruebaProcesadoUtil.getDtoFromEntity(archivoPruebaProcesadoEntity));
 	        
-	        
-	        if(areaArchivoList!=null && areaArchivoList.size() > 0) {
-	        	
-	        	//order the rows by user
-	        	List<List<Row>> rowsByUser = divideExcelFileByRows(datatypeSheet);
-	        	
-	        	for(List<Row> rowList : rowsByUser) {
-	        		
-	        		//objeto padre del json respuesta por usuario
-	        		RespuestaExamenProcesado respuestaExamenProcesado = new RespuestaExamenProcesado();
-	        		
-	        		RespuestaExamen respuestaExamen = new RespuestaExamen();
-	        		respuestaExamen.setArchivoPruebaProcesadoId(newArchivoPruebaProcesado);
-	        		
-	        		List<EsquemaRespuesta> respuestaUsuarioList = new ArrayList<>();
-	        		
-		        	int rowNumber = 0;
-		    		for(AreaArchivoPruebaDTO dto : areaArchivoList ) {
-		    			EsquemaRespuesta respuestaObj = new EsquemaRespuesta();
-		    			
-		    			respuestaObj.setAreaId(dto.getAreaId().getAreaId());
-		    			
-		    			List<ItemRespuesta> itemList = new ArrayList<>();
-		    			
-		    			double nroDocumento = 0;
-		    			rowNumber = 0;
-		    			for(Row userRow : rowList) {
+	        if(newArchivoPruebaProcesado != null) {
+	        	if(areaArchivoList!=null && areaArchivoList.size() > 0) {
+		        	
+		        	//order the rows by user
+		        	List<List<Row>> rowsByUser = divideExcelFileByRows(datatypeSheet);
+		        	
+		        	for(List<Row> rowList : rowsByUser) {
+		        		
+		        		//objeto padre del json respuesta por usuario
+		        		RespuestaExamenProcesado respuestaExamenProcesado = new RespuestaExamenProcesado();
+		        		
+		        		RespuestaExamen respuestaExamen = new RespuestaExamen();
+		        		respuestaExamen.setArchivoPruebaProcesadoId(newArchivoPruebaProcesado);
+		        		
+		        		List<EsquemaRespuesta> respuestaUsuarioList = new ArrayList<>();
+		        		
+			        	int rowNumber = 0;
+			    		for(AreaArchivoPruebaDTO dto : areaArchivoList ) {
+			    			EsquemaRespuesta respuestaObj = new EsquemaRespuesta();
+			    			
+			    			respuestaObj.setAreaId(dto.getAreaId().getAreaId());
+			    			
+			    			List<ItemRespuesta> itemList = new ArrayList<>();
+			    			
+			    			double nroDocumento = 0;
+			    			rowNumber = 0;
+			    			for(Row userRow : rowList) {
 
-		    					if(userRow.getCell(1) != null && !userRow.getCell(1).toString().isEmpty()) {
-		    	        			nroDocumento = userRow.getCell(1).getNumericCellValue();
-		    	        			int intNroDoc = (int) nroDocumento;
-		    	        			UserDTO userDto = userService.getUserByDocNum(String.valueOf(intNroDoc));
-		    	        			respuestaExamen.setUserId(UserUtil.getEntityFromDto(userDto));
-		    	        		}
-		    	        		
-		    	        		double nroPregunta = userRow.getCell(2).getNumericCellValue();
-		    	        		String respuesta = userRow.getCell(dto.getNroColumna()).getStringCellValue();
-		    	        		
-		    	        		ItemRespuesta itemRespuesta = new ItemRespuesta();
-		    	        		
-		    	        		itemRespuesta.setPregunta((int) nroPregunta);
-		    	        		itemRespuesta.setRespuesta(respuesta);
-		    	        		
-		    	        		itemList.add(itemRespuesta);
-		    	        	}
-	    					rowNumber++;
-		    			
-		    			respuestaObj.setItem(itemList);
-		    			
-		    			respuestaUsuarioList.add(respuestaObj);
-		    			respuestaExamenProcesado.setRespuestaExamen(respuestaUsuarioList);
-		    			logger.info("OBJ: " + respuestaObj);
-		    		}
-		    		
-		    		String objRespuestaExamen = gson.toJson(respuestaExamenProcesado);
-		    		//Blob b = new javax.sql.rowset.serial.SerialBlob(objRespuestaExamen.getBytes());
-		    		//Creates an ArchivoPruebaProcesado entry
-		    		respuestaExamen.setRespuesta(objRespuestaExamen);
-		    		respuestaExamenService.create(RespuestaExamenUtil.getDtoFromEntity(respuestaExamen));
-		    		logger.info("JSON: " + objRespuestaExamen);
+			    					if(userRow.getCell(1) != null && !userRow.getCell(1).toString().isEmpty()) {
+			    	        			nroDocumento = userRow.getCell(1).getNumericCellValue();
+			    	        			int intNroDoc = (int) nroDocumento;
+			    	        			UserDTO userDto = userService.getUserByDocNum(String.valueOf(intNroDoc));
+			    	        			respuestaExamen.setUserId(UserUtil.getEntityFromDto(userDto));
+			    	        		}
+			    	        		
+			    	        		String nroPregunta = userRow.getCell(2).getStringCellValue();
+			    	        		String respuesta = userRow.getCell(dto.getNroColumna()).getStringCellValue();
+			    	        		
+			    	        		ItemRespuesta itemRespuesta = new ItemRespuesta();
+			    	        		
+			    	        		itemRespuesta.setPregunta(nroPregunta);
+			    	        		itemRespuesta.setRespuesta(respuesta);
+			    	        		
+			    	        		itemList.add(itemRespuesta);
+			    	        	}
+		    					rowNumber++;
+			    			
+			    			respuestaObj.setItem(itemList);
+			    			
+			    			respuestaUsuarioList.add(respuestaObj);
+			    			respuestaExamenProcesado.setRespuestaExamen(respuestaUsuarioList);
+			    			logger.info("OBJ: " + respuestaObj);
+			    		}
+			    		
+			    		String objRespuestaExamen = gson.toJson(respuestaExamenProcesado);
+			    		//Blob b = new javax.sql.rowset.serial.SerialBlob(objRespuestaExamen.getBytes());
+			    		//Creates an ArchivoPruebaProcesado entry
+			    		respuestaExamen.setRespuesta(objRespuestaExamen);
+			    		respuestaExamen.setProcesado((short) 0);
+			    		respuestaExamenService.create(RespuestaExamenUtil.getDtoFromEntity(respuestaExamen));
+			    		logger.info("JSON: " + objRespuestaExamen);
+			        }
 		        }
+	        	
+	        	resultadoExamenUsuarioController.procesarRespuestaArchivo(ArchivoPruebaProcesadoUtil.getDtoFromEntity(newArchivoPruebaProcesado));
 	        }
 	        
 		} catch (IOException e) {
@@ -401,6 +406,12 @@ public class ArchivoPruebaController {
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
 	}
-	
-	
+
+	public ResultadoExamenUsuarioController getResultadoExamenUsuarioController() {
+		return resultadoExamenUsuarioController;
+	}
+
+	public void setResultadoExamenUsuarioController(ResultadoExamenUsuarioController resultadoExamenUsuarioController) {
+		this.resultadoExamenUsuarioController = resultadoExamenUsuarioController;
+	}
 }

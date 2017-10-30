@@ -38,7 +38,7 @@ import co.com.core.domain.User;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RespuestaExamen.findAll", query = "SELECT r FROM RespuestaExamen r"), 
-    @NamedQuery(name = "RespuestaExamen.findByArchivoPruebaProcesado", query = "SELECT r FROM RespuestaExamen r WHERE r.archivoPruebaProcesadoId = :archivoPruebaProcesadoId AND r.procesado = FALSE"), 
+    @NamedQuery(name = "RespuestaExamen.findByArchivoPruebaProcesado", query = "SELECT r FROM RespuestaExamen r WHERE r.archivoPruebaProcesadoId = :archivoPruebaProcesadoId AND r.procesado = 0"), 
     @NamedQuery(name = "RespuestaExamen.findByRespuestaExamenId", query = "SELECT r FROM RespuestaExamen r WHERE r.respuestaExamenId = :respuestaExamenId")})
 public class RespuestaExamen implements Serializable {
 

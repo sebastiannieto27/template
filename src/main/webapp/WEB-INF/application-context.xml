@@ -64,6 +64,7 @@
                 <value>co.com.core.domain.psaber.AreaArchivoPrueba</value>
                 <value>co.com.core.domain.psaber.ArchivoPruebaProcesado</value>
                 <value>co.com.core.domain.psaber.RespuestaExamen</value>
+                <value>co.com.core.domain.psaber.ResultadoExamenUsuario</value>
                 
                 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS 
 				<value>co.com.core.domain.cms.Branch</value>
@@ -190,6 +191,10 @@
 	    <bean id="archivoPruebaProcesadoDAO" class="co.com.core.dao.psaber.impl.ArchivoPruebaProcesadoDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
+	    	    	    	    
+	    <bean id="resultadoExamenUsuarioDAO" class="co.com.core.dao.psaber.impl.ResultadoExamenUsuarioDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -293,6 +298,10 @@
 	    	    
    		<bean id="archivoPruebaProcesadoService" class="co.com.core.services.psaber.impl.ArchivoPruebaProcesadoServiceImpl">
 	    	<property name="archivoPruebaProcesadoDAO" ref="archivoPruebaProcesadoDAO" />
+	    </bean>
+	    	    	    
+   		<bean id="resultadoExamenUsuarioService" class="co.com.core.services.psaber.impl.ResultadoExamenUsuarioServiceImpl">
+	    	<property name="resultadoExamenUsuarioDAO" ref="resultadoExamenUsuarioDAO" />
 	    </bean>
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -405,13 +414,21 @@
     <bean id="respuestaController" scope="session" class="co.com.core.controller.psaber.RespuestaController" init-method="init">
     	<property name="respuestaService" ref="respuestaService" />
     </bean>
-                    
+                                    
+    <bean id="resultadoExamenUsuarioController" scope="session" class="co.com.core.controller.psaber.ResultadoExamenUsuarioController" init-method="init">
+    	<property name="resultadoExamenUsuarioService" ref="resultadoExamenUsuarioService" />
+    	<property name="archivoPruebaProcesadoService" ref="archivoPruebaProcesadoService" />
+    	<property name="respuestaExamenService" ref="respuestaExamenService" />
+    	<property name="preguntaService" ref="preguntaService" />
+    </bean>
+          
     <bean id="archivoPruebaController" scope="session" class="co.com.core.controller.psaber.ArchivoPruebaController" init-method="init">
     	<property name="archivoPruebaService" ref="archivoPruebaService" />
     	<property name="areaService" ref="areaService" />
     	<property name="respuestaExamenService" ref="respuestaExamenService" />
     	<property name="archivoPruebaProcesadoService" ref="archivoPruebaProcesadoService" />
     	<property name="userService" ref="userService" />
+    	<property name="resultadoExamenUsuarioController" ref="resultadoExamenUsuarioController" />
     </bean>
                         
     <bean id="respuestaExamenController" scope="session" class="co.com.core.controller.psaber.RespuestaExamenController" init-method="init">
@@ -421,4 +438,6 @@
     <bean id="archivoPruebaProcesadoController" scope="session" class="co.com.core.controller.psaber.ArchivoPruebaProcesadoController" init-method="init">
     	<property name="archivoPruebaProcesadoService" ref="archivoPruebaProcesadoService" />
     </bean>
+
+    
 </beans>

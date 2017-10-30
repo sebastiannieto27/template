@@ -16,14 +16,17 @@
 
                         <p:outputLabel value="#{msg.code}" for="codigo" />
                         <p:inputText id="codigo" value="#{respuestaController.selected.codigo}" title="#{msg.code}" required="true" requiredMessage="#{msg.codeRequiredMessage}" size="45" maxlength="45"/>
-                        
+                  
+                        <p:outputLabel value="#{msg.letra}" for="letra" />
+                        <p:inputText id="letra" value="#{respuestaController.selected.letra}" title="#{msg.letra}" required="true" requiredMessage="#{msg.letraRequiredMessage}" size="1" maxlength="1"/>
+						
                         <p:outputLabel value="#{msg.verdadera}" for="verdadera" />
                         <p:selectBooleanCheckbox id="verdadera" value="#{respuestaController.selected.verdadera}" />
                         
                         <p:outputLabel value="#{msg.description}" for="descripcion" />
                         <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{respuestaController.selected.descripcion}" title="#{msg.description}" required="true" requiredMessage="#{msg.descriptionRequiredMessage}"/>
 
-                       	<p:outputLabel value="#{msg.respuesta}" for="preguntaId" />
+                       	<p:outputLabel value="#{msg.pregunta}" for="preguntaId" />
                         <p:selectOneMenu id="preguntaId" value="#{respuestaController.preguntaId}" >
                             <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
                             <f:selectItems value="#{preguntaController.lazyModel.datasource}"

@@ -46,7 +46,7 @@ public class RespuestaExamenServiceImpl implements IRespuestaExamenService {
 	
 	@Override
 	public List<RespuestaExamenDTO> getByArchivoPruebaProcesado(ArchivoPruebaProcesadoDTO id) {
-		List<RespuestaExamenDTO> dtoList = null;
+		List<RespuestaExamenDTO> dtoList = new ArrayList<>();
 		List<RespuestaExamen> entityList = respuestaExamenDAO.getByArchivoPruebaProcesado(ArchivoPruebaProcesadoUtil.getEntityFromDto(id));
 		if(entityList!=null && entityList.size() > 0) {
 			for(RespuestaExamen entity : entityList) {
