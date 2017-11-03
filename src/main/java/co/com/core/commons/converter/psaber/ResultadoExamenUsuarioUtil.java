@@ -16,6 +16,8 @@ public class ResultadoExamenUsuarioUtil {
 		dto.setRespuestasErradas(entity.getRespuestasErradas());
 		dto.setSinContestar(entity.getSinContestar());
 		dto.setUserId(entity.getUserId());
+		dto.setPorcentajeAcierto(entity.getPorcentajeAcierto());
+		dto.setPromedioArea(entity.getPromedioArea());
 		return dto;
 	}
 	
@@ -30,6 +32,8 @@ public class ResultadoExamenUsuarioUtil {
 		entity.setRespuestasErradas(dto.getRespuestasErradas());
 		entity.setSinContestar(dto.getSinContestar());
 		entity.setUserId(dto.getUserId());
+		entity.setPorcentajeAcierto(dto.getPorcentajeAcierto());
+		entity.setPromedioArea(dto.getPromedioArea());
 		return entity;
 	}
 }

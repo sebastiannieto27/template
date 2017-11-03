@@ -1,5 +1,6 @@
 package co.com.core.dao.psaber.impl;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -148,6 +149,28 @@ public class RespuestaExamenDAOImpl implements RespuestaExamenDAO {
 		        Query query = session.getNamedQuery("RespuestaExamen.findByArchivoPruebaProcesado");
 		        query.setParameter("archivoPruebaProcesadoId", id);
 		        entityList = query.list();
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [RespuestaExamenDAOImpl.getByArchivoPruebaProcesado]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			
+			return entityList;
+		}
+		
+		@Override
+		public List<RespuestaExamen> getByRespuestaExamenResultado(User userId, Date searchDate) {
+			List<RespuestaExamen> entityList = null;
+			try {
+				session = this.sessionFactory.openSession();
+				StringBuilder hql = new StringBuilder();
+				hql.append("SELECT r FROM RespuestaExamen r LEFT JOIN r.archivoPruebaProcesadoId a");
+				hql.append(" WHERE r.userId = :userId");
+				hql.append(" AND a.fecCre = :fecCre");
+				Query query = session.createQuery(hql.toString());
+				query.setParameter("userId", userId);
+				query.setParameter("fecCre", searchDate);
+				entityList = query.list();
 			} catch(Exception ex) {
 				logger.error("Throwed Exception [RespuestaExamenDAOImpl.getByArchivoPruebaProcesado]: " +ex.getMessage());
 			} finally {

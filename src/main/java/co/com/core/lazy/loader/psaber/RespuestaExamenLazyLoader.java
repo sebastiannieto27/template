@@ -2,6 +2,7 @@ package co.com.core.lazy.loader.psaber;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import co.com.core.dto.UserDTO;
 import co.com.core.dto.psaber.RespuestaExamenDTO;
 import co.com.core.lazy.sorter.psaber.RespuestaExamenLazySorter;
 import co.com.core.services.psaber.IRespuestaExamenService;
@@ -16,8 +18,8 @@ import co.com.core.services.psaber.IRespuestaExamenService;
 public class RespuestaExamenLazyLoader extends LazyDataModel<RespuestaExamenDTO> {
 	private List<RespuestaExamenDTO> datasource;
     
-    public RespuestaExamenLazyLoader(IRespuestaExamenService serviceImpl) {
-        this.datasource = serviceImpl.getAll();
+    public RespuestaExamenLazyLoader(IRespuestaExamenService serviceImpl, UserDTO dto, Date searchDate) {
+        this.datasource = serviceImpl.getByRespuestaExamenResultado(dto, searchDate);
     }
     
     @Override

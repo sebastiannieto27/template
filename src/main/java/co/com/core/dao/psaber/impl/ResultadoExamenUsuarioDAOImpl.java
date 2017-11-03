@@ -1,5 +1,6 @@
 package co.com.core.dao.psaber.impl;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.psaber.ResultadoExamenUsuarioDAO;
+import co.com.core.domain.User;
+import co.com.core.domain.psaber.ArchivoPruebaProcesado;
 import co.com.core.domain.psaber.RespuestaExamen;
 import co.com.core.domain.psaber.ResultadoExamenUsuario;
 
@@ -111,21 +114,34 @@ public class ResultadoExamenUsuarioDAOImpl implements ResultadoExamenUsuarioDAO 
 				session.close();
 			}
 		}
-
+		
 		@Override
-		public List<ResultadoExamenUsuario> getByUserNRespuestaExamenResultado(RespuestaExamen entity) {
+		public List<ResultadoExamenUsuario> getByRespuestaExamen(RespuestaExamen id) {
 			List<ResultadoExamenUsuario> entityList = null;
 			try {
 				session = this.sessionFactory.openSession();
 		        Query query = session.getNamedQuery("ResultadoExamenUsuario.findByRespuestaExamenId");
-		        query.setParameter("respuestaExamenId", entity);
+		        query.setParameter("respuestaExamenId", id);
 		        entityList = query.list();
 			} catch(Exception ex) {
-				logger.error("Throwed Exception [RespuestaExamenDAOImpl.getByArchivoPruebaProcesado]: " +ex.getMessage());
+				logger.error("Throwed Exception [ResultadoExamenUsuarioDAOImpl.getByRespuestaExamen]: " +ex.getMessage());
 			} finally {
 				session.close();
 			}
 			
 			return entityList;
+		}
+
+		@Override
+		public void updatePromedioArea(double promedio, List<Integer> idList) {
+			try {
+				session = this.sessionFactory.openSession();
+				Query query = session.createQuery("UPDATE ResultadoExamenUsuario SET promedioArea = :promedioArea WHERE resultadoExamenUsuarioId IN(:ids)");
+				query.setParameter("promedioArea", promedio);
+				query.setParameterList("ids", idList);
+				query.executeUpdate();
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [ResultadoExamenUsuarioDAOImpl.updatePromedioArea]: " +ex.getMessage());
+			}
 		}
 }

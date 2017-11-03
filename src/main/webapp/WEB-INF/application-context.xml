@@ -433,11 +433,15 @@
                         
     <bean id="respuestaExamenController" scope="session" class="co.com.core.controller.psaber.RespuestaExamenController" init-method="init">
     	<property name="respuestaExamenService" ref="respuestaExamenService" />
+    	<property name="resultadoExamenUsuarioService" ref="resultadoExamenUsuarioService" />
+    	<property name="userService" ref="userService" />
+    	<property name="competenciaService" ref="competenciaService" />
     </bean>
                             
     <bean id="archivoPruebaProcesadoController" scope="session" class="co.com.core.controller.psaber.ArchivoPruebaProcesadoController" init-method="init">
     	<property name="archivoPruebaProcesadoService" ref="archivoPruebaProcesadoService" />
     </bean>
 
-    
+   	<bean id="chartView" scope="session" class="co.com.core.controller.psaber.ChartView" init-method="init">
+    </bean>
 </beans>

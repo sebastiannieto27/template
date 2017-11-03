@@ -6,13 +6,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -56,7 +54,7 @@ import co.com.core.services.psaber.IRespuestaExamenService;
 public class ArchivoPruebaController {
 
 	private static final Logger logger = Logger.getLogger(ArchivoPruebaController.class);
-	public static final String PREFIX = "tempPlainFile";
+	public static final String PREFIX = "respuestasUsuario";
     public static final String SUFFIX = ".xlsx";
     
 	private IArchivoPruebaService archivoPruebaService;
@@ -86,9 +84,9 @@ public class ArchivoPruebaController {
 	public void procesarArchivoExcel(File excelFile) {
 		
 		try {
-			
-			String fileName = excelFile.getName();
-			/*FileInputStream excelFile = new FileInputStream(new File("C:\\Users\\diego.nieto\\Documents\\DiegoNieto\\template\\Respuesta_Prueba.xlsx"));*/
+			SimpleDateFormat dt = new SimpleDateFormat("dd-yyyy-mm'-'hh:mm");
+			Date today = new Date();
+			String fileName = PREFIX + dt.format(today) + SUFFIX;
 	        Workbook workbook = new XSSFWorkbook(excelFile);
 	        Sheet datatypeSheet = workbook.getSheetAt(0);
 	        Gson gson = new Gson();
@@ -214,19 +212,26 @@ public class ArchivoPruebaController {
 	} 
 	
 	public UploadedFileDTO uploadAndUseFile(FileUploadEvent event) {  
-    	UploadedFileDTO resultDto = null;
-    	try {
-    		FacesContext context = FacesContext.getCurrentInstance();
-        	UploadedFile uploadedFile = event.getFile();
+    	
+		FacesContext context = FacesContext.getCurrentInstance();
+		UploadedFileDTO resultDto = null;
+		
+		if(archivoPruebaExcelId != null && archivoPruebaExcelId !=0) {
+	    	try {
+	        	UploadedFile uploadedFile = event.getFile();
 
-        	InputStream inputStream = uploadedFile.getInputstream();
-        	File tempFile = getTemporaryFile(inputStream);
-        	
-        	procesarArchivoExcel(tempFile);
-        	
-    	} catch(Exception ex) {
-    		logger.error("Throwed Exception [ArchivoPruebaController.uploadAndUseFile]: " +ex.getMessage());
-    	}
+	        	InputStream inputStream = uploadedFile.getInputstream();
+	        	File tempFile = getTemporaryFile(inputStream);
+	        	procesarArchivoExcel(tempFile);
+	        	context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, geProperty("fileSuccessfullyProcessed"), null));	        	
+	    	} catch(Exception ex) {
+	    		logger.error("Throwed Exception [ArchivoPruebaController.uploadAndUseFile]: " +ex.getMessage());
+	    	}
+		} else {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, geProperty("archivoPrubeaRequiredMessage"), null));
+		}
+		
+
     	return resultDto;
     } 
 	
@@ -238,25 +243,6 @@ public class ArchivoPruebaController {
         }
         return tempFile;
     }
-	
-	
-	private Map<Integer, EsquemaRespuesta> createEsquemaMap(List<AreaArchivoPruebaDTO> areaArchivoList) {
-		Map<Integer, EsquemaRespuesta> respuestaMap = new HashMap<>();
-		
-		if(areaArchivoList != null && areaArchivoList.size() > 0) {
-			for(AreaArchivoPruebaDTO dto : areaArchivoList) {
-				EsquemaRespuesta respuesta = new EsquemaRespuesta();
-				respuesta.setAreaId(dto.getAreaId().getAreaId());
-				respuesta.setNombreArea(dto.getAreaId().getNombre());
-				respuesta.setNroColumna(dto.getNroColumna());
-				
-				respuestaMap.put(dto.getNroColumna(), respuesta);
-				
-			}
-		}
-		
-		return respuestaMap;
-	}
 	
 	public void mostrarInformacionArchivo(ValueChangeEvent event) {
 		Integer id = (Integer) event.getNewValue();

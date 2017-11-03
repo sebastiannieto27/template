@@ -28,12 +28,6 @@
 											itemValue="#{archivoPruebaIdItem.archivoPruebaId}"
 											itemLabel="#{archivoPruebaIdItem.nombre.toString()}" />
 									</p:selectOneMenu>
-			
-			
-									<p:commandButton id="procesarButton" icon="ui-icon-search"
-										value="#{msg.procesarArchivo}"
-										actionListener="#{archivoPruebaController.uploadAndUseFile}"
-										update=":procesarExcelListForm" />
 								</p:panelGrid>
 						</h:panelGroup>
 						

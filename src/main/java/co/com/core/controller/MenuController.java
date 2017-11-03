@@ -15,6 +15,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.formula.functions.Columns;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -30,12 +32,6 @@ import co.com.core.domain.User;
 import co.com.core.dto.MenuDTO;
 import co.com.core.dto.UserDTO;
 import co.com.core.services.IMenuService;
-import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
-import net.sf.dynamicreports.report.builder.DynamicReports;
-import net.sf.dynamicreports.report.builder.column.Columns;
-import net.sf.dynamicreports.report.builder.component.Components;
-import net.sf.dynamicreports.report.builder.datatype.DataTypes;
-import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -71,16 +67,16 @@ public class MenuController {
 			Map<String,Object> parametros= new HashMap<String,Object>();
 			parametros.put("PRINT_BY", "Diego Nieto");
 			
-			String jPath = "/Users/dienieto/Documents/DocumentsDiego/projects/friogan/reports/pdf/jasper/test.jasper";
+			String jPath = "C:\\Users\\diego.nieto\\Documents\\DiegoNieto\\template\\pdf_files\\test.pdf";
 			BaseJasperPDFReport reporter = new BaseJasperPDFReport(parametros, jPath, this.getItems());
 			String currDateStr = ApplicationUtil.getFormattedDate(new Date(), ApplicationConstants.SIMPLE_DATE_FORMAT, null);
 			String reportName = "test" + currDateStr;
 			try {
 				reporter.createPDFReport(reportName);
 			} catch (JRException e) {
-				System.out.println("JRException");
+				System.out.println("JRException " + e.getMessage());
 			} catch (IOException e) {
-				System.out.println("IOException");
+				System.out.println("IOException " + e.getMessage());
 			}
 	}
 	
@@ -124,7 +120,7 @@ public class MenuController {
 	public void createPDF2() {
 		Connection connection = null;
 		
-		try {
+		/*try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(
 	                    "jdbc:mysql://localhost:3306/mydb","root", "admin");
@@ -150,7 +146,7 @@ public class MenuController {
 			report.toPdf(new FileOutputStream("/Users/dienieto/Documents/DocumentsDiego/projects/friogan/reports/pdf/report.pdf"));
 		} catch(Exception ex) {
 			System.out.println("ERROR: " + ex);
-		}
+		}*/
 	}
 	
 	public void createReport() {

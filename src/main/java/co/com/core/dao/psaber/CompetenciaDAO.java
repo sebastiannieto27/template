@@ -3,6 +3,7 @@ package co.com.core.dao.psaber;
 import java.util.List;
 import java.util.Map;
 
+import co.com.core.domain.psaber.Area;
 import co.com.core.domain.psaber.Competencia;
 
 public interface CompetenciaDAO {
@@ -16,5 +17,7 @@ public interface CompetenciaDAO {
 	public void delete(Competencia entity);
 	
 	public void update(Competencia entity);
+	
+	public List<Competencia> getByAreaList(List<Area> areaList);
 	
 }

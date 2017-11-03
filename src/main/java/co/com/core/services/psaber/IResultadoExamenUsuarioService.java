@@ -20,5 +20,8 @@ public interface IResultadoExamenUsuarioService {
 	
 	public void update(ResultadoExamenUsuarioDTO dto);
 	
-	public List<ResultadoExamenUsuarioDTO> getByUserNRespuestaExamenResultado(RespuestaExamenDTO dto);
+	public List<ResultadoExamenUsuarioDTO> getByRespuestaExamen(RespuestaExamenDTO dto);
+	
+	public void updatePromedioArea(double promedio, List<ResultadoExamenUsuario> entityList);
+	
 }

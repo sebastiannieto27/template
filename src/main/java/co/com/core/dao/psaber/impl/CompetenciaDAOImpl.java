@@ -1,5 +1,6 @@
 package co.com.core.dao.psaber.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.psaber.CompetenciaDAO;
+import co.com.core.domain.psaber.Area;
 import co.com.core.domain.psaber.Competencia;
 import co.com.core.domain.psaber.Contenido;
 
@@ -138,5 +140,19 @@ public class CompetenciaDAOImpl implements CompetenciaDAO {
 			} finally {
 				session.close();
 			}
+		}
+
+		@Override
+		public List<Competencia> getByAreaList(List<Area> areaList) {
+			List<Competencia> entityList = new ArrayList<Competencia>();
+			try {
+				session = this.sessionFactory.openSession();
+				Query query = session.createQuery("SELECT c FROM Competencia c WHERE c.areaId IN (:ids)");
+				query.setParameterList("ids", areaList);
+				entityList = query.list();
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [ResultadoExamenUsuarioDAOImpl.updatePromedioArea]: " +ex.getMessage());
+			}
+			return entityList;
 		}
 }

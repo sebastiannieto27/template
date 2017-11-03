@@ -55,6 +55,10 @@ public class ResultadoExamenUsuario implements Serializable {
     private Integer respuestasErradas;
     @Column(name = "sin_contestar")
     private Integer sinContestar;
+    @Column(name = "porcentaje_acierto")
+    private Double porcentajeAcierto;
+    @Column(name = "promedio_area")
+    private Double promedioArea;
     @JoinColumn(name = "archivo_prueba_id", referencedColumnName = "archivo_prueba_id")
     @ManyToOne(optional = false)
     private ArchivoPrueba archivoPruebaId;
@@ -152,7 +156,23 @@ public class ResultadoExamenUsuario implements Serializable {
         this.userId = userId;
     }
 
-    @Override
+    public Double getPorcentajeAcierto() {
+		return porcentajeAcierto;
+	}
+
+	public void setPorcentajeAcierto(Double porcentajeAcierto) {
+		this.porcentajeAcierto = porcentajeAcierto;
+	}
+
+	public Double getPromedioArea() {
+		return promedioArea;
+	}
+
+	public void setPromedioArea(Double promedioArea) {
+		this.promedioArea = promedioArea;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (resultadoExamenUsuarioId != null ? resultadoExamenUsuarioId.hashCode() : 0);

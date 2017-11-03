@@ -3,6 +3,7 @@ package co.com.core.services.psaber;
 import java.util.List;
 import java.util.Map;
 
+import co.com.core.domain.psaber.Area;
 import co.com.core.domain.psaber.Competencia;
 import co.com.core.dto.psaber.CompetenciaDTO;
 
@@ -18,4 +19,6 @@ public interface ICompetenciaService {
 	public void delete(CompetenciaDTO dto);
 	
 	public void update(CompetenciaDTO dto);
+	
+	public List<CompetenciaDTO> getByAreaList(List<Area> areaList);
 }

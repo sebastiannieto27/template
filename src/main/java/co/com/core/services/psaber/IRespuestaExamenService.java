@@ -1,9 +1,11 @@
 package co.com.core.services.psaber;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import co.com.core.domain.psaber.RespuestaExamen;
+import co.com.core.dto.UserDTO;
 import co.com.core.dto.psaber.ArchivoPruebaProcesadoDTO;
 import co.com.core.dto.psaber.RespuestaExamenDTO;
 
@@ -22,4 +24,5 @@ public interface IRespuestaExamenService {
 	
 	public List<RespuestaExamenDTO> getByArchivoPruebaProcesado(ArchivoPruebaProcesadoDTO dto); 
 	
+	public List<RespuestaExamenDTO> getByRespuestaExamenResultado(UserDTO dto, Date searchDate);
 }

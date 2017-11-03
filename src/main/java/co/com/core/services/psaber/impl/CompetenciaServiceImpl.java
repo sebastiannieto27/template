@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import co.com.core.commons.converter.psaber.CompetenciaUtil;
 import co.com.core.dao.psaber.CompetenciaDAO;
+import co.com.core.domain.psaber.Area;
 import co.com.core.domain.psaber.Competencia;
 import co.com.core.dto.psaber.CompetenciaDTO;
 import co.com.core.services.psaber.ICompetenciaService;
@@ -41,6 +42,20 @@ public class CompetenciaServiceImpl implements ICompetenciaService {
 		return Competencias;
 	}
 	
+
+	@Override
+	public List<CompetenciaDTO> getByAreaList(List<Area> areaList) {
+		List<Competencia> entityList = competenciaDAO.getByAreaList(areaList);
+		if(entityList!=null && entityList.size() > 0) {
+			List<CompetenciaDTO> dtoList = new ArrayList<>();
+			for(Competencia entity: entityList) {
+				dtoList.add(CompetenciaUtil.getDtoFromEntity(entity));
+			}
+			return dtoList;
+		}
+		return null;
+	}
+	
 	@Override
 	public Competencia create(CompetenciaDTO dto) {
 		return competenciaDAO.create(CompetenciaUtil.getEntityFromDto(dto));
@@ -63,4 +78,5 @@ public class CompetenciaServiceImpl implements ICompetenciaService {
 	public void setCompetenciaDAO(CompetenciaDAO CompetenciaDAO) {
 		this.competenciaDAO = CompetenciaDAO;
 	}
+
 }

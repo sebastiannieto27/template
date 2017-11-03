@@ -2,7 +2,7 @@ package co.com.core.controller.psaber;
 
 import static co.com.core.commons.LoadBundle.geProperty;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -24,11 +24,12 @@ import co.com.core.domain.psaber.Area;
 import co.com.core.domain.psaber.RespuestaExamen;
 import co.com.core.domain.psaber.ResultadoExamenUsuario;
 import co.com.core.dto.psaber.ArchivoPruebaProcesadoDTO;
+import co.com.core.dto.psaber.CompetenciaDTO;
 import co.com.core.dto.psaber.RespuestaDTO;
 import co.com.core.dto.psaber.RespuestaExamenDTO;
 import co.com.core.dto.psaber.ResultadoExamenUsuarioDTO;
-import co.com.core.lazy.loader.psaber.ResultadoExamenUsuarioLazyLoader;
 import co.com.core.services.psaber.IArchivoPruebaProcesadoService;
+import co.com.core.services.psaber.ICompetenciaService;
 import co.com.core.services.psaber.IPreguntaService;
 import co.com.core.services.psaber.IRespuestaExamenService;
 import co.com.core.services.psaber.IResultadoExamenUsuarioService;
@@ -46,12 +47,13 @@ public class ResultadoExamenUsuarioController {
 	private List<ResultadoExamenUsuarioDTO> items;
 	private ResultadoExamenUsuarioDTO selected;
 	
+	
 	private String searchName;
 	
 	private LazyDataModel<ResultadoExamenUsuarioDTO> lazyModel;
 	
 	public void init() {
-		lazyModel = new ResultadoExamenUsuarioLazyLoader(resultadoExamenUsuarioService);
+		//lazyModel = new ResultadoExamenUsuarioLazyLoader(resultadoExamenUsuarioService);
 		Log.error(lazyModel);
 	}
 	
@@ -109,7 +111,6 @@ public class ResultadoExamenUsuarioController {
  * Procesar respuestas usuario ** Procesar respuestas usuario ** Procesar respuestas usuario ** 	
  */
 	public void procesarRespuestaArchivo(ArchivoPruebaProcesadoDTO archivoPruebaProcesadoDTO) {
-		//ArchivoPruebaProcesadoDTO archivoPruebaProcesadoDTO = archivoPruebaProcesadoService.getByDateNName(fecArchivo, nomArchivo);
 		
 		List<RespuestaExamenDTO> respuestaExamenList = respuestaExamenService.getByArchivoPruebaProcesado(archivoPruebaProcesadoDTO);
 		
@@ -126,6 +127,9 @@ public class ResultadoExamenUsuarioController {
 			Gson gson = new Gson();
 			
 			RespuestaExamenProcesado respuestas = gson.fromJson(respuestaExamenDTO.getRespuesta(), RespuestaExamenProcesado.class);
+			
+			List<ResultadoExamenUsuario> createdEntryList = new ArrayList<>();
+			double sumAreaValue = 0;
 			
 			for(EsquemaRespuesta respuestaArea : respuestas.getRespuestaExamen()) {
 				
@@ -166,12 +170,33 @@ public class ResultadoExamenUsuarioController {
 				resultadoExamenUsuarioDTO.setRespuestasErradas(contadorIncorrectas);
 				resultadoExamenUsuarioDTO.setSinContestar(contadorVacias);
 				resultadoExamenUsuarioDTO.setNroPreguntasArea(itemList.size());
+				double porcentajeAcierto = 0;
+				if(contadorCorrectas > 0 && itemList.size() > 0) {
+					porcentajeAcierto = ((double)contadorCorrectas / itemList.size()) * 100;
+				}
+				 
+				resultadoExamenUsuarioDTO.setPorcentajeAcierto(porcentajeAcierto);
+				createdEntryList.add(resultadoExamenUsuarioService.create(resultadoExamenUsuarioDTO));
 				
-				resultadoExamenUsuarioService.create(resultadoExamenUsuarioDTO);
+				sumAreaValue = sumAreaValue + porcentajeAcierto;
 			}
+			
+			setPromedioArea(sumAreaValue, createdEntryList);
+			
 		} catch(Exception e) {
 			logger.error("Exception at: ResultadoExamenUsuarioController.procesarRespuestaUsuario: " +e.getMessage());
 		}
+	}
+	
+	private void setPromedioArea(double sumAreaValue, List<ResultadoExamenUsuario> entityList) {
+		if(entityList.size() > 0) {
+			double promedioAreas = (double) (sumAreaValue / entityList.size());
+			resultadoExamenUsuarioService.updatePromedioArea(promedioAreas, entityList);
+		}
+	}
+	
+	private void findEstudentRank() {
+		
 	}
 	
 	private boolean validarRespuestaUsuario(String codPregunta, String respuesta) {
@@ -261,5 +286,4 @@ public class ResultadoExamenUsuarioController {
 	public void setPreguntaService(IPreguntaService preguntaService) {
 		this.preguntaService = preguntaService;
 	}
-	
 }

@@ -13,27 +13,33 @@
    			<h:panelGroup id="searchForm">
             	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
             		
+                    <p:outputLabel for="searchDate" value="#{msg.fecExamen}:" />
+					<p:calendar id="searchDate" value="#{respuestaExamenController.searchDate}" pattern="MM/dd/yyyy HH:mm:ss" effect="fold"/>
+            		
                 	<p:outputLabel value="#{msg.user}:"  />
-                    <h:panelGrid columns="2" style="width:100%">
-	                   <p:inputText id="txtInputSearch" value="#{userController.userNameSearch}" onblur="inputTextBlur( this, '#{userController.userNameSearch}' );" onfocus="inputTextFocus( this, '#{userController.userNameSearch}' );" />
-	                   <p:commandLink id="cmdLink" actionListener="#{userController.advancedSearch}"  
-	                   		oncomplete="PF('advanceSearchViewDialog').show()">
-	                       <span><h:graphicImage url="resources/images/magnifier_16.png" width="17" height="17" /></span>
+                    <h:panelGrid columns="2" style="width:100%" border="0">
+                    
+	                   <p:inputText id="txtInputSearch" value="#{respuestaExamenController.userNameSearch}" 
+	                   			onblur="inputTextBlur( this, '#{respuestaExamenController.userNameSearch}' );" 
+	                   			onfocus="inputTextFocus( this, '#{respuestaExamenController.userNameSearch}' );" />
+	                   <p:commandLink id="cmdLink" actionListener="#{respuestaExamenController.advancedSearch}"  
+	                   		oncomplete="PF('advanceSearchViewDialog').show()" update="archivoPruebaListForm:advanceSearchViewDlg">
+	                       <span><h:graphicImage url="../resources/images/magnifier_16.png" width="17" height="17" /></span>
 	                   </p:commandLink>
 		            
 			            <p:dialog id="advanceSearchViewDlg" widgetVar="advanceSearchViewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
-				                <p:dataScroller id="dataScroller" value="#{userController.searchResultItems}" var="result" chunkSize="5" >
+				                <p:dataScroller id="dataScroller" value="#{respuestaExamenController.searchResultItems}" var="result" chunkSize="5" >
 							        <f:facet name="loader">
-							            <p:commandButton type="button" value="#{msg.more}" icon="ui-icon-circle-triangle-s" rendered="#{userController.showSearchData}"/>
-							        	<h:outputText value="#{msg.emptySearch}" rendered="#{!userController.showSearchData}" style="font-weight: bold"/>
+							            <p:commandButton type="button" value="#{msg.more}" icon="ui-icon-circle-triangle-s" rendered="#{respuestaExamenController.showSearchData}"/>
+							        	<h:outputText value="#{msg.emptySearch}" rendered="#{!respuestaExamenController.showSearchData}" style="font-weight: bold"/>
 							        </f:facet>
 							        <h:panelGrid columns="2" style="width:100%">
 							            <p:outputPanel>
 							                <h:panelGrid columns="3">
-							                	<f:ajax execute="@form" render="@all" onevent="PF('advanceSearchViewDialog').hide()">
+							                	<f:ajax execute="@form" render=":archivoPruebaListForm" onevent="PF('advanceSearchViewDialog').hide()">
 								                    <h:outputText value="#{result.completeName}" style="font-weight: bold"/>
-								                    <h:commandLink id="result-#{result.userId}" action="#{userController.selectResult(result)}">
-								                        <span><h:graphicImage url="resources/images/accept_16.png" width="12" height="12" /></span>
+								                    <h:commandLink id="result-#{result.userId}" action="#{respuestaExamenController.selectResult(result)}">
+								                        <span><h:graphicImage url="../resources/images/accept_16.png" width="12" height="12" /></span>
 								                    </h:commandLink>
 							                    </f:ajax>
 							                </h:panelGrid>
@@ -45,7 +51,7 @@
             		
             		
           			<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" 
-          				actionListener="#{archivoPruebaController.init()}" update=":archivoPruebaListForm" />
+          				actionListener="#{respuestaExamenController.retrieveEntriesByUser}" update=":archivoPruebaListForm" />
        			</p:panelGrid>
            	</h:panelGroup>
               
@@ -103,8 +109,8 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.resultado}"/>
                     </f:facet>
-                    <p:commandLink id="viewResultadoLink" value="#{msg.resultado}" update=":archivoPruebaViewAreaForm,:listAreaArchivoPruebaForm" 
-                    		oncomplete="PF('archivoPruebaViewAreaDialog').show()" actionListener="#{areaController.findAreaByArchivoPrueba(item)}"/>
+                    <p:commandLink id="viewResultadoLink" value="#{msg.resultado}" update=":resultadoExamenViewForm, :competenciaAreaExamenViewForm, :resultadoExamenViewDlg" 
+                    		oncomplete="PF('resultadoExamenViewDialog').show()" actionListener="#{respuestaExamenController.getByRespuestaExamenResultado(item)}"/>
                 </p:column>
 
             </p:dataTable>
@@ -114,7 +120,6 @@
         </p:panel>
         <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
     </h:form>
-
 	</ui:composition>
 </body>
 </html>

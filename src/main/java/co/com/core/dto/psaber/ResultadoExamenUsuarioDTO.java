@@ -16,6 +16,9 @@ public class ResultadoExamenUsuarioDTO {
     private Area areaId;
     private RespuestaExamen respuestaExamenId;
     private User userId;
+    private double  porcentajeAcierto;
+    private double promedioArea;
+    
 	public Integer getResultadoExamenUsuarioId() {
 		return resultadoExamenUsuarioId;
 	}
@@ -70,11 +73,26 @@ public class ResultadoExamenUsuarioDTO {
 	public void setUserId(User userId) {
 		this.userId = userId;
 	}
+	
+	public double getPorcentajeAcierto() {
+		return porcentajeAcierto;
+	}
+	public void setPorcentajeAcierto(double porcentajeAcierto) {
+		this.porcentajeAcierto = porcentajeAcierto;
+	}
+	
+	public double getPromedioArea() {
+		return promedioArea;
+	}
+	public void setPromedioArea(double promedioArea) {
+		this.promedioArea = promedioArea;
+	}
 	@Override
 	public String toString() {
 		return "ResultadoExamenUsuarioDTO [resultadoExamenUsuarioId=" + resultadoExamenUsuarioId + ", nroPreguntasArea="
 				+ nroPreguntasArea + ", respuestasCorrectas=" + respuestasCorrectas + ", respuestasErradas="
 				+ respuestasErradas + ", sinContestar=" + sinContestar + ", archivoPruebaId=" + archivoPruebaId
-				+ ", areaId=" + areaId + ", respuestaExamenId=" + respuestaExamenId + ", userId=" + userId + "]";
+				+ ", areaId=" + areaId + ", respuestaExamenId=" + respuestaExamenId + ", userId=" + userId
+				+ ", porcentajeAcierto=" + porcentajeAcierto + ", promedioArea=" + promedioArea + "]";
 	}
 }

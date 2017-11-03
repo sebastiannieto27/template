@@ -18,5 +18,7 @@ public interface ResultadoExamenUsuarioDAO {
 	
 	public void update(ResultadoExamenUsuario entity);
 	
-	public List<ResultadoExamenUsuario> getByUserNRespuestaExamenResultado(RespuestaExamen entity);
+	public List<ResultadoExamenUsuario> getByRespuestaExamen(RespuestaExamen entity);
+	
+	public void updatePromedioArea(double promedio, List<Integer> idList);
 }

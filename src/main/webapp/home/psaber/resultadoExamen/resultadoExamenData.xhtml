@@ -1,105 +1,113 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
+<ui:composition>
 
-        <p:dialog id="resultadoExamenViewAreaDlg" widgetVar="resultadoExamenViewAreaDialog" modal="true" resizable="true" width="50%" appendTo="@(body)" header="#{msg.resultado}" closeOnEscape="true">
+	<p:dialog id="resultadoExamenViewDlg" width="50%"
+		widgetVar="resultadoExamenViewDialog" modal="true" resizable="true"
+		 appendTo="@(body)" header="#{msg.resultado}"
+		closeOnEscape="true">
 
-            <h:form id="resultadoExamenViewAreaForm">
-            <p:dataTable id="datalist"
-                         value="#{areaController.areaList}"
-                         var="item"
-                         rowKey="#{item.areaId}"
-                         paginator="true"
-                         rows="5"
-                         rowsPerPageTemplate="10,20,30,40,50"
-                         selectionMode="single"
-                         selection="#{areaController.selected}">
+		<h:form id="resultadoExamenViewForm">
+			<p:dataTable id="datalist"
+				value="#{respuestaExamenController.itemResultado}" var="item"
+				rowKey="#{item.resultadoExamenUsuarioId}" paginator="true" rows="5"
+				rowsPerPageTemplate="10,20,30,40,50" selectionMode="single"
+				selection="#{respuestaExamenController.selectedResultado}">
 
-                <p:ajax event="rowSelect" />
+				<p:ajax event="rowSelect" />
 
-               <p:column sortBy="#{item.areaId}" filterBy="#{item.areaId}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.areaId}"/>
-                </p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.id}" />
+					</f:facet>
+					<h:outputText value="#{item.resultadoExamenUsuarioId}" />
+				</p:column>
 
-                <p:column sortBy="#{item.codigo}" filterBy="#{item.codigo}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.name}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.codigo}"/>
-                </p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.area}" />
+					</f:facet>
+					<h:outputText value="#{item.areaId.nombre}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.porcentajeAcierto}" />
+					</f:facet>
+					<h:outputText value="#{item.porcentajeAcierto}%" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.correctas}" />
+					</f:facet>
+					<h:outputText value="#{item.respuestasCorrectas}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.incorrectas}" />
+					</f:facet>
+					<h:outputText value="#{item.respuestasErradas}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.sinResponder}" />
+					</f:facet>
+					<h:outputText value="#{item.sinContestar}" />
+				</p:column>
 				
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.name}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.nombre}"/>
-                </p:column>
+				<!-- <p:column style="height:100px; width:400px;">
+					<p:chart type="line" model="#{chartView.lineModel1}" style="height:100px; width:400px; margin-top:20px; margin-bottom:5px"/>
+				</p:column> -->
+			</p:dataTable>
 
-            </p:dataTable>
-            
-            </h:form>
-            
-            <h:form id="listArearesultadoExamenForm">
-	            <p:dataTable id="datalistArearesultadoExamen"
-	                         value="#{areaController.areaItems}"
-	                         var="resultadoExamenAreaItem"
-	                         rowKey="#{resultadoExamenAreaItem.arearesultadoExamenId}"
-	                         paginator="true"
-	                         rows="5"
-	                         rowsPerPageTemplate="10,20,30,40,50"
-	                         selectionMode="single"
-	                         selection="#{areaController.selectedArearesultadoExamen}">
+			<p:commandButton id="pdfExport" value="#{msg.pdfExport}"
+				actionListener="#{respuestaExamenController.generatePDFReport}" />
 
-                <p:column sortBy="#{resultadoExamenAreaItem.arearesultadoExamenId}" filterBy="#{resultadoExamenAreaItem.arearesultadoExamenId}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.id}"/>
-                    </f:facet>
-                    <h:outputText value="#{resultadoExamenAreaItem.arearesultadoExamenId}"/>
-                </p:column>
-
-                <p:column sortBy="#{resultadoExamenAreaItem.areaId.codigo}" filterBy="#{resultadoExamenAreaItem.areaId.codigo}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.code}"/>
-                    </f:facet>
-                    <h:outputText value="#{resultadoExamenAreaItem.areaId.codigo}"/>
-                </p:column>
-                
-                <p:column sortBy="#{resultadoExamenAreaItem.areaId.nombre}" filterBy="#{resultadoExamenAreaItem.areaId.nombre}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.name}"/>
-                    </f:facet>
-                    <h:outputText value="#{resultadoExamenAreaItem.areaId.nombre}"/>
-                </p:column>
-                
-                <p:column sortBy="#{resultadoExamenAreaItem.nroColumna}" filterBy="#{resultadoExamenAreaItem.nroColumna}">
-                    <f:facet name="header">
-                        <h:outputText value="#{msg.nroColumna}"/>
-                    </f:facet>
-                    <h:outputText value="#{resultadoExamenAreaItem.nroColumna}"/>
-                </p:column>
-                
-                <p:column>
-               		 <h:selectBooleanCheckbox id="chk-#{areaItem.areaId}"
-                                value="#{areaController.arearesultadoExamenCheckValue}">
-                                <f:ajax execute="@this" listener="#{areaController.addRemoveArearesultadoExamen(resultadoExamenAreaItem)}"/>
-                       </h:selectBooleanCheckbox>
-               
-                </p:column>
-                
-            </p:dataTable>
-            <p:commandButton id="removeAreaButton" value="#{msg.remove}" actionListener="#{areaController.removeAreaFromresultadoExamen}" update="listArearesultadoExamenForm resultadoExamenViewAreaForm" />
 		</h:form>
-        </p:dialog>
+		<h:form id="competenciaAreaExamenViewForm">
 
-    </ui:composition>
+			<p:dataTable id="datalist"
+				value="#{respuestaExamenController.itemCompetencia}" var="item"
+				rowKey="#{item.competenciaId}" paginator="true" rows="5"
+				rowsPerPageTemplate="10,20,30,40,50" selectionMode="single"
+				selection="#{respuestaExamenController.selectedCompetencia}">
+
+				<p:ajax event="rowSelect" />
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.area}" />
+					</f:facet>
+					<h:outputText value="#{item.areaId.nombre}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.name}" />
+					</f:facet>
+					<h:outputText value="#{item.nombre}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.description}" />
+					</f:facet>
+					<h:outputText value="#{item.descripcion}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</p:dialog>
+
+</ui:composition>
 
 </html>
