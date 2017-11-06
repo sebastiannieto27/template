@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +25,7 @@ import org.primefaces.model.chart.BubbleChartModel;
 import org.primefaces.model.chart.BubbleChartSeries;
 
 import co.com.core.commons.ValidationUtil;
+import co.com.core.commons.converter.psaber.ArchivoPruebaProcesadoUtil;
 import co.com.core.domain.psaber.Area;
 import co.com.core.dto.UserDTO;
 import co.com.core.dto.psaber.CompetenciaDTO;
@@ -56,6 +59,7 @@ public class RespuestaExamenController {
 	private ResultadoExamenUsuarioDTO selectedResultado;
 	private RespuestaExamenDTO selectedRespuestaExameDTO;
 	private List<CompetenciaDTO> itemCompetencia;
+	private List<ResultadoExamenUsuarioDTO> resultadoList;
 	
 	private CompetenciaDTO selectedCompetencia;
 	private Date searchDate;
@@ -154,6 +158,23 @@ public class RespuestaExamenController {
 		itemCompetencia = competenciaService.getByAreaList(areaList);
 	}
 	
+	public void getUbicacionArea(ResultadoExamenUsuarioDTO dto) {
+		
+		try {
+			List<RespuestaExamenDTO> respExamenList = respuestaExamenService.getByArchivoPruebaProcesado
+					(ArchivoPruebaProcesadoUtil.getDtoFromEntity(selectedRespuestaExameDTO.getArchivoPruebaProcesadoId()));
+			
+			resultadoList = resultadoExamenUsuarioService.getByAreaRespuestaExamenList(respExamenList, dto);
+			
+			Collections.sort(resultadoList);
+			
+			logger.info("" + resultadoList);
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	
 	/**
 	 * search an item using the advance search component
 	 */
@@ -208,6 +229,13 @@ public class RespuestaExamenController {
 	 * * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
 	 * * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
 	 */
+
+	
+	/*private class ResultadoExamenUsuarioDTOComparator implements  {
+
+		
+	}*/
+	
 	public IRespuestaExamenService getRespuestaExamenService() {
 		return respuestaExamenService;
 	}
@@ -338,8 +366,12 @@ public class RespuestaExamenController {
 	public void setSelectedCompetencia(CompetenciaDTO selectedCompetencia) {
 		this.selectedCompetencia = selectedCompetencia;
 	}
-	
-	
-	
-	
+
+	public List<ResultadoExamenUsuarioDTO> getResultadoList() {
+		return resultadoList;
+	}
+
+	public void setResultadoList(List<ResultadoExamenUsuarioDTO> resultadoList) {
+		this.resultadoList = resultadoList;
+	}
 }

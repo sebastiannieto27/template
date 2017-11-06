@@ -64,6 +64,14 @@
 					<h:outputText value="#{item.sinContestar}" />
 				</p:column>
 				
+             	<p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.ubicacionArea}"/>
+                    </f:facet>
+                    <p:commandLink id="viewUbicacionAreaLink" value="#{msg.ubicacionArea}" update=":ubicacionAreaViewForm, :ubicacionAreaViewDlg" 
+                    		oncomplete="PF('ubicacionAreaViewDialog').show()" actionListener="#{respuestaExamenController.getUbicacionArea(item)}"/>
+                </p:column>
+				
 				<!-- <p:column style="height:100px; width:400px;">
 					<p:chart type="line" model="#{chartView.lineModel1}" style="height:100px; width:400px; margin-top:20px; margin-bottom:5px"/>
 				</p:column> -->
@@ -104,6 +112,31 @@
 					<h:outputText value="#{item.descripcion}" />
 				</p:column>
 
+			</p:dataTable>
+		</h:form>
+		
+		<h:form id="ubicacionAreaExamenViewForm">
+
+			<p:dataTable id="datalist"
+				value="#{respuestaExamenController.resultadoList}" var="item"
+				rowKey="#{item.resultadoExamenUsuarioId}" paginator="true" rows="5"
+				rowsPerPageTemplate="10,20,30,40,50" selectionMode="single">
+
+				<p:ajax event="rowSelect" />
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.area}" />
+					</f:facet>
+					<h:outputText value="#{item.areaId.nombre}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.porcentajeAcierto}" />
+					</f:facet>
+					<h:outputText value="#{item.porcentajeAcierto}" />
+				</p:column>
 			</p:dataTable>
 		</h:form>
 	</p:dialog>

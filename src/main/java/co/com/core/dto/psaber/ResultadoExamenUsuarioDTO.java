@@ -5,7 +5,7 @@ import co.com.core.domain.psaber.ArchivoPrueba;
 import co.com.core.domain.psaber.Area;
 import co.com.core.domain.psaber.RespuestaExamen;
 
-public class ResultadoExamenUsuarioDTO {
+public class ResultadoExamenUsuarioDTO implements Comparable<ResultadoExamenUsuarioDTO>{
 
 	private Integer resultadoExamenUsuarioId;
     private int nroPreguntasArea;
@@ -94,5 +94,9 @@ public class ResultadoExamenUsuarioDTO {
 				+ respuestasErradas + ", sinContestar=" + sinContestar + ", archivoPruebaId=" + archivoPruebaId
 				+ ", areaId=" + areaId + ", respuestaExamenId=" + respuestaExamenId + ", userId=" + userId
 				+ ", porcentajeAcierto=" + porcentajeAcierto + ", promedioArea=" + promedioArea + "]";
+	}
+	@Override
+	public int compareTo(ResultadoExamenUsuarioDTO obj) {
+		return (int) (obj.getPorcentajeAcierto() - this.porcentajeAcierto);
 	}
 }

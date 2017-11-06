@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="ubicacionAreaViewDlg" width="50%"
+		widgetVar="ubicacionAreaViewDialog" modal="true" resizable="true"
+		 appendTo="@(body)" header="#{msg.ubicacionArea}"
+		closeOnEscape="true">
+
+		<h:form id="ubicacionAreaViewForm">
+			 <p:dataList value="#{respuestaExamenController.resultadoList}" var="item" type="unordered" 
+			 rowIndexVar="rowIndex"	itemType="none" paginator="true" rows="10" styleClass="paginated">
+
+				<p:panelGrid columns="5">
+					<h:outputText style="font-weight: bold;" value="#{rowIndex + 1}"/>
+			        <h:outputText style="font-weight: bold;" value="#{msg.name}:"/>
+			        <div style="width: 150px;">
+			        	#{item.userId.completeName}
+			        </div>
+	
+			        <h:outputText style="font-weight: bold;" value="#{msg.puntaje}: "/>
+			        <div style="width: 50px;">
+			        	#{item.porcentajeAcierto}
+			        </div>
+				</p:panelGrid>
+		    </p:dataList>
+		</h:form>
+	</p:dialog>
+
+</ui:composition>
+
+</html>

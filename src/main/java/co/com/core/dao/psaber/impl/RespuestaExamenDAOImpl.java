@@ -148,6 +148,7 @@ public class RespuestaExamenDAOImpl implements RespuestaExamenDAO {
 				session = this.sessionFactory.openSession();
 		        Query query = session.getNamedQuery("RespuestaExamen.findByArchivoPruebaProcesado");
 		        query.setParameter("archivoPruebaProcesadoId", id);
+		        query.setParameter("procesado", (short)0);
 		        entityList = query.list();
 			} catch(Exception ex) {
 				logger.error("Throwed Exception [RespuestaExamenDAOImpl.getByArchivoPruebaProcesado]: " +ex.getMessage());

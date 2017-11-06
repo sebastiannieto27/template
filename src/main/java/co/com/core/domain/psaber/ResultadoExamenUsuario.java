@@ -34,6 +34,7 @@ import co.com.core.domain.User;
     @NamedQuery(name = "ResultadoExamenUsuario.findByResultadoExamenUsuarioId", query = "SELECT r FROM ResultadoExamenUsuario r WHERE r.resultadoExamenUsuarioId = :resultadoExamenUsuarioId"), 
     @NamedQuery(name = "ResultadoExamenUsuario.findByNroPreguntasArea", query = "SELECT r FROM ResultadoExamenUsuario r WHERE r.nroPreguntasArea = :nroPreguntasArea"), 
     @NamedQuery(name = "ResultadoExamenUsuario.findByRespuestaExamenId", query = "SELECT r FROM ResultadoExamenUsuario r WHERE r.respuestaExamenId = :respuestaExamenId"),
+    @NamedQuery(name = "ResultadoExamenUsuario.findByAreaRespuestaExamenIdList", query = "SELECT r FROM ResultadoExamenUsuario r WHERE r.respuestaExamenId IN (:ids) AND r.areaId = :areaId"),
     @NamedQuery(name = "ResultadoExamenUsuario.findByRespuestasCorrectas", query = "SELECT r FROM ResultadoExamenUsuario r WHERE r.respuestasCorrectas = :respuestasCorrectas"), 
     @NamedQuery(name = "ResultadoExamenUsuario.findByRespuestasErradas", query = "SELECT r FROM ResultadoExamenUsuario r WHERE r.respuestasErradas = :respuestasErradas"), 
     @NamedQuery(name = "ResultadoExamenUsuario.findBySinContestar", query = "SELECT r FROM ResultadoExamenUsuario r WHERE r.sinContestar = :sinContestar")})

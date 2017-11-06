@@ -1,6 +1,5 @@
 package co.com.core.dao.psaber.impl;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.psaber.ResultadoExamenUsuarioDAO;
-import co.com.core.domain.User;
-import co.com.core.domain.psaber.ArchivoPruebaProcesado;
+import co.com.core.domain.psaber.Area;
 import co.com.core.domain.psaber.RespuestaExamen;
 import co.com.core.domain.psaber.ResultadoExamenUsuario;
 
@@ -143,5 +141,23 @@ public class ResultadoExamenUsuarioDAOImpl implements ResultadoExamenUsuarioDAO 
 			} catch(Exception ex) {
 				logger.error("Throwed Exception [ResultadoExamenUsuarioDAOImpl.updatePromedioArea]: " +ex.getMessage());
 			}
+		}
+		
+		@Override
+		public List<ResultadoExamenUsuario> getByAreaRespuestaExamenList(List<RespuestaExamen> idList, Area area) {
+			List<ResultadoExamenUsuario> entityList = null;
+			try {
+				session = this.sessionFactory.openSession();
+		        Query query = session.getNamedQuery("ResultadoExamenUsuario.findByAreaRespuestaExamenIdList");
+		        query.setParameter("areaId", area);
+		        query.setParameterList("ids", idList);
+		        entityList = query.list();
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [ResultadoExamenUsuarioDAOImpl.getByRespuestaExamenList]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			
+			return entityList;
 		}
 }

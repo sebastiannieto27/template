@@ -9,8 +9,8 @@ import org.apache.log4j.Logger;
 import co.com.core.commons.converter.psaber.RespuestaExamenUtil;
 import co.com.core.commons.converter.psaber.ResultadoExamenUsuarioUtil;
 import co.com.core.dao.psaber.ResultadoExamenUsuarioDAO;
+import co.com.core.domain.psaber.RespuestaExamen;
 import co.com.core.domain.psaber.ResultadoExamenUsuario;
-import co.com.core.dto.RolePermissionDTO;
 import co.com.core.dto.psaber.RespuestaExamenDTO;
 import co.com.core.dto.psaber.ResultadoExamenUsuarioDTO;
 import co.com.core.services.psaber.IResultadoExamenUsuarioService;
@@ -56,13 +56,34 @@ public class ResultadoExamenUsuarioServiceImpl implements IResultadoExamenUsuari
 		return dtoList;
 	}
 	
-
 	@Override
 	public void updatePromedioArea(double promedio, List<ResultadoExamenUsuario> entityList) {
 		if(entityList != null && entityList.size() > 0) {
 			List<Integer> idList = getResultadoExamenUsuarioIds(entityList);
 			resultadoExamenUsuarioDAO.updatePromedioArea(promedio, idList);
 		}
+	}
+	
+	@Override
+	public List<ResultadoExamenUsuarioDTO> getByAreaRespuestaExamenList(List<RespuestaExamenDTO> paramDtoList, ResultadoExamenUsuarioDTO dto) {
+		
+		List<ResultadoExamenUsuarioDTO> dtoList = new ArrayList<>();
+		
+		List<RespuestaExamen> paramList = new ArrayList<>();
+		if(paramDtoList!=null && paramDtoList.size() > 0) {
+			for(RespuestaExamenDTO item : paramDtoList) {
+				paramList.add(RespuestaExamenUtil.getEntityFromDto(item));
+			}
+			
+			List<ResultadoExamenUsuario> entityList = resultadoExamenUsuarioDAO.getByAreaRespuestaExamenList(paramList, dto.getAreaId());
+			if(entityList!=null && entityList.size() > 0) {
+				for(ResultadoExamenUsuario entity : entityList) {
+					dtoList.add(ResultadoExamenUsuarioUtil.getDtoFromEntity(entity));
+				}
+			}
+		}
+	
+		return dtoList;
 	}
 	
 	private List<Integer> getResultadoExamenUsuarioIds(List<ResultadoExamenUsuario> entityList) {
