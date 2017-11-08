@@ -72,6 +72,14 @@
                     		oncomplete="PF('ubicacionAreaViewDialog').show()" actionListener="#{respuestaExamenController.getUbicacionArea(item)}"/>
                 </p:column>
 				
+         		<p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.percentilArea}"/>
+                    </f:facet>
+                    <p:commandLink id="viewPercentilAreaLink" value="#{msg.percentilArea}" update=":percentilAreaViewForm, :percentilAreaViewDlg" 
+                    		oncomplete="PF('percentilAreaViewDialog').show()" actionListener="#{respuestaExamenController.percentilEstudianteArea(item)}" />
+                </p:column>
+                
 				<!-- <p:column style="height:100px; width:400px;">
 					<p:chart type="line" model="#{chartView.lineModel1}" style="height:100px; width:400px; margin-top:20px; margin-bottom:5px"/>
 				</p:column> -->

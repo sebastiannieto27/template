@@ -64,6 +64,7 @@ public class RespuestaExamenController {
 	private CompetenciaDTO selectedCompetencia;
 	private Date searchDate;
 
+	private double percentilEstudiante;
 	private String userNameSearch; 
 	private Integer userIdSearchResult; 
 	private boolean showSearchData;
@@ -174,7 +175,24 @@ public class RespuestaExamenController {
 		}
 	}
 	
-	
+	public void percentilEstudianteArea(ResultadoExamenUsuarioDTO dto) {
+		try {
+			List<RespuestaExamenDTO> respExamenList = respuestaExamenService.getByArchivoPruebaProcesado
+					(ArchivoPruebaProcesadoUtil.getDtoFromEntity(selectedRespuestaExameDTO.getArchivoPruebaProcesadoId()));
+			
+			List<ResultadoExamenUsuarioDTO> listResultado = resultadoExamenUsuarioService.getByAreaRespuestaExamenList(respExamenList, dto);
+		
+			double nElements = listResultado.size();
+			double houndredPercent = 100;
+			double userResult = dto.getPorcentajeAcierto();
+			
+			double tempValue = ((nElements * userResult) / houndredPercent);
+			percentilEstudiante = Math.floor(tempValue);		
+			
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
 	/**
 	 * search an item using the advance search component
 	 */
@@ -374,4 +392,13 @@ public class RespuestaExamenController {
 	public void setResultadoList(List<ResultadoExamenUsuarioDTO> resultadoList) {
 		this.resultadoList = resultadoList;
 	}
+
+	public double getPercentilEstudiante() {
+		return percentilEstudiante;
+	}
+
+	public void setPercentilEstudiante(double percentilEstudiante) {
+		this.percentilEstudiante = percentilEstudiante;
+	}
+	
 }
