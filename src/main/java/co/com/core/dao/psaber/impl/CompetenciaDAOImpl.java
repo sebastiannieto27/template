@@ -143,12 +143,12 @@ public class CompetenciaDAOImpl implements CompetenciaDAO {
 		}
 
 		@Override
-		public List<Competencia> getByAreaList(List<Area> areaList) {
+		public List<Competencia> getByArea(Area area) {
 			List<Competencia> entityList = new ArrayList<Competencia>();
 			try {
 				session = this.sessionFactory.openSession();
-				Query query = session.createQuery("SELECT c FROM Competencia c WHERE c.areaId IN (:ids)");
-				query.setParameterList("ids", areaList);
+				Query query = session.createQuery("SELECT c FROM Competencia c WHERE c.areaId = :areaId");
+				query.setParameter("areaId", area);
 				entityList = query.list();
 			} catch(Exception ex) {
 				logger.error("Throwed Exception [ResultadoExamenUsuarioDAOImpl.updatePromedioArea]: " +ex.getMessage());

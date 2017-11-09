@@ -64,7 +64,7 @@ public class RespuestaExamenController {
 	private CompetenciaDTO selectedCompetencia;
 	private Date searchDate;
 
-	private double percentilEstudiante;
+	private int percentilEstudiante;
 	private String userNameSearch; 
 	private Integer userIdSearchResult; 
 	private boolean showSearchData;
@@ -148,15 +148,12 @@ public class RespuestaExamenController {
 			for(ResultadoExamenUsuarioDTO item : itemResultado) {
 				areaList.add(item.getAreaId());
 			}
-			if(areaList.size() > 0) {
-				getCompetenciasAreas(areaList);
-			}
 		}
 		
 	}
 	
-	private void getCompetenciasAreas(List<Area> areaList) {
-		itemCompetencia = competenciaService.getByAreaList(areaList);
+	public void getCompetenciasArea(ResultadoExamenUsuarioDTO dto) {
+		itemCompetencia = competenciaService.getByArea(dto.getAreaId());
 	}
 	
 	public void getUbicacionArea(ResultadoExamenUsuarioDTO dto) {
@@ -182,12 +179,12 @@ public class RespuestaExamenController {
 			
 			List<ResultadoExamenUsuarioDTO> listResultado = resultadoExamenUsuarioService.getByAreaRespuestaExamenList(respExamenList, dto);
 		
-			double nElements = listResultado.size();
+			double nElements = 89;//listResultado.size();
 			double houndredPercent = 100;
 			double userResult = dto.getPorcentajeAcierto();
 			
 			double tempValue = ((nElements * userResult) / houndredPercent);
-			percentilEstudiante = Math.floor(tempValue);		
+			percentilEstudiante = (int) Math.floor(tempValue);		
 			
 		} catch(Exception e) {
 			logger.error(e.getMessage());
@@ -393,11 +390,11 @@ public class RespuestaExamenController {
 		this.resultadoList = resultadoList;
 	}
 
-	public double getPercentilEstudiante() {
+	public int getPercentilEstudiante() {
 		return percentilEstudiante;
 	}
 
-	public void setPercentilEstudiante(double percentilEstudiante) {
+	public void setPercentilEstudiante(int percentilEstudiante) {
 		this.percentilEstudiante = percentilEstudiante;
 	}
 	

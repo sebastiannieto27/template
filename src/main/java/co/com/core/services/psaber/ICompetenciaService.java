@@ -20,5 +20,5 @@ public interface ICompetenciaService {
 	
 	public void update(CompetenciaDTO dto);
 	
-	public List<CompetenciaDTO> getByAreaList(List<Area> areaList);
+	public List<CompetenciaDTO> getByArea(Area area);
 }

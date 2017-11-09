@@ -18,6 +18,6 @@ public interface CompetenciaDAO {
 	
 	public void update(Competencia entity);
 	
-	public List<Competencia> getByAreaList(List<Area> areaList);
+	public List<Competencia> getByArea(Area area);
 	
 }

@@ -64,6 +64,14 @@
 					<h:outputText value="#{item.sinContestar}" />
 				</p:column>
 				
+         		<p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.competenciaArea}"/>
+                    </f:facet>
+                    <p:commandLink id="viewCompetenciaAreaLink" value="#{msg.competenciaArea}" update=":competenciaAreaViewForm, :competenciaAreaViewDlg" 
+                    		oncomplete="PF('competenciaAreaViewDialog').show()" actionListener="#{respuestaExamenController.getCompetenciasArea(item)}" />
+                </p:column>
+                
              	<p:column>
                     <f:facet name="header">
                         <h:outputText value="#{msg.ubicacionArea}"/>

@@ -44,8 +44,8 @@ public class CompetenciaServiceImpl implements ICompetenciaService {
 	
 
 	@Override
-	public List<CompetenciaDTO> getByAreaList(List<Area> areaList) {
-		List<Competencia> entityList = competenciaDAO.getByAreaList(areaList);
+	public List<CompetenciaDTO> getByArea(Area area) {
+		List<Competencia> entityList = competenciaDAO.getByArea(area);
 		if(entityList!=null && entityList.size() > 0) {
 			List<CompetenciaDTO> dtoList = new ArrayList<>();
 			for(Competencia entity: entityList) {
