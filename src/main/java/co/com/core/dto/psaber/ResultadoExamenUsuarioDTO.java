@@ -1,5 +1,7 @@
 package co.com.core.dto.psaber;
 
+import java.text.DecimalFormat;
+
 import co.com.core.domain.User;
 import co.com.core.domain.psaber.ArchivoPrueba;
 import co.com.core.domain.psaber.Area;
@@ -75,7 +77,7 @@ public class ResultadoExamenUsuarioDTO implements Comparable<ResultadoExamenUsua
 	}
 	
 	public double getPorcentajeAcierto() {
-		return porcentajeAcierto;
+		return roundDouble(porcentajeAcierto);
 	}
 	public void setPorcentajeAcierto(double porcentajeAcierto) {
 		this.porcentajeAcierto = porcentajeAcierto;
@@ -95,8 +97,17 @@ public class ResultadoExamenUsuarioDTO implements Comparable<ResultadoExamenUsua
 				+ ", areaId=" + areaId + ", respuestaExamenId=" + respuestaExamenId + ", userId=" + userId
 				+ ", porcentajeAcierto=" + porcentajeAcierto + ", promedioArea=" + promedioArea + "]";
 	}
+	
 	@Override
 	public int compareTo(ResultadoExamenUsuarioDTO obj) {
 		return (int) (obj.getPorcentajeAcierto() - this.porcentajeAcierto);
+	}
+	
+	public static double roundDouble(double val) {
+		val = val*100;
+		val = (double)((int) val);
+		val = val /100; 
+	    
+	    return val;
 	}
 }

@@ -8,7 +8,7 @@
 
 <ui:composition>
 
-	<p:dialog id="resultadoExamenViewDlg" width="50%"
+	<p:dialog id="resultadoExamenViewDlg" width="70%"
 		widgetVar="resultadoExamenViewDialog" modal="true" resizable="true"
 		 appendTo="@(body)" header="#{msg.resultado}"
 		closeOnEscape="true">
@@ -97,64 +97,7 @@
 				actionListener="#{respuestaExamenController.generatePDFReport}" />
 
 		</h:form>
-		<h:form id="competenciaAreaExamenViewForm">
-
-			<p:dataTable id="datalist"
-				value="#{respuestaExamenController.itemCompetencia}" var="item"
-				rowKey="#{item.competenciaId}" paginator="true" rows="5"
-				rowsPerPageTemplate="10,20,30,40,50" selectionMode="single"
-				selection="#{respuestaExamenController.selectedCompetencia}">
-
-				<p:ajax event="rowSelect" />
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{msg.area}" />
-					</f:facet>
-					<h:outputText value="#{item.areaId.nombre}" />
-				</p:column>
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{msg.name}" />
-					</f:facet>
-					<h:outputText value="#{item.nombre}" />
-				</p:column>
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{msg.description}" />
-					</f:facet>
-					<h:outputText value="#{item.descripcion}" />
-				</p:column>
-
-			</p:dataTable>
-		</h:form>
 		
-		<h:form id="ubicacionAreaExamenViewForm">
-
-			<p:dataTable id="datalist"
-				value="#{respuestaExamenController.resultadoList}" var="item"
-				rowKey="#{item.resultadoExamenUsuarioId}" paginator="true" rows="5"
-				rowsPerPageTemplate="10,20,30,40,50" selectionMode="single">
-
-				<p:ajax event="rowSelect" />
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{msg.area}" />
-					</f:facet>
-					<h:outputText value="#{item.areaId.nombre}" />
-				</p:column>
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{msg.porcentajeAcierto}" />
-					</f:facet>
-					<h:outputText value="#{item.porcentajeAcierto}" />
-				</p:column>
-			</p:dataTable>
-		</h:form>
 	</p:dialog>
 
 </ui:composition>

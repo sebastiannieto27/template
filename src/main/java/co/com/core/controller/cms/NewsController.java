@@ -88,7 +88,7 @@ public class NewsController {
 	}
 	
 	private UploadedFileDTO createUploadedFile(FileUploadEvent event) {
-		return uploadedFileController.upload(event, true);
+		return null;//uploadedFileController.upload(event, true);
 	}
 	
 	public String getImagePath() {

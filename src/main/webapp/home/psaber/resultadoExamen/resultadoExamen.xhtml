@@ -109,7 +109,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{msg.resultado}"/>
                     </f:facet>
-                    <p:commandLink id="viewResultadoLink" value="#{msg.resultado}" update=":resultadoExamenViewForm, :competenciaAreaExamenViewForm, :resultadoExamenViewDlg" 
+                    <p:commandLink id="viewResultadoLink" value="#{msg.resultado}" update=":resultadoExamenViewForm, :resultadoExamenViewDlg" 
                     		oncomplete="PF('resultadoExamenViewDialog').show()" actionListener="#{respuestaExamenController.getByRespuestaExamenResultado(item)}"/>
                 </p:column>
 

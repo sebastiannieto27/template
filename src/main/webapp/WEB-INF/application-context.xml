@@ -20,7 +20,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost:3306/template" />
         <property name="username" value="root" />
-        <property name="password" value="admin" />
+        <property name="password" value="D1360.nieto.p3n4.proyectando" />
     </bean>
 	
 	<!-- Hibernate 3 Annotation SessionFactory Bean definition-->
@@ -442,6 +442,4 @@
     	<property name="archivoPruebaProcesadoService" ref="archivoPruebaProcesadoService" />
     </bean>
 
-   	<bean id="chartView" scope="session" class="co.com.core.controller.psaber.ChartView" init-method="init">
-    </bean>
 </beans>

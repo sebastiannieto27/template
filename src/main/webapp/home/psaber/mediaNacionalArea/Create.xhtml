@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MediaNacionalAreaCreateDlg" widgetVar="MediaNacionalAreaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.CreateMediaNacionalAreaTitle}" closeOnEscape="true">
+
+            <h:form id="MediaNacionalAreaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{mediaNacionalAreaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.CreateMediaNacionalAreaLabel_valor}" for="valor" />
+                        <p:inputText id="valor" value="#{mediaNacionalAreaController.selected.valor}" title="#{msg.CreateMediaNacionalAreaTitle_valor}" required="true" requiredMessage="#{msg.CreateMediaNacionalAreaRequiredMessage_valor}"/>
+
+                        <p:outputLabel value="#{msg.CreateMediaNacionalAreaLabel_archivoPruebaId}" for="archivoPruebaId" />
+                        <p:selectOneMenu id="archivoPruebaId" value="#{mediaNacionalAreaController.selected.archivoPruebaId}" required="true" requiredMessage="#{msg.CreateMediaNacionalAreaRequiredMessage_archivoPruebaId}" converter="archivoPruebaConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{archivoPruebaController.items}"
+                                           var="archivoPruebaIdItem"
+                                           itemValue="#{archivoPruebaIdItem}"
+                                           itemLabel="#{archivoPruebaIdItem.archivoPruebaId.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{msg.CreateMediaNacionalAreaLabel_areaId}" for="areaId" />
+                        <p:selectOneMenu id="areaId" value="#{mediaNacionalAreaController.selected.areaId}" required="true" requiredMessage="#{msg.CreateMediaNacionalAreaRequiredMessage_areaId}" converter="areaConverter">
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{areaController.items}"
+                                           var="areaIdItem"
+                                           itemValue="#{areaIdItem}"
+                                           itemLabel="#{areaIdItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{mediaNacionalAreaController.saveNew}" value="#{msg.Save}" update="display,:MediaNacionalAreaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MediaNacionalAreaCreateDialog'));">
+                        <p:confirm header="#{msg.ConfirmationHeader}" message="#{msg.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.Cancel}" oncomplete="PF('MediaNacionalAreaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

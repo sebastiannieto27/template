@@ -13,6 +13,7 @@ import org.hibernate.Transaction;
 
 import co.com.core.dao.psaber.RespuestaExamenDAO;
 import co.com.core.domain.User;
+import co.com.core.domain.psaber.ArchivoPrueba;
 import co.com.core.domain.psaber.ArchivoPruebaProcesado;
 import co.com.core.domain.psaber.PreguntaTema;
 import co.com.core.domain.psaber.RespuestaExamen;
@@ -174,6 +175,28 @@ public class RespuestaExamenDAOImpl implements RespuestaExamenDAO {
 				entityList = query.list();
 			} catch(Exception ex) {
 				logger.error("Throwed Exception [RespuestaExamenDAOImpl.getByArchivoPruebaProcesado]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			
+			return entityList;
+		}
+		
+		@Override
+		public List<RespuestaExamen> getByArchivoPruebaFecha(ArchivoPrueba archivoPruebaId, Date searchDate) {
+			List<RespuestaExamen> entityList = null;
+			try {
+				session = this.sessionFactory.openSession();
+				StringBuilder hql = new StringBuilder();
+				hql.append("SELECT r FROM RespuestaExamen r LEFT JOIN r.archivoPruebaProcesadoId a");
+				hql.append(" WHERE r.archivoPruebaId = :archivoPruebaId");
+				hql.append(" AND a.fecCre = :fecCre");
+				Query query = session.createQuery(hql.toString());
+				query.setParameter("archivoPruebaId", archivoPruebaId);
+				query.setParameter("fecCre", searchDate);
+				entityList = query.list();
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [RespuestaExamenDAOImpl.getByArchivoPruebaFecha]: " +ex.getMessage());
 			} finally {
 				session.close();
 			}

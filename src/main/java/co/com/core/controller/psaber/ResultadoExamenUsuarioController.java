@@ -195,10 +195,6 @@ public class ResultadoExamenUsuarioController {
 		}
 	}
 	
-	private void findEstudentRank() {
-		
-	}
-	
 	private boolean validarRespuestaUsuario(String codPregunta, String respuesta) {
 		RespuestaDTO respuestaDTO = preguntaService.getRespuestaByPreguntaCode(codPregunta);
 		

@@ -2,37 +2,35 @@ package co.com.core.controller.psaber;
 
 import static co.com.core.commons.LoadBundle.geProperty;
 
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 import org.jfree.util.Log;
 import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.BubbleChartModel;
-import org.primefaces.model.chart.BubbleChartSeries;
+import org.primefaces.model.chart.LineChartModel;
 
 import co.com.core.commons.ValidationUtil;
+import co.com.core.commons.charts.GenericLineChart;
 import co.com.core.commons.converter.psaber.ArchivoPruebaProcesadoUtil;
 import co.com.core.domain.psaber.Area;
 import co.com.core.dto.UserDTO;
+import co.com.core.dto.psaber.ArchivoPruebaDTO;
 import co.com.core.dto.psaber.CompetenciaDTO;
 import co.com.core.dto.psaber.RespuestaExamenDTO;
 import co.com.core.dto.psaber.ResultadoExamenUsuarioDTO;
 import co.com.core.lazy.loader.psaber.RespuestaExamenLazyLoader;
 import co.com.core.services.IUserService;
+import co.com.core.services.psaber.IArchivoPruebaService;
 import co.com.core.services.psaber.ICompetenciaService;
 import co.com.core.services.psaber.IRespuestaExamenService;
 import co.com.core.services.psaber.IResultadoExamenUsuarioService;
@@ -52,6 +50,7 @@ public class RespuestaExamenController {
 	private IResultadoExamenUsuarioService resultadoExamenUsuarioService;
 	private IUserService userService;
 	private ICompetenciaService competenciaService;
+	private IArchivoPruebaService archivoPruebaService;
 	
 	private List<RespuestaExamenDTO> items;
 	private RespuestaExamenDTO selected;
@@ -71,12 +70,23 @@ public class RespuestaExamenController {
 	private List<UserDTO> searchResultItems;
 	private UserDTO userDtoSearchResult;
 	
+	private Integer archivoPruebaId;
+	private ArchivoPruebaDTO archivoPruebaDTO;
+	private Date archivoSearchDate;
+	
 	private LazyDataModel<RespuestaExamenDTO> lazyModel;
 	
+	private LineChartModel lineModelPercentil;
+	
 	public void init() {
+		lineModelPercentil = new LineChartModel();
 		Log.error(lazyModel);
 	}
 	
+	/**
+	 * Creates new entry in the database
+	 * @return
+	 */
 	public boolean saveNew() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
@@ -93,6 +103,10 @@ public class RespuestaExamenController {
 		return true;
 	}
 
+	/**
+	 * Updates an existing entry
+	 * @return
+	 */
 	public boolean save() {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -109,6 +123,9 @@ public class RespuestaExamenController {
 		return true;
 	}
 	
+	/**
+	 * Deletes an existing entry
+	 */
 	public void delete() {
 		if (this.selected != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -124,6 +141,9 @@ public class RespuestaExamenController {
 		}
 	}
 
+	/**
+	 * prepares the form and variables to create a new entry
+	 */
 	public void prepareCreate() {
 		selected = new RespuestaExamenDTO();
 	}
@@ -133,12 +153,19 @@ public class RespuestaExamenController {
 	 * * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
 	 * * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
 	 */
+	/**
+	 * retrieves all entries by archivoPruebaProcesado.user and archivoPruebaProcesado.fecCre
+	 */
 	public void retrieveEntriesByUser() {
 		if(userDtoSearchResult != null) {
 			lazyModel = new RespuestaExamenLazyLoader(respuestaExamenService, userDtoSearchResult, searchDate);
 		}
 	}
 	
+	/**
+	 * retrieves RespuestaExamenResultado by RespuestaExamen
+	 * @param dto
+	 */
 	public void getByRespuestaExamenResultado(RespuestaExamenDTO dto) {
 		selectedRespuestaExameDTO = dto;
 		itemResultado = resultadoExamenUsuarioService.getByRespuestaExamen(dto);
@@ -152,10 +179,20 @@ public class RespuestaExamenController {
 		
 	}
 	
+	/**
+	 * retrieves all competencia entries by area
+	 * @param dto
+	 */
 	public void getCompetenciasArea(ResultadoExamenUsuarioDTO dto) {
 		itemCompetencia = competenciaService.getByArea(dto.getAreaId());
 	}
 	
+	/**
+	 * retrieves RespuestaExamen by archivoPruebaProcesado 
+	 * then retrieves ResultadoExamenUsuario by respuestaExamen and area 
+	 * finally sorts by ResultadoExamenUsuario.porcentajeAcierto 
+	 * @param dto
+	 */
 	public void getUbicacionArea(ResultadoExamenUsuarioDTO dto) {
 		
 		try {
@@ -166,12 +203,15 @@ public class RespuestaExamenController {
 			
 			Collections.sort(resultadoList);
 			
-			logger.info("" + resultadoList);
 		} catch(Exception e) {
 			logger.error(e.getMessage());
 		}
 	}
 	
+	/**
+	 * calculates the percentile by area and creates a linear chart
+	 * @param dto
+	 */
 	public void percentilEstudianteArea(ResultadoExamenUsuarioDTO dto) {
 		try {
 			List<RespuestaExamenDTO> respExamenList = respuestaExamenService.getByArchivoPruebaProcesado
@@ -179,17 +219,47 @@ public class RespuestaExamenController {
 			
 			List<ResultadoExamenUsuarioDTO> listResultado = resultadoExamenUsuarioService.getByAreaRespuestaExamenList(respExamenList, dto);
 		
-			double nElements = 89;//listResultado.size();
+			double nElements = 89;//listResultado.size();TODO
 			double houndredPercent = 100;
 			double userResult = dto.getPorcentajeAcierto();
 			
 			double tempValue = ((nElements * userResult) / houndredPercent);
 			percentilEstudiante = (int) Math.floor(tempValue);		
+
+			//individual chart
+			Map<String, Object> dataMap = new HashMap<>();
+			dataMap.put("label", "percentil");
+			dataMap.put("13", "0.5");//TODO
+			
+			//List of charts
+			List<Map> charList = new ArrayList<>();
+			charList.add(dataMap);
+			
+			//general map
+			Map<String, Object> generalMap = new HashMap<>();
+			generalMap.put("chartList", charList);
+			generalMap.put("title", "Percentil Estudiante");
+			generalMap.put("yAxisMin", "0");
+			generalMap.put("yAxisMax", "1");
+			generalMap.put("xAxisMin", "0");
+			generalMap.put("xAxisMax", "100");//TODO
+			
+			GenericLineChart lineChart = new GenericLineChart();
+			lineModelPercentil = lineChart.createLineModels(generalMap);
 			
 		} catch(Exception e) {
 			logger.error(e.getMessage());
 		}
 	}
+	
+	public void getRespuestaExamenByArchivoPruebaFecCre() {
+		//get the archvioPrueba dto
+        archivoPruebaDTO = archivoPruebaService.getByArchivoPruebaId(archivoPruebaId);
+        //archivoSearchDate
+        List<RespuestaExamenDTO> respuestaList = respuestaExamenService.getByArchivoPruebaFecha(archivoPruebaDTO, archivoSearchDate);
+	}
+	
+	
 	/**
 	 * search an item using the advance search component
 	 */
@@ -238,18 +308,11 @@ public class RespuestaExamenController {
 		}
 	}
 	
-	
 	/**
 	 * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
 	 * * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
 	 * * RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN *** RESPUESTA EXAMEN **
 	 */
-
-	
-	/*private class ResultadoExamenUsuarioDTOComparator implements  {
-
-		
-	}*/
 	
 	public IRespuestaExamenService getRespuestaExamenService() {
 		return respuestaExamenService;
@@ -396,6 +459,14 @@ public class RespuestaExamenController {
 
 	public void setPercentilEstudiante(int percentilEstudiante) {
 		this.percentilEstudiante = percentilEstudiante;
+	}
+
+	public LineChartModel getLineModelPercentil() {
+		return lineModelPercentil;
+	}
+
+	public void setLineModelPercentil(LineChartModel lineModelPercentil) {
+		this.lineModelPercentil = lineModelPercentil;
 	}
 	
 }

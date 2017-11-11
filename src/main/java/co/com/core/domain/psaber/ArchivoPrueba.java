@@ -59,10 +59,8 @@ public class ArchivoPrueba implements Serializable {
     @Column(name = "nro_preguntas")
     private String nroPreguntas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "archivoPruebaId")
-    private Collection<AreaArchivoPrueba> areaArchivoPruebaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "archivoPruebaId")
-    private Collection<ResultadoExamenUsuario> resultadoExamenUsuarioCollection;
-    
+    private Collection<MediaNacionalArea> mediaNacionalAreaCollection;
+
     public ArchivoPrueba() {
     }
 
@@ -110,23 +108,14 @@ public class ArchivoPrueba implements Serializable {
     }
 
     @XmlTransient
-    public Collection<AreaArchivoPrueba> getAreaArchivoPruebaCollection() {
-        return areaArchivoPruebaCollection;
+    public Collection<MediaNacionalArea> getMediaNacionalAreaCollection() {
+        return mediaNacionalAreaCollection;
     }
 
-    public void setAreaArchivoPruebaCollection(Collection<AreaArchivoPrueba> areaArchivoPruebaCollection) {
-        this.areaArchivoPruebaCollection = areaArchivoPruebaCollection;
+    public void setMediaNacionalAreaCollection(Collection<MediaNacionalArea> mediaNacionalAreaCollection) {
+        this.mediaNacionalAreaCollection = mediaNacionalAreaCollection;
     }
 
-    @XmlTransient
-    public Collection<ResultadoExamenUsuario> getResultadoExamenUsuarioCollection() {
-        return resultadoExamenUsuarioCollection;
-    }
-
-    public void setResultadoExamenUsuarioCollection(Collection<ResultadoExamenUsuario> resultadoExamenUsuarioCollection) {
-        this.resultadoExamenUsuarioCollection = resultadoExamenUsuarioCollection;
-    }
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -151,5 +140,6 @@ public class ArchivoPrueba implements Serializable {
     public String toString() {
         return "co.com.core.domain.psaber.ArchivoPrueba[ archivoPruebaId=" + archivoPruebaId + " ]";
     }
+    
     
 }

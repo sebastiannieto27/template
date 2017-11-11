@@ -24,8 +24,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import co.com.core.domain.financial.account.BillHead;
-
 /**
  *
  * @author root
@@ -43,7 +41,7 @@ public class GeneralStatus implements Serializable {
     @Column(name = "general_status_module")
     private int generalStatusModule;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "generalStatusId")
-    private Collection<BillHead> billHeadCollection;
+   // private Collection<BillHead> billHeadCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -152,13 +150,13 @@ public class GeneralStatus implements Serializable {
         this.generalStatusModule = generalStatusModule;
     }
 
-    @XmlTransient
+    /*@XmlTransient
     public Collection<BillHead> getBillHeadCollection() {
         return billHeadCollection;
     }
 
     public void setBillHeadCollection(Collection<BillHead> billHeadCollection) {
         this.billHeadCollection = billHeadCollection;
-    }
+    }*/
     
 }

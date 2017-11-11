@@ -6,15 +6,35 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition>
 
+<ui:composition>
+<script type="text/javascript">
+	function hideFields() {
+		var i=0;
+		var j=0;
+		
+		var legend = document.getElementsByClassName("jqplot-table-legend"); 
+		var divsToHide = document.getElementsByClassName("jqplot-yaxis-tick"); 
+
+		while (legend.length>j) {
+			legend[j].style.display = "none";
+		    j++;
+		}
+		
+		while (divsToHide.length>i) {
+			divsToHide[i].style.display = "none";
+		    i++;
+		}
+	}
+</script>
 	<p:dialog id="percentilAreaViewDlg" width="50%"
 		widgetVar="percentilAreaViewDialog" modal="true" resizable="true"
 		 appendTo="@(body)" header="#{msg.percentilArea}"
-		closeOnEscape="true">
+		closeOnEscape="true" onShow="hideFields()">
 
-		<h:form id="percentilAreaViewForm">
-			 <h:outputText style="font-weight: bold;" value="#{respuestaExamenController.percentilEstudiante} "/>
+		<h:form id="percentilAreaViewForm" >
+			<p:chart type="line" model="#{respuestaExamenController.lineModelPercentil}" style="height:100px;"/>
+		 	<h:outputText style="font-weight: bold;" value="#{respuestaExamenController.percentilEstudiante} "/>
 		</h:form>
 	</p:dialog>
 
