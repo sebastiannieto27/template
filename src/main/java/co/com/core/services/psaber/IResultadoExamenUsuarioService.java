@@ -3,6 +3,7 @@ package co.com.core.services.psaber;
 import java.util.List;
 import java.util.Map;
 
+import co.com.core.domain.psaber.Area;
 import co.com.core.domain.psaber.ResultadoExamenUsuario;
 import co.com.core.dto.psaber.RespuestaExamenDTO;
 import co.com.core.dto.psaber.ResultadoExamenUsuarioDTO;
@@ -24,5 +25,5 @@ public interface IResultadoExamenUsuarioService {
 	
 	public void updatePromedioArea(double promedio, List<ResultadoExamenUsuario> entityList);
 	
-	public List<ResultadoExamenUsuarioDTO> getByAreaRespuestaExamenList(List<RespuestaExamenDTO> paramDtoList, ResultadoExamenUsuarioDTO dto);
+	public List<ResultadoExamenUsuarioDTO> getByAreaRespuestaExamenList(List<RespuestaExamenDTO> paramDtoList, Area area);
 }

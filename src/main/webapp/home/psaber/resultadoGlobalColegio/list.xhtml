@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+    <h:form id="respuestaListForm">
+   			<h:panelGroup id="searchForm">
+            	<p:panelGrid columns="2" columnClasses="column" styleClass="panelGridCenter">
+            		<p:outputLabel for="searchDate" value="#{msg.fecExamen}:" />
+					<p:calendar id="searchDate" value="#{respuestaExamenController.archivoSearchDate}" pattern="MM/dd/yyyy" effect="fold"/>
+            		
+					<p:outputLabel value="#{msg.archivoPrueba}" for="archivoPruebaIdSearch" />
+                    <p:selectOneMenu id="archivoPruebaIdSearch" value="#{respuestaExamenController.archivoPruebaId}" >
+                        <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                        <f:selectItems value="#{archivoPruebaController.lazyModel.datasource}"
+                                       var="archivoPruebaIdItem"
+                                       itemValue="#{archivoPruebaIdItem.archivoPruebaId}"
+                                       itemLabel="#{archivoPruebaIdItem.nombre.toString()}"
+                                       />
+                    </p:selectOneMenu>
+                        
+					<p:commandButton id="searchButton" icon="ui-icon-search" value="#{msg.search}" actionListener="#{respuestaExamenController.getRespuestaExamenByArchivoPruebaFecCre}" update=":respuestaListForm" />
+       			</p:panelGrid>
+              </h:panelGroup>
+
+        <p:panel header="#{msg.resultadoGlobalColegio}">
+            <p:dataTable id="datalist"
+                         value="#{respuestaExamenController.lazyModelRespuestaExamen}"
+                         var="item"
+                         rowKey="#{item.respuestaExamenId}"
+                         paginator="true"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{respuestaExamenController.selectedRespuestaExamen}"
+                         lazy="true">
+
+
+                <p:column sortBy="#{item.respuestaExamenId}" filterBy="#{item.respuestaExamenId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.respuestaExamenId}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.archivoPruebaProcesadoId.archivoPruebaId.nombre}" filterBy="#{item.archivoPruebaProcesadoId.archivoPruebaId.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.archivoPrueba}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.archivoPruebaProcesadoId.archivoPruebaId.nombre}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.archivoPruebaProcesadoId.fecCre}" filterBy="#{item.archivoPruebaProcesadoId.fecCre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.letra}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.archivoPruebaProcesadoId.fecCre}"/>
+                </p:column>
+
+         		<p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.resultadoGlobalColegio}"/>
+                    </f:facet>
+                    <p:commandLink id="viewresultadoGlobalColegioLink" value="#{msg.resultadoGlobalColegio}" update=":resultadoGlobalColegioViewForm, :resultadoGlobalColegioViewDlg" 
+                    		oncomplete="PF('resultadoGlobalColegioViewDialog').show()"  />
+                </p:column>
+
+            </p:dataTable>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+    </h:form>
+				
+	    </ui:composition>
+    </body>
+</html>

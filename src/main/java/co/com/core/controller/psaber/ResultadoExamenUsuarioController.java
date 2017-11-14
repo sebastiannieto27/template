@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 import co.com.core.commons.EsquemaRespuesta;
 import co.com.core.commons.ItemRespuesta;
 import co.com.core.commons.RespuestaExamenProcesado;
+import co.com.core.commons.converter.psaber.ArchivoPruebaUtil;
+import co.com.core.commons.converter.psaber.AreaUtil;
 import co.com.core.commons.converter.psaber.RespuestaExamenUtil;
 import co.com.core.domain.User;
 import co.com.core.domain.psaber.ArchivoPrueba;
@@ -24,12 +26,12 @@ import co.com.core.domain.psaber.Area;
 import co.com.core.domain.psaber.RespuestaExamen;
 import co.com.core.domain.psaber.ResultadoExamenUsuario;
 import co.com.core.dto.psaber.ArchivoPruebaProcesadoDTO;
-import co.com.core.dto.psaber.CompetenciaDTO;
+import co.com.core.dto.psaber.AreaArchivoPruebaDTO;
 import co.com.core.dto.psaber.RespuestaDTO;
 import co.com.core.dto.psaber.RespuestaExamenDTO;
 import co.com.core.dto.psaber.ResultadoExamenUsuarioDTO;
 import co.com.core.services.psaber.IArchivoPruebaProcesadoService;
-import co.com.core.services.psaber.ICompetenciaService;
+import co.com.core.services.psaber.IArchivoPruebaService;
 import co.com.core.services.psaber.IPreguntaService;
 import co.com.core.services.psaber.IRespuestaExamenService;
 import co.com.core.services.psaber.IResultadoExamenUsuarioService;
@@ -43,6 +45,7 @@ public class ResultadoExamenUsuarioController {
 	private IArchivoPruebaProcesadoService archivoPruebaProcesadoService;
 	private IRespuestaExamenService respuestaExamenService;
 	private IPreguntaService preguntaService;
+	private IArchivoPruebaService archivoPruebaService;
 	
 	private List<ResultadoExamenUsuarioDTO> items;
 	private ResultadoExamenUsuarioDTO selected;
@@ -119,18 +122,63 @@ public class ResultadoExamenUsuarioController {
 				procesarRespuestaUsuario(dto);
 			}
 		}
+		
+		//once all the answers are processed the average per area is calculated
+		
 	}
 	
+	/**
+	 * 
+	 * @param respuestaExamenList
+	 */
+	public void calcularPromedioGeneralArea(List<RespuestaExamenDTO> respuestaExamenList, ArchivoPruebaProcesadoDTO archivoPruebaProcesadoDTO) {
+		
+		try {
+			//1.get area by examenPrueba
+			List<AreaArchivoPruebaDTO> areaArchivoPruebaList = 
+					archivoPruebaService.getAreasByArchivoPrueba(ArchivoPruebaUtil.getDtoFromEntity(archivoPruebaProcesadoDTO.getArchivoPruebaId()));
+			//2. using the area and the respuestaExamenList get the entries (resultadoExamenUsuario) per each area
+			if(areaArchivoPruebaList!=null && areaArchivoPruebaList.size() > 0) {
+				for(AreaArchivoPruebaDTO item : areaArchivoPruebaList) {
+					List<ResultadoExamenUsuarioDTO> resultadoExamenList = 
+							resultadoExamenUsuarioService.getByAreaRespuestaExamenList(respuestaExamenList, item.getAreaId());
+					if(resultadoExamenList!=null && resultadoExamenList.size()>0) {
+						double sumPromedioGeneralArea = 0;
+						for(ResultadoExamenUsuarioDTO resultado : resultadoExamenList) {
+							sumPromedioGeneralArea = sumPromedioGeneralArea + resultado.getPromedioArea();
+						}
+						double promedioGeneralArea = sumPromedioGeneralArea / resultadoExamenList.size();
+						createPromedioAreaRespuestaExamen(promedioGeneralArea, item.getAreaId(), respuestaExamenList.get(0));//TODO
+					}
+				}
+			}
+
+			//3. get the average and persist
+		} catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+		}
+	}
+	
+	public void createPromedioAreaRespuestaExamen(double valor, Area area, RespuestaExamenDTO respuestaExamen) {
+		
+	}
+	
+	/**
+	 * Process individual exam results by user
+	 * @param respuestaExamenDTO
+	 */
 	private void procesarRespuestaUsuario(RespuestaExamenDTO respuestaExamenDTO) {
 		
 		try {
 			Gson gson = new Gson();
 			
+			//get the answers in JSON format and convert them into a RespuestaExamenProcesado object
 			RespuestaExamenProcesado respuestas = gson.fromJson(respuestaExamenDTO.getRespuesta(), RespuestaExamenProcesado.class);
 			
 			List<ResultadoExamenUsuario> createdEntryList = new ArrayList<>();
 			double sumAreaValue = 0;
 			
+			//process the answers for each area
 			for(EsquemaRespuesta respuestaArea : respuestas.getRespuestaExamen()) {
 				
 				ResultadoExamenUsuarioDTO resultadoExamenUsuarioDTO = new ResultadoExamenUsuarioDTO();
@@ -282,4 +330,15 @@ public class ResultadoExamenUsuarioController {
 	public void setPreguntaService(IPreguntaService preguntaService) {
 		this.preguntaService = preguntaService;
 	}
+
+
+	public IArchivoPruebaService getArchivoPruebaService() {
+		return archivoPruebaService;
+	}
+
+
+	public void setArchivoPruebaService(IArchivoPruebaService archivoPruebaService) {
+		this.archivoPruebaService = archivoPruebaService;
+	}
+	
 }

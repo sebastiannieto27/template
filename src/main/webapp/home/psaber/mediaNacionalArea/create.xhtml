@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+        <p:dialog id="mediaNacionalAreaCreateDlg" widgetVar="mediaNacionalAreaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{msg.mediaNacionalArea}" closeOnEscape="true">
+
+            <h:form id="mediaNacionalAreaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{mediaNacionalAreaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{msg.value}" for="valor" />
+                        <p:inputText id="valor" value="#{mediaNacionalAreaController.selected.valor}" title="#{msg.value}" required="true" requiredMessage="#{msg.valueRequiredMessage}"/>
+
+						<p:outputLabel value="#{msg.area}" for="areaId" />
+                        <p:selectOneMenu id="areaId" value="#{mediaNacionalAreaController.areaId}" >
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{areaController.lazyModel.datasource}"
+                                           var="areaIdItem"
+                                           itemValue="#{areaIdItem.areaId}"
+                                           itemLabel="#{areaIdItem.nombre.toString()}"
+                                           />
+                        </p:selectOneMenu>
+
+						<p:outputLabel value="#{msg.archivoPrueba}" for="archivoPruebaId" />
+                        <p:selectOneMenu id="archivoPruebaId" value="#{mediaNacionalAreaController.archivoPruebaId}" >
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{archivoPruebaController.lazyModel.datasource}"
+                                           var="archivoPruebaIdItem"
+                                           itemValue="#{archivoPruebaIdItem.archivoPruebaId}"
+                                           itemLabel="#{archivoPruebaIdItem.nombre.toString()}"
+                                           />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{mediaNacionalAreaController.saveNew}" value="#{msg.save}" update="display,:mediaNacionalAreaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('mediaNacionalAreaCreateDialog'));">
+                        <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_create_message}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{msg.cancel}" oncomplete="PF('mediaNacionalAreaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+    </body>
+</html>
+

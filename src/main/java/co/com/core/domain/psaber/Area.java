@@ -64,6 +64,8 @@ public class Area implements Serializable {
     private Collection<AreaArchivoPrueba> areaArchivoPruebaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaId")
     private Collection<ResultadoExamenUsuario> resultadoExamenUsuarioCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaId")
+    private Collection<PromedioAreaRespuestaExamen> promedioAreaRespuestaExamenCollection;
     
     public Area() {
     }
@@ -135,6 +137,15 @@ public class Area implements Serializable {
 
     public void setResultadoExamenUsuarioCollection(Collection<ResultadoExamenUsuario> resultadoExamenUsuarioCollection) {
         this.resultadoExamenUsuarioCollection = resultadoExamenUsuarioCollection;
+    }
+    
+    @XmlTransient
+    public Collection<PromedioAreaRespuestaExamen> getPromedioAreaRespuestaExamenCollection() {
+        return promedioAreaRespuestaExamenCollection;
+    }
+
+    public void setPromedioAreaRespuestaExamenCollection(Collection<PromedioAreaRespuestaExamen> promedioAreaRespuestaExamenCollection) {
+        this.promedioAreaRespuestaExamenCollection = promedioAreaRespuestaExamenCollection;
     }
     
     @Override

@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="mediaNacionalAreaViewDlg" widgetVar="mediaNacionalAreaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{msg.mediaNacionalArea}" closeOnEscape="true">
+
+            <h:form id="mediaNacionalAreaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{mediaNacionalAreaController.selected != null}">
+
+                        <h:outputText value="#{msg.id}"/>
+                        <h:outputText value="#{mediaNacionalAreaController.selected.mediaNacionalAreaId}" title="#{msg.id}"/>
+
+                        <h:outputText value="#{msg.value}"/>
+                        <h:outputText value="#{mediaNacionalAreaController.selected.valor}" title="#{msg.value}"/>
+
+                        <h:outputText value="#{msg.archivoPrueba}"/>
+                        <h:outputText value="#{mediaNacionalAreaController.selected.archivoPruebaId.nombre}"/>
+
+                        <h:outputText value="#{msg.area}"/>
+                        <h:outputText value="#{mediaNacionalAreaController.selected.areaId.nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{msg.close}" onclick="PF('mediaNacionalAreaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -2,7 +2,6 @@ package co.com.core.lazy.loader.psaber;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -10,29 +9,23 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import co.com.core.dto.UserDTO;
-import co.com.core.dto.psaber.ArchivoPruebaDTO;
-import co.com.core.dto.psaber.RespuestaExamenDTO;
-import co.com.core.lazy.sorter.psaber.RespuestaExamenLazySorter;
-import co.com.core.services.psaber.IRespuestaExamenService;
+import co.com.core.dto.psaber.MediaNacionalAreaDTO;
+import co.com.core.lazy.sorter.psaber.MediaNacionalAreaLazySorter;
+import co.com.core.services.psaber.IMediaNacionalAreaService;
 
-public class RespuestaExamenLazyLoader extends LazyDataModel<RespuestaExamenDTO> {
-	private List<RespuestaExamenDTO> datasource;
+public class MediaNacionalAreaLazyLoader extends LazyDataModel<MediaNacionalAreaDTO> {
+	private List<MediaNacionalAreaDTO> datasource;
     
-    public RespuestaExamenLazyLoader(IRespuestaExamenService serviceImpl, UserDTO dto, Date searchDate) {
-        this.datasource = serviceImpl.getByRespuestaExamenResultado(dto, searchDate);
-    }
-    
-    public RespuestaExamenLazyLoader(IRespuestaExamenService serviceImpl, ArchivoPruebaDTO archivoPruebaDTO, Date date) {
-    	this.datasource = serviceImpl.getByArchivoPruebaFecha(archivoPruebaDTO, date);
+    public MediaNacionalAreaLazyLoader(IMediaNacionalAreaService serviceImpl) {
+        this.datasource = serviceImpl.getAll();
     }
     
     @Override
-    public RespuestaExamenDTO getRowData(String rowKey) {
-        for(RespuestaExamenDTO dto : datasource) {
+    public MediaNacionalAreaDTO getRowData(String rowKey) {
+        for(MediaNacionalAreaDTO dto : datasource) {
         	try {
             	Integer rowKeyInt = Integer.parseInt(rowKey);
-        		if(dto.getRespuestaExamenId() == rowKeyInt)
+        		if(dto.getMediaNacionalAreaId() == rowKeyInt)
                 return dto;
         	} catch(Exception ex) {
         		return null;
@@ -42,15 +35,15 @@ public class RespuestaExamenLazyLoader extends LazyDataModel<RespuestaExamenDTO>
     }
  
     @Override
-    public Object getRowKey(RespuestaExamenDTO dto) {
-        return dto.getRespuestaExamenId();
+    public Object getRowKey(MediaNacionalAreaDTO dto) {
+        return dto.getMediaNacionalAreaId();
     }
     
 	@Override
-    public List<RespuestaExamenDTO> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {
-		List<RespuestaExamenDTO> data = new ArrayList<RespuestaExamenDTO>();
+    public List<MediaNacionalAreaDTO> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,Object> filters) {
+		List<MediaNacionalAreaDTO> data = new ArrayList<MediaNacionalAreaDTO>();
 		  //filter
-        for(RespuestaExamenDTO dto : datasource) {
+        for(MediaNacionalAreaDTO dto : datasource) {
         	boolean match = true;
         	if (filters != null) {
         		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
@@ -76,7 +69,7 @@ public class RespuestaExamenLazyLoader extends LazyDataModel<RespuestaExamenDTO>
         
         //sort
         if(sortField != null) {
-            Collections.sort(data, new RespuestaExamenLazySorter(sortField, sortOrder));
+            Collections.sort(data, new MediaNacionalAreaLazySorter(sortField, sortOrder));
         }
 		
         //rowCount
@@ -97,12 +90,13 @@ public class RespuestaExamenLazyLoader extends LazyDataModel<RespuestaExamenDTO>
         }
 	}
 
-	public List<RespuestaExamenDTO> getDatasource() {
+	public List<MediaNacionalAreaDTO> getDatasource() {
 		return datasource;
 	}
 
-	public void setDatasource(List<RespuestaExamenDTO> datasource) {
+	public void setDatasource(List<MediaNacionalAreaDTO> datasource) {
 		this.datasource = datasource;
 	}
-
+	
+	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import co.com.core.domain.psaber.ArchivoPrueba;
+import co.com.core.domain.psaber.AreaArchivoPrueba;
 
 public interface ArchivoPruebaDAO {
 	
@@ -19,4 +20,5 @@ public interface ArchivoPruebaDAO {
 	
 	public ArchivoPrueba getByArchivoPruebaId(Integer id);
 	
+	public List<AreaArchivoPrueba> getAreasByArchivoPrueba(ArchivoPrueba entity);
 }

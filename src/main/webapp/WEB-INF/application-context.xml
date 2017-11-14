@@ -20,7 +20,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost:3306/template" />
         <property name="username" value="root" />
-        <property name="password" value="D1360.nieto.p3n4.proyectando" />
+        <property name="password" value="admin" />
     </bean>
 	
 	<!-- Hibernate 3 Annotation SessionFactory Bean definition-->
@@ -65,6 +65,7 @@
                 <value>co.com.core.domain.psaber.ArchivoPruebaProcesado</value>
                 <value>co.com.core.domain.psaber.RespuestaExamen</value>
                 <value>co.com.core.domain.psaber.ResultadoExamenUsuario</value>
+                <value>co.com.core.domain.psaber.MediaNacionalArea</value>
                 
                 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS 
 				<value>co.com.core.domain.cms.Branch</value>
@@ -195,6 +196,10 @@
 	    <bean id="resultadoExamenUsuarioDAO" class="co.com.core.dao.psaber.impl.ResultadoExamenUsuarioDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
+	    	    	    	    	    
+	    <bean id="mediaNacionalAreaDAO" class="co.com.core.dao.psaber.impl.MediaNacionalAreaDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -302,6 +307,10 @@
 	    	    	    
    		<bean id="resultadoExamenUsuarioService" class="co.com.core.services.psaber.impl.ResultadoExamenUsuarioServiceImpl">
 	    	<property name="resultadoExamenUsuarioDAO" ref="resultadoExamenUsuarioDAO" />
+	    </bean>
+	    	    	    	    
+   		<bean id="mediaNacionalAreaService" class="co.com.core.services.psaber.impl.MediaNacionalAreaServiceImpl">
+	    	<property name="mediaNacionalAreaDAO" ref="mediaNacionalAreaDAO" />
 	    </bean>
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -436,10 +445,14 @@
     	<property name="resultadoExamenUsuarioService" ref="resultadoExamenUsuarioService" />
     	<property name="userService" ref="userService" />
     	<property name="competenciaService" ref="competenciaService" />
+    	<property name="archivoPruebaService" ref="archivoPruebaService" />
     </bean>
                             
     <bean id="archivoPruebaProcesadoController" scope="session" class="co.com.core.controller.psaber.ArchivoPruebaProcesadoController" init-method="init">
     	<property name="archivoPruebaProcesadoService" ref="archivoPruebaProcesadoService" />
     </bean>
-
+                            
+    <bean id="mediaNacionalAreaController" scope="session" class="co.com.core.controller.psaber.MediaNacionalAreaController" init-method="init">
+    	<property name="mediaNacionalAreaService" ref="mediaNacionalAreaService" />
+    </bean>
 </beans>

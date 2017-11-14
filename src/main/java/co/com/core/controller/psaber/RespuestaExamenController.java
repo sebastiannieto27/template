@@ -54,6 +54,7 @@ public class RespuestaExamenController {
 	
 	private List<RespuestaExamenDTO> items;
 	private RespuestaExamenDTO selected;
+	private RespuestaExamenDTO selectedRespuestaExamen;
 	private List<ResultadoExamenUsuarioDTO> itemResultado;
 	private ResultadoExamenUsuarioDTO selectedResultado;
 	private RespuestaExamenDTO selectedRespuestaExameDTO;
@@ -76,11 +77,12 @@ public class RespuestaExamenController {
 	
 	private LazyDataModel<RespuestaExamenDTO> lazyModel;
 	
+	private LazyDataModel<RespuestaExamenDTO> lazyModelRespuestaExamen;
+	
 	private LineChartModel lineModelPercentil;
 	
 	public void init() {
 		lineModelPercentil = new LineChartModel();
-		Log.error(lazyModel);
 	}
 	
 	/**
@@ -199,7 +201,7 @@ public class RespuestaExamenController {
 			List<RespuestaExamenDTO> respExamenList = respuestaExamenService.getByArchivoPruebaProcesado
 					(ArchivoPruebaProcesadoUtil.getDtoFromEntity(selectedRespuestaExameDTO.getArchivoPruebaProcesadoId()));
 			
-			resultadoList = resultadoExamenUsuarioService.getByAreaRespuestaExamenList(respExamenList, dto);
+			resultadoList = resultadoExamenUsuarioService.getByAreaRespuestaExamenList(respExamenList, dto.getAreaId());
 			
 			Collections.sort(resultadoList);
 			
@@ -217,7 +219,7 @@ public class RespuestaExamenController {
 			List<RespuestaExamenDTO> respExamenList = respuestaExamenService.getByArchivoPruebaProcesado
 					(ArchivoPruebaProcesadoUtil.getDtoFromEntity(selectedRespuestaExameDTO.getArchivoPruebaProcesadoId()));
 			
-			List<ResultadoExamenUsuarioDTO> listResultado = resultadoExamenUsuarioService.getByAreaRespuestaExamenList(respExamenList, dto);
+			List<ResultadoExamenUsuarioDTO> listResultado = resultadoExamenUsuarioService.getByAreaRespuestaExamenList(respExamenList, dto.getAreaId());
 		
 			double nElements = 89;//listResultado.size();TODO
 			double houndredPercent = 100;
@@ -253,13 +255,28 @@ public class RespuestaExamenController {
 	}
 	
 	public void getRespuestaExamenByArchivoPruebaFecCre() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		if(archivoPruebaId==null || archivoPruebaId==0) {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					geProperty("archivoPrubeaRequiredMessage"), geProperty("pleaseVerifySummary")));
+			return;
+		}
+		
+		if(archivoSearchDate==null) {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					geProperty("fecExamenRequiredMessage"), geProperty("pleaseVerifySummary")));
+			return;
+		}
 		//get the archvioPrueba dto
         archivoPruebaDTO = archivoPruebaService.getByArchivoPruebaId(archivoPruebaId);
         //archivoSearchDate
-        List<RespuestaExamenDTO> respuestaList = respuestaExamenService.getByArchivoPruebaFecha(archivoPruebaDTO, archivoSearchDate);
+        lazyModelRespuestaExamen = new RespuestaExamenLazyLoader(respuestaExamenService, archivoPruebaDTO, archivoSearchDate); 
 	}
 	
-	
+	public void verGraficaResultadoGeneralColegio(RespuestaExamenDTO dto) {
+		
+	}
 	/**
 	 * search an item using the advance search component
 	 */
@@ -467,6 +484,54 @@ public class RespuestaExamenController {
 
 	public void setLineModelPercentil(LineChartModel lineModelPercentil) {
 		this.lineModelPercentil = lineModelPercentil;
+	}
+
+	public LazyDataModel<RespuestaExamenDTO> getLazyModelRespuestaExamen() {
+		return lazyModelRespuestaExamen;
+	}
+
+	public void setLazyModelRespuestaExamen(LazyDataModel<RespuestaExamenDTO> lazyModelRespuestaExamen) {
+		this.lazyModelRespuestaExamen = lazyModelRespuestaExamen;
+	}
+
+	public RespuestaExamenDTO getSelectedRespuestaExameDTO() {
+		return selectedRespuestaExameDTO;
+	}
+
+	public void setSelectedRespuestaExameDTO(RespuestaExamenDTO selectedRespuestaExameDTO) {
+		this.selectedRespuestaExameDTO = selectedRespuestaExameDTO;
+	}
+
+	public RespuestaExamenDTO getSelectedRespuestaExamen() {
+		return selectedRespuestaExamen;
+	}
+
+	public void setSelectedRespuestaExamen(RespuestaExamenDTO selectedRespuestaExamen) {
+		this.selectedRespuestaExamen = selectedRespuestaExamen;
+	}
+
+	public Integer getArchivoPruebaId() {
+		return archivoPruebaId;
+	}
+
+	public void setArchivoPruebaId(Integer archivoPruebaId) {
+		this.archivoPruebaId = archivoPruebaId;
+	}
+
+	public Date getArchivoSearchDate() {
+		return archivoSearchDate;
+	}
+
+	public void setArchivoSearchDate(Date archivoSearchDate) {
+		this.archivoSearchDate = archivoSearchDate;
+	}
+
+	public IArchivoPruebaService getArchivoPruebaService() {
+		return archivoPruebaService;
+	}
+
+	public void setArchivoPruebaService(IArchivoPruebaService archivoPruebaService) {
+		this.archivoPruebaService = archivoPruebaService;
 	}
 	
 }

@@ -13,6 +13,8 @@ import org.hibernate.Transaction;
 import co.com.core.dao.psaber.ArchivoPruebaDAO;
 import co.com.core.domain.User;
 import co.com.core.domain.psaber.ArchivoPrueba;
+import co.com.core.domain.psaber.AreaArchivoPrueba;
+import co.com.core.domain.psaber.ResultadoExamenUsuario;
 
 public class ArchivoPruebaDAOImpl implements ArchivoPruebaDAO {
 
@@ -134,5 +136,22 @@ public class ArchivoPruebaDAOImpl implements ArchivoPruebaDAO {
 				session.close();
 			}
 			return entity;
+		}
+
+		@Override
+		public List<AreaArchivoPrueba> getAreasByArchivoPrueba(ArchivoPrueba entity) {
+			List<AreaArchivoPrueba> entityList = null;
+			try {
+				session = this.sessionFactory.openSession();
+		        Query query = session.getNamedQuery("AreaArchivoPrueba.findByArchivoPruebaId");
+		        query.setParameter("archivoPruebaId", entity);
+		        entityList = query.list();
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [ArchivoPruebaDAOImpl.getAreasByArchivoPrueba]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			
+			return entityList;
 		}
 }

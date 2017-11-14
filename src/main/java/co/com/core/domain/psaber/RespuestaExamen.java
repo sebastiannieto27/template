@@ -64,6 +64,9 @@ public class RespuestaExamen implements Serializable {
     private Short procesado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "respuestaExamenId")
     private Collection<ResultadoExamenUsuario> resultadoExamenUsuarioCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "respuestaExamenId")
+    private Collection<PromedioAreaRespuestaExamen> promedioAreaRespuestaExamenCollection;
+    
     public RespuestaExamen() {
     }
 
@@ -123,6 +126,15 @@ public class RespuestaExamen implements Serializable {
 
     public void setProcesado(Short procesado) {
         this.procesado = procesado;
+    }
+
+    @XmlTransient
+    public Collection<PromedioAreaRespuestaExamen> getPromedioAreaRespuestaExamenCollection() {
+        return promedioAreaRespuestaExamenCollection;
+    }
+
+    public void setPromedioAreaRespuestaExamenCollection(Collection<PromedioAreaRespuestaExamen> promedioAreaRespuestaExamenCollection) {
+        this.promedioAreaRespuestaExamenCollection = promedioAreaRespuestaExamenCollection;
     }
     @Override
     public int hashCode() {

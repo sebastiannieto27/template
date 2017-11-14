@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import co.com.core.commons.converter.psaber.RespuestaExamenUtil;
 import co.com.core.commons.converter.psaber.ResultadoExamenUsuarioUtil;
 import co.com.core.dao.psaber.ResultadoExamenUsuarioDAO;
+import co.com.core.domain.psaber.Area;
 import co.com.core.domain.psaber.RespuestaExamen;
 import co.com.core.domain.psaber.ResultadoExamenUsuario;
 import co.com.core.dto.psaber.RespuestaExamenDTO;
@@ -65,7 +66,7 @@ public class ResultadoExamenUsuarioServiceImpl implements IResultadoExamenUsuari
 	}
 	
 	@Override
-	public List<ResultadoExamenUsuarioDTO> getByAreaRespuestaExamenList(List<RespuestaExamenDTO> paramDtoList, ResultadoExamenUsuarioDTO dto) {
+	public List<ResultadoExamenUsuarioDTO> getByAreaRespuestaExamenList(List<RespuestaExamenDTO> paramDtoList, Area area) {
 		
 		List<ResultadoExamenUsuarioDTO> dtoList = new ArrayList<>();
 		
@@ -75,7 +76,7 @@ public class ResultadoExamenUsuarioServiceImpl implements IResultadoExamenUsuari
 				paramList.add(RespuestaExamenUtil.getEntityFromDto(item));
 			}
 			
-			List<ResultadoExamenUsuario> entityList = resultadoExamenUsuarioDAO.getByAreaRespuestaExamenList(paramList, dto.getAreaId());
+			List<ResultadoExamenUsuario> entityList = resultadoExamenUsuarioDAO.getByAreaRespuestaExamenList(paramList, area);
 			if(entityList!=null && entityList.size() > 0) {
 				for(ResultadoExamenUsuario entity : entityList) {
 					dtoList.add(ResultadoExamenUsuarioUtil.getDtoFromEntity(entity));
@@ -85,6 +86,7 @@ public class ResultadoExamenUsuarioServiceImpl implements IResultadoExamenUsuari
 	
 		return dtoList;
 	}
+	
 	
 	private List<Integer> getResultadoExamenUsuarioIds(List<ResultadoExamenUsuario> entityList) {
 		

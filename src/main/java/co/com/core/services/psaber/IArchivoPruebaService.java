@@ -5,6 +5,7 @@ import java.util.Map;
 
 import co.com.core.domain.psaber.ArchivoPrueba;
 import co.com.core.dto.psaber.ArchivoPruebaDTO;
+import co.com.core.dto.psaber.AreaArchivoPruebaDTO;
 
 
 public interface IArchivoPruebaService {
@@ -20,4 +21,6 @@ public interface IArchivoPruebaService {
 	public void update(ArchivoPruebaDTO dto);
 	
 	public ArchivoPruebaDTO getByArchivoPruebaId(Integer id);
+	
+	public List<AreaArchivoPruebaDTO> getAreasByArchivoPrueba(ArchivoPruebaDTO dto); 
 }

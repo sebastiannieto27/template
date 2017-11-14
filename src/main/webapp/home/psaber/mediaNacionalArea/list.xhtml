@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+
+    <h:form id="mediaNacionalAreaListForm">
+   			<h:panelGroup id="searchForm">
+   				<h:panelGrid columns="2">
+   					<p:outputLabel value="#{msg.area}" for="areaIdSearch" />
+                        <p:selectOneMenu id="areaIdSearch" value="#{mediaNacionalAreaController.areaId}" >
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{areaController.lazyModel.datasource}"
+                                           var="areaIdItem"
+                                           itemValue="#{areaIdItem.areaId}"
+                                           itemLabel="#{areaIdItem.nombre.toString()}"
+                                           />
+                        </p:selectOneMenu>
+
+						<p:outputLabel value="#{msg.archivoPrueba}" for="archivoPruebaIdSearch" />
+                        <p:selectOneMenu id="archivoPruebaIdSearch" value="#{mediaNacionalAreaController.archivoPruebaId}" >
+                            <f:selectItem itemLabel="#{msg.SelectOneMessage}"/>
+                            <f:selectItems value="#{archivoPruebaController.lazyModel.datasource}"
+                                           var="archivoPruebaIdItem"
+                                           itemValue="#{archivoPruebaIdItem.archivoPruebaId}"
+                                           itemLabel="#{archivoPruebaIdItem.nombre.toString()}"
+                                           />
+                        </p:selectOneMenu>
+   				</h:panelGrid>
+						
+              </h:panelGroup>
+
+        <p:panel header="#{msg.mediaNacionalArea}">
+        	<p:dataTable id="datalist"
+	            value="#{mediaNacionalAreaController.lazyModel}"
+	            var="item"
+	            rowKey="#{item.mediaNacionalAreaId}"
+	            paginator="true"
+	            paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+	            rows="10"
+	            rowsPerPageTemplate="10,20,30,40,50"
+	            selectionMode="single"
+	            selection="#{mediaNacionalAreaController.selected}"
+	            lazy="true">
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('mediaNacionalAreaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.mediaNacionalAreaId}" filterBy="#{item.mediaNacionalAreaId}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.mediaNacionalAreaId}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.valor}" filterBy="#{item.valor}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.value}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.valor}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.archivoPruebaId.nombre}" filterBy="#{item.archivoPruebaId.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.archivoPrueba}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.archivoPruebaId.nombre}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.areaId.nombre}" filterBy="#{item.areaId.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.area}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.areaId.nombre}"/>
+                </p:column>
+            </p:dataTable>
+
+            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{msg.create}" actionListener="#{mediaNacionalAreaController.prepareCreate}" update=":mediaNacionalAreaCreateForm" oncomplete="PF('mediaNacionalAreaCreateDialog').show()"/>
+            <p:commandButton id="viewButton" icon="ui-icon-search" value="#{msg.view}" update=":mediaNacionalAreaViewForm" oncomplete="PF('mediaNacionalAreaViewDialog').show()" disabled="#{empty mediaNacionalAreaController.selected}"/>
+            <p:commandButton id="editButton" icon="ui-icon-pencil" value="#{msg.edit}" update=":mediaNacionalAreaEditForm" oncomplete="PF('mediaNacionalAreaEditDialog').show()" disabled="#{empty mediaNacionalAreaController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{msg.delete}" actionListener="#{mediaNacionalAreaController.delete}" update=":growl,datalist" disabled="#{empty mediaNacionalAreaController.selected}">
+                <p:confirm header="#{msg.confirmation_header}" message="#{msg.confirm_delete_message}" icon="ui-icon-alert"/>
+            </p:commandButton>
+        </p:panel>
+        <ui:include src="/WEB-INF/templates/confirmation.xhtml"/>
+    </h:form>
+				
+	    </ui:composition>
+    </body>
+</html>

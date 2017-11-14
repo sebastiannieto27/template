@@ -7,9 +7,12 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import co.com.core.commons.converter.psaber.ArchivoPruebaUtil;
+import co.com.core.commons.converter.psaber.AreaArchivoPruebaUtil;
 import co.com.core.dao.psaber.ArchivoPruebaDAO;
 import co.com.core.domain.psaber.ArchivoPrueba;
+import co.com.core.domain.psaber.AreaArchivoPrueba;
 import co.com.core.dto.psaber.ArchivoPruebaDTO;
+import co.com.core.dto.psaber.AreaArchivoPruebaDTO;
 import co.com.core.services.psaber.IArchivoPruebaService;
 
 public class ArchivoPruebaServiceImpl implements IArchivoPruebaService {
@@ -31,14 +34,14 @@ public class ArchivoPruebaServiceImpl implements IArchivoPruebaService {
 
 	@Override
 	public List<ArchivoPruebaDTO> getAllFilter(Map<String, Object> filter) {
-		List<ArchivoPruebaDTO> ArchivoPruebas = new ArrayList<ArchivoPruebaDTO>();
+		List<ArchivoPruebaDTO> dtoList = new ArrayList<ArchivoPruebaDTO>();
 		List<ArchivoPrueba> entityList = archivoPruebaDAO.getAllFilter(filter);
 		if(entityList!=null && entityList.size() > 0) {
 			for(ArchivoPrueba ArchivoPrueba : entityList) {
-				ArchivoPruebas.add(ArchivoPruebaUtil.getDtoFromEntity(ArchivoPrueba));
+				dtoList.add(ArchivoPruebaUtil.getDtoFromEntity(ArchivoPrueba));
 			}
 		}
-		return ArchivoPruebas;
+		return dtoList;
 	}
 	
 	@Override
@@ -49,6 +52,18 @@ public class ArchivoPruebaServiceImpl implements IArchivoPruebaService {
 			dto = ArchivoPruebaUtil.getDtoFromEntity(entity);
 		}
 		return dto;
+	}
+
+	@Override
+	public List<AreaArchivoPruebaDTO> getAreasByArchivoPrueba(ArchivoPruebaDTO dto) {
+		List<AreaArchivoPruebaDTO> dtoList = new ArrayList<AreaArchivoPruebaDTO>();
+		List<AreaArchivoPrueba> entityList = archivoPruebaDAO.getAreasByArchivoPrueba(ArchivoPruebaUtil.getEntityFromDto(dto));
+		if(entityList!=null && entityList.size() > 0) {
+			for(AreaArchivoPrueba entity : entityList) {
+				dtoList.add(AreaArchivoPruebaUtil.getDtoFromEntity(entity));
+			}
+		}
+		return dtoList;
 	}
 	
 	@Override

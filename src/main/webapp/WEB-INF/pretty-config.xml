@@ -107,50 +107,17 @@
 		<pattern value="/psaber/resultados-usuario" />
 		<view-id value="/home/psaber/resultadoExamen/index.xhtml" />
 	</url-mapping>
+			
+	<url-mapping id="mediaNacionalArea">
+		<pattern value="/psaber/media-nacional-area" />
+		<view-id value="/home/psaber/mediaNacionalArea/index.xhtml" />
+	</url-mapping>
+				
+	<url-mapping id="resultadoGlobalColegio">
+		<pattern value="/psaber/resultado-global-colegio" />
+		<view-id value="/home/psaber/resultadoGlobalColegio/index.xhtml" />
+	</url-mapping>
 	<!-- saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro  saber pro saber pro -->
 	
-	
-	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS -->
-	<!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS 
-	<url-mapping id="branch">
-		<pattern value="/cms/sede" />
-		<view-id value="/home/cms/branch/index.xhtml" />
-	</url-mapping>
-	
-	<url-mapping id="brachType">
-		<pattern value="/cms/tipo-sede" />
-		<view-id value="/home/cms/branchType/index.xhtml" />
-	</url-mapping>	
-	
-	<url-mapping id="generalStatus">
-		<pattern value="/cms/estado-general" />
-		<view-id value="/home/cms/generalStatus/index.xhtml" />
-	</url-mapping>
-	
-	<url-mapping id="newsType">
-		<pattern value="/cms/tipo-noticia" />
-		<view-id value="/home/cms/newsType/index.xhtml" />
-	</url-mapping>
-	
-	<url-mapping id="news">
-		<pattern value="/cms/noticia" />
-		<view-id value="/home/cms/news/index.xhtml" />
-	</url-mapping>	
-	
-	<url-mapping id="companyEvent">
-		<pattern value="/cms/evento-friogan" />
-		<view-id value="/home/cms/companyEvent/index.xhtml" />
-	</url-mapping>	
-	
-	<url-mapping id="service">
-		<pattern value="/cms/servicio" />
-		<view-id value="/home/cms/service/index.xhtml" />
-	</url-mapping>
-		
-	<url-mapping id="branchService">
-		<pattern value="/cms/servicio-sede" />
-		<view-id value="/home/cms/branchService/index.xhtml" />
-	</url-mapping>		
- -->  
 	
 </pretty-config>

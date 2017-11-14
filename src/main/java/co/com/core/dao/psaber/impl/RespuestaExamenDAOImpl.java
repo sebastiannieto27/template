@@ -188,9 +188,13 @@ public class RespuestaExamenDAOImpl implements RespuestaExamenDAO {
 			try {
 				session = this.sessionFactory.openSession();
 				StringBuilder hql = new StringBuilder();
-				hql.append("SELECT r FROM RespuestaExamen r LEFT JOIN r.archivoPruebaProcesadoId a");
-				hql.append(" WHERE r.archivoPruebaId = :archivoPruebaId");
+				hql.append("SELECT r FROM RespuestaExamen r ");
+				hql.append("LEFT JOIN r.archivoPruebaProcesadoId a");
+				//hql.append("LEFT JOIN a.archivoPruebaId ap");
+				
+				hql.append(" WHERE a.archivoPruebaId = :archivoPruebaId");
 				hql.append(" AND a.fecCre = :fecCre");
+				hql.append(" GROUP BY a.archivoPruebaId");
 				Query query = session.createQuery(hql.toString());
 				query.setParameter("archivoPruebaId", archivoPruebaId);
 				query.setParameter("fecCre", searchDate);
