@@ -94,7 +94,7 @@ public class ResultadoExamenUsuarioDTO implements Comparable<ResultadoExamenUsua
 		return "ResultadoExamenUsuarioDTO [resultadoExamenUsuarioId=" + resultadoExamenUsuarioId + ", nroPreguntasArea="
 				+ nroPreguntasArea + ", respuestasCorrectas=" + respuestasCorrectas + ", respuestasErradas="
 				+ respuestasErradas + ", sinContestar=" + sinContestar + ", archivoPruebaId=" + archivoPruebaId
-				+ ", areaId=" + areaId + ", respuestaExamenId=" + respuestaExamenId + ", userId=" + userId
+				+ ", areaId=" + areaId + ", respuestaExamenId=" + respuestaExamenId + ", userId=" + "userId"
 				+ ", porcentajeAcierto=" + porcentajeAcierto + ", promedioArea=" + promedioArea + "]";
 	}
 	

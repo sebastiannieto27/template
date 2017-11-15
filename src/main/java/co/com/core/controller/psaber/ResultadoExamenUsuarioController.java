@@ -17,8 +17,8 @@ import com.google.gson.Gson;
 import co.com.core.commons.EsquemaRespuesta;
 import co.com.core.commons.ItemRespuesta;
 import co.com.core.commons.RespuestaExamenProcesado;
+import co.com.core.commons.converter.psaber.ArchivoPruebaProcesadoUtil;
 import co.com.core.commons.converter.psaber.ArchivoPruebaUtil;
-import co.com.core.commons.converter.psaber.AreaUtil;
 import co.com.core.commons.converter.psaber.RespuestaExamenUtil;
 import co.com.core.domain.User;
 import co.com.core.domain.psaber.ArchivoPrueba;
@@ -27,12 +27,14 @@ import co.com.core.domain.psaber.RespuestaExamen;
 import co.com.core.domain.psaber.ResultadoExamenUsuario;
 import co.com.core.dto.psaber.ArchivoPruebaProcesadoDTO;
 import co.com.core.dto.psaber.AreaArchivoPruebaDTO;
+import co.com.core.dto.psaber.PromedioAreaArchivoPruebaProcesadoDTO;
 import co.com.core.dto.psaber.RespuestaDTO;
 import co.com.core.dto.psaber.RespuestaExamenDTO;
 import co.com.core.dto.psaber.ResultadoExamenUsuarioDTO;
 import co.com.core.services.psaber.IArchivoPruebaProcesadoService;
 import co.com.core.services.psaber.IArchivoPruebaService;
 import co.com.core.services.psaber.IPreguntaService;
+import co.com.core.services.psaber.IPromedioAreaArchivoPruebaProcesadoService;
 import co.com.core.services.psaber.IRespuestaExamenService;
 import co.com.core.services.psaber.IResultadoExamenUsuarioService;
 
@@ -46,6 +48,7 @@ public class ResultadoExamenUsuarioController {
 	private IRespuestaExamenService respuestaExamenService;
 	private IPreguntaService preguntaService;
 	private IArchivoPruebaService archivoPruebaService;
+	private IPromedioAreaArchivoPruebaProcesadoService promedioAreaArchivoPruebaProcesadoService;
 	
 	private List<ResultadoExamenUsuarioDTO> items;
 	private ResultadoExamenUsuarioDTO selected;
@@ -124,7 +127,7 @@ public class ResultadoExamenUsuarioController {
 		}
 		
 		//once all the answers are processed the average per area is calculated
-		
+		calcularPromedioGeneralArea(respuestaExamenList, archivoPruebaProcesadoDTO);
 	}
 	
 	/**
@@ -140,27 +143,36 @@ public class ResultadoExamenUsuarioController {
 			//2. using the area and the respuestaExamenList get the entries (resultadoExamenUsuario) per each area
 			if(areaArchivoPruebaList!=null && areaArchivoPruebaList.size() > 0) {
 				for(AreaArchivoPruebaDTO item : areaArchivoPruebaList) {
+					
 					List<ResultadoExamenUsuarioDTO> resultadoExamenList = 
 							resultadoExamenUsuarioService.getByAreaRespuestaExamenList(respuestaExamenList, item.getAreaId());
+					
 					if(resultadoExamenList!=null && resultadoExamenList.size()>0) {
 						double sumPromedioGeneralArea = 0;
 						for(ResultadoExamenUsuarioDTO resultado : resultadoExamenList) {
-							sumPromedioGeneralArea = sumPromedioGeneralArea + resultado.getPromedioArea();
+							
+							//we must use the PorcentajeAcierto, it represents the number of correct answers in the exam
+							//the mean of all the PorcentajeAcierto by area values gives us the mean by area
+							sumPromedioGeneralArea = sumPromedioGeneralArea + resultado.getPorcentajeAcierto();
 						}
 						double promedioGeneralArea = sumPromedioGeneralArea / resultadoExamenList.size();
-						createPromedioAreaRespuestaExamen(promedioGeneralArea, item.getAreaId(), respuestaExamenList.get(0));//TODO
+						
+						createPromedioAreaArchivoPruebaProcesado(promedioGeneralArea, item.getAreaId(), archivoPruebaProcesadoDTO);
 					}
 				}
 			}
-
-			//3. get the average and persist
 		} catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
 		}
 	}
 	
-	public void createPromedioAreaRespuestaExamen(double valor, Area area, RespuestaExamenDTO respuestaExamen) {
+	public void createPromedioAreaArchivoPruebaProcesado(double valor, Area area, ArchivoPruebaProcesadoDTO archivoPruebaProcesadoDTO) {
+		PromedioAreaArchivoPruebaProcesadoDTO dto = new PromedioAreaArchivoPruebaProcesadoDTO();
 		
+		dto.setAreaId(area);
+		dto.setArchivoPruebaProcesadoId(ArchivoPruebaProcesadoUtil.getEntityFromDto(archivoPruebaProcesadoDTO));
+		dto.setValor(valor);
+		promedioAreaArchivoPruebaProcesadoService.create(dto);
 	}
 	
 	/**
@@ -229,7 +241,7 @@ public class ResultadoExamenUsuarioController {
 				sumAreaValue = sumAreaValue + porcentajeAcierto;
 			}
 			
-			setPromedioArea(sumAreaValue, createdEntryList);
+			setPromedioArea(sumAreaValue, createdEntryList);//wrong concept it sets the the mean of all the areas, using the porcentajeAcierto
 			
 		} catch(Exception e) {
 			logger.error("Exception at: ResultadoExamenUsuarioController.procesarRespuestaUsuario: " +e.getMessage());
@@ -339,6 +351,17 @@ public class ResultadoExamenUsuarioController {
 
 	public void setArchivoPruebaService(IArchivoPruebaService archivoPruebaService) {
 		this.archivoPruebaService = archivoPruebaService;
+	}
+
+
+	public IPromedioAreaArchivoPruebaProcesadoService getPromedioAreaArchivoPruebaProcesadoService() {
+		return promedioAreaArchivoPruebaProcesadoService;
+	}
+
+
+	public void setPromedioAreaArchivoPruebaProcesadoService(
+			IPromedioAreaArchivoPruebaProcesadoService promedioAreaArchivoPruebaProcesadoService) {
+		this.promedioAreaArchivoPruebaProcesadoService = promedioAreaArchivoPruebaProcesadoService;
 	}
 	
 }

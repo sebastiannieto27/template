@@ -45,7 +45,7 @@ public class RespuestaExamenDTO {
 	@Override
 	public String toString() {
 		return "RespuestaExamenDTO [respuestaExamenId=" + respuestaExamenId + ", respuesta=" + respuesta
-				+ ", archivoPruebaProcesadoId=" + archivoPruebaProcesadoId + ", userId=" + userId + ", procesado="
+				+ ", archivoPruebaProcesadoId=" + archivoPruebaProcesadoId + ", userId=" + "null" + ", procesado="
 				+ procesado + "]";
 	}
 }

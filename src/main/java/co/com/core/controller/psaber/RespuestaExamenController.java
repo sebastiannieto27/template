@@ -15,7 +15,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
-import org.jfree.util.Log;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.chart.LineChartModel;
 
@@ -26,12 +25,14 @@ import co.com.core.domain.psaber.Area;
 import co.com.core.dto.UserDTO;
 import co.com.core.dto.psaber.ArchivoPruebaDTO;
 import co.com.core.dto.psaber.CompetenciaDTO;
+import co.com.core.dto.psaber.PromedioAreaArchivoPruebaProcesadoDTO;
 import co.com.core.dto.psaber.RespuestaExamenDTO;
 import co.com.core.dto.psaber.ResultadoExamenUsuarioDTO;
 import co.com.core.lazy.loader.psaber.RespuestaExamenLazyLoader;
 import co.com.core.services.IUserService;
 import co.com.core.services.psaber.IArchivoPruebaService;
 import co.com.core.services.psaber.ICompetenciaService;
+import co.com.core.services.psaber.IPromedioAreaArchivoPruebaProcesadoService;
 import co.com.core.services.psaber.IRespuestaExamenService;
 import co.com.core.services.psaber.IResultadoExamenUsuarioService;
 import net.sf.jasperreports.engine.JRExporter;
@@ -51,6 +52,7 @@ public class RespuestaExamenController {
 	private IUserService userService;
 	private ICompetenciaService competenciaService;
 	private IArchivoPruebaService archivoPruebaService;
+	private IPromedioAreaArchivoPruebaProcesadoService promedioAreaArchivoPruebaProcesadoService;
 	
 	private List<RespuestaExamenDTO> items;
 	private RespuestaExamenDTO selected;
@@ -275,6 +277,9 @@ public class RespuestaExamenController {
 	}
 	
 	public void verGraficaResultadoGeneralColegio(RespuestaExamenDTO dto) {
+		List<PromedioAreaArchivoPruebaProcesadoDTO> promedioList = 
+		promedioAreaArchivoPruebaProcesadoService.getByArchivoPruebaProcesado(ArchivoPruebaProcesadoUtil.getDtoFromEntity(dto.getArchivoPruebaProcesadoId()));
+	
 		
 	}
 	/**
@@ -439,11 +444,9 @@ public class RespuestaExamenController {
 		return competenciaService;
 	}
 
-
 	public void setCompetenciaService(ICompetenciaService competenciaService) {
 		this.competenciaService = competenciaService;
 	}
-
 
 	public List<CompetenciaDTO> getItemCompetencia() {
 		return itemCompetencia;
@@ -533,5 +536,13 @@ public class RespuestaExamenController {
 	public void setArchivoPruebaService(IArchivoPruebaService archivoPruebaService) {
 		this.archivoPruebaService = archivoPruebaService;
 	}
-	
+
+	public IPromedioAreaArchivoPruebaProcesadoService getPromedioAreaArchivoPruebaProcesadoService() {
+		return promedioAreaArchivoPruebaProcesadoService;
+	}
+
+	public void setPromedioAreaArchivoPruebaProcesadoService(
+			IPromedioAreaArchivoPruebaProcesadoService promedioAreaArchivoPruebaProcesadoService) {
+		this.promedioAreaArchivoPruebaProcesadoService = promedioAreaArchivoPruebaProcesadoService;
+	}
 }

@@ -66,6 +66,8 @@
                 <value>co.com.core.domain.psaber.RespuestaExamen</value>
                 <value>co.com.core.domain.psaber.ResultadoExamenUsuario</value>
                 <value>co.com.core.domain.psaber.MediaNacionalArea</value>
+                <value>co.com.core.domain.psaber.PromedioAreaArchivoPruebaProcesado</value>
+                
                 
                 <!-- CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS  CMS 
 				<value>co.com.core.domain.cms.Branch</value>
@@ -200,6 +202,10 @@
 	    <bean id="mediaNacionalAreaDAO" class="co.com.core.dao.psaber.impl.MediaNacionalAreaDAOImpl">
 	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	    </bean>
+	    	    	    	    	    
+	    <bean id="promedioAreaArchivoPruebaProcesadoDAO" class="co.com.core.dao.psaber.impl.PromedioAreaArchivoPruebaProcesadoDAOImpl">
+	        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	    </bean>
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
 <!-- Services  Services  Services  Services  Services  Services  Services  Services  Services  Services  Services Services  Services  Services -->
@@ -311,6 +317,10 @@
 	    	    	    	    
    		<bean id="mediaNacionalAreaService" class="co.com.core.services.psaber.impl.MediaNacionalAreaServiceImpl">
 	    	<property name="mediaNacionalAreaDAO" ref="mediaNacionalAreaDAO" />
+	    </bean>
+	    	    	    	    
+   		<bean id="promedioAreaArchivoPruebaProcesadoService" class="co.com.core.services.psaber.impl.PromedioAreaArchivoPruebaProcesadoServiceImpl">
+	    	<property name="promedioAreaArchivoPruebaProcesadoDAO" ref="promedioAreaArchivoPruebaProcesadoDAO" />
 	    </bean>
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
 <!-- Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers  Controllers   Controllers  Controllers  Controllers -->
@@ -429,6 +439,8 @@
     	<property name="archivoPruebaProcesadoService" ref="archivoPruebaProcesadoService" />
     	<property name="respuestaExamenService" ref="respuestaExamenService" />
     	<property name="preguntaService" ref="preguntaService" />
+    	<property name="archivoPruebaService" ref="archivoPruebaService" />
+    	<property name="promedioAreaArchivoPruebaProcesadoService" ref="promedioAreaArchivoPruebaProcesadoService" />
     </bean>
           
     <bean id="archivoPruebaController" scope="session" class="co.com.core.controller.psaber.ArchivoPruebaController" init-method="init">
