@@ -21,8 +21,6 @@ public class GenericBarChart implements Serializable {
 
 	private static final Logger logger = LoggerFactory.getLogger(GenericBarChart.class);
 
-	private BarChartModel barModel;
-
 	private BarChartModel initBarModel(List<Map<String, Object>> chartSeriesList) {
 		BarChartModel model = new BarChartModel();
 
@@ -39,7 +37,9 @@ public class GenericBarChart implements Serializable {
 						Map.Entry pair = (Map.Entry) it.next();
 						String key = pair.getKey().toString();
 						String value = pair.getValue().toString();
-						chart.set(key, Integer.parseInt(value));
+						if(!key.equalsIgnoreCase("label")) {
+							chart.set(key, Double.parseDouble(value));
+						}
 						it.remove(); // avoids a ConcurrentModificationException
 					}
 
@@ -53,8 +53,8 @@ public class GenericBarChart implements Serializable {
 		return model;
 	}
 	
-	public void createBarModel(Map<String, Object> charData) {
-       barModel = initBarModel((List<Map<String, Object>>) charData.get("chartList"));
+	public BarChartModel createBarModel(Map<String, Object> charData) {
+		BarChartModel barModel = initBarModel((List<Map<String, Object>>) charData.get("chartList"));
          
         barModel.setTitle(charData.get("title").toString());
         barModel.setLegendPosition("ne");
@@ -66,9 +66,7 @@ public class GenericBarChart implements Serializable {
         yAxis.setLabel(charData.get("yTitle").toString());
         yAxis.setMin(0);
         yAxis.setMax(200);
-    }
-	
-	public BarChartModel getBarModel() {
+        
         return barModel;
     }
 }

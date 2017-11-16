@@ -16,15 +16,19 @@ import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.LineChartModel;
 
 import co.com.core.commons.ValidationUtil;
+import co.com.core.commons.charts.GenericBarChart;
 import co.com.core.commons.charts.GenericLineChart;
 import co.com.core.commons.converter.psaber.ArchivoPruebaProcesadoUtil;
+import co.com.core.commons.converter.psaber.ArchivoPruebaUtil;
 import co.com.core.domain.psaber.Area;
 import co.com.core.dto.UserDTO;
 import co.com.core.dto.psaber.ArchivoPruebaDTO;
 import co.com.core.dto.psaber.CompetenciaDTO;
+import co.com.core.dto.psaber.MediaNacionalAreaDTO;
 import co.com.core.dto.psaber.PromedioAreaArchivoPruebaProcesadoDTO;
 import co.com.core.dto.psaber.RespuestaExamenDTO;
 import co.com.core.dto.psaber.ResultadoExamenUsuarioDTO;
@@ -32,6 +36,7 @@ import co.com.core.lazy.loader.psaber.RespuestaExamenLazyLoader;
 import co.com.core.services.IUserService;
 import co.com.core.services.psaber.IArchivoPruebaService;
 import co.com.core.services.psaber.ICompetenciaService;
+import co.com.core.services.psaber.IMediaNacionalAreaService;
 import co.com.core.services.psaber.IPromedioAreaArchivoPruebaProcesadoService;
 import co.com.core.services.psaber.IRespuestaExamenService;
 import co.com.core.services.psaber.IResultadoExamenUsuarioService;
@@ -53,6 +58,7 @@ public class RespuestaExamenController {
 	private ICompetenciaService competenciaService;
 	private IArchivoPruebaService archivoPruebaService;
 	private IPromedioAreaArchivoPruebaProcesadoService promedioAreaArchivoPruebaProcesadoService;
+	private IMediaNacionalAreaService mediaNacionalAreaService;
 	
 	private List<RespuestaExamenDTO> items;
 	private RespuestaExamenDTO selected;
@@ -83,8 +89,11 @@ public class RespuestaExamenController {
 	
 	private LineChartModel lineModelPercentil;
 	
+	private BarChartModel resultadoGeneralChart;
+	
 	public void init() {
 		lineModelPercentil = new LineChartModel();
+		resultadoGeneralChart = new BarChartModel();
 	}
 	
 	/**
@@ -277,10 +286,45 @@ public class RespuestaExamenController {
 	}
 	
 	public void verGraficaResultadoGeneralColegio(RespuestaExamenDTO dto) {
+		
+		//get the mean of the areas associated to archivoPrueba
 		List<PromedioAreaArchivoPruebaProcesadoDTO> promedioList = 
 		promedioAreaArchivoPruebaProcesadoService.getByArchivoPruebaProcesado(ArchivoPruebaProcesadoUtil.getDtoFromEntity(dto.getArchivoPruebaProcesadoId()));
 	
+		List<MediaNacionalAreaDTO> mediaNacionalList = 
+				mediaNacionalAreaService.getMediaNacionalByArchivoPrueba(ArchivoPruebaUtil.getDtoFromEntity(dto.getArchivoPruebaProcesadoId().getArchivoPruebaId()));
 		
+		//General chart map - contains values such as title,xTitle,yTitle
+		Map<String, Object> charData = new HashMap<>();
+		charData.put("title", "Resultado General Colegio");
+		charData.put("xTitle", "Área");
+		charData.put("yTitle", "Media");
+		
+		//chart data list, contains one or more maps with all the chart values
+		List<Map<String, Object>> dataList = new ArrayList<>();
+		
+		Map<String, Object> colegioMap = new HashMap<>();
+		colegioMap.put("label", "Media Colegio");
+		if(promedioList!=null && promedioList.size()>0) {
+			for(PromedioAreaArchivoPruebaProcesadoDTO item : promedioList) {
+				String area = item.getAreaId().getNombre();
+				colegioMap.put(area, item.getValor());
+			}
+		}
+		dataList.add(colegioMap);
+		
+		Map<String, Object> mediaNacionalMap = new HashMap<>();
+		mediaNacionalMap.put("label", "Media Nacional");
+		if(mediaNacionalList!=null && mediaNacionalList.size()>0) {
+			for(MediaNacionalAreaDTO item : mediaNacionalList) {
+				String area = item.getAreaId().getNombre();
+				mediaNacionalMap.put(area, item.getValor());
+			}
+		}
+		dataList.add(mediaNacionalMap);
+		charData.put("chartList", dataList);
+		GenericBarChart genericBarChart = new GenericBarChart();
+		resultadoGeneralChart = genericBarChart.createBarModel(charData);
 	}
 	/**
 	 * search an item using the advance search component
@@ -544,5 +588,21 @@ public class RespuestaExamenController {
 	public void setPromedioAreaArchivoPruebaProcesadoService(
 			IPromedioAreaArchivoPruebaProcesadoService promedioAreaArchivoPruebaProcesadoService) {
 		this.promedioAreaArchivoPruebaProcesadoService = promedioAreaArchivoPruebaProcesadoService;
+	}
+
+	public IMediaNacionalAreaService getMediaNacionalAreaService() {
+		return mediaNacionalAreaService;
+	}
+
+	public void setMediaNacionalAreaService(IMediaNacionalAreaService mediaNacionalAreaService) {
+		this.mediaNacionalAreaService = mediaNacionalAreaService;
+	}
+
+	public BarChartModel getResultadoGeneralChart() {
+		return resultadoGeneralChart;
+	}
+
+	public void setResultadoGeneralChart(BarChartModel resultadoGeneralChart) {
+		this.resultadoGeneralChart = resultadoGeneralChart;
 	}
 }

@@ -7,9 +7,11 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import co.com.core.commons.converter.psaber.ArchivoPruebaUtil;
 import co.com.core.commons.converter.psaber.MediaNacionalAreaUtil;
 import co.com.core.dao.psaber.MediaNacionalAreaDAO;
 import co.com.core.domain.psaber.MediaNacionalArea;
+import co.com.core.dto.psaber.ArchivoPruebaDTO;
 import co.com.core.dto.psaber.MediaNacionalAreaDTO;
 import co.com.core.services.psaber.IMediaNacionalAreaService;
 
@@ -20,26 +22,38 @@ public class MediaNacionalAreaServiceImpl implements IMediaNacionalAreaService {
 	
 	@Override
 	public List<MediaNacionalAreaDTO> getAll() {
-		List<MediaNacionalAreaDTO> MediaNacionalAreas = new ArrayList<MediaNacionalAreaDTO>();
+		List<MediaNacionalAreaDTO> dtoList = new ArrayList<MediaNacionalAreaDTO>();
 		List<MediaNacionalArea> entityList = mediaNacionalAreaDAO.getAll();
 		if(entityList!=null && entityList.size() > 0) {
-			for(MediaNacionalArea MediaNacionalArea : entityList) {
-				MediaNacionalAreas.add(MediaNacionalAreaUtil.getDtoFromEntity(MediaNacionalArea));
+			for(MediaNacionalArea item : entityList) {
+				dtoList.add(MediaNacionalAreaUtil.getDtoFromEntity(item));
 			}
 		}
-		return MediaNacionalAreas;
+		return dtoList;
 	}
 
 	@Override
 	public List<MediaNacionalAreaDTO> getAllFilter(Map<String, Object> filter) {
-		List<MediaNacionalAreaDTO> MediaNacionalAreas = new ArrayList<MediaNacionalAreaDTO>();
+		List<MediaNacionalAreaDTO> dtoList = new ArrayList<MediaNacionalAreaDTO>();
 		List<MediaNacionalArea> entityList = mediaNacionalAreaDAO.getAllFilter(filter);
 		if(entityList!=null && entityList.size() > 0) {
-			for(MediaNacionalArea MediaNacionalArea : entityList) {
-				MediaNacionalAreas.add(MediaNacionalAreaUtil.getDtoFromEntity(MediaNacionalArea));
+			for(MediaNacionalArea item : entityList) {
+				dtoList.add(MediaNacionalAreaUtil.getDtoFromEntity(item));
 			}
 		}
-		return MediaNacionalAreas;
+		return dtoList;
+	}
+
+	@Override
+	public List<MediaNacionalAreaDTO> getMediaNacionalByArchivoPrueba(ArchivoPruebaDTO dto) {
+		List<MediaNacionalAreaDTO> dtoList = new ArrayList<MediaNacionalAreaDTO>();
+		List<MediaNacionalArea> entityList = mediaNacionalAreaDAO.getMediaNacionalByArchivoPrueba(ArchivoPruebaUtil.getEntityFromDto(dto));
+		if(entityList!=null && entityList.size() > 0) {
+			for(MediaNacionalArea item : entityList) {
+				dtoList.add(MediaNacionalAreaUtil.getDtoFromEntity(item));
+			}
+		}
+		return dtoList;
 	}
 	
 	@Override

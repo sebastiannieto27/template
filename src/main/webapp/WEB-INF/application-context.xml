@@ -458,6 +458,8 @@
     	<property name="userService" ref="userService" />
     	<property name="competenciaService" ref="competenciaService" />
     	<property name="archivoPruebaService" ref="archivoPruebaService" />
+    	<property name="mediaNacionalAreaService" ref="mediaNacionalAreaService" />
+    	<property name="promedioAreaArchivoPruebaProcesadoService" ref="promedioAreaArchivoPruebaProcesadoService" />
     </bean>
                             
     <bean id="archivoPruebaProcesadoController" scope="session" class="co.com.core.controller.psaber.ArchivoPruebaProcesadoController" init-method="init">

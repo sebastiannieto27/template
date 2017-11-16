@@ -15,8 +15,7 @@
 		closeOnEscape="true">
 
 		<h:form id="resultadoGlobalColegioViewForm" >
-			<p:chart type="line" model="#{respuestaExamenController.lineModelPercentil}" style="height:100px;"/>
-		 	<h:outputText style="font-weight: bold;" value="#{respuestaExamenController.percentilEstudiante} "/>
+			<p:chart type="bar" model="#{respuestaExamenController.resultadoGeneralChart}" style="height:300px"/>
 		</h:form>
 	</p:dialog>
 

@@ -69,7 +69,7 @@
                         <h:outputText value="#{msg.resultadoGlobalColegio}"/>
                     </f:facet>
                     <p:commandLink id="viewresultadoGlobalColegioLink" value="#{msg.resultadoGlobalColegio}" update=":resultadoGlobalColegioViewForm, :resultadoGlobalColegioViewDlg" 
-                    		oncomplete="PF('resultadoGlobalColegioViewDialog').show()"  />
+                    		oncomplete="PF('resultadoGlobalColegioViewDialog').show()" actionListener="#{respuestaExamenController.verGraficaResultadoGeneralColegio(item)}" />
                 </p:column>
 
             </p:dataTable>

@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import co.com.core.dao.psaber.MediaNacionalAreaDAO;
+import co.com.core.domain.psaber.ArchivoPrueba;
 import co.com.core.domain.psaber.MediaNacionalArea;
 
 public class MediaNacionalAreaDAOImpl implements MediaNacionalAreaDAO {
@@ -120,5 +121,21 @@ public class MediaNacionalAreaDAOImpl implements MediaNacionalAreaDAO {
 			} finally {
 				session.close();
 			}
+		}
+
+		@Override
+		public List<MediaNacionalArea> getMediaNacionalByArchivoPrueba(ArchivoPrueba entity) {
+			List<MediaNacionalArea> entityList = null;
+			try {
+				session = this.sessionFactory.openSession();
+		        Query query = session.getNamedQuery("MediaNacionalArea.findByArchivoPruebaId");
+		        query.setParameter("archivoPruebaId", entity);
+		        entityList = query.list();
+			} catch(Exception ex) {
+				logger.error("Throwed Exception [MediaNacionalAreaDAOImpl.getMediaNacionalByArchivoPrueba]: " +ex.getMessage());
+			} finally {
+				session.close();
+			}
+			return entityList;
 		}
 }

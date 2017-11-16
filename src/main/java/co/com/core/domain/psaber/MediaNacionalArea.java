@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "MediaNacionalArea.findAll", query = "SELECT m FROM MediaNacionalArea m")
     , @NamedQuery(name = "MediaNacionalArea.findByMediaNacionalAreaId", query = "SELECT m FROM MediaNacionalArea m WHERE m.mediaNacionalAreaId = :mediaNacionalAreaId")
+    , @NamedQuery(name = "MediaNacionalArea.findByArchivoPruebaId", query = "SELECT m FROM MediaNacionalArea m WHERE m.archivoPruebaId = :archivoPruebaId")
     , @NamedQuery(name = "MediaNacionalArea.findByValor", query = "SELECT m FROM MediaNacionalArea m WHERE m.valor = :valor")})
 public class MediaNacionalArea implements Serializable {
 
