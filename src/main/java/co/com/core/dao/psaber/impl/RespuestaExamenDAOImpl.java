@@ -1,5 +1,6 @@
 package co.com.core.dao.psaber.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -184,11 +185,11 @@ public class RespuestaExamenDAOImpl implements RespuestaExamenDAO {
 		
 		@Override
 		public List<RespuestaExamen> getByArchivoPruebaFecha(ArchivoPrueba archivoPruebaId, Date searchDate) {
-			List<RespuestaExamen> entityList = null;
+			List<RespuestaExamen> entityList = new ArrayList<>();
 			try {
 				session = this.sessionFactory.openSession();
 				StringBuilder hql = new StringBuilder();
-				hql.append("SELECT r FROM RespuestaExamen r ");
+				hql.append("SELECT MAX(r.respuestaExamenId), MAX(r.userId), MAX(r.archivoPruebaProcesadoId) FROM RespuestaExamen r ");
 				hql.append("LEFT JOIN r.archivoPruebaProcesadoId a");
 				//hql.append("LEFT JOIN a.archivoPruebaId ap");
 				
@@ -198,7 +199,19 @@ public class RespuestaExamenDAOImpl implements RespuestaExamenDAO {
 				Query query = session.createQuery(hql.toString());
 				query.setParameter("archivoPruebaId", archivoPruebaId);
 				query.setParameter("fecCre", searchDate);
-				entityList = query.list();
+				List<Object[]> objList = query.list();
+				
+				if(objList!=null && objList.size() > 0) {
+					RespuestaExamen entity = new RespuestaExamen();
+					Object[] arrObj = objList.get(0);
+					
+					entity.setRespuestaExamenId((Integer) arrObj[0]);
+					entity.setUserId((User)arrObj[1]);
+					entity.setArchivoPruebaProcesadoId((ArchivoPruebaProcesado)arrObj[2]);
+					
+					entityList.add(entity);
+				}
+				
 			} catch(Exception ex) {
 				logger.error("Throwed Exception [RespuestaExamenDAOImpl.getByArchivoPruebaFecha]: " +ex.getMessage());
 			} finally {

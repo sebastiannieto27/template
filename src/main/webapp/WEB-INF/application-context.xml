@@ -21,6 +21,7 @@
         <property name="url" value="jdbc:mysql://localhost:3306/template" />
         <property name="username" value="root" />
         <property name="password" value="admin" />
+        <!--<property name="password" value="D1360$n1370$4d31n" />-->
     </bean>
 	
 	<!-- Hibernate 3 Annotation SessionFactory Bean definition-->
